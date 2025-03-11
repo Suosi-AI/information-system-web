@@ -1,0 +1,775 @@
+import chuan1 from '../../../assets//images/imgs/chuanbo1.jpg'
+import chuan2 from '../../../assets//images/imgs/chuanbo2.jpg'
+import zf from './../../../assets/images/zf.png'
+import zjz from './../../../assets/images/zjz.png'
+
+
+export const deveData = {
+  1: {
+    t1: {
+      title: '历年预算',
+      details: [
+        {
+          Technical: `年度预算执行报告 `,
+          preContent: [
+            { content: '2024年度', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R6koukyojigyo.pdf' },
+            { content: '2023年度', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R4koukyojigyo.pdf' },
+            { content: '2022年度', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R3koukyojigyo.pdf' },
+            { content: '2021年度', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R2koukyojigyo.pdf' },
+            { content: '2020年度', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R2koukyoujigyoukaiji.pdf' },
+            { content: '2019年度', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R1koukyojigyo%5B1%5D-1.pdf' }
+
+          ]
+        },
+        {
+          Technical: `历年预算概要 `,
+          preContent: [
+            { content: '2025年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/2024/08/27/nyusatsu/koukoku/201502/shiyousyo/R7youkyugaiyou.pdf' },
+            { content: '2024年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R6_yosan_gaiyou.pdf' },
+            { content: '2024年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R6kannkeiyosanngaiyou.pdf' },
+            { content: '2023年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R5hoseiyosan.pdf' },
+            { content: '2023年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R5yosanketteigaiyou.pdf' },
+            { content: '2023年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R5kannkeiyosanngaiyou.pdf' },
+            { content: '2022年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R4hoseigaiyou.pdf' },
+            { content: '2022年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R4yosanketteigaiyou.pdf' },
+            { content: '2022年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R4kannkeiyosanngaiyou.pdf' },
+            { content: '2021年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R3hoseigaiyou.pdf' },
+            { content: '2021年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R3yosanketteigaiyou.pdf' },
+            { content: '2021年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R3kannkeiyosanngaiyou.pdf' },
+            { content: '2020年海上保安庁第三次追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R2hoseigaiyou.pdf' },
+            { content: '2020年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R2yosanketteigaiyou.pdf' },
+            { content: '2020年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R2kannkeiyosanngaiyou.pdf' },
+            { content: '2019年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R1hoseigaiyou.pdf' },
+            { content: '2019年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/2018/12/20/folder794/yosan/H31ketteishiropan.pdf' },
+            { content: '2019年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/folder794/yosan/31youkyuushiropan.pdf' },
+            { content: '2018年海上保安庁第二次追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/2018/12/20/folder794/yosan/H30hosei2shiropan.pdf' },
+            { content: '2018年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/folder794/yosan/H30hoseishiropan.pdf' },
+            { content: '2018年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/folder794/yosan/H30ketteishiropan.pdf' },
+            { content: '2018年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/30youkyuushiropan.pdf' },
+            { content: '2017年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/folder794/yosan/H29hoseishiropan.pdf' },
+            { content: '2017年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/H29ketteishiropan.pdf' },
+            { content: '2017年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/H29youkyuushiropan.pdf' },
+            { content: '2016年海上保安庁関係第二次補正予算の概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/H28hosei2shiropan.pdf' },
+            { content: '2016年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/folder794/yosan/28ketteishiropan.pdf' },
+            { content: '2016年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/yosan/h28shiropan.pdf' },
+            { content: '2015年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/kouhou/h27/k20151218/k151218-1.pdf' },
+            { content: '2015年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h27/k20150114/k150114-1.pdf' },
+            { content: '2015年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h26/k20140828/k140828-1.pdf' },
+
+            { content: '2014年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h27/k20150109/k150109-1.pdf' },
+            { content: '2014年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h27/k20150109/k150109-1.pdf' },
+            { content: '2014年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h25/k20130827/26yosan.pdf' },
+
+            { content: '2013年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h25/k20131212/k131212-1.pdf' },
+            { content: '2013年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h25/k20130129/25kettei.pdf' },
+
+            { content: '2012年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h25/k20130115/k130115-2.pdf' },
+            { content: '2012年海上保安庁硬件基金概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h24/k20121026/k121026-1.pdf' },
+            { content: '2012年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h23/k20111224/24kettei.pdf' },
+            { content: '2012年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h23/k20110930/24yosan.pdf' },
+
+            { content: '2011年海上保安庁第四次追加预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h23/k20111220/k111220-1.pdf' },
+            { content: '2011年海上保安庁第三次追加预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h23/k20111021/k111021-2.pdf' },
+            { content: '2011年海上保安庁追加预算概算', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h23/k20110422/k110422-1.pdf' },
+            { content: '2011年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h22/k20101224/23yosan.pdf' },
+            { content: '2011年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h22/k20100827/23yosan.pdf' },
+
+            { content: '2010年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h21/k20091225/22yosan.pdf' },
+            { content: '2010年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h21/k20090831/22yosan.pdf' },
+
+
+
+
+          ],
+        },
+
+
+
+      ]
+    },
+    t2: {
+      title: '人员规模',
+      details: [
+        {
+          Technical: `海上保安庁定员概要 `,
+          preContent: [
+            { content: '2025年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/30_R7teiin_yokyu.pdf' },
+            { content: '2024年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/29_R6teiin_kettei.pdf' },
+            { content: '2024年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/28_R6teiinn_gaiyo.pdf' },
+
+            { content: '2023年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/27_R5teiin_kettei.pdf' },
+            { content: '2023年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/26_R5teiinn_gaiyo.pdf' },
+            { content: '2022年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/25_R4teiinn_kettei.pdf' },
+            { content: '2022年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/24_R4teiin_gaiyo.pdf' },
+            { content: '2021年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/soubi-yosan/22_R3teiin_satei.pdf' },
+            { content: '2021年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/soubi-yosan/21_R3teiin_gaiyo.pdf' },
+            { content: '2020年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/soubi-yosan/22_R2teiin_satei.pdf' },
+            { content: '2020年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/soubi-yosan/21_R2teiin_gaiyo.pdf' },
+            { content: '2019年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/folder794/yosan/20_H31teiin_satei.pdf' },
+            { content: '2019年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/folder794/yosan/19_h31teiin_gaiyo.pdf' },
+            { content: '2018年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/18_H30teiin_satei.pdf' },
+            { content: '2018年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/17_H30teiin_gaiyo .pdf' },
+            { content: '2017年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/16_H29teiin_satei.pdf' },
+            { content: '2017年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/15_h29teiin_gaiyo.pdf' },
+            { content: '2016年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/folder794/yosan/14_h28teiin_satei.pdf' },
+            { content: '2016年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/soubi/14_h28teiin_gaiyo.pdf' },
+            { content: '2015年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/13_h27teiin_satei.pdf' },
+            { content: '2015年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/12_h27teiin_gaiyo.pdf' },
+            { content: '2014年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/11_h26teiin_satei.pdf' },
+            { content: '2014年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/10_h26teiin_gaiyo.pdf' },
+            { content: '2013年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/08_h25teiin_satei.pdf' },
+            { content: '2013年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/07_h25teiin_gaiyo.pdf' },
+            { content: '2012年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/06_h24teiin_satei.pdf' },
+            { content: '2012年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/05_h24teiin_gaiyo.pdf' },
+            { content: '2011年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/04_h23teiin_satei.pdf' },
+            { content: '2011年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/03_h23teiin_gaiyo.pdf' },
+            { content: '2010年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/02_h22teiin_satei.pdf' },
+            { content: '2010年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/01_h22teiin_gaiyo.pdf' },
+
+          ]
+        },
+
+
+      ]
+    },
+
+    t3: {
+      title: '装备建造',
+      details: [
+
+        {
+          Technical: `船艇`,
+          preContent: `   海上保安厅船艇包括巡视船艇和特殊警备救难艇等警备救难业务用船、海洋情报业务用船、航路标识业务用船等。警备救难业务用船配备到全国的海上保安部、署，负责维持海上治安、确保海上交通安全、防止海上灾害、监视和取缔海洋污染等。海洋情报业务用船主要负责测量海底地形、观测海流和潮流、调查海洋污染等。航路标识业务用船主要负责灯塔、灯标、电波标识等航路标识的维护和管理等。教育业务用船配备海上保安学校，主要负责学生获取相应资格的实习等。
+   截止2022年4月1日`,
+          tableData: {
+            header: [
+              { title: '种类', colSpan: 2, rowSpan: null },
+              { title: '船型', colSpan: 1, rowSpan: null },
+              { title: '数量（架）', colSpan: 2, rowSpan: null }
+            ],
+            body: [
+              [
+                { content: '警备救难业务用船', rowSpan: 10, colSpan: 1 },
+                { content: '巡视船', rowSpan: 5, colSpan: 1 },
+                { content: 'PLH', rowSpan: 1, colSpan: 1 },
+                { content: '19', rowSpan: 1, colSpan: 1 },
+                { content: '145', rowSpan: 5, colSpan: 2, }
+              ],
+              [
+                { content: 'PL', rowSpan: 1, colSpan: 1 },
+                { content: '51', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: 'PM', rowSpan: 1, colSpan: 1 },
+                { content: '38', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: 'PS', rowSpan: 1, colSpan: 1 },
+                { content: '36', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: 'FL', rowSpan: 1, colSpan: 1 },
+                { content: '1', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '巡视艇', rowSpan: 2, colSpan: 1 },
+                { content: 'PC', rowSpan: 1, colSpan: 1 },
+                { content: '69', rowSpan: 1, colSpan: 1 },
+                { content: '238', rowSpan: 1, colSpan: 1, },
+              ],
+              [
+                { content: 'CL', rowSpan: 1, colSpan: 1 },
+                { content: '169', rowSpan: 1, colSpan: 1 },
+                { content: '', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '特殊警备救难艇', rowSpan: 2, colSpan: 1 },
+                { content: '放射能调查艇', rowSpan: 1, colSpan: 1 },
+                { content: '3', rowSpan: 1, colSpan: 1 },
+                { content: '67', rowSpan: 1, colSpan: 1, className: 't-c' },
+              ],
+              [
+                { content: '警备艇', rowSpan: 1, colSpan: 1 },
+                { content: '2', rowSpan: 1, colSpan: 1 },
+                { content: '', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '监视取缔艇', rowSpan: 1, colSpan: 1 },
+                { content: '62', rowSpan: 1, colSpan: 1 },
+                { content: '', rowSpan: 1, colSpan: 2 }
+              ],
+              [
+                { content: '海洋情报业务用船', rowSpan: 2, colSpan: 1 },
+                { content: '测量船', rowSpan: 2, colSpan: 1 },
+                { content: 'HL', rowSpan: 1, colSpan: 1 },
+                { content: '7', rowSpan: 1, colSpan: 1 },
+                { content: '15', rowSpan: 2, colSpan: 1, },
+              ],
+              [
+                { content: 'HS', rowSpan: 1, colSpan: 1 },
+                { content: '8', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '航路标识业务用船', rowSpan: 2, colSpan: 1 },
+                { content: '灯塔巡视船', rowSpan: 2, colSpan: 1 },
+                { content: 'LM', rowSpan: 1, colSpan: 1 },
+                { content: '3', rowSpan: 1, colSpan: 1 },
+                { content: '6', rowSpan: 2, colSpan: 1, },
+              ],
+              [
+                { content: 'LS', rowSpan: 1, colSpan: 1 },
+                { content: '3', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '教育业务用船', rowSpan: 1, colSpan: 1 },
+                { content: '实习艇', rowSpan: 1, colSpan: 1 },
+                { content: '', rowSpan: 1, colSpan: 1 },
+                { content: '3', rowSpan: 1, colSpan: 1, },
+                { content: '3', rowSpan: 1, colSpan: 1, }
+              ]
+            ],
+            total: {
+              content: '474',
+              colSpan: 5
+            }
+          }
+
+        },
+        {
+          Technical: `飞机`,
+          preContent: `   海上保安厅飞机包括固定翼飞机和旋转翼飞机。负责维持海上治安、确保海上交通安全、实施海难救助、防止海上灾害、监视和取缔海洋污染、进行火山状况监视及沿岸区域测量、向受灾地区运输物资等。
+   截止2022年4月1日`,
+          tableData: {
+            header: [
+              { title: '种类', colSpan: 1, rowSpan: null },
+              { title: '机型', colSpan: 1, rowSpan: null },
+              { title: '数量（架）', colSpan: 1, rowSpan: null }
+            ],
+            body: [
+              [
+                { content: '固定翼飞机	', rowSpan: 6, colSpan: 1 },
+                { content: '海湾V	', rowSpan: 1, colSpan: 1 },
+                { content: '2', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '猎鹰2000	', rowSpan: 1, colSpan: 1 },
+                { content: '5', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '庞巴迪315	', rowSpan: 1, colSpan: 1 },
+                { content: '9', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '萨布340	', rowSpan: 1, colSpan: 1 },
+                { content: '4', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '比奇350	', rowSpan: 1, colSpan: 1 },
+                { content: '10', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '塞斯纳172	', rowSpan: 1, colSpan: 1 },
+                { content: '5', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '旋转翼飞机	', rowSpan: 7, colSpan: 1 },
+                { content: '超级美洲豹225', rowSpan: 1, colSpan: 1 },
+                { content: '11', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '	超级美洲豹332	', rowSpan: 1, colSpan: 1 },
+                { content: '2', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: 'AW139	', rowSpan: 1, colSpan: 1 },
+                { content: '19', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: 'S76D	', rowSpan: 1, colSpan: 1 },
+                { content: '3', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: 'S76C	', rowSpan: 1, colSpan: 1 },
+                { content: '12', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '贝尔412	', rowSpan: 1, colSpan: 1 },
+                { content: '4', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '贝尔505	', rowSpan: 1, colSpan: 1 },
+                { content: '4', rowSpan: 1, colSpan: 1 },
+              ],
+
+            ],
+            total: {
+              content: '90',
+              colSpan: 2
+            }
+          }
+
+        },
+        {
+          Technical: `航路标识`,
+          preContent: `   航标是船舶为了确认己方位置和与目的地的位置关系，安全且有效地航行所必需的。航标的种类包括：指示海角和防波堤位置的灯塔、指示航线和障碍物所在的灯浮标等的“光波标识”；通过电波指示船舶的位置和标志方向的“电波标识”；在潮汐较大的关门海峡和来岛海峡，使用无线广播和电子显示屏通知潮流方向和速度的“潮流信号所”；以及在船舶交通所载海域使用雷达、AIS以及使用电视摄像机掌握航道和港口内船舶交通状况，通过无线电和AIS消息提供船舶交通信息的“船舶通航信号所”等。
+   截至2022年3月31日`,
+          tableData: {
+            header: [
+              { title: '种类', colSpan: 1, rowSpan: null },
+              { title: '数量', colSpan: 1, rowSpan: null }
+            ],
+            body: [
+              [
+                { content: '灯塔		', rowSpan: 1, colSpan: 1 },
+                { content: '3118	', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '灯浮标		', rowSpan: 1, colSpan: 1 },
+                { content: '1164', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '引导灯		', rowSpan: 1, colSpan: 1 },
+                { content: '44', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '指向灯		', rowSpan: 1, colSpan: 1 },
+                { content: '17', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '照射灯		', rowSpan: 1, colSpan: 1 },
+                { content: '136', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '立标		', rowSpan: 1, colSpan: 1 },
+                { content: '111', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '浮标		', rowSpan: 1, colSpan: 1 },
+                { content: '28', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '	无线方位信号所		', rowSpan: 1, colSpan: 1 },
+                { content: '15', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: 'AIS信号所		', rowSpan: 1, colSpan: 1 },
+                { content: '20', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '船舶通航信号所		', rowSpan: 1, colSpan: 1 },
+                { content: '27', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '潮流信号所		', rowSpan: 1, colSpan: 1 },
+                { content: '7', rowSpan: 1, colSpan: 1 },
+              ],
+
+
+            ],
+            total: {
+              content: '5142',
+              colSpan: 2
+            }
+          }
+
+        },
+        {
+          Technical: `工作制服`,
+          preContent: '',
+          imgBox: [
+            {
+              name: `   制服`,
+              img: zf,
+            },
+            {
+              name: `   职级章`,
+              img: zjz,
+            },
+          ],
+
+
+        },
+
+      ]
+    },
+    t4: {
+      title: '技术发展',
+      details: [
+        {
+          Technical: `船舶的建造和维护`,
+          preContent: `   海上保安厅的巡视船艇，在1948年创建之际，系收集了第二次世界大战后的各种杂务船。之后，自1949年开始建造新船艇，历经三次大规模建造更换后，发展到现在。
+在建造采用最先进技术的船舶的过程中，海上保安厅制订满足业务需求的性能基本计划，对于在造船厂进行的船体结构焊接加工情况、船体性能和搭载设备等功能确认等开展建造监督工作。
+另外，在维护现有船舶方面，除了在发生故障时由船员提供维修的技术支援、由船舶公司商讨维修方案外，还需要对老化、过时的船舶进行延长寿命、提高功能的大规模维修等，以维持船舶的性能和功能，从而力求能够精准应对多样化的海上保安业务`,
+          imgBox: [chuan1, chuan2],
+
+        },
+        {
+          Technical: `飞机的建造和维护`,
+          preContent: `   凭借飞机的机动能力和监视能力，能够从事维持海洋秩序、海难救助、防止海上灾害、监视管制海洋污染、确保海上交通安全等工作，以及应对监视火山和测量沿岸区域等各种业务需求。海上保安厅负责建造（采购·改造）飞机的规格制定，以及从预算要求到接收的一系列业务。在各种业务需求中，为保障飞机无故障运行，负责零部件采购、机体建造和维修、装备建造和维修、技术支援等。`,
+          imgBox: [],
+
+        },
+        {
+          Technical: `航标的建设和维护`,
+          preContent: `   船舶为了安全且有效率地航行，必须经常确认自己船只的位置，避开危险的障碍物，把握安全的航向，为此设置灯塔等航向标志进行管理。航标具有较高的公共性，因此被定位为公共事业对象。整备（工程）科除了进行航标设施的建设和整修之外，还进行航标用机器的采购、安装和更换。
+    为了让航标持续发挥其应有的功能，维护保养是非常重要的。海上保安厅职员定期巡视航标，确认设施和设置的机器有无异常。另外，在航标因风浪或台风而受损或灯光熄灭的情况下进行修复工作，努力确保船舶交通的安全。近年，通过将航标灯从灯泡更换为LED、金属光栅灯，或者使用不需要补充电解液的蓄电池等，努力推进维护保养的省力化。`,
+          imgBox: [],
+
+        },
+
+
+
+
+
+
+      ]
+    },
+
+
+  },
+  2: {
+
+
+    t1: {
+      title: '历史沿革',
+      contents: `   海岸警卫队的历史可以追溯到18世纪90年代美国财政部为执行关税（新国家的重要收入来源）而维护的小型舰队。财政部长 亚历山大·汉密尔顿游说国会资助建造十艘巡逻艇，国会于1790年8月4日（现在被定为海岸警卫队的官方生日）批准了建造。在1798年海军重建之前，这些“缉私巡逻艇”是美国早期唯一的海军力量。因此，巡逻艇及其船员经常承担额外的任务，包括打击海盗、营救遇险水手、运送政府官员，甚至运送邮件。最初，它根本不是一个有组织的联邦机构，只是一个“巡逻艇系统”，每艘船都在其所在港口的海关官员的指导下运行。随着该服务逐渐变得更加有组织，它使用了包括“缉私巡逻艇”在内的几个名称。最终，它正式组建为美国缉私巡逻艇服务队。除了常规的执法和海关任务外，缉私巡逻艇及其船员还被用于支持和补充海军参与各种武装冲突，包括美国内战。
+    一个独立的联邦机构——美国救生服务局与税务海军陆战队同时发展起来。1848年之前，有各种慈善努力试图建立系统从岸基站向遇难水手提供援助，最著名的是马萨诸塞州人道协会。联邦政府于1848年开始资助救生站，但资金并不稳定，而且该系统仍然依赖于全志愿者船员。1871年，萨姆纳·因克利斯·金博尔被任命为财政部新成立的税务海军部负责人，并开始将税务海军快艇组织成一个集中机构。金博尔还推动为救生站争取更多资金，并最终获得批准将救生服务局创建为一个独立的联邦机构，也隶属于财政部，拥有全职带薪船员。
+1915年，缉私船服务处和救生服务处合并，成立了现代的美国海岸警卫队。灯塔服务处和海事检查导航局分别于1939年和1942年并入海岸警卫队。  1967年，海岸警卫队从美国财政部划归新成立的美国运输部，这一安排一直持续到2003年，为了在2001年9月11日恐怖袭击后更有效地保护美国利益，根据相关立法，海岸警卫队划归美国国土安全部管辖。
+在战争时期，海岸警卫队或其各个组成部分可以作为海军部的一个部门开展行动。这种安排有着广泛的历史基础，因为海岸警卫队参与过各种各样的战争，如1812年战争、美墨战争和美国内战。在美国内战中，哈里特·莱恩号巡逻舰发射了第一发海军炮弹，试图解救被围困的萨姆特堡。海岸警卫队最后一次作为海军整体行动是在第二次世界大战期间，二战期间共有约25万人在海岸警卫队服役。
+    海岸警卫队第一中队是美国海岸警卫队于1965年为越南战争组建的作战部队。该中队由美国海军作战指挥，负责执行市场时间行动。它的成立标志着海岸警卫队人员自二战以来首次在战斗环境中得到广泛使用。1965年至1970年期间，该中队在三个不同地区开展作战行动。26艘点级巡逻艇及其船员和一个中队支援人员被指派给美国海军，其任务是拦截越共和北越的帆船和拖网渔船操作员从南海向南越运送武器和补给。该中队还为在南越海岸线作战的附近友军提供81毫米迫击炮海军炮火支援，并在海王行动期间协助美国海军。
+海岸警卫队第三中队是美国海岸警卫队于1967年组建的一支作战部队，用于越南战争。受美国海军指挥，驻扎在珍珠港。它由五艘美国海岸警卫队高耐久性巡逻艇组成，每六个月轮流部署一次。从1967年5月到1971年12月，共有35艘高耐久性巡逻艇参与了行动，最著名的是使用它们的5英寸炮提供海军炮火支援任务。
+通常情况下，海岸警卫队下属单位受海军行动指挥，而其他海岸警卫队单位则受国土安全部指挥。
+    可部署行动组(DOG)是海岸警卫队于2007年7月成立的一个司令部。DOG建立了一个单一的指挥机构，以迅速向海岸警卫队、国土安全部、国防部、司法部和其他跨部门作战指挥官提供来自海岸警卫队可部署专业部队的适应性部队包。DOG于2013年4月22日解散，并重组为可部署专业部队(DSF)单位，由大西洋和太平洋地区指挥官控制。
+该部队的筹备始于2001年9月11日恐怖袭击之后，并于2007年7月20日正式成立。其任务包括海上执法、反恐、港口安全、污染应对和潜水作业。 
+可部署行动组内有超过25个专业单位  ，包括海上安全响应小组、海上安全与安保小组、执法支队、港口安保单位、国家打击部队和区域潜水舱。可部署行动组还管理分配给海军远征作战司令部的海岸警卫队人员，并参与挑选参加海军BUD/S和海军海豹突击队服役的海岸警卫队候选人。`
+    },
+    t2: {
+      title: '历年预算',
+      details: [
+        {
+          Technical: `年度预算执行报告 `,
+          preContent: [
+            { content: '2024年度', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R6koukyojigyo.pdf' },
+            { content: '2023年度', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R4koukyojigyo.pdf' },
+            { content: '2022年度', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R3koukyojigyo.pdf' },
+            { content: '2021年度', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R2koukyojigyo.pdf' },
+            { content: '2020年度', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R2koukyoujigyoukaiji.pdf' },
+            { content: '2019年度', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R1koukyojigyo%5B1%5D-1.pdf' }
+
+          ]
+        },
+        {
+          Technical: `历年预算概要 `,
+          preContent: [
+            { content: '2025年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/2024/08/27/nyusatsu/koukoku/201502/shiyousyo/R7youkyugaiyou.pdf' },
+            { content: '2024年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R6_yosan_gaiyou.pdf' },
+            { content: '2024年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R6kannkeiyosanngaiyou.pdf' },
+            { content: '2023年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R5hoseiyosan.pdf' },
+            { content: '2023年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R5yosanketteigaiyou.pdf' },
+            { content: '2023年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R5kannkeiyosanngaiyou.pdf' },
+            { content: '2022年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R4hoseigaiyou.pdf' },
+            { content: '2022年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R4yosanketteigaiyou.pdf' },
+            { content: '2022年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R4kannkeiyosanngaiyou.pdf' },
+            { content: '2021年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R3hoseigaiyou.pdf' },
+            { content: '2021年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R3yosanketteigaiyou.pdf' },
+            { content: '2021年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R3kannkeiyosanngaiyou.pdf' },
+            { content: '2020年海上保安庁第三次追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R2hoseigaiyou.pdf' },
+            { content: '2020年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R2yosanketteigaiyou.pdf' },
+            { content: '2020年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R2kannkeiyosanngaiyou.pdf' },
+            { content: '2019年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R1hoseigaiyou.pdf' },
+            { content: '2019年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/2018/12/20/folder794/yosan/H31ketteishiropan.pdf' },
+            { content: '2019年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/folder794/yosan/31youkyuushiropan.pdf' },
+            { content: '2018年海上保安庁第二次追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/2018/12/20/folder794/yosan/H30hosei2shiropan.pdf' },
+            { content: '2018年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/folder794/yosan/H30hoseishiropan.pdf' },
+            { content: '2018年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/folder794/yosan/H30ketteishiropan.pdf' },
+            { content: '2018年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/30youkyuushiropan.pdf' },
+            { content: '2017年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/folder794/yosan/H29hoseishiropan.pdf' },
+            { content: '2017年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/H29ketteishiropan.pdf' },
+            { content: '2017年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/H29youkyuushiropan.pdf' },
+            { content: '2016年海上保安庁関係第二次補正予算の概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/H28hosei2shiropan.pdf' },
+            { content: '2016年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/folder794/yosan/28ketteishiropan.pdf' },
+            { content: '2016年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/yosan/h28shiropan.pdf' },
+            { content: '2015年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/kouhou/h27/k20151218/k151218-1.pdf' },
+            { content: '2015年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h27/k20150114/k150114-1.pdf' },
+            { content: '2015年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h26/k20140828/k140828-1.pdf' },
+
+            { content: '2014年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h27/k20150109/k150109-1.pdf' },
+            { content: '2014年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h27/k20150109/k150109-1.pdf' },
+            { content: '2014年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h25/k20130827/26yosan.pdf' },
+
+            { content: '2013年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h25/k20131212/k131212-1.pdf' },
+            { content: '2013年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h25/k20130129/25kettei.pdf' },
+
+            { content: '2012年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h25/k20130115/k130115-2.pdf' },
+            { content: '2012年海上保安庁硬件基金概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h24/k20121026/k121026-1.pdf' },
+            { content: '2012年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h23/k20111224/24kettei.pdf' },
+            { content: '2012年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h23/k20110930/24yosan.pdf' },
+
+            { content: '2011年海上保安庁第四次追加预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h23/k20111220/k111220-1.pdf' },
+            { content: '2011年海上保安庁第三次追加预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h23/k20111021/k111021-2.pdf' },
+            { content: '2011年海上保安庁追加预算概算', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h23/k20110422/k110422-1.pdf' },
+            { content: '2011年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h22/k20101224/23yosan.pdf' },
+            { content: '2011年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h22/k20100827/23yosan.pdf' },
+
+            { content: '2010年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h21/k20091225/22yosan.pdf' },
+            { content: '2010年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h21/k20090831/22yosan.pdf' },
+
+
+
+
+          ],
+        },
+
+
+
+      ]
+    },
+    t3: {
+      title: '人员编制',
+      details: [
+        {
+          title: '6666666666',
+          Technical: `海上保安庁定员概要 `,
+          preContent: [
+            { content: '海上保安厅船艇包括巡视船艇和特殊警备救难艇等警备救难业务用船、海洋情报业务用船、航路标识业务用船等。警备救难业务用船配备到全国的海上保安部、署，负责维持海上治安、确保海上交通安全、防止海上灾害、监视和取缔海洋污染等。海洋情报业务用船主要负责测量海底地形、观测海流和潮流、调查海洋污染等。航路标识业务用船主要负责灯塔、灯标、电波标识等航路标识的维护和管理等。教育业务用船配备海上保安学校，主要负责学生获取相应资格的实习等。', link: '' },
+          ]
+        },
+        {
+          title: '',
+          Technical: `海上保安庁定员概要 `,
+          preContent: [
+
+          ]
+        },
+
+      ]
+    },
+
+    t4: {
+      title: '武器装备',
+      details: [
+
+        {
+          Technical: `舰船`,
+          mixBox: [
+            {
+              preContents: '巡防救难舰',
+              timeContent: [
+                { Technical1: '1800吨级（伟星舰）（1艘）' },
+                { Technical1: '1800吨级（伟星舰）（1艘）' },
+              ],
+            },
+            {
+              preContents: '666',
+              timeContent: [
+                { Technical1: '1800吨级（伟星舰）（1艘）' },
+              ],
+
+            },
+            {
+              preContents: `    目前依“筹建海巡舰艇发展计划（107–116）”筹建中的大型舰艇计有12艘600吨级巡防舰、6艘1,000吨级巡防舰、4艘4000吨级巡防舰，共计22艘，并于2021年宣布加购6艘3,000吨级远洋巡护船。1,000吨级以上大型舰艇将扩充至24艘，500吨以上1,000吨以下中型舰艇将扩充至20艘以上，舰队规模甚至超过戒严时期的海军巡防舰编织数量。`,
+
+
+            }
+          ],
+
+
+        },
+
+
+      ]
+    },
+
+
+  },
+  3: {
+    t1: {
+      title: '历史沿革',
+      contents: `   海岸警卫队的历史可以追溯到18世纪90年代美国财政部为执行关税（新国家的重要收入来源）而维护的小型舰队。财政部长 亚历山大·汉密尔顿游说国会资助建造十艘巡逻艇，国会于1790年8月4日（现在被定为海岸警卫队的官方生日）批准了建造。在1798年海军重建之前，这些“缉私巡逻艇”是美国早期唯一的海军力量。因此，巡逻艇及其船员经常承担额外的任务，包括打击海盗、营救遇险水手、运送政府官员，甚至运送邮件。最初，它根本不是一个有组织的联邦机构，只是一个“巡逻艇系统”，每艘船都在其所在港口的海关官员的指导下运行。随着该服务逐渐变得更加有组织，它使用了包括“缉私巡逻艇”在内的几个名称。最终，它正式组建为美国缉私巡逻艇服务队。除了常规的执法和海关任务外，缉私巡逻艇及其船员还被用于支持和补充海军参与各种武装冲突，包括美国内战。
+    一个独立的联邦机构——美国救生服务局与税务海军陆战队同时发展起来。1848年之前，有各种慈善努力试图建立系统从岸基站向遇难水手提供援助，最著名的是马萨诸塞州人道协会。联邦政府于1848年开始资助救生站，但资金并不稳定，而且该系统仍然依赖于全志愿者船员。1871年，萨姆纳·因克利斯·金博尔被任命为财政部新成立的税务海军部负责人，并开始将税务海军快艇组织成一个集中机构。金博尔还推动为救生站争取更多资金，并最终获得批准将救生服务局创建为一个独立的联邦机构，也隶属于财政部，拥有全职带薪船员。
+1915年，缉私船服务处和救生服务处合并，成立了现代的美国海岸警卫队。灯塔服务处和海事检查导航局分别于1939年和1942年并入海岸警卫队。  1967年，海岸警卫队从美国财政部划归新成立的美国运输部，这一安排一直持续到2003年，为了在2001年9月11日恐怖袭击后更有效地保护美国利益，根据相关立法，海岸警卫队划归美国国土安全部管辖。
+在战争时期，海岸警卫队或其各个组成部分可以作为海军部的一个部门开展行动。这种安排有着广泛的历史基础，因为海岸警卫队参与过各种各样的战争，如1812年战争、美墨战争和美国内战。在美国内战中，哈里特·莱恩号巡逻舰发射了第一发海军炮弹，试图解救被围困的萨姆特堡。海岸警卫队最后一次作为海军整体行动是在第二次世界大战期间，二战期间共有约25万人在海岸警卫队服役。
+    海岸警卫队第一中队是美国海岸警卫队于1965年为越南战争组建的作战部队。该中队由美国海军作战指挥，负责执行市场时间行动。它的成立标志着海岸警卫队人员自二战以来首次在战斗环境中得到广泛使用。1965年至1970年期间，该中队在三个不同地区开展作战行动。26艘点级巡逻艇及其船员和一个中队支援人员被指派给美国海军，其任务是拦截越共和北越的帆船和拖网渔船操作员从南海向南越运送武器和补给。该中队还为在南越海岸线作战的附近友军提供81毫米迫击炮海军炮火支援，并在海王行动期间协助美国海军。
+海岸警卫队第三中队是美国海岸警卫队于1967年组建的一支作战部队，用于越南战争。受美国海军指挥，驻扎在珍珠港。它由五艘美国海岸警卫队高耐久性巡逻艇组成，每六个月轮流部署一次。从1967年5月到1971年12月，共有35艘高耐久性巡逻艇参与了行动，最著名的是使用它们的5英寸炮提供海军炮火支援任务。
+通常情况下，海岸警卫队下属单位受海军行动指挥，而其他海岸警卫队单位则受国土安全部指挥。
+    可部署行动组(DOG)是海岸警卫队于2007年7月成立的一个司令部。DOG建立了一个单一的指挥机构，以迅速向海岸警卫队、国土安全部、国防部、司法部和其他跨部门作战指挥官提供来自海岸警卫队可部署专业部队的适应性部队包。DOG于2013年4月22日解散，并重组为可部署专业部队(DSF)单位，由大西洋和太平洋地区指挥官控制。
+该部队的筹备始于2001年9月11日恐怖袭击之后，并于2007年7月20日正式成立。其任务包括海上执法、反恐、港口安全、污染应对和潜水作业。 
+可部署行动组内有超过25个专业单位  ，包括海上安全响应小组、海上安全与安保小组、执法支队、港口安保单位、国家打击部队和区域潜水舱。可部署行动组还管理分配给海军远征作战司令部的海岸警卫队人员，并参与挑选参加海军BUD/S和海军海豹突击队服役的海岸警卫队候选人。`
+    },
+    t2: {
+      title: '历年预算',
+      details: [
+        {
+          Technical: `年度预算执行报告 `,
+          preContent: [
+            { content: '2024年度', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R6koukyojigyo.pdf' },
+            { content: '2023年度', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R4koukyojigyo.pdf' },
+            { content: '2022年度', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R3koukyojigyo.pdf' },
+            { content: '2021年度', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R2koukyojigyo.pdf' },
+            { content: '2020年度', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R2koukyoujigyoukaiji.pdf' },
+            { content: '2019年度', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R1koukyojigyo%5B1%5D-1.pdf' }
+
+          ]
+        },
+        {
+          Technical: `历年预算概要 `,
+          preContent: [
+            { content: '2025年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/2024/08/27/nyusatsu/koukoku/201502/shiyousyo/R7youkyugaiyou.pdf' },
+            { content: '2024年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R6_yosan_gaiyou.pdf' },
+            { content: '2024年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R6kannkeiyosanngaiyou.pdf' },
+            { content: '2023年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R5hoseiyosan.pdf' },
+            { content: '2023年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R5yosanketteigaiyou.pdf' },
+            { content: '2023年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R5kannkeiyosanngaiyou.pdf' },
+            { content: '2022年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R4hoseigaiyou.pdf' },
+            { content: '2022年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R4yosanketteigaiyou.pdf' },
+            { content: '2022年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R4kannkeiyosanngaiyou.pdf' },
+            { content: '2021年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R3hoseigaiyou.pdf' },
+            { content: '2021年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R3yosanketteigaiyou.pdf' },
+            { content: '2021年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R3kannkeiyosanngaiyou.pdf' },
+            { content: '2020年海上保安庁第三次追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R2hoseigaiyou.pdf' },
+            { content: '2020年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R2yosanketteigaiyou.pdf' },
+            { content: '2020年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R2kannkeiyosanngaiyou.pdf' },
+            { content: '2019年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R1hoseigaiyou.pdf' },
+            { content: '2019年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/2018/12/20/folder794/yosan/H31ketteishiropan.pdf' },
+            { content: '2019年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/folder794/yosan/31youkyuushiropan.pdf' },
+            { content: '2018年海上保安庁第二次追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/2018/12/20/folder794/yosan/H30hosei2shiropan.pdf' },
+            { content: '2018年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/folder794/yosan/H30hoseishiropan.pdf' },
+            { content: '2018年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/folder794/yosan/H30ketteishiropan.pdf' },
+            { content: '2018年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/30youkyuushiropan.pdf' },
+            { content: '2017年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/folder794/yosan/H29hoseishiropan.pdf' },
+            { content: '2017年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/H29ketteishiropan.pdf' },
+            { content: '2017年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/H29youkyuushiropan.pdf' },
+            { content: '2016年海上保安庁関係第二次補正予算の概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/H28hosei2shiropan.pdf' },
+            { content: '2016年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/folder794/yosan/28ketteishiropan.pdf' },
+            { content: '2016年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/yosan/h28shiropan.pdf' },
+            { content: '2015年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/kouhou/h27/k20151218/k151218-1.pdf' },
+            { content: '2015年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h27/k20150114/k150114-1.pdf' },
+            { content: '2015年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h26/k20140828/k140828-1.pdf' },
+
+            { content: '2014年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h27/k20150109/k150109-1.pdf' },
+            { content: '2014年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h27/k20150109/k150109-1.pdf' },
+            { content: '2014年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h25/k20130827/26yosan.pdf' },
+
+            { content: '2013年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h25/k20131212/k131212-1.pdf' },
+            { content: '2013年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h25/k20130129/25kettei.pdf' },
+
+            { content: '2012年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h25/k20130115/k130115-2.pdf' },
+            { content: '2012年海上保安庁硬件基金概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h24/k20121026/k121026-1.pdf' },
+            { content: '2012年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h23/k20111224/24kettei.pdf' },
+            { content: '2012年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h23/k20110930/24yosan.pdf' },
+
+            { content: '2011年海上保安庁第四次追加预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h23/k20111220/k111220-1.pdf' },
+            { content: '2011年海上保安庁第三次追加预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h23/k20111021/k111021-2.pdf' },
+            { content: '2011年海上保安庁追加预算概算', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h23/k20110422/k110422-1.pdf' },
+            { content: '2011年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h22/k20101224/23yosan.pdf' },
+            { content: '2011年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h22/k20100827/23yosan.pdf' },
+
+            { content: '2010年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h21/k20091225/22yosan.pdf' },
+            { content: '2010年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h21/k20090831/22yosan.pdf' },
+
+
+
+
+          ],
+        },
+
+
+
+      ]
+    },
+    t3: {
+      title: '人员编制',
+      details: [
+        {
+          Technical: `海上保安庁定员概要 `,
+          preContent: [
+            { content: '2025年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/30_R7teiin_yokyu.pdf' },
+            { content: '2024年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/29_R6teiin_kettei.pdf' },
+            { content: '2024年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/28_R6teiinn_gaiyo.pdf' },
+
+            { content: '2023年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/27_R5teiin_kettei.pdf' },
+            { content: '2023年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/26_R5teiinn_gaiyo.pdf' },
+            { content: '2022年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/25_R4teiinn_kettei.pdf' },
+            { content: '2022年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/24_R4teiin_gaiyo.pdf' },
+            { content: '2021年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/soubi-yosan/22_R3teiin_satei.pdf' },
+            { content: '2021年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/soubi-yosan/21_R3teiin_gaiyo.pdf' },
+            { content: '2020年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/soubi-yosan/22_R2teiin_satei.pdf' },
+            { content: '2020年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/soubi-yosan/21_R2teiin_gaiyo.pdf' },
+            { content: '2019年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/folder794/yosan/20_H31teiin_satei.pdf' },
+            { content: '2019年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/folder794/yosan/19_h31teiin_gaiyo.pdf' },
+            { content: '2018年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/18_H30teiin_satei.pdf' },
+            { content: '2018年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/17_H30teiin_gaiyo .pdf' },
+            { content: '2017年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/16_H29teiin_satei.pdf' },
+            { content: '2017年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/15_h29teiin_gaiyo.pdf' },
+            { content: '2016年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/folder794/yosan/14_h28teiin_satei.pdf' },
+            { content: '2016年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/soubi/14_h28teiin_gaiyo.pdf' },
+            { content: '2015年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/13_h27teiin_satei.pdf' },
+            { content: '2015年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/12_h27teiin_gaiyo.pdf' },
+            { content: '2014年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/11_h26teiin_satei.pdf' },
+            { content: '2014年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/10_h26teiin_gaiyo.pdf' },
+            { content: '2013年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/08_h25teiin_satei.pdf' },
+            { content: '2013年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/07_h25teiin_gaiyo.pdf' },
+            { content: '2012年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/06_h24teiin_satei.pdf' },
+            { content: '2012年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/05_h24teiin_gaiyo.pdf' },
+            { content: '2011年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/04_h23teiin_satei.pdf' },
+            { content: '2011年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/03_h23teiin_gaiyo.pdf' },
+            { content: '2010年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/02_h22teiin_satei.pdf' },
+            { content: '2010年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/01_h22teiin_gaiyo.pdf' },
+
+          ]
+        },
+
+
+      ]
+    },
+
+    t4: {
+      title: '装备建造',
+      details: [
+
+        {
+          Technical: `巡逻缉私船`,
+          preContent: `   
+   截止2022年4月1日`,
+
+
+        },
+
+
+      ]
+    },
+    t5: {
+      title: '技术发展',
+      details: [
+        {
+          Technical: `船舶的建造和维护`,
+          preContent: `   海上保安厅的巡视船艇，在1948年创建之际，系收集了第二次世界大战后的各种杂务船。之后，自1949年开始建造新船艇，历经三次大规模建造更换后，发展到现在。
+在建造采用最先进技术的船舶的过程中，海上保安厅制订满足业务需求的性能基本计划，对于在造船厂进行的船体结构焊接加工情况、船体性能和搭载设备等功能确认等开展建造监督工作。
+另外，在维护现有船舶方面，除了在发生故障时由船员提供维修的技术支援、由船舶公司商讨维修方案外，还需要对老化、过时的船舶进行延长寿命、提高功能的大规模维修等，以维持船舶的性能和功能，从而力求能够精准应对多样化的海上保安业务`,
+          imgBox: [chuan1, chuan2],
+
+        },
+        {
+          Technical: `飞机的建造和维护`,
+          preContent: `   凭借飞机的机动能力和监视能力，能够从事维持海洋秩序、海难救助、防止海上灾害、监视管制海洋污染、确保海上交通安全等工作，以及应对监视火山和测量沿岸区域等各种业务需求。海上保安厅负责建造（采购·改造）飞机的规格制定，以及从预算要求到接收的一系列业务。在各种业务需求中，为保障飞机无故障运行，负责零部件采购、机体建造和维修、装备建造和维修、技术支援等。`,
+          imgBox: [],
+
+        },
+        {
+          Technical: `航标的建设和维护`,
+          preContent: `   船舶为了安全且有效率地航行，必须经常确认自己船只的位置，避开危险的障碍物，把握安全的航向，为此设置灯塔等航向标志进行管理。航标具有较高的公共性，因此被定位为公共事业对象。整备（工程）科除了进行航标设施的建设和整修之外，还进行航标用机器的采购、安装和更换。
+    为了让航标持续发挥其应有的功能，维护保养是非常重要的。海上保安厅职员定期巡视航标，确认设施和设置的机器有无异常。另外，在航标因风浪或台风而受损或灯光熄灭的情况下进行修复工作，努力确保船舶交通的安全。近年，通过将航标灯从灯泡更换为LED、金属光栅灯，或者使用不需要补充电解液的蓄电池等，努力推进维护保养的省力化。`,
+          imgBox: [],
+
+        },
+
+
+
+
+
+
+      ]
+    },
+
+  }
+}

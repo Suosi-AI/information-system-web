@@ -1,0 +1,129 @@
+import React from 'react';
+import { Layout, Form, Input, Button, Checkbox, Image } from 'antd';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+import img from '@/assets/images/login_logo.png';
+
+const { Header, Content } = Layout;
+import './password.css';
+
+const Password = () => {
+  const navigate = useNavigate();
+  const onFinish = values => {
+    console.log('Received values of form: ', values);
+    navigate('/login');
+  };
+  const onFinishFailed = errorInfo => {
+    console.log('Failed:', errorInfo);
+  };
+  return (
+    <div className="appHeader">
+      <div className="loginContent2">
+        {/* <img className="login-img" src={img}></img> */}
+        <p className="title">修改密码</p>
+        <Form
+          name="normal_login"
+          className="login-form"
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          autoComplete="off"
+          labelCol={{
+            span: 8,
+          }}
+          wrapperCol={{
+            span: 23,
+          }}
+        >
+          <Form.Item
+            name="username"
+            // label="账号"
+            className="login-form-item"
+            rules={[
+              {
+                required: true,
+                message: '请输入正确用户名!',
+              },
+            ]}
+          >
+            <Input
+              className="login-form-input"
+              prefix={<UserOutlined className="site-form-item-icon" />}
+              placeholder="请输入用户名"
+              autoComplete="off"
+            />
+          </Form.Item>
+
+          <Form.Item
+            className="login-form-item"
+            name="oldpassword"
+            // label="旧密码"
+            rules={[
+              {
+                required: true,
+                message: '请输入旧密码!',
+              },
+              {
+                min: 6,
+                message: '密码不能少于6位!',
+              },
+            ]}
+          >
+            <Input.Password
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              type="password"
+              placeholder="请输入密码"
+              className="login-form-input"
+              autoComplete="off"
+            />
+          </Form.Item>
+          <Form.Item
+            className="login-form-item"
+            name="newpassword"
+            // label="新密码"
+            rules={[
+              {
+                required: true,
+                message: '请输入新密码!',
+              },
+              {
+                min: 6,
+                message: '密码不能少于6位!',
+              },
+            ]}
+          >
+            <Input.Password
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              type="password"
+              placeholder="请输入新密码"
+              className="login-form-input"
+              autoComplete="off"
+            />
+          </Form.Item>
+
+          {/* <Form.Item>
+            <Form.Item name="remember" valuePropName="checked" noStyle>
+              <Checkbox>Remember me</Checkbox>
+            </Form.Item>
+
+            <a className="login-form-forgot" href="">
+              Forgot password
+            </a>
+          </Form.Item> */}
+
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              style={{ background: '#02f3dd' }}
+              className="login-form-button"
+            >
+              确认修改密码
+            </Button>
+            {/* Or <a href="">register now!</a> */}
+          </Form.Item>
+        </Form>
+      </div>
+    </div>
+  );
+};
+export default Password;

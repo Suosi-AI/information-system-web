@@ -1,0 +1,544 @@
+import hsbad from './../../../assets/images/archives/hsbad.png'
+import taiwan from './../../../assets/images/archives/taiwanjj.png'
+import meiguo from './../../../assets/images/archives/meiguojj.png'
+const organizationData = {
+  1: {
+    jbTitle: '海上保卫厅',
+    img: {
+
+      type: 'image',
+      src: hsbad,
+      alt: '海上保安厅',
+      style: { width: '200px', height: '200px' },
+
+    },
+    lianJie: '@JCG_koho',
+    address: '东京都千代田区霞关2-1-3',
+    website: 'kaiho.mlit.go.jp',
+    joinDate: '2014年12月加入',
+    spokesperson: '篠田麻里子（2019年起担任）',
+    description: '海上保安厅（日语假名：かいじょうほあんちょう，英语：Japan Coast Guard，缩写：JCG），简称“海保”或“海保厅”，成立于1948年5月1日，现隶属于日本政府国土交通省，是日本为维持海上安全及治安等设置的行政机构，相当于其他国家的沿岸警备队（Coast Guard）、国境警备队等准军事组织。日本是一个海洋国家，历来重视对海洋的控制与管理。战后，为防止海上偷渡，1946年7月1日，日本海运局设立“非法出入国船舶监视本部”。随着国内局势的稳定和经济快速恢复，为确保本国海洋权益、海上治安和船舶航行安全，日本政府于1948年4月27日颁布实施《海上保安厅法》，5月1日正式成立海上保安厅，隶属国土交通大臣管辖。\n      日本海上保安厅是日本管理与控制海洋的专门机构，同时也是一支海上准军事力量，是海上自卫队的主要后备力量，相关情报、指挥、通信与控制系统均与海上自卫队相通。平时，海上保安厅主要负责港湾、领海和专属经济区内的巡逻、警戒，其巡视船、飞机所获的各种海上情报，均自动传输至海上自卫队的作战指挥中枢。由于海上保安厅隶属于日本国土交通省，属于警察性质，因而可以避免许多国际法律问题。在一些敏感海域或有重要活动时，海上保安厅常与海上自卫队协同行动。',
+    structure: '    日本海上保安厅主要由本厅、地方管区海上保安本部、地方海上保安（监）部、海上保安署等4级机构和直属院校等组成。\n    日本海上保安厅以日本本土为中心，将周边管辖海域分为11个海上管区，每个管区都设有海上保安本部，又下辖数个海上保安署，负责管区内的主要巡逻勤务。截至2020年，这11个管区的海上保安本部共下辖69个海上保安监部、1个海上警备救难部、63个海上保安署、 6个情报通信管理中心、7个海上交通中心、1个航空警备管理中心、14个航空基地、1个国际组织犯罪对策基地、1个特殊警备基地、1个特殊救灾基地、1个机动防灾基地、5个通信站、4个航道观测站、1个导航中心与18个航标管理部门等。',
+    functionsIntroduction: '  《海上保安厅法》规定：日本海上保安厅隶属日本国土交通省，是日本政府执行海上法令、维持海上治安、预防海上犯罪、实施海难救助、保障船舶航行安全的专门机构。其主要任务： \n    1、贯彻执行国家海上法令，实施领海、港湾巡逻警戒，维持海上治安； \n    2、实施海难救助，保护海运安全和渔业生产； \n    3、防止海洋污染； \n    4、实施海上警备，预防和制止海上犯罪，搜查、逮捕罪犯，防止海上走私、偷渡； \n    5、管理海上交通，进行航道测量、航标管理，负责航海资料保障等； \n    6、处理其他海上安全事务。 \n    海上保安厅的功能职责包括海上警备业务、海洋调查业务、海难救助业务、海洋情报业务与海洋交通业务等。 ',
+    "tabsData": [
+      {
+        label: '海上警备业务',
+        content: '   堪称海保厅最重要的业务，由警备救难部负责，主要包括海上巡视、领海港湾警备、维护海上治安、打击海上刑事犯罪、防止走私和偷渡、打击海盗、防止可疑船只侵入、取缔国内外船只的非法渔业作业、海上交通事故调查、情报搜集、海上重要设施和重要物资的运送警备等等；此外，也与周边国家积极进行交流与合作，共同维护海上秩序。自从联合国海洋公约通过200海里专属经济海域后，日本与邻近的韩国、中国大陆、中国台湾地区发生许多经济海域重叠，造成渔业纠纷层出不穷；此外，日本与俄罗斯、韩国、中国大陆与中国台湾地区之间还有南千岛群岛（北方四岛）、独岛（竹岛）、钓鱼岛与东海油田等领土资源纷争，经济海域与领土争议加上许多历史情感因素，导致日本与中国、韩国间的相关摩擦冲突变得异常敏感。为此，维护海域利益、驱逐取缔进入日本经济海域的外国船只（包含渔船、探测船乃至情报船），遂成为海上保安厅的重点工作。'
+      },
+      {
+        label: '海洋调查业务',
+        content: '   实施海洋调查，航路调查和测量，观测卫星激光测距，防灾调查等。搜集海洋情报，提供航海安全情报，通信航行警报和水路通报，搜集、管理和提供海洋情报，维护日本海洋数据中心等。'
+      },
+      {
+        label: '海难救助业务',
+        content: '   由警备救难部负责负责，包括海难救助、海洋环境保护与海上防灾等业务。从事海难救助，推进沿海区域海上安全；应对破坏海上环境事件，采取海洋环境保护对策；应对事故、自然灾害。'
+      },
+      {
+        label: '海上警备业务',
+        content: '   由交通部负责，主要业务包括海上交通管理、助航设施管理以及安全通讯管理，保障近海及港内安全，海难预防，航路标识运用。'
+      },
+      {
+        label: '海洋情报业务',
+        content: '   由海洋情报部负责，主要是针对日本周边海域进行测绘、编辑海图，定期进行海底地形、水深、潮汐、海洋潮流、天体位置等海洋科学研究活动，并定期测绘、编辑、出版各类海图、电子导航海图、水路志（航海指南）、潮汐表、航海（天文）历等航海相关图书，并发放给各航运单位。海洋情报部下辖日本海洋数据中心，是日本全国唯一的最高海洋数据库，负责收集、管理境内外海洋科学研究机构提供的各种海洋资讯。除了航行安全之外，海洋情报业务的另一项重要机能就是藉由地形探勘来协助经济海域的划定（例如将资料提供给联合国相关单位进行划界），并探勘、开采埋藏在日本经济海域内的资源。'
+      }
+    ],
+    "treeData": {
+      id: 'root',
+      name: '本厅',
+      positionName: '长官',
+      departmentName: '本厅',
+      currentMinister: '奥岛 高弘',
+      introduction: '日本海上保安厅本厅设在东京，是其中央机构，最高指挥和管理机关，全面负责警务救难、航海保障等海上保安业务的组织计划、指挥管理、人事管理、装备采 购调拨、院校教育训练等。本厅设海上保安厅长官、次长，下设首席监察官和总务部、装备技术部、警备救难部、海洋情报部、交通部等5个职能部。海上保安厅本厅直辖1所海上保安大学、海上保安学校及其2所分校，是其主要教育训练机构，专门负责海上保安干部和职员的训练培养和业务进修等。',
+      "collapsed": false,
+      "children": [
+        {
+          name: '次长',
+          id: 'minister',
+          departmentName: '现任--',
+          currentMinister: '--',
+          introduction: '--',
+          "collapsed": false
+        },
+        {
+          id: 'seahai',
+          name: '海上保安监',
+          departmentName: '现任--',
+          currentMinister: '--',
+          introduction: '--',
+          "collapsed": false
+        },
+        {
+          name: '內部部局',
+          id: 'nei',
+          departmentName: '现任--',
+          currentMinister: '--',
+          introduction: '--',
+          "collapsed": false,
+          "children": [
+            {
+              id: 'nei1',
+              name: '总务部',
+              departmentName: '现任部长',
+              currentMinister: '胜山 洁',
+              introduction: '主要负责公共关系、国际交流、人事管理、预算财务等工作。',
+              "collapsed": false
+            },
+            {
+              id: 'nei2',
+              name: '装备技术部',
+              departmentName: '现任部长',
+              currentMinister: '加藤 幸弘',
+              introduction: '主要负责海图测绘、航道测量、海洋观测、提供海图出版物和确保航行安全所需的信息管理等工作。',
+              "collapsed": false
+            },
+            {
+              id: 'nei3',
+              name: '警备救难部',
+              departmentName: '现任部长',
+              currentMinister: '白石 昌已',
+              introduction: '主要负责海上公共秩序、海上救难与污染防制等工作。',
+              "collapsed": false
+            },
+            {
+              id: 'nei4',
+              name: '海洋情报部',
+              departmentName: '现任部长',
+              currentMinister: '加藤 幸弘',
+              introduction: '主要负责海图测绘、航道测量、海洋观测、提供海图出版物和确保航行安全所需的信息管理等工作。',
+              "collapsed": false
+            },
+            {
+              id: 'nei5',
+              name: '海上交通部',
+              departmentName: '现任部长',
+              currentMinister: '吉久 隆博',
+              introduction: '主要负责航行安全措施的实施、航标的设立、维护和运作等工作。',
+              "collapsed": false
+            },
+            {
+              id: 'nei6',
+              name: '首席监察官',
+              departmentName: '现任监察官',
+              currentMinister: '菊久 纯一',
+              introduction: '海上保安厅本厅设首席监察官，管区海上保安本部设管区首席监察官，站在国民视角客观、公正地监督监察厅内工作，发现并改善问题，改善业务环境，针对事故防患于未然，维持纪律。具体工作包括，开展年度业务监察，确定监察项目并开展调查，促进业务改善，维持适当运行；针对事故或违规违法事件开展事故监察，确认事实，查明分析原因。',
+              "collapsed": false
+            }
+          ]
+        },
+        {
+          id: 'sea',
+          name: '海上保安大学',
+          departmentName: '现任--',
+          currentMinister: '葛西 正记',
+          introduction: '设在广岛县吴市，是海保厅唯一一所培养干部职员的高等院校。其基础教育由4年制本科和随后进行的6个月专业教学（远航实习）等。',
+          "collapsed": false
+        },
+        {
+          id: 'seaXue',
+          name: '海上保安学校',
+          departmentName: '现任--',
+          currentMinister: '葛西 正记',
+          introduction: '设在广岛县吴市，是海保厅唯一一所培养干部职员的高等院校。其基础教育由4年制本科和随后进行的6个月专业教学（远航实习）等。',
+          "collapsed": false,
+          "children": [
+            {
+              id: 'seaXue1',
+              name: '门司分校',
+              departmentName: '现任--',
+              currentMinister: '--',
+              introduction: '--',
+              "collapsed": false
+            },
+            {
+              id: 'seaXue2',
+              name: '宫城分校',
+              departmentName: '现任--',
+              currentMinister: '--',
+              introduction: '--',
+              "collapsed": false
+            }
+          ]
+        },
+        {
+          name: '地方管区',
+          id: 'guan',
+          departmentName: '现任--',
+          currentMinister: '--',
+          introduction: '--',
+          "collapsed": false,
+          "children": [
+            {
+              id: 'guan1',
+              name: '第1管区',
+              departmentName: '现任部长',
+              currentMinister: '松本 胜利',
+              introduction: '第一管区海上保安本部（だいいちかんくかいじょうほあんほんぶ），是日本国土交通省海上保安厅的一个海上保安本部，司法管辖区主要以北海道地区为主，包括北海道地区的鄂霍次克海、与现由俄罗斯控制的北方领土（北方四岛）。',
+              "collapsed": false
+            },
+            {
+              id: 'guan2',
+              name: '第2管区',
+              departmentName: '现任部长',
+              currentMinister: '黑石 积',
+              introduction: '主要负责海图测绘、航道测量、海洋观测、提供海图出版物和确保航行安全所需的信息管理等工作。',
+              "collapsed": false
+            },
+            {
+              id: 'guan3',
+              name: '第3管区',
+              departmentName: '现任部长',
+              currentMinister: '广川 隆',
+              introduction: '第三管区海上保安本部（だいさんかんくかいじょうほあんほんぶ），是日本国土交通省海上保安厅的一个海上保安本部，管辖范围为关东地区、东京都岛屿部分、东海地方的太平洋地区，涵盖枥木、群马、埼玉、千叶、东京、神奈川县、山梨县以及静冈县。',
+              "collapsed": false
+            },
+            {
+              id: 'guan4',
+              name: '0000',
+              departmentName: '现任部长',
+              currentMinister: '加藤 幸弘',
+              introduction: '主要负责海图测绘、航道测量、海洋观测、提供海图出版物和确保航行安全所需的信息管理等工作。',
+              "collapsed": false
+            },
+            {
+              id: 'guan5',
+              name: '海上交通部',
+              departmentName: '现任部长',
+              currentMinister: '吉久 隆博',
+              introduction: '主要负责航行安全措施的实施、航标的设立、维护和运作等工作。',
+              "collapsed": false
+            },
+            {
+              id: 'guan6',
+              name: '首席监察官',
+              departmentName: '现任监察官',
+              currentMinister: '菊久 纯一',
+              introduction: '海上保安厅本厅设首席监察官，管区海上保安本部设管区首席监察官，站在国民视角客观、公正地监督监察厅内工作，发现并改善问题，改善业务环境，针对事故防患于未然，维持纪律。具体工作包括，开展年度业务监察，确定监察项目并开展调查，促进业务改善，维持适当运行；针对事故或违规违法事件开展事故监察，确认事实，查明分析原因。',
+              "collapsed": false
+            }
+          ]
+        }
+      ]
+    }
+  },
+  2: {
+    jbTitle: '美国海岸警卫队',
+    img: {
+
+      type: 'image',
+      src: meiguo,
+      alt: '海上保安厅',
+      style: { width: '200px', height: '200px' },
+
+    },
+    lianJie: '总部地址：300 Ala Moana Blvd, Room 9-204，Honolulu, HI 96850-4982',
+    website: '官网：https://www.pacificarea.uscg.mil/Our-Organization/District-14/',
+    spokesperson: '',
+    description: '  美国海岸警卫队（USCG）是美国武装部队的海上安全、搜救和执法服务部门，也是美国八个建制军种之一。该军种是美国各军种中独一无二的海上、军事、多任务军种，其职责包括国内和国际水域的海上执法任务和联邦监管机构任务。它是世界上最大的海岸警卫队，其能力和规模可与大多数海军相媲美。',
+    functionsIntroduction: '第十四区负责指挥整个大洋洲的海岸警卫队行动，包括夏威夷、关岛、北马里亚纳群岛联邦、美属萨摩亚以及新加坡和日本的活动。海岸警卫队作为保护美国的国土安全部团队的一部分，以及作为保卫美国的六个武装部队之一和联合部队的一部分，在整个第十四区开展行动和活动。海岸警卫队与盟友密切合作，推进海洋治理，这是基于规则的国际秩序的一部分，对自由、开放和安全的印度太平洋至关重要。',
+    "tabsData": [],
+    "treeData": {
+      id: 'root',
+      name: '组织架构',
+      departmentName: '组织架构',
+      "collapsed": false,
+      "children": [
+        {
+          id: 'ziyuanjixiao',
+          name: '资源/绩效管理部',
+          "collapsed": false,
+          "children": [
+            {
+              id: 'ziyuanjixiao1',
+              name: '管理分支',
+              "collapsed": false
+            },
+            {
+              id: 'ziyuanjixiao2',
+              name: '人事科',
+              "collapsed": false
+            },
+            {
+              id: 'ziyuanjixiao3',
+              name: '財政科',
+              "collapsed": false
+            }
+          ]
+        },
+        {
+          id: 'yufangbumen',
+          name: '预防部门',
+          "collapsed": false,
+          "children": [
+            {
+              id: 'yufangbumen1',
+              name: '水道管理处',
+              "collapsed": false
+            },
+            {
+              id: 'yufangbumen2',
+              name: '监察及调查科',
+              "collapsed": false
+            },
+            {
+              id: 'yufangbumen3',
+              name: '辅助科',
+              "collapsed": false
+            }
+          ]
+        },
+        {
+          id: 'xiangyingbumen',
+          name: '响应部门',
+          "collapsed": false,
+          "children": [
+            {
+              id: 'xiangyingbumen1',
+              name: '搜索与救援(SAR)',
+              "collapsed": false
+            },
+            {
+              id: 'xiangyingbumen2',
+              name: '事件管理部门',
+              "collapsed": false
+            },
+            {
+              id: 'xiangyingbumen3',
+              name: '执法部门',
+              "collapsed": false
+            },
+            {
+              id: 'xiangyingbumen4',
+              name: '情报科',
+              "collapsed": false
+            },
+            {
+              id: 'xiangyingbumen5',
+              name: '动态随机存取存储器',
+              "collapsed": false
+            }
+          ]
+        },
+        {
+          id: 'guihuayubudui',
+          name: '规划与部队准备部',
+          "collapsed": false,
+          "children": [
+            {
+              id: 'guihuayubudui1',
+              name: '应急计划科',
+              "collapsed": false
+            },
+            {
+              id: 'guihuayubudui2',
+              name: '行动计划处',
+              "collapsed": false
+            },
+            {
+              id: 'guihuayubudui3',
+              name: '军队战备科',
+              "collapsed": false
+            }
+          ]
+        },
+        {
+          id: 'c51yuanquan',
+          name: 'C5I与安全部门',
+          "collapsed": false,
+          "children": [
+            {
+              id: 'c51yuanquan1',
+              name: '信息技术',
+              "collapsed": false
+            },
+            {
+              id: 'c51yuanquan2',
+              name: '电信',
+              "collapsed": false
+            },
+            {
+              id: 'c51yuanquan3',
+              name: '指挥安全官',
+              "collapsed": false
+            },
+            {
+              id: 'c51yuanquan4',
+              name: '区域安全经理',
+              "collapsed": false
+            },
+            {
+              id: 'c51yuanquan5',
+              name: '频谱管理',
+              "collapsed": false
+            },
+            {
+              id: 'c51yuanquan6',
+              name: '密钥管理基础设施(KMI)',
+              "collapsed": false
+            }
+          ]
+        }
+      ]
+    }
+  },
+  3: {
+    jbTitle: '台湾海巡署',
+    img: {
+
+      type: 'image',
+      src: taiwan,
+      alt: '海上保安厅',
+      style: { width: '200px', height: '200px' },
+
+    },
+    address: '11698台北市文山区兴隆路三段296号24.99529°N 121.55959°E ',
+    website: 'https://www.cga.gov.tw/GipOpen/wSite/mp?mp=999',
+    description: '  海岸巡防为国家安全的根本，台湾省政府为统一海岸巡防事权及有效管理海域，于2000年1月28日，纳编原防务部门“海岸巡防司令部”、内政部门“警政署水上警察局”及财政部门“关税总局缉私舰艇”等任务执行机关，成立部会层级的海域执法专责机关“行政院海岸巡防署”，确立岸海合一之执法机制，一方面致力于维护国家的海洋权益、保障人民的生命财产，二方面注重执法的妥当性，在执法的过程中，兼顾公平、适当、澈底等原则，积极朝向海洋发展，开创我国海域及海岸巡防之新纪元。配合“行政院”组织调整于2018年4月28日成立海洋委员会，“行政院海岸巡防署”改隶为“海洋委员会海巡署”，持续执行海域及海岸巡防执法工作。',
+    functionsIntroduction: '海巡署是台湾地区负责海域及海岸巡防之机关，隶属于台湾海洋委员会的中央三级行政机关，负责巡防海岸、领海、邻接区及专属经济海域等，并执行查缉走私枪械、货物、毒品、非法入出境等治安事务。署内人员编制主要由警察、军人、海关人员或其他公务人员组成（政风单位除外）。自海巡署成立后，除随同业务移拨本署之海务技工，得依其原关务人员相关规定改任官称官阶外，不得另外再进用关务人员。其核心任务有5个：维护渔权、救生救难、海域治安、海洋事务、海洋保育。 \n\n    本署掌理下列事项： \n  一、海洋权益维护之规划、督导及执行。  \n    二、海事安全维护之规划、督导及执行。   \n   三、入出港船舶或其他水上运输工具及通商口岸人员之安全检查。    \n   四、海域至海岸、河口、非通商口岸之查缉走私、防止非法入出国及其他犯罪调查。   \n   五、公海上对台湾地区船舶或依国际协定得登检之外国船舶之登临、检查及犯罪调查。    \n   六、海域与海岸巡防涉外事务之协调、调查及处理。    \n   七、海域及海岸之安全调查。   \n   八、海岸管制区之安全维护。   \n   八、海岸管制区之安全维护。    \n  九、海巡人员教育训练之督导、协调及推动。    \n  十、其他海岸巡防事项。 ',
+    structure: '  海巡署平常不负责军事任务，惟作战时期可依台湾地区《国防法》第四条纳入作战序列。海巡署设置署长1人，由海洋委员会副主任委员其中1人兼任，常务副署长2人及主任秘书1人，内部单位为企划组、督察组、巡防组、情报组、后勤组、通电资讯组、秘书室、人事室、主计室、政风室、巡防区指挥部、通资作业队及警卫队。所属机关为北部分署、中部分署、南部分署、东部分署、金马澎分署、东南沙分署、舰队分署、侦防分署及教育训练测考中心。',
+    tabsData: [
+      {
+        label: '业务职掌',
+        content: '   本署掌理下列事项：  \n  一、海洋权益维护之规划、督导及执行。  \n  二、海事安全维护之规划、督导及执行。  \n  三、入出港船舶或其他水上运输工具及通商口岸人员之安全检查。  \n  四、海域至海岸、河口、非通商口岸之查缉走私、防止非法入出国及其他犯罪调查。  \n  五、公海上对台湾地区船舶或依国际协定得登检之外国船舶之登临、检查及犯罪调查。  \n  六、海域与海岸巡防涉外事务之协调、调查及处理。  \n  七、海域及海岸之安全调查。  \n  八、海岸管制区之安全维护。  \n  九、海巡人员教育训练之督导、协调及推动。  \n  十、其他海岸巡防事项。 '
+      }
+    ],
+    treeData: {
+      id: 'root',
+      name: '海洋委员会海巡署',
+      departmentName: '海洋委员会海巡署',
+      "collapsed": false,
+      "children": [
+        {
+          id: 'neibudanwei',
+          name: '内部单位',
+          "collapsed": false,
+          "children": [
+            {
+              id: 'neibudanwei1',
+              name: '特别行动支援中心',
+              "collapsed": false
+            },
+            {
+              id: 'neibudanwei2',
+              name: '企划组',
+              "collapsed": false
+            },
+            {
+              id: 'neibudanwei3',
+              name: '巡防组',
+              "collapsed": false
+            },
+            {
+              id: 'neibudanwei4',
+              name: '情报组',
+              "collapsed": false
+            },
+            {
+              id: 'neibudanwei5',
+              name: '后勤组',
+              "collapsed": false
+            },
+            {
+              id: 'neibudanwei6',
+              name: '通电资讯组',
+              "collapsed": false
+            },
+            {
+              id: 'neibudanwei7',
+              name: '督察组',
+              "collapsed": false
+            },
+            {
+              id: 'neibudanwei8',
+              name: '秘书室',
+              "collapsed": false
+            },
+            {
+              id: 'neibudanwei9',
+              name: '人事室',
+              "collapsed": false
+            },
+            {
+              id: 'neibudanwei10',
+              name: '主计室',
+              "collapsed": false
+            },
+            {
+              id: 'neibudanwei11',
+              name: '政风室',
+              "collapsed": false
+            },
+            {
+              id: 'neibudanwei12',
+              name: '巡防区指挥部',
+              "collapsed": false
+            },
+            {
+              id: 'neibudanwei13',
+              name: '通资作业队',
+              "collapsed": false
+            },
+            {
+              id: 'neibudanwei14',
+              name: '警卫队',
+              "collapsed": false
+            }
+          ]
+        },
+        {
+          id: 'suoshujiguan',
+          name: '所属机关',
+          "collapsed": false,
+          "children": [
+            {
+              id: 'suoshujiguan1',
+              name: '北部分署',
+              "collapsed": false
+            },
+            {
+              id: 'suoshujiguan2',
+              name: '中部分署',
+              "collapsed": false
+            },
+            {
+              id: 'suoshujiguan3',
+              name: '南部分署',
+              "collapsed": false
+            },
+            {
+              id: 'suoshujiguan4',
+              name: '东部分署',
+              "collapsed": false
+            },
+            {
+              id: 'suoshujiguan5',
+              name: '金马澎分署',
+              "collapsed": false
+            },
+            {
+              id: 'suoshujiguan6',
+              name: '东南沙分署',
+              "collapsed": false
+            },
+            {
+              id: 'suoshujiguan7',
+              name: '舰队分署',
+              "collapsed": false
+            },
+            {
+              id: 'suoshujiguan8',
+              name: '侦防分署',
+              "collapsed": false
+            },
+            {
+              id: 'suoshujiguan9',
+              name: '教育训练测考中心',
+              "collapsed": false
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+
+export { organizationData as organizationsData }

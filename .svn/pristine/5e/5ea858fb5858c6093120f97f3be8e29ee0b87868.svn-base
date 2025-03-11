@@ -1,0 +1,9 @@
+module.exports = {
+  proxy: {
+    '/dev-api': {
+      target: 'http://192.168.160.174:8899',
+      changeOrigin: true,
+      pathRewrite: { '^/dev-api': '' },
+    },
+  },
+}

@@ -1,0 +1,16 @@
+const {
+    merge
+} = require("webpack-merge")
+const BaseConfig = require("./webpack.base.js")
+
+module.exports = merge(BaseConfig, {
+    mode: "development",
+    devtool: "inline-source-map",
+    devServer: {
+        static: "../dist",
+        open: true,
+        client: {
+            progress: true
+        }
+    }
+})

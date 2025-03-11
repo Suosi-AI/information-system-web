@@ -1,0 +1,117 @@
+import React, { useState } from 'react'
+import { Upload, message } from 'antd'
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+
+// 接口请求
+import { uploadImg, uploadChunkImg, mergeChunkImg } from '../../api/index.js'
+import { splitFileChunk } from './utils'
+
+export const UploadMode = {
+    SPLIT: 'split', // 切片上传
+}
+
+export default (props) => {
+    // Props
+    const { mode } = props
+
+    const [loading, setLoading] = useState(false)
+    const [imgUrl, setImgUrl] = useState('')
+
+    // 上传多张图片
+    const [fileList, setFileList] = useState([])
+    /**
+     * 文件选择后进行格式、大小校验
+     * @param {*} file 
+     */
+    async function beforeUpload(file) {
+        console.log(file)
+        let fileTypes = ['image/jpg', 'image/png', 'image/jpeg']
+        if (!fileTypes.includes(file.type)) {
+            message.error('仅支持上传png、jpg格式的图片')
+            return false
+        }
+        if (mode !== UploadMode.SPLIT) {
+            // 直接上传
+            let form = new FormData()
+            form.append('file', file)
+            form.append('name', file.name)
+            const { code, fileUrl } = await uploadImg(form)
+            if (code === 200) {
+                setImgUrl(fileUrl)
+                //
+                // setFileList(arr => [...arr, { url: fileUrl, status: 'done', name: fileUrl }])
+            }
+            return false
+        }
+        // 读取文件，切割分片上传
+        let fileChunk = splitFileChunk(file, 1024 * 1000)
+        // 创建请求
+        let requests = fileChunk.map((chunk, index) => {
+            let form = new FormData()
+            form.append('file', chunk)
+            form.append('name', file.name + "_" + index)
+
+            return uploadChunkImg(form)
+        })
+        // 切片上传
+        await Promise.all(requests)
+
+        // 通知合并
+        await mergeChunkImg({
+            name: file.name
+        })
+        // 手动上传
+        return false
+    }
+    /**
+     * 图片选择上传后处理
+     * 1. 文件切割上传
+     * 2. 文件断点续传
+     * @param {*} info 
+     */
+    function handleChange(info) {
+        console.log(info)
+        if (info.file.status === 'uploading') {
+            setLoading(true);
+            return;
+        }
+        if (info.file.status === 'done') {
+            // Get this url from response in real world.
+            getBase64(info.file.originFileObj, imageUrl => {
+                setLoading(false)
+                setImgUrl(imageUrl)
+            }
+            );
+        }
+    }
+    /**
+     * 图片转换为可访问的base64  url地址
+     * @param {*} img 
+     * @param {*} callback 
+     */
+    function getBase64(img, callback) {
+        const reader = new FileReader();
+        reader.addEventListener('load', () => callback(reader.result));
+        reader.readAsDataURL(img);
+    }
+    const uploadButton = (
+        <div>
+            {loading ? <LoadingOutlined /> : <PlusOutlined />}
+            <div style={{ marginTop: 8 }}>Upload</div>
+        </div>
+    );
+    return <>
+        <h3>{mode === UploadMode.SPLIT ? "切片上传" : "直接上传"}</h3>
+        <Upload
+            name="file"
+            listType="picture-card"
+            fileList={fileList}
+            className="file-uploader"
+            showUploadList={false}
+            beforeUpload={beforeUpload}
+            onChange={handleChange}
+        >
+            {imgUrl ? <img src={imgUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+        </Upload>
+    </>
+}

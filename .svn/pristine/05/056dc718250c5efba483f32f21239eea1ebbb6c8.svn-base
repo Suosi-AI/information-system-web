@@ -1,0 +1,54 @@
+// api.js
+import request from '@/utils/request'
+import { Layout as Container, Avatar, Dropdown, Menu, message } from 'antd'
+const token = localStorage.getItem('token')
+
+export const testQuery = (options) =>
+  request('post', `/usher/web/testQuery/${options?.methodId}`, options)
+
+
+// 登录
+export const getLogin = (data) => {
+  return request('post', '/intelligence/api/sysUser/login', { params: data })
+}
+
+export const logout = () => {
+  return request('post', '/intelligence/api/user/logout', {}
+  )
+}
+
+export const updatePassword = (data) => {
+  return request('post', '/intelligence/api/user/updatePassword', {
+    params: data
+  })
+}
+
+
+
+// 档案名称列表  一级
+export const getQcArchivesPage = (data) => {
+  return request('post', '/intelligence/api/qcArchives/qcArchivesPage', {
+    params: data
+  })
+}
+// 二级
+export const getQcArchivesSourcePage = (data) => {
+  return request('post', '/intelligence/api/qcArchives/qcArchivesSourcePage', {
+    params: data
+  })
+}
+// 新闻列表
+export const getNewsPage = (data) => {
+  return request('post', '/intelligence/api/news/newsPage', {
+    params: data
+  })
+}
+// 新闻详情
+export const getInfo = (data) => {
+  return request('post', '/intelligence/api/news/info/1', {
+    params: data
+  })
+}
+
+
+

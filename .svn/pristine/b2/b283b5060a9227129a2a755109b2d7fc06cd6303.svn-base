@@ -1,0 +1,54 @@
+import React, { useState } from "react"
+import { Layout, Menu, Spin } from "antd"
+import { Link, Routes, Route, Outlet, Navigate } from "react-router-dom"
+
+const { Header, Content } = Layout
+
+// components
+const CNode = React.lazy(() => import('./CNode'))
+const AntD = React.lazy(() => import('./AntD'))
+
+export default function Home() {
+  const [routes] = useState(() => [
+    {
+      path: 'cnode',
+      name: 'CNode 社区',
+      // element 无法渲染
+      // component: ()=>React.lazy(() => import('./CNode'))
+      component: <CNode />
+    },
+    {
+      path: 'antd',
+      name: 'AntD 库',
+      component: <AntD />
+    }
+  ])
+  return <> 
+    <Layout>
+      <Header style={{ position: 'fixed', width: '100%', zIndex: 99 }}>
+        <Menu theme="dark" mode="horizontal">
+          {routes.map(item => <Menu.Item key={item.path}>
+            <Link to={item.path}>{item.name}</Link>
+          </Menu.Item>)}
+        </Menu>
+      </Header>
+      <Content style={{ padding: '20px', background: '#fff', marginTop: '64px' }}>
+        <React.Suspense fallback={<Spin />}>
+          <Routes>
+            <Route path="/" element={<Navigate to="/cnode" />} />
+            {routes.map(item => <Route key={item.path} path={item.path} element={item.component} />)}
+            <Route
+              path="*"
+              element={
+                <main style={{ padding: "1rem" }}>
+                  <p>Page Is Not Found</p>
+                </main>
+              }
+            />
+          </Routes>
+        </React.Suspense>
+      </Content>
+      <Outlet />
+    </Layout>
+  </>
+}

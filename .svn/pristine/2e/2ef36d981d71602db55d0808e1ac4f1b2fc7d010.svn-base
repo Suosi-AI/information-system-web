@@ -1,0 +1,29 @@
+
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from './../type'
+import axios from 'axios'
+
+export const login = (username, password) => {
+  return async dispatch => {
+    dispatch({ type: LOGIN_REQUEST })
+
+    try {
+      const response = await axios.post('/intelligence/api/sysUser/login', {
+        username,
+        password
+      })
+
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: response.data
+      })
+
+
+      // localStorage.setItem('token', response.data.token)
+    } catch (error) {
+      dispatch({
+        type: LOGIN_FAILURE,
+        payload: error
+      })
+    }
+  }
+}

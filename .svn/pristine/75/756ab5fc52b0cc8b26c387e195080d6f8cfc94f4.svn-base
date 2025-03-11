@@ -1,0 +1,198 @@
+import React, { useState, useEffect } from 'react';
+import {
+  Modal,
+  Form,
+  Input,
+  Menu,
+  Dropdown,
+  Button,
+  Checkbox,
+  Row,
+  Col,
+  Select,
+  Transfer,
+} from 'antd';
+import _ from 'lodash';
+import { DownOutlined, SearchOutlined, RightOutlined, LeftOutlined } from '@ant-design/icons';
+import styles from './index.less';
+const { Option } = Select;
+
+const mockData = Array.from({
+  length: 20,
+}).map((_, i) => ({
+  key: i.toString(),
+  title: `content${i + 1}`,
+  description: `description of content${i + 1}`,
+}));
+
+const selectOptions = [
+  {
+    value: '',
+    label: '全部',
+  },
+  {
+    value: '1',
+    label: '微博',
+  },
+  {
+    value: '2',
+    label: '公众号',
+  },
+  {
+    value: '3',
+    label: '谷歌',
+  },
+  {
+    value: '4',
+    label: '博客',
+  },
+  {
+    value: '5',
+    label: '网站',
+  },
+  {
+    value: '6',
+    label: '百度',
+  },
+  {
+    value: '7',
+    label: '推特',
+  },
+];
+
+const SocialEditor = ({ visible, onSave, isEditing, data, onCancel, handleSearchZhang }) => {
+  const [row, setRow] = useState({ name: '' });
+  const [selectValue, setSelectValue] = useState('');
+  const [inputValue, setInputValue] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [targetKeys, setTargetKeys] = useState([]);
+  const [selectedKeys, setSelectedKeys] = useState([]);
+
+  // const handleSearch = () => {
+  //   console.log('object :>> ');
+  // };
+
+  const save = () => {
+    if (!row.name) {
+      alert('信源档案名称不能为空');
+      return;
+    }
+
+    const { list } = targetKeys;
+    debugger;
+    if (targetKeys.length < 1) {
+      alert('监测账号不能为空');
+      return;
+    }
+    const dataToSave = {
+      name: row.name,
+      targetKeys: targetKeys,
+    };
+
+    onSave(dataToSave);
+  };
+
+  useEffect(() => {
+    // 每次打开弹框时重置状态
+    setRow({ name: '' });
+    setTargetKeys([]);
+    setSelectedKeys([]);
+
+    setSelectValue('');
+    setInputValue('');
+
+    if (isEditing && data) {
+      setRow({ ...row, name: data.name });
+      // 如果 data 中有 targetKeys 和 selectedKeys，也应该设置它们
+      if (data.targetKeys) {
+        setTargetKeys(data.targetKeys);
+      }
+      if (data.selectedKeys) {
+        setSelectedKeys(data.selectedKeys);
+      }
+    }
+  }, [visible, isEditing, data]);
+
+  const handleChange = value => {
+    console.log(`selected ${value}`);
+    setSelectValue(value); // 更新Select组件的状态
+  };
+
+  const onChange = (nextTargetKeys, direction, moveKeys) => {
+    console.log('targetKeys:', nextTargetKeys);
+    console.log('direction:', direction);
+    console.log('moveKeys:', moveKeys);
+    setTargetKeys(nextTargetKeys);
+  };
+  const onSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {
+    console.log('sourceSelectedKeys:', sourceSelectedKeys);
+    console.log('targetSelectedKeys:', targetSelectedKeys);
+    setSelectedKeys([...sourceSelectedKeys, ...targetSelectedKeys]);
+  };
+  const onScroll = (direction, e) => {
+    console.log('direction:', direction);
+    console.log('target:', e.target);
+  };
+
+  return (
+    <Modal
+      className={styles.modalAdd}
+      visible={visible}
+      onCancel={onCancel}
+      width={800}
+      onOk={save}
+      loading={loading}
+    >
+      <Form labelWidth={120} labelPosition="left">
+        <Form.Item label={isEditing ? '编辑信源档案名称：' : '信源档案名称：'}>
+          <Input
+            placeholder="信源档案名称"
+            value={row.name}
+            onChange={e => setRow({ ...row, name: e.target.value })}
+          />
+        </Form.Item>
+        <Form.Item label="账号池检索：" className={styles.inputTwo}>
+          <Input.Group compact className={styles.btnSearch}>
+            <Select
+              style={{
+                width: 120,
+              }}
+              onChange={handleChange}
+              placeholder="请选择"
+              options={selectOptions}
+              value={selectValue}
+            />
+            <Input
+              className={styles.btnSearch}
+              style={{
+                width: '70%',
+              }}
+              placeholder="昵称"
+              value={inputValue}
+              onChange={e => setInputValue(e.target.value)}
+              allowClear
+            />
+            <Button
+              icon={<SearchOutlined />}
+              onClick={handleSearchZhang}
+              className={styles.btnSearch}
+            />
+          </Input.Group>
+        </Form.Item>
+        <Form.Item label="账号池：">
+          <Transfer
+            dataSource={mockData}
+            targetKeys={targetKeys}
+            selectedKeys={selectedKeys}
+            onChange={onChange}
+            onSelectChange={onSelectChange}
+            onScroll={onScroll}
+            render={item => item.title}
+          />
+        </Form.Item>
+      </Form>
+    </Modal>
+  );
+};
+
+export default SocialEditor;

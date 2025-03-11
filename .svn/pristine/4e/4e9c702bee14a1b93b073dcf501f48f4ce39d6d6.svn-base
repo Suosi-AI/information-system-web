@@ -1,0 +1,311 @@
+export const documentationData = {
+  1: {
+    t1: {
+      title: '海洋法令',
+      details: [
+        {
+          Technical: `联合国海洋法公约 `,
+          altLink: "https://www.un.org/depts/los/convention_agreements/texts/unclos/unclos_c.pdf",
+          preContent: ''
+        },
+        {
+          Technical: `领海及毗连区相关法律 `,
+          preContent: '',
+          altLink: "https://laws.e-gov.go.jp/law/352AC0000000030"
+        },
+        {
+          Technical: `中华人民共和国和日本国渔业协定 `,
+          preContent: '',
+          altLink: "https://www.mfa.gov.cn/web/wjb_673085/zzjg_673183/bjhysws_674671/bhgjty/yyhzsbty/202303/P020230320588443756378.pdf",
+        },
+
+
+
+      ]
+    },
+    t2: {
+      title: '警备要领',
+      details: [
+        {
+          Technical: `钓鱼岛周边海域领海警备 `,
+          preContent: '近年，日本加紧对我钓鱼岛周边海域主权的争夺，2012年“购岛”闹剧后，海上保安厅获得对钓鱼列岛（钓鱼岛、南小岛、北小岛）的管控权，与中国海警局所属船舶在钓鱼岛周边海域进行对峙，导致海域局势紧张。针对中国海警船等进入钓鱼岛领海，海上保安厅采取警告，并在继续进入领海的情况下，采取“要求退出”和航路管制，阻碍中国海警船等进入钓鱼岛领海。针对外国渔船或有主权主张的“保钓团体”船舶，海上保安厅作为执法机构，也根据国际法及其国内法进行应对。'
+
+        },
+        {
+          Technical: `应对外国海洋调査船 `,
+          preContent: '近年，日本以外国海洋调査船在日本周边海域频繁实施异常行动（事先未征得批准的调查活动或与批准内容不符的调查活动）为由，派遣海上保安厅船机赴现场海域实施应对。获得外国海洋调査船的异常行动情报后，派遣巡视船、飞机赴现场海域，确认该调査船的活动情况及行动目的，向相关省厅提供所获情报，并实施“要求停止”，协同相关省厅，视情采取应对措施。'
+        },
+        {
+          Technical: `海上警备行动 `,
+          preContent: '日本海上自卫队与海上保安厅所进行的“海上警备行动”出自日本《自卫队法》第六章第八十二条，该条规定：当防卫大臣在得到内阁总理大臣批准的前提下，可以授权海上自卫队采取必要的行动来“保护海上的人身财产安全与公共秩序”。'
+        },
+
+
+
+      ]
+    },
+
+    t3: {
+      title: '海上规则',
+      details: [
+        {
+          Technical: `海上交通安全法 `,
+          preContent: '',
+          altLink: 'https://elaws.e-gov.go.jp/search/elawsSearch/elaws_search/lsg0500/detail?lawId=347AC0000000115'
+        },
+        {
+          Technical: `海上交通安全法施行令`,
+          preContent: '',
+          altLink: 'https://elaws.e-gov.go.jp/search/elawsSearch/elaws_search/lsg0500/detail?lawId=348CO0000000005'
+        },
+        {
+          Technical: ` 海上交通安全法施行规则`,
+          preContent: '',
+          altLink: 'https://elaws.e-gov.go.jp/search/elawsSearch/elaws_search/lsg0500/detail?lawId=348M50000800009'
+        },
+        {
+          Technical: `海上防撞法`,
+          preContent: '',
+          altLink: 'https://elaws.e-gov.go.jp/search/elawsSearch/elaws_search/lsg0500/detail?lawId=352AC0000000062'
+        },
+        {
+          Technical: `海上防撞法施行规则`,
+          preContent: '',
+          altLink: 'https://elaws.e-gov.go.jp/search/elawsSearch/elaws_search/lsg0500/detail?lawId=352M50000800019'
+        },
+        {
+          Technical: `海上保安庁法`,
+          preContent: '',
+          altLink: 'https://elaws.e-gov.go.jp/search/elawsSearch/elaws_search/lsg0500/detail?lawId=323AC0000000028'
+        },
+        {
+          Technical: `海上保安庁法施行令`,
+          preContent: '',
+          altLink: 'https://elaws.e-gov.go.jp/search/elawsSearch/elaws_search/lsg0500/detail?lawId=323CO0000000096'
+        },
+        {
+          Technical: `港口法`,
+          preContent: '',
+          altLink: 'https://elaws.e-gov.go.jp/search/elawsSearch/elaws_search/lsg0500/detail?lawId=323AC0000000174'
+        },
+        {
+          Technical: `港口法施行令`,
+          preContent: '',
+          altLink: 'https://elaws.e-gov.go.jp/search/elawsSearch/elaws_search/lsg0500/detail?lawId=340CO0000000219'
+        },
+        {
+          Technical: `港口法施行规则`,
+          preContent: '',
+          altLink: 'https://elaws.e-gov.go.jp/search/elawsSearch/elaws_search/lsg0500/detail?lawId=323M40000800029'
+        },
+        {
+          Technical: `航路标识法`,
+          preContent: '',
+          altLink: 'https://elaws.e-gov.go.jp/search/elawsSearch/elaws_search/lsg0500/detail?lawId=324AC0000000099'
+        },
+        {
+          Technical: `航路標标识法施行规则`,
+          preContent: '',
+          altLink: 'https://elaws.e-gov.go.jp/search/elawsSearch/elaws_search/lsg0500/detail?lawId=324M50000800030'
+        },
+        {
+          Technical: `水难救援法`,
+          preContent: '',
+          altLink: 'https://elaws.e-gov.go.jp/search/elawsSearch/elaws_search/lsg0500/detail?lawId=132AC0000000095'
+        },
+        {
+          Technical: `水难救援法施行令`,
+          preContent: '',
+          altLink: 'https://elaws.e-gov.go.jp/search/elawsSearch/elaws_search/lsg0500/detail?lawId=328CO0000000237'
+        },
+        {
+          Technical: `水难救援法施行细则`,
+          preContent: '',
+          altLink: 'https://elaws.e-gov.go.jp/search/elawsSearch/elaws_search/lsg0500/detail?lawId=328CO0000000237'
+        },
+        {
+          Technical: `水路商业法`,
+          preContent: '',
+          altLink: 'https://elaws.e-gov.go.jp/search/elawsSearch/elaws_search/lsg0500/detail?lawId=325AC0000000102'
+        },
+        {
+          Technical: `水路商业法施行令`,
+          preContent: '',
+          altLink: 'https://elaws.e-gov.go.jp/search/elawsSearch/elaws_search/lsg0500/detail?lawId=325AC0000000102'
+        },
+        {
+          Technical: `水路商业法施行规则`,
+          preContent: '',
+          altLink: 'https://elaws.e-gov.go.jp/search/elawsSearch/elaws_search/lsg0500/detail?lawId=325M50000800055'
+        },
+        {
+          Technical: `有关外国船舶在领海航行的法律等`,
+          preContent: '',
+          altLink: 'https://elaws.e-gov.go.jp/search/elawsSearch/elaws_search/lsg0500/detail?lawId=420AC0000000064'
+        },
+        {
+          Technical: `外国船舶领海航行法施行细则等`,
+          preContent: '',
+          altLink: 'https://elaws.e-gov.go.jp/search/elawsSearch/elaws_search/lsg0500/detail?lawId=420M60000800040'
+        },
+        {
+          Technical: `关于为专属经济区渔业等行使主权法第24条第1项规定的案件提供扣押担保的命令`,
+          preContent: '',
+          altLink: 'https://elaws.e-gov.go.jp/search/elawsSearch/elaws_search/lsg0500/detail?lawId=408M50000a02001'
+        },
+        {
+          Technical: `关于提供放射性同位素辐射危害防止法第 62 条第 2 项第 1 项规定的保证金的命令`,
+          preContent: '',
+          altLink: 'https://elaws.e-gov.go.jp/search/elawsSearch/elaws_search/lsg0500/detail?lawId=408M50000802003'
+        },
+
+
+
+      ]
+    },
+    t4: {
+      title: '白皮书',
+      details: [
+        {
+          Technical: `2024年日本海上保安厅宣传册日文版（PDF格式：36.9MB） `,
+          preContent: '',
+          altLink: 'https://www.kaiho.mlit.go.jp/doc/hakkou/pamphlet/r06_ja.pdf'
+        },
+        {
+          Technical: `海上保安レポート2024（HTML） `,
+          preContent: '',
+          altLink: 'https://www.kaiho.mlit.go.jp/info/books/report2024/html/top.html'
+        },
+        {
+          Technical: ` 海上保安レポート2023（HTML）`,
+          preContent: '',
+          altLink: 'https://www.kaiho.mlit.go.jp/info/books/report2024/html/top.html'
+        },
+        {
+          Technical: ` 海上保安レポート2022（HTML）`,
+          preContent: '',
+          altLink: 'https://www.kaiho.mlit.go.jp/info/books/report2022/html/top.html'
+        },
+        {
+          Technical: `海上保安レポート2021（HTML） `,
+          preContent: '',
+          altLink: 'https://www.kaiho.mlit.go.jp/info/books/report2022/html/top.html'
+        },
+        {
+          Technical: ` 海上保安レポート2020（HTML）`,
+          preContent: '',
+          altLink: 'https://www.kaiho.mlit.go.jp/info/books/report2020/html/top.html'
+        },
+        {
+          Technical: `海上保安レポート2019（HTML） `,
+          preContent: '',
+          altLink: 'https://www.kaiho.mlit.go.jp/info/books/report2019/html/top.html'
+        },
+        {
+          Technical: `海上保安レポート2018（HTML） `,
+          preContent: '',
+          altLink: 'https://www.kaiho.mlit.go.jp/info/books/report2018/index.html'
+        },
+        {
+          Technical: `海上保安レポート2017（HTML） `,
+          preContent: '',
+          altLink: 'https://www.kaiho.mlit.go.jp/info/books/report2017/index.html'
+        },
+        {
+          Technical: `海上保安レポート2016（HTML） `,
+          preContent: '',
+          altLink: 'https://www.kaiho.mlit.go.jp/info/books/report2016/index.html'
+        },
+        {
+          Technical: `海上保安レポート2015（HTML） `,
+          preContent: '',
+          altLink: 'https://www.kaiho.mlit.go.jp/info/books/report2015/index.html'
+        },
+        {
+          Technical: `海上保安レポート2014（HTML） `,
+          preContent: '',
+          altLink: 'https://www.kaiho.mlit.go.jp/info/books/report2014/index.html'
+        },
+        {
+          Technical: `海上保安レポート2013（HTML） `,
+          preContent: '',
+          altLink: 'https://www.kaiho.mlit.go.jp/info/books/report2013/index.html'
+        },
+        {
+          Technical: `海上保安レポート2012（HTML） `,
+          preContent: '',
+          altLink: 'https://www.kaiho.mlit.go.jp/info/books/report2012/index.html'
+        },
+        {
+          Technical: `海上保安レポート2011（HTML） `,
+          preContent: '',
+          altLink: 'https://www.kaiho.mlit.go.jp/info/books/report2011/index.html'
+        },
+        {
+          Technical: `海上保安レポート2010（HTML） `,
+          preContent: '',
+          altLink: 'https://www.kaiho.mlit.go.jp/info/books/report2010/index.html'
+        },
+        {
+          Technical: `海上保安レポート2009（HTML） `,
+          preContent: '',
+          altLink: 'https://www.kaiho.mlit.go.jp/info/books/report2009/index.html'
+        },
+        {
+          Technical: `海上保安レポート2008（HTML） `,
+          preContent: '',
+          altLink: 'https://www.kaiho.mlit.go.jp/info/books/report2008/index.html'
+        },
+        {
+          Technical: `海上保安レポート2007（HTML） `,
+          preContent: '',
+          altLink: 'https://www.kaiho.mlit.go.jp/info/books/report2007/index.html'
+        },
+        {
+          Technical: `海上保安レポート2006（HTML） `,
+          preContent: '',
+          altLink: 'https://www.kaiho.mlit.go.jp/info/books/report2006/index.html'
+        },
+        {
+          Technical: `海上保安レポート2005（HTML） `,
+          preContent: '',
+          altLink: 'https://www.kaiho.mlit.go.jp/info/books/report2005/index.html'
+        },
+        {
+          Technical: `海上保安レポート2004（HTML） `,
+          preContent: '',
+          altLink: 'https://www.kaiho.mlit.go.jp/info/books/report2004/index.html'
+        },
+        {
+          Technical: `海上保安レポート2003（HTML） `,
+          preContent: '',
+          altLink: 'https://www.kaiho.mlit.go.jp/info/books/report2003/index.html'
+        },
+        {
+          Technical: `海上保安レポート2002（HTML） `,
+          preContent: '',
+          altLink: 'https://www.kaiho.mlit.go.jp/info/books/report2002/index.html'
+        },
+        {
+          Technical: `海上保安レポート2001（HTML） `,
+          preContent: '',
+          altLink: 'https://www.kaiho.mlit.go.jp/info/books/report2001/index.html'
+        },
+
+
+
+
+      ]
+    },
+
+
+  },
+  2: {
+
+    // {
+    //   Technical: ` `,
+    //   preContent: ''
+    // },
+
+  }
+}

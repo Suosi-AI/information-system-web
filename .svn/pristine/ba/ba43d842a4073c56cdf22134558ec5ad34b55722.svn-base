@@ -1,0 +1,7 @@
+:global(.ant-tabs > .ant-tabs-nav .ant-tabs-nav-list) {
+  padding-left: 15px;
+}
+:global(.ant-table-thead > tr > th) {
+  color: white;
+  background-color: #3b3d51;
+}

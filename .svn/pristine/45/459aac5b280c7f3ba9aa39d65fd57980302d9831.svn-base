@@ -1,0 +1,31 @@
+{
+    "rules": {
+        "quotes": ["error", "double"],
+        "no-console":"off",
+        "indent": ["error", "2"],
+        "eqeqeq": "warn"
+    },
+    "overrides": [{
+        "files": ["*/**/pages/**.js"],
+        "rules": {
+            "no-unused-vars": "off",
+            "no-unused-expressions": "off"
+        }
+    }],
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "env": {
+        "browser": true,
+        "node": true
+    }
+}

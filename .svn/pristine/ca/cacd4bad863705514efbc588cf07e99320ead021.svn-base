@@ -1,0 +1,18 @@
+
+const INIT_STATE = {}
+
+const BASE = "AntD"
+// action type
+const GET_DATA = `${BASE}/GET_DATA`
+
+export function reducer(state = INIT_STATE, action) {
+    const { type, data } = action
+
+    switch (type) {
+        case GET_DATA: {
+            return state
+        }
+        default:
+            return state
+    }
+}

@@ -1,0 +1,120 @@
+// api.js
+import request from '@/utils/request'
+import { Layout as Container, Avatar, Dropdown, Menu, message } from 'antd'
+const token = localStorage.getItem('token')
+
+export const testQuery = (options) =>
+  request('post', `/usher/web/testQuery/${options?.methodId}`, options)
+
+
+// 登录
+export const getLogin = (data) => {
+  return request('post', '/intelligence/api/sysUser/login', { params: data })
+}
+
+export const logout = () => {
+  return request('post', '/intelligence/api/user/logout', {}
+  )
+}
+
+export const updatePassword = (data) => {
+  return request('post', '/intelligence/api/user/updatePassword', {
+    params: data
+  })
+}
+
+
+
+// 档案名称列表  一级
+export const getQcArchivesPage = (data) => {
+  return request('post', '/intelligence/api/qcArchives/qcArchivesPage', {
+    params: data
+  })
+}
+// 二级
+export const getQcArchivesSourcePage = (data) => {
+  return request('post', '/intelligence/api/qcArchives/qcArchivesSourcePage', {
+    params: data
+  })
+}
+// 新闻列表
+export const getNewsPage = (data) => {
+  return request('post', '/intelligence/api/news/archivesNewsPage', {
+    params: data
+  })
+}
+// 新闻详情
+export const getInfo = (data) => {
+  return request('post', '/intelligence/api/news/info', {
+    params: data
+  })
+}
+
+
+// 根据信源名称查询所有信源清单信息
+export const getSourcePage = (data) => {
+  return request('post', '/intelligence/api/qcArchives/sourcePage', {
+    params: data
+  })
+}
+// 新增信源菜单
+export const getQcArchivesSave = (data) => {
+  return request('post', '/intelligence/api/qcArchives/qcArchivesSave', {
+    params: data
+  })
+}
+// 编辑信源菜单
+export const getQcArchivesUpdate = (data) => {
+  return request('post', '/intelligence/api/qcArchives/qcArchivesUpdate', {
+    params: data
+  })
+}
+
+// 删除信源菜单
+export const getQcArchivesDelete = (data) => {
+  return request('post', '/intelligence/api/qcArchives/qcArchivesDelete', {
+    params: data
+  })
+}
+
+//导出
+export const downNewsWord = (data) => {
+  return request('get', '/intelligence/api/news/exportNewsToWord', {
+    params: data
+  })
+}
+
+//专题监测列表
+export const getList = (data) => {
+  return request('post', '/intelligence/api/monitorTarget/list', {
+    params: data
+  })
+}
+export const getMonitorTargetNewsPage = (data) => {
+  return request('post', '/intelligence/api/news/monitorTargetNewsPage', {
+    params: data
+  })
+}
+//专题监测 新增
+export const getSave = (data) => {
+  return request('post', '/intelligence/api/monitorTarget/save', {
+    params: data
+  })
+}
+//专题监测 修改
+export const getUpdate = (data) => {
+  return request('post', '/intelligence/api/monitorTarget/update', {
+    params: data
+  })
+}
+//专题监测 修改
+export const getDelete = (data) => {
+  return request('post', '/intelligence/api/monitorTarget/delete', {
+    params: data
+  })
+}
+
+
+
+
+

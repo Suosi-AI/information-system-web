@@ -1,0 +1,49 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  .header {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 74px;
+    padding-left: 10px;
+    line-height: 70px;
+    background: #001529 !important;
+    .navLogo {
+      display: inline-block;
+      height: 30px;
+    }
+  }
+  .main {
+    height: 100%;
+    padding-top: 20px;
+    background-color: rgb(60, 61, 61);
+    main {
+      height: 100%;
+    }
+    .content {
+      max-height: calc(100vh - 75px);
+      // overflow: hidden;
+      // overflow-x: hidden;
+      // overflow-y: auto;
+      color: white;
+    }
+  }
+}
+
+// .breadcrumb {
+//   margin-bottom: 12px;
+// }
+
+// .inline {
+//   height: 100vh;
+//   overflow-y: auto;
+// }
+// .mixin {
+//   height: calc(100vh - 48px);
+//   overflow-y: auto;
+// }

@@ -1,0 +1,1761 @@
+import ren from './../../../assets/images/archives/ico/ren@3x.png'
+import feiji from './../../../assets/images/archives/ico/feiji@3x.png'
+import chuan from './../../../assets/images/archives/ico/chuan@3x.png'
+import jidi from './../../../assets/images/archives/ico/jidi@3x.png'
+
+import hsbad from './../../../assets/images/archives/hsbad.png'
+import guanqu01 from './../../../assets/images/archives/address/guanqu01.png'
+import guanqu02 from './../../../assets/images/archives/thumb/003.png'
+import guanqu03 from './../../../assets/images/archives/thumb/004.png'
+import guanqu04 from './../../../assets/images/archives/thumb/005.png'
+import guanqu05 from './../../../assets/images/archives/thumb/006.png'
+import guanqu06 from './../../../assets/images/archives/thumb/007.png'
+import guanqu07 from './../../../assets/images/archives/thumb/008.png'
+import guanqu08 from './../../../assets/images/archives/thumb/009.png'
+import guanqu09 from './../../../assets/images/archives/thumb/010.png'
+import guanqu010 from './../../../assets/images/archives/thumb/011.png'
+import guanqu011 from './../../../assets/images/archives/thumb/012.png'
+
+// 第一管区
+import ship_001 from '../../../assets/images/archives/model/ship_001.jpeg'
+import ship_002 from './../../../assets/images/archives/model/ship_002.jpeg'
+import ship_003 from './../../../assets/images/archives/model/ship_003.jpeg'
+import ship_004 from './../../../assets/images/archives/model/ship_004.jpeg'
+import ship_005 from './../../../assets/images/archives/model/ship_005.jpeg'
+import ship_006 from './../../../assets/images/archives/model/ship_006.jpeg'
+// 第一管区k2
+import ship_007 from './../../../assets/images/archives/model/ship_007.jpeg'
+import ship_008 from './../../../assets/images/archives/model/ship_008.jpeg'
+import ship_009 from './../../../assets/images/archives/model/ship_009.jpeg'
+import ship_0010 from './../../../assets/images/archives/model/ship_010.jpeg'
+import ship_0011 from './../../../assets/images/archives/model/ship_011.jpeg'
+// 第一管区k3
+import ship_0012 from './../../../assets/images/archives/model/ship_012.jpeg'
+import ship_0013 from './../../../assets/images/archives/model/ship_013.jpeg'
+import ship_0014 from './../../../assets/images/archives/model/ship_014.jpeg'
+import ship_0015 from './../../../assets/images/archives/model/ship_015.jpeg'
+import ship_0016 from './../../../assets/images/archives/model/ship_016.jpeg'
+import ship_0017 from './../../../assets/images/archives/model/ship_017.jpeg'
+import ship_0018 from './../../../assets/images/archives/model/ship_018.jpeg'
+// 第一管区k4
+import ship_0019 from './../../../assets/images/archives/model/ship_019.jpeg'
+import ship_0020 from './../../../assets/images/archives/model/ship_020.jpeg'
+import ship_0021 from './../../../assets/images/archives/model/ship_021.jpeg'
+import ship_0022 from './../../../assets/images/archives/model/ship_022.jpeg'
+import ship_0023 from './../../../assets/images/archives/model/ship_023.jpeg'
+// 第一管区k5
+import ship_0024 from './../../../assets/images/archives/model/ship_024.jpeg'
+import ship_0025 from './../../../assets/images/archives/model/ship_025.jpeg'
+// 第一管区k6
+import ship_0026 from './../../../assets/images/archives/model/ship_026.jpeg'
+import ship_0027 from './../../../assets/images/archives/model/ship_027.jpeg'
+import ship_0028 from './../../../assets/images/archives/model/ship_028.jpeg'
+// 第一管区k7
+import ship_0029 from './../../../assets/images/archives/model/ship_029.jpeg'
+import ship_0030 from './../../../assets/images/archives/model/ship_030.jpeg'
+// 第一管区k8
+import ship_0031 from './../../../assets/images/archives/model/ship_031.jpeg'
+import ship_0032 from './../../../assets/images/archives/model/ship_032.jpeg'
+import ship_0033 from './../../../assets/images/archives/model/ship_033.jpeg'
+import ship_0034 from './../../../assets/images/archives/model/ship_034.jpeg'
+import ship_0035 from './../../../assets/images/archives/model/ship_035.jpeg'
+import ship_0036 from './../../../assets/images/archives/model/ship_036.jpeg'
+// 第一管区k9
+import ship_0037 from './../../../assets/images/archives/model/ship_037.jpeg'
+import ship_0038 from './../../../assets/images/archives/model/ship_038.jpeg'
+// 第一管区k10
+import ship_0039 from './../../../assets/images/archives/model/ship_039.jpeg'
+import ship_0040 from './../../../assets/images/archives/model/ship_040.jpeg'
+// 第一管区k11
+import ship_0041 from './../../../assets/images/archives/model/ship_041.jpeg'
+import ship_0042 from './../../../assets/images/archives/model/ship_042.jpeg'
+import ship_0043 from './../../../assets/images/archives/model/ship_043.jpeg'
+import ship_0044 from './../../../assets/images/archives/model/ship_044.jpeg'
+import ship_0045 from './../../../assets/images/archives/model/ship_045.jpeg'
+
+// 2k2  a1-a31
+import ship_a1 from './../../../assets/images/archives/yl/a1.jpeg'
+import ship_a2 from './../../../assets/images/archives/yl/a2.jpeg'
+import ship_a3 from './../../../assets/images/archives/yl/a3.jpeg'
+// 2k3
+import ship_a4 from './../../../assets/images/archives/yl/a4.jpeg'
+import ship_a5 from './../../../assets/images/archives/yl/a5.jpeg'
+import ship_a6 from './../../../assets/images/archives/yl/a6.jpeg'
+// 2k4
+import ship_a7 from './../../../assets/images/archives/yl/a7.jpeg'
+import ship_a8 from './../../../assets/images/archives/yl/a8.jpeg'
+// 2k5
+import ship_a9 from './../../../assets/images/archives/yl/a9.jpeg'
+import ship_a10 from './../../../assets/images/archives/yl/a10.jpeg'
+import ship_a11 from './../../../assets/images/archives/yl/a11.jpeg'
+// 2k6
+import ship_a12 from './../../../assets/images/archives/yl/a12.jpeg'
+import ship_a13 from './../../../assets/images/archives/yl/a13.jpeg'
+import ship_a14 from './../../../assets/images/archives/yl/a14.jpeg'
+import ship_a15 from './../../../assets/images/archives/yl/a15.jpeg'
+// 2k7
+import ship_a16 from './../../../assets/images/archives/yl/a16.jpeg'
+import ship_a17 from './../../../assets/images/archives/yl/a17.jpeg'
+import ship_a18 from './../../../assets/images/archives/yl/a18.jpeg'
+import ship_a19 from './../../../assets/images/archives/yl/a19.jpeg'
+import ship_a20 from './../../../assets/images/archives/yl/a20.jpeg'
+import ship_a21 from './../../../assets/images/archives/yl/a21.jpeg'
+import ship_a22 from './../../../assets/images/archives/yl/a22.jpeg'
+// 2k10
+import ship_a23 from './../../../assets/images/archives/yl/a23.jpeg'
+import ship_a24 from './../../../assets/images/archives/yl/a24.jpeg'
+// 2k12
+import ship_a25 from './../../../assets/images/archives/yl/a25.jpeg'
+import ship_a29 from './../../../assets/images/archives/yl/a29.jpeg'
+import ship_a31 from './../../../assets/images/archives/yl/a31.jpeg'
+
+// 3k2 a35-a53、zz1、a54-a68、zz2、a69-a93、a95、a99、a100、a91、a92
+import ship_a35 from './../../../assets/images/archives/yl/a35.jpeg'
+import ship_a36 from './../../../assets/images/archives/yl/a36.jpeg'
+// 3k3
+import ship_a37 from './../../../assets/images/archives/yl/a37.jpeg'
+import ship_a38 from './../../../assets/images/archives/yl/a38.jpeg'
+import ship_a39 from './../../../assets/images/archives/yl/a39.jpeg'
+// 3k4
+import ship_a40 from './../../../assets/images/archives/yl/a40.jpeg'
+import ship_a41 from './../../../assets/images/archives/yl/a41.jpeg'
+import ship_a42 from './../../../assets/images/archives/yl/a42.jpeg'
+import ship_a43 from './../../../assets/images/archives/yl/a43.jpeg'
+import ship_a44 from './../../../assets/images/archives/yl/a44.jpeg'
+import ship_a45 from './../../../assets/images/archives/yl/a45.jpeg'
+import ship_a46 from './../../../assets/images/archives/yl/a46.jpeg'
+// 3k5
+import ship_a47 from './../../../assets/images/archives/yl/a47.jpeg'
+// 3k6
+import ship_a48 from './../../../assets/images/archives/yl/a48.jpeg'
+import ship_a49 from './../../../assets/images/archives/yl/a49.jpeg'
+// 3k9
+import ship_a50 from './../../../assets/images/archives/yl/a50.jpeg'
+import ship_a51 from './../../../assets/images/archives/yl/a51.jpeg'
+import ship_a52 from './../../../assets/images/archives/yl/a52.jpeg'
+import ship_a53 from './../../../assets/images/archives/yl/a53.jpeg'
+// 3k11
+import ship_zz1 from './../../../assets/images/archives/yl/zz1.jpeg'
+// 3k12
+import ship_a54 from './../../../assets/images/archives/yl/a54.jpeg'
+import ship_a55 from './../../../assets/images/archives/yl/a55.jpeg'
+import ship_a56 from './../../../assets/images/archives/yl/a56.jpeg'
+import ship_a57 from './../../../assets/images/archives/yl/a57.jpeg'
+import ship_a58 from './../../../assets/images/archives/yl/a58.jpeg'
+import ship_a59 from './../../../assets/images/archives/yl/a59.jpeg'
+import ship_a60 from './../../../assets/images/archives/yl/a60.jpeg'
+import ship_a61 from './../../../assets/images/archives/yl/a61.jpeg'
+import ship_a62 from './../../../assets/images/archives/yl/a62.jpeg'
+import ship_a63 from './../../../assets/images/archives/yl/a63.jpeg'
+import ship_a64 from './../../../assets/images/archives/yl/a64.jpeg'
+import ship_a65 from './../../../assets/images/archives/yl/a65.jpeg'
+import ship_a66 from './../../../assets/images/archives/yl/a66.jpeg'
+import ship_a67 from './../../../assets/images/archives/yl/a67.jpeg'
+import ship_a68 from './../../../assets/images/archives/yl/a68.jpeg'
+import ship_zz2 from './../../../assets/images/archives/yl/zz2.jpeg'
+// 3k13
+import ship_a69 from './../../../assets/images/archives/yl/a69.jpeg'
+import ship_a70 from './../../../assets/images/archives/yl/a70.jpeg'
+import ship_a71 from './../../../assets/images/archives/yl/a71.jpeg'
+// 3k14
+import ship_a72 from './../../../assets/images/archives/yl/a72.jpeg'
+import ship_a73 from './../../../assets/images/archives/yl/a73.jpeg'
+// 3k15
+import ship_a74 from './../../../assets/images/archives/yl/a74.jpeg'
+import ship_a75 from './../../../assets/images/archives/yl/a75.jpeg'
+import ship_a76 from './../../../assets/images/archives/yl/a76.jpeg'
+import ship_a77 from './../../../assets/images/archives/yl/a77.jpeg'
+import ship_a78 from './../../../assets/images/archives/yl/a78.jpeg'
+import ship_a79 from './../../../assets/images/archives/yl/a79.jpeg'
+import ship_a80 from './../../../assets/images/archives/yl/a80.jpeg'
+import ship_a81 from './../../../assets/images/archives/yl/a81.jpeg'
+import ship_a82 from './../../../assets/images/archives/yl/a82.jpeg'
+import ship_a83 from './../../../assets/images/archives/yl/a83.jpeg'
+// 3k16
+import ship_a84 from './../../../assets/images/archives/yl/a84.jpeg'
+import ship_a85 from './../../../assets/images/archives/yl/a85.jpeg'
+// 3k17
+import ship_a86 from './../../../assets/images/archives/yl/a86.jpeg'
+import ship_a87 from './../../../assets/images/archives/yl/a87.jpeg'
+import ship_a88 from './../../../assets/images/archives/yl/a88.jpeg'
+import ship_a89 from './../../../assets/images/archives/yl/a89.jpeg'
+// 3k20
+import ship_a90 from './../../../assets/images/archives/yl/a90.jpeg'
+import ship_a91 from './../../../assets/images/archives/yl/a91.jpeg'
+import ship_a92 from './../../../assets/images/archives/yl/a92.jpeg'
+// 3k22
+import ship_a93 from './../../../assets/images/archives/yl/a93.jpeg'
+import ship_a95 from './../../../assets/images/archives/yl/a95.jpeg'
+import ship_a99 from './../../../assets/images/archives/yl/a99.jpeg'
+import ship_a100 from './../../../assets/images/archives/yl/a100.jpeg'
+import ship_a91 from './../../../assets/images/archives/yl/a91.jpeg'
+import ship_a92 from './../../../assets/images/archives/yl/a92.jpeg'
+
+// 4k1 zz4、
+
+export const strengthData = {
+  1: {
+    t1: {
+      title: '总体实力',
+      jianjie: [
+        {
+          type: 'image',
+          src: hsbad,
+          alt: '海上保安厅',
+          style: { width: '200px', height: '200px' },
+        },
+        {
+          type: 'text',
+          title: '日本海上保安厅管区',
+        },
+        {
+          iconData: [
+            { src: ren, alt: '人', count: 102 },
+            { src: feiji, alt: '飞机', count: 134 },
+            { src: chuan, alt: '船', count: 594 },
+            { src: jidi, alt: '基地', count: 84 },
+          ],
+        },
+        {
+          guanqu: [
+            {
+              index: 1,
+              name: '第一管区',
+            },
+            {
+              index: 2,
+              name: '第二管区',
+            },
+            {
+              index: 3,
+              name: '第三管区',
+            },
+            {
+              index: 4,
+              name: '第四管区',
+            },
+            {
+              index: 5,
+              name: '第五管区',
+            },
+            {
+              index: 6,
+              name: '第六管区',
+            },
+            {
+              index: 7,
+              name: '第七管区',
+            },
+            {
+              index: 8,
+              name: '第八管区',
+            },
+            {
+              index: 9,
+              name: '第九管区',
+            },
+            {
+              index: 10,
+              name: '第十管区',
+            },
+            {
+              index: 11,
+              name: '第十一管区',
+            },
+          ],
+        },
+        {
+          info: '   海上保安厅职员称海上保安官。截至2020年，海上保安厅现有人员约1.3万余人，拥有各型船艇460余艘（总计20余万吨）、飞机70多架，拥有一支数量质量均极其可观的水面舰艇与航空巡逻机兵力，在全球海岸防卫队中仅次于美国海岸警卫队，整体实力甚至高出许多小国海军，是日本不折不扣的“第二海军”。',
+        },
+      ],
+    },
+    t2: {
+      title: '第一管区',
+      jianjie: [
+        {
+          type: 'image',
+          src: guanqu01,
+          alt: '海上保安厅',
+          style: { width: '200px', height: '200px' },
+        },
+        {
+          type: 'text',
+          title: '第一管区海上保安本部',
+        },
+        {
+          iconData: [
+            { src: ren, alt: '人', count: 8 },
+            { src: feiji, alt: '飞机', count: 32 },
+            { src: jidi, alt: '基地', count: 9 },
+          ],
+        },
+        {
+          guanqu: [
+            {
+              index: 1,
+              name: '函馆海上保安部',
+            },
+            {
+              index: 2,
+              name: '小樽海上保安部',
+            },
+            {
+              index: 3,
+              name: '室兰海上保安部',
+            },
+            {
+              index: 4,
+              name: '钏路海上保安部',
+            },
+            {
+              index: 5,
+              name: '留萌海上保安部',
+            },
+            {
+              index: 6,
+              name: '稚内海上保安部',
+            },
+            {
+              index: 7,
+              name: '纹别海上保安部',
+            },
+            {
+              index: 8,
+              name: '根室海上保安部',
+            },
+            {
+              index: 9,
+              name: '函馆航空基地',
+            },
+            {
+              index: 10,
+              name: '钏路航空基地',
+            },
+            {
+              index: 11,
+              name: '千歳航空基地',
+            },
+          ],
+        },
+        {
+          info: '   第一管区海上保安本部（だいいちかんくかいじょうほあんほんぶ），是日本国土交通省海上保安厅的一个海上保安本部，司法管辖区主要以北海道地区为主，包括北海道地区的鄂霍次克海、与现由俄罗斯控制的北方领土（北方四岛）。',
+        },
+      ],
+      guanquTabs: [
+        {
+          departmentsData: [
+            { key: 'k1', name: '函馆海上保安部' },
+            { key: 'k2', name: '小樽海上保安部' },
+            { key: 'k3', name: '室兰海上保安部' },
+            { key: 'k4', name: '钏路海上保安部' },
+            { key: 'k5', name: '留萌海上保安部' },
+            { key: 'k6', name: '稚内海上保安部' },
+            { key: 'k7', name: '纹别海上保安部' },
+            { key: 'k8', name: '根室海上保安部' },
+            { key: 'k9', name: '函馆航空基地' },
+            { key: 'k10', name: '钏路航空基地' },
+            { key: 'k11', name: '千歳航空基地' },
+          ],
+          shipsData: {
+            k1: [
+              {
+                title: 'つがる（搭載大型巡視船）',
+                name: 'つがる',
+                type: '搭載大型巡視船',
+                image: ship_001,
+                model: 'PLH',
+                info: '',
+              },
+              {
+                title: 'おくしり（中型巡視船）',
+                name: 'おくしり',
+                type: '中型巡視船',
+                image: ship_002,
+                model: 'PM',
+              },
+              {
+                title: 'ゆきぐも（大型巡視艇）',
+                name: 'おくしり',
+                type: '大型巡視艇',
+                image: ship_003,
+                model: 'PC',
+              },
+              {
+                title: 'すずらん（小型巡視艇）',
+                name: 'すずらん',
+                type: '小型巡視艇',
+                image: ship_004,
+                model: 'CL',
+              },
+              {
+                title: 'かむい（小型巡視船）',
+                name: 'かむい',
+                type: '小型巡視船',
+                image: ship_005,
+                model: 'PS',
+              },
+              {
+                title: 'あかしあ（小型巡視艇）',
+                name: 'あかしあ',
+                type: '小型巡視艇',
+                image: ship_006,
+                model: 'CL',
+              },
+            ],
+            k2: [
+              {
+                title: 'えさん（大型巡視船）',
+                name: 'えさん',
+                type: '大型巡視船',
+                image: ship_007,
+                model: 'PL',
+                info: '',
+              },
+              {
+                title: 'しれとこ（大型巡視船）',
+                name: 'しれとこ',
+                type: '大型巡視船',
+                image: ship_008,
+                model: 'PL',
+              },
+              {
+                title: 'ほろべつ（中型巡視船）',
+                name: 'ほろべつ',
+                type: '中型巡視船',
+                image: ship_009,
+                model: 'PM',
+              },
+              {
+                title: 'すずかぜ（小型巡視艇）',
+                name: 'すずかぜ',
+                type: '小型巡視艇',
+                image: ship_0010,
+                model: 'CL',
+              },
+              {
+                title: 'やぐるま（小型巡視艇）',
+                name: 'やぐるま',
+                type: '小型巡視艇',
+                image: ship_0011,
+                model: 'CL',
+              },
+            ],
+            k3: [
+              {
+                title: 'れぶん（大型巡視船）',
+                name: 'れぶん',
+                type: '大型巡視船',
+                image: ship_0012,
+                model: 'PL',
+                info: '',
+              },
+              {
+                title: 'ちよかぜ（小型巡視艇）',
+                name: 'ちよかぜ',
+                type: '小型巡視艇',
+                image: ship_0013,
+                model: 'CL',
+              },
+              {
+                title: 'こざくら（小型巡視艇）',
+                name: 'こざくら',
+                type: '小型巡視艇',
+                image: ship_0014,
+                model: 'CL',
+              },
+              {
+                title: 'えぞかぜ（小型巡視艇）',
+                name: 'えぞかぜ',
+                type: '小型巡視艇',
+                image: ship_0015,
+                model: 'CL',
+              },
+              {
+                title: 'りゅうせい（大型巡視艇）',
+                name: 'りゅうせい',
+                type: '大型巡視艇',
+                image: ship_0016,
+                model: 'PC',
+              },
+              {
+                title: 'うらづき（大型巡視艇）',
+                name: 'うらづき',
+                type: '大型巡視艇',
+                image: ship_0017,
+                model: 'PC',
+              },
+              {
+                title: 'とまかぜ（小型巡視艇）',
+                name: 'とまかぜ',
+                type: '小型巡視艇',
+                image: ship_0018,
+                model: 'CL',
+              }
+            ],
+            k4: [
+              {
+                title: 'そうや（搭載大型巡視船）',
+                name: 'そうや',
+                type: '搭載大型巡視船',
+                image: ship_0019,
+                model: 'PLH',
+                info: '',
+              },
+              {
+                title: 'えりも（大型巡視船）',
+                name: 'えりも',
+                type: '大型巡視船',
+                image: ship_0020,
+                model: 'PL',
+              },
+              {
+                title: 'いしかり（中型巡視船）',
+                name: 'いしかり',
+                type: '中型巡視船',
+                image: ship_0021,
+                model: 'PM',
+              },
+              {
+                title: 'あさかぜ（小型巡視艇）',
+                name: 'あさかぜ',
+                type: '小型巡視艇',
+                image: ship_0022,
+                model: 'CL',
+              },
+              {
+                title: 'とかち（中型巡視船）',
+                name: 'とかち',
+                type: '中型巡視船',
+                image: ship_0023,
+                model: 'PM',
+              }
+            ],
+            k5: [
+              {
+                title: 'ちとせ（中型巡視船）',
+                name: 'ちとせ',
+                type: '中型巡視船',
+                image: ship_0024,
+                model: 'PM',
+                info: '',
+              },
+              {
+                title: 'はまなす（小型巡視艇）',
+                name: 'はまなす',
+                type: '小型巡視艇',
+                image: ship_0025,
+                model: 'CL',
+              }
+            ],
+            k6: [
+              {
+                title: 'りしり（中型巡視船）',
+                name: 'りしり',
+                type: '中型巡視船',
+                image: ship_0026,
+                model: 'PM',
+                info: '',
+              },
+              {
+                title: 'もとうら（大型巡視船）',
+                name: 'もとうら',
+                type: '大型巡視船',
+                image: ship_0027,
+                model: 'PL',
+              },
+              {
+                title: 'きたかぜ（小型巡視艇）',
+                name: 'きたかぜ',
+                type: '小型巡視艇',
+                image: ship_0028,
+                model: 'CL',
+              }
+            ],
+            k7: [
+              {
+                title: 'そらち（中型巡視船）',
+                name: 'そらち',
+                type: '中型巡視船',
+                image: ship_0029,
+                model: 'PM',
+                info: '',
+              },
+              {
+                title: 'ゆうばり（中型巡視船）',
+                name: 'ゆうばり',
+                type: '中型巡視船',
+                image: ship_0030,
+                model: 'PM',
+              }
+            ],
+            k8: [
+              {
+                title: 'くなしり（小型巡視船）',
+                name: 'くなしり',
+                type: '小型巡視船',
+                image: ship_0031,
+                model: 'PS',
+                info: '',
+              },
+              {
+                title: 'さろま（小型巡視船）',
+                name: 'さろま',
+                type: '小型巡視船',
+                image: ship_0032,
+                model: 'PS',
+              },
+              {
+                title: 'きたぐも（大型巡視艇）',
+                name: 'きたぐも',
+                type: '大型巡視艇',
+                image: ship_0033,
+                model: 'PC',
+              },
+              {
+                title: 'てしお（中型巡視船）',
+                name: 'てしお',
+                type: '中型巡視船',
+                image: ship_0034,
+                model: 'PM  ',
+              },
+              {
+                title: 'かわぎり（大型巡視艇）',
+                name: 'かわぎり',
+                type: '大型巡視艇',
+                image: ship_0035,
+                model: 'PC',
+              },
+              {
+                title: 'ゆきかぜ（小型巡視艇）',
+                name: 'ゆきかぜ',
+                type: '小型巡視艇',
+                image: ship_0036,
+                model: 'CL',
+              }
+            ],
+            k9: [
+              {
+                title: 'シコルスキー76Dくまたか1号',
+                name: 'シコルスキー76Dくまたか1号',
+                type: '回転翼航空機',
+                image: ship_0037,
+                model: '',
+                info: '',
+              },
+              {
+                title: 'シコルスキー76Dくまたか2号',
+                name: 'シコルスキー76Dくまたか2号',
+                type: '回転翼航空機',
+                image: ship_0038,
+                model: '',
+              }
+            ],
+            k10: [
+              {
+                title: 'シコルスキー76Cしまふくろう1号',
+                name: 'シコルスキー76Cしまふくろう1号',
+                type: '回転翼航空機',
+                image: ship_0039,
+                model: '',
+                info: '',
+              },
+              {
+                title: 'シコルスキー76Cしまふくろう2号',
+                name: 'シコルスキー76Cしまふくろう2号',
+                type: '回転翼航空機',
+                image: ship_0040,
+                model: '',
+              }
+            ],
+            k11: [
+              {
+                title: 'ボンバル300おおわし1号',
+                name: 'ボンバル300おおわし1号',
+                type: '飛行機',
+                image: ship_0041,
+                model: '',
+                info: '',
+              },
+              {
+                title: 'ボンバル300おおわし2号',
+                name: 'ボンバル300おおわし2号',
+                type: '飛行機',
+                image: ship_0042,
+                model: '',
+              },
+              {
+                title: 'ボンバル300おおわし3号',
+                name: 'ボンバル300おおわし3号',
+                type: '飛行機',
+                image: ship_0043,
+                model: '',
+              },
+              {
+                title: 'シコルスキー76Dはいたか',
+                name: 'シコルスキー76Dはいたか',
+                type: '回転翼航空機',
+                image: ship_0044,
+                model: '',
+              },
+              {
+                title: 'シコルスキー76Cせきれい',
+                name: 'シコルスキー76Cせきれい',
+                type: '回転翼航空機',
+                image: ship_0045,
+                model: '',
+              }
+            ]
+
+          },
+        },
+      ],
+    },
+    t3: {
+      title: '第二管区',
+      jianjie: [
+        {
+          type: 'image',
+          src: guanqu02,
+          alt: '海上保安厅',
+          style: { maxWidth: '200px', height: '200px' },
+        },
+        {
+          type: 'text',
+          title: '第二管区海上保安本部',
+        },
+        {
+          iconData: [
+            { src: ren, alt: '人', count: 10 },
+            { src: feiji, alt: '飞机', count: 24 },
+            { src: chuan, alt: '船', count: 10 },
+            { src: jidi, alt: '基地', count: 12 },
+          ],
+        },
+        {
+          guanqu: [
+            {
+              index: 1,
+              name: '函馆海上保安部',
+            },
+            {
+              index: 2,
+              name: '小樽海上保安部',
+            },
+            {
+              index: 3,
+              name: '室兰海上保安部',
+            },
+            {
+              index: 4,
+              name: '钏路海上保安部',
+            },
+            {
+              index: 5,
+              name: '留萌海上保安部',
+            },
+            {
+              index: 6,
+              name: '稚内海上保安部',
+            },
+            {
+              index: 7,
+              name: '纹别海上保安部',
+            },
+            {
+              index: 8,
+              name: '根室海上保安部',
+            },
+            {
+              index: 9,
+              name: '函馆航空基地',
+            },
+            {
+              index: 10,
+              name: '钏路航空基地',
+            },
+            {
+              index: 11,
+              name: '千歳航空基地',
+            },
+          ],
+        },
+        {
+          info: '   第一管区海上保安本部（だいいちかんくかいじょうほあんほんぶ），是日本国土交通省海上保安厅的一个海上保安本部，司法管辖区主要以北海道地区为主，包括北海道地区的鄂霍次克海、与现由俄罗斯控制的北方领土（北方四岛）。',
+        },
+      ],
+      guanquTabs: [
+        {
+          departmentsData: [
+            { key: 'k1', name: '第二管区海上保安本部' },
+            { key: 'k2', name: '青森海上保安部' },
+            { key: 'k3', name: '秋田海上保安部' },
+            { key: 'k4', name: '酒田海上保安部' },
+            { key: 'k5', name: '福島海上保安部' },
+            { key: 'k6', name: '八戸海上保安部' },
+            { key: 'k7', name: '函馆海上保安部' },
+            { key: 'k8', name: '気仙沼海上保安署' },
+            { key: 'k9', name: '石巻海上保安署' },
+            { key: 'k10', name: '釜石海上保安部' },
+            { key: 'k11', name: '宮古海上保安署' },
+            { key: 'k12', name: '仙台航空基地' },
+          ],
+          shipsData: {
+            k1: [
+            ],
+            k2: [
+              {
+                title: 'おいらせ（中型巡視船）',
+                name: 'おいらせ',
+                type: '中型巡視船',
+                image: ship_a1,
+                model: 'PM',
+                info: '',
+              },
+              {
+                title: 'ひばかぜ（小型巡視艇）',
+                name: 'ひばかぜ',
+                type: '小型巡視艇',
+                image: ship_a2,
+                model: 'CL',
+              },
+              {
+                title: 'さわかぜ（小型巡視艇）',
+                name: 'さわかぜ',
+                type: '小型巡視艇',
+                image: ship_a3,
+                model: 'CL',
+              }
+            ],
+            k3: [
+              {
+                title: 'でわ（大型巡視船）',
+                name: 'でわ',
+                type: '大型巡視船',
+                image: ship_a4,
+                model: 'PL',
+                info: '',
+              },
+              {
+                title: 'ひばかぜ（小型巡視艇）',
+                name: 'ひばかぜ',
+                type: '小型巡視艇',
+                image: ship_a5,
+                model: 'CL',
+              },
+              {
+                title: 'すぎかぜ（小型巡視艇）',
+                name: 'すぎかぜ',
+                type: '小型巡視艇',
+                image: ship_a6,
+                model: 'CL',
+              }
+            ],
+            k4: [
+              {
+                title: 'つるぎ（小型巡視船）',
+                name: 'つるぎ',
+                type: '小型巡視船',
+                image: ship_a7,
+                model: 'PS',
+                info: '',
+              },
+              {
+                title: 'べにばな（小型巡視艇）',
+                name: 'べにばな',
+                type: '小型巡視艇',
+                image: ship_a8,
+                model: 'CL',
+              }
+            ],
+            k5: [
+              {
+                title: 'あぶくま（中型巡視船）',
+                name: 'あぶくま',
+                type: '中型巡視船',
+                image: ship_a9,
+                model: 'PM',
+                info: '',
+              },
+              {
+                title: 'なつい（中型巡視船）',
+                name: 'なつい',
+                type: '中型巡視船',
+                image: ship_a10,
+                model: 'PM',
+              },
+              {
+                title: 'てるかぜ（小型巡視艇）',
+                name: 'てるかぜ',
+                type: '小型巡視艇',
+                image: ship_a11,
+                model: 'CL',
+              }
+            ],
+            k6: [
+              {
+                title: 'しもきた（大型巡視船）',
+                name: 'しもきた',
+                type: '大型巡視船',
+                image: ship_a12,
+                model: 'PL',
+                info: '',
+              },
+              {
+                title: 'まべち（中型巡視船）',
+                name: 'まべち',
+                type: '中型巡視船',
+                image: ship_a13,
+                model: 'PM',
+              },
+              {
+                title: 'むつぎく（小型巡視艇）',
+                name: 'むつぎく',
+                type: '小型巡視艇',
+                image: ship_a14,
+                model: 'CL',
+              },
+              {
+                title: 'むつかぜ（小型巡視艇）',
+                name: 'むつかぜ',
+                type: '小型巡視艇',
+                image: ship_a15,
+                model: 'CL',
+              }
+            ],
+            k7: [
+              {
+                title: 'ざおう（大型巡視船）',
+                name: 'ざおう',
+                type: '大型巡視船',
+                image: ship_a16,
+                model: 'PL',
+                info: '',
+              },
+              {
+                title: 'くりこま（大型巡視船）',
+                name: 'くりこま',
+                type: '大型巡視船',
+                image: ship_a17,
+                model: 'PL',
+              },
+              {
+                title: 'まつしま（大型巡視船）',
+                name: 'まつしま',
+                type: '大型巡視船',
+                image: ship_a18,
+                model: 'PL',
+              },
+              {
+                title: 'うみぎり（大型巡視艇）',
+                name: 'みぎり',
+                type: '大型巡視艇',
+                image: ship_a19,
+                model: 'PC',
+              },
+              {
+                title: 'しらはぎ（小型巡視艇）',
+                name: 'しらはぎ',
+                type: '小型巡視艇',
+                image: ship_a20,
+                model: 'CL',
+              },
+              {
+                title: 'しまかぜ（小型巡視艇）',
+                name: 'しまかぜ',
+                type: '小型巡視艇',
+                image: ship_a21,
+                model: 'CL',
+              },
+              {
+                title: 'ささかぜ（小型巡視艇）',
+                name: 'ささかぜ',
+                type: '小型巡視艇',
+                image: ship_a22,
+                model: 'CL',
+              }
+            ],
+            k8: [
+            ],
+            k9: [
+            ],
+            k10: [
+              {
+                title: 'きじかぜ（小型巡視艇）',
+                name: 'きじかぜ',
+                type: '小型巡視艇',
+                image: ship_a23,
+                model: 'CL',
+                info: '',
+              },
+              {
+                title: 'きたかみ（中型巡視船）',
+                name: 'きたかみ',
+                type: '中型巡視船',
+                image: ship_a24,
+                model: 'PM',
+              }
+            ],
+            k11: [
+            ],
+            k12: [
+              {
+                title: 'はくたか１号（飛行機）',
+                name: 'はくたか１号',
+                type: '飛行機',
+                image: ship_a25,
+                model: '',
+                info: '',
+              },
+              {
+                title: 'はくたか2号（飛行機）',
+                name: 'はくたか2号',
+                type: '飛行機',
+                image: ship_a25,
+                model: '',
+                info: '',
+              },
+              {
+                title: 'はくたか3号（飛行機）',
+                name: 'ざおう',
+                type: '飛行機',
+                image: ship_a25,
+                model: '',
+                info: '',
+              },
+              {
+                title: 'あおばずく（飛行機）',
+                name: 'あおばずく',
+                type: '飛行機',
+                image: ship_a25,
+                model: '',
+                info: '',
+              },
+              {
+                title: 'うみすずめ１号（回転翼航空機）',
+                name: 'うみすずめ１号',
+                type: '回転翼航空機',
+                image: ship_a29,
+                model: '',
+              },
+              {
+                title: 'うみすずめ2号（回転翼航空機）',
+                name: 'うみすずめ2号',
+                type: '回転翼航空機',
+                image: ship_a29,
+                model: '',
+              },
+              {
+                title: 'おおるり１号（回転翼航空機）',
+                name: 'くりこま',
+                type: '回転翼航空機',
+                image: ship_a31,
+                model: '',
+              },
+              {
+                title: 'おおるり２号（回転翼航空機）',
+                name: 'おおるり２号',
+                type: '回転翼航空機',
+                image: ship_a31,
+                model: '',
+              },
+              {
+                title: 'おおるり３号（回転翼航空機）',
+                name: 'おおるり３号',
+                type: '回転翼航空機',
+                image: ship_a31,
+                model: '',
+              },
+              {
+                title: 'おおるり４号（回転翼航空機）',
+                name: 'おおるり４号',
+                type: '回転翼航空機',
+                image: ship_a31,
+                model: '',
+              }
+            ]
+          },
+        },
+      ],
+    },
+    t4: {
+      title: '第三管区',
+      jianjie: [
+        {
+          type: 'image',
+          src: guanqu03,
+          alt: '海上保安厅',
+          style: { maxWidth: '200px', height: '200px' },
+        },
+        {
+          type: 'text',
+          title: '第三管区海上保安本部',
+        },
+        {
+          iconData: [
+            { src: ren, alt: '人', count: 10 },
+            { src: feiji, alt: '飞机', count: 24 },
+            { src: chuan, alt: '船', count: 10 },
+            { src: jidi, alt: '基地', count: 12 },
+          ],
+        },
+        {
+          guanqu: [
+            {
+              index: 1,
+              name: '第三管区海上保安本部',
+            },
+            {
+              index: 2,
+              name: '茨城海上保安部',
+            },
+            {
+              index: 3,
+              name: '鹿島海上保安署',
+            },
+            {
+              index: 4,
+              name: '千葉海上保安部',
+            },
+            {
+              index: 5,
+              name: '木更津海上保安署',
+            },
+            {
+              index: 6,
+              name: '千葉海上保安部館山分室',
+            },
+            {
+              index: 7,
+              name: '千葉海上保安部船橋分室',
+            },
+            {
+              index: 8,
+              name: '木更津海上保安署',
+            },
+            {
+              index: 9,
+              name: '銚子海上保安部',
+            },
+            {
+              index: 10,
+              name: '勝浦海上保安署',
+            },
+            {
+              index: 11,
+              name: '東京海上保安部',
+            },
+            {
+              index: 12,
+              name: '横浜海上保安部',
+            }
+          ],
+        },
+        {
+          info: '   第三管区海上保安本部，是日本国土交通省海上保安厅的一个海上保安本部，管辖范围为关东地区、东京都岛屿部分、东海地方的太平洋地区，涵盖枥木、群马、埼玉、千叶、东京、神奈川县、山梨县以及静冈县。由于日本是一个狭长海岛，海上保安厅为了方便管理，故将所属海域分成十一个管区，该部为编号第三个的管理部门，故简称为三管（或三管本部，3th Regional Coast Guard Headquarters），本部设在神奈川县横滨市市中区北仲通地区。海上保安厅吨位最大、达6000吨的敷岛型巡视船1艘配属于此区。另外2艘配置于第十管区。',
+        },
+      ],
+      guanquTabs: [
+        {
+          departmentsData: [
+            { key: 'k1', name: '第三管区海上保安本部' },
+            { key: 'k2', name: '茨城海上保安部' },
+            { key: 'k3', name: '鹿島海上保安署' },
+            { key: 'k4', name: '千葉海上保安部' },
+            { key: 'k5', name: '木更津海上保安署' },
+            { key: 'k6', name: '千葉海上保安部館山分室' },
+            { key: 'k7', name: '千葉海上保安部船橋分室' },
+            { key: 'k8', name: '木更津海上保安署' },
+            { key: 'k9', name: '銚子海上保安部' },
+            { key: 'k10', name: '勝浦海上保安署' },
+            { key: 'k11', name: '東京海上保安部' },
+            { key: 'k12', name: '横浜海上保安部' },
+          ],
+          shipsData: {
+            k1: [
+            ],
+            k2: [
+              {
+                title: 'あかぎ（小型巡視船）',
+                name: 'あかぎ',
+                type: '小型巡視船',
+                image: ship_a35,
+                model: 'PS',
+                info: '',
+              },
+              {
+                title: 'なかかぜ（小型巡視艇）',
+                name: 'なかかぜ',
+                type: '小型巡視艇',
+                image: ship_a36,
+                model: 'CL',
+              }
+            ],
+            k3: [
+              {
+                title: 'ひたち（中型巡視船）',
+                name: 'ひたち',
+                type: '中型巡視船',
+                image: ship_a37,
+                model: 'PM',
+                info: '',
+              },
+              {
+                title: 'よど（大型巡視艇）',
+                name: 'よど',
+                type: '大型巡視艇',
+                image: ship_a38,
+                model: 'PC',
+              },
+              {
+                title: 'うめかぜ（小型巡視艇）',
+                name: 'うめかぜ',
+                type: '小型巡視艇',
+                image: ship_a39,
+                model: 'CL',
+              }
+            ],
+            k4: [
+              {
+                title: 'たかたき（大型巡視艇）',
+                name: 'たかたき',
+                type: '大型巡視艇',
+                image: ship_a40,
+                model: 'PC',
+                info: '',
+              },
+              {
+                title: 'はつぎく（小型巡視艇）',
+                name: 'つぎく',
+                type: '小型巡視艇',
+                image: ship_a41,
+                model: 'CL',
+              },
+              {
+                title: 'しらうめ（小型巡視艇）',
+                name: 'しらうめ',
+                type: '小型巡視艇',
+                image: ship_a42,
+                model: 'CL',
+              },
+              {
+                title: 'あわかぜ（小型巡視艇）',
+                name: 'あわかぜ',
+                type: '小型巡視艇',
+                image: ship_a43,
+                model: 'CL',
+              },
+              {
+                title: 'はすかぜ（小型巡視艇）',
+                name: 'はすかぜ',
+                type: '小型巡視艇',
+                image: ship_a44,
+                model: 'CL',
+              },
+              {
+                title: 'すぴか（監視取締艇）',
+                name: 'すぴか',
+                type: '監視取締艇',
+                image: ship_a45,
+                model: 'SS',
+              },
+              {
+                title: 'りぶら（監視取締艇）',
+                name: 'りぶら',
+                type: '監視取締艇',
+                image: ship_a46,
+                model: 'SS',
+              }
+            ],
+            k5: [
+              {
+                title: 'きみかぜ（小型巡視艇）',
+                name: 'きみかぜ',
+                type: '小型巡視艇',
+                image: ship_a47,
+                model: 'CL',
+                info: '',
+              }
+            ],
+            k6: [
+              {
+                title: 'ふさかぜ（小型巡視艇）',
+                name: 'ふさかぜ',
+                type: '小型巡視艇',
+                image: ship_a48,
+                model: 'CL',
+                info: '',
+              },
+              {
+                title: 'かすとる（監視取締艇）',
+                name: 'かすとる',
+                type: '監視取締艇',
+                image: ship_a49,
+                model: 'SS',
+              }
+            ],
+            k7: [
+            ],
+            k8: [
+            ],
+            k9: [
+              {
+                title: 'かとり（中型巡視船）',
+                name: 'かとり',
+                type: '中型巡視船',
+                image: ship_a50,
+                model: 'PM',
+                info: '',
+              },
+              {
+                title: 'つくば（小型巡視船）',
+                name: 'つくば',
+                type: '小型巡視船',
+                image: ship_a51,
+                model: 'PS',
+              },
+              {
+                title: 'とねかぜ（小型巡視艇）',
+                name: 'とねかぜ',
+                type: '小型巡視艇',
+                image: ship_a52,
+                model: 'CL',
+              },
+              {
+                title: 'かつかぜ（小型巡視艇）',
+                name: 'かつかぜ',
+                type: '小型巡視艇',
+                image: ship_a53,
+                model: 'CL',
+              }
+            ],
+            k10: [
+            ],
+            k11: [
+              {
+                title: 'まつなみ（大型巡視艇）',
+                name: 'まつなみ',
+                type: '大型巡視艇',
+                image: ship_zz1,
+                model: 'PC',
+                info: '',
+              }
+            ],
+            k12: [
+              {
+                title: 'あきつしま（搭載型巡視船）',
+                name: 'あきつしま',
+                type: '搭載型巡視船',
+                image: ship_a54,
+                model: 'PLH',
+                info: '',
+              },
+              {
+                title: 'おおすみ（搭載型巡視船）',
+                name: 'おおすみ',
+                type: '搭載型巡視船',
+                image: ship_a55,
+                model: 'PLH',
+                info: '',
+              },
+              {
+                title: 'いず（大型巡視船）',
+                name: 'いず',
+                type: '大型巡視船',
+                image: ship_a56,
+                model: 'PL',
+                info: '',
+              },
+              {
+                title: 'ぶこう（大型巡視船）',
+                name: 'ぶこう',
+                type: '大型巡視船',
+                image: ship_a57,
+                model: 'PL',
+                info: '',
+              },
+              {
+                title: 'ひりゆう（消防船）',
+                name: 'ひりゆう',
+                type: '消防船',
+                image: ship_a58,
+                model: 'FL',
+              },
+              {
+                title: 'はまなみ（大型巡視艇）',
+                name: 'はまなみ',
+                type: '大型巡視艇',
+                image: ship_a59,
+                model: 'PC',
+              },
+              {
+                title: 'はまぐも（大型巡視艇）',
+                name: 'はまぐも',
+                type: '大型巡視艇',
+                image: ship_a60,
+                model: 'PC',
+              },
+              {
+                title: 'いそづき（大型巡視艇）',
+                name: 'いそづき',
+                type: '大型巡視艇',
+                image: ship_a61,
+                model: 'PC',
+              },
+              {
+                title: 'きりかぜ（小型巡視艇）',
+                name: 'きりかぜ',
+                type: '小型巡視艇',
+                image: ship_a62,
+                model: 'CL',
+              },
+              {
+                title: 'はまかぜ（小型巡視艇）',
+                name: 'はまかぜ',
+                type: '小型巡視艇',
+                image: ship_a63,
+                model: 'CL',
+              },
+              {
+                title: 'のげかぜ（小型巡視艇）',
+                name: 'のげかぜ',
+                type: '小型巡視艇',
+                image: ship_a64,
+                model: 'CL',
+              },
+              {
+                title: 'やまゆり（小型巡視艇）',
+                name: 'やまゆり',
+                type: '小型巡視艇',
+                image: ship_a65,
+                model: 'CL',
+              },
+              {
+                title: 'はまひかり（灯台見回り船）',
+                name: 'はまひかり',
+                type: '灯台見回り船',
+                image: ship_a66,
+                model: '',
+              },
+              {
+                title: 'れお（監視取締艇）',
+                name: 'れお',
+                type: '監視取締艇',
+                image: ship_a67,
+                model: 'SS',
+              },
+              {
+                title: ' あくありうす（監視取締艇）',
+                name: 'あくありうす',
+                type: '監視取締艇',
+                image: ship_a68,
+                model: '',
+              },
+              {
+                title: 'あきたか1号（回転翼航空機）',
+                name: 'あきたか1号',
+                type: '回転翼航空機',
+                image: ship_zz2,
+                model: 'MH689',
+              },
+              {
+                title: 'あきたか2号（回転翼航空機）',
+                name: 'あきたか2号',
+                type: '回転翼航空機',
+                image: ship_zz2,
+                model: 'MH690',
+              }
+            ],
+            k13: [
+              {
+                title: 'しおかぜ（小型巡視艇）',
+                name: 'しおかぜ',
+                type: '小型巡視艇',
+                image: ship_a69,
+                model: 'CL',
+                info: '',
+              },
+              {
+                title: 'たまかぜ（小型巡視艇）',
+                name: 'たまかぜ',
+                type: '小型巡視艇',
+                image: ship_a70,
+                model: 'CL',
+              },
+              {
+                title: 'ふえにつくす（監視取締艇）',
+                name: 'ふえにつくす',
+                type: '監視取締艇',
+                image: ship_a71,
+                model: 'SS',
+              }
+            ],
+            k14: [
+              {
+                title: 'みかづき（小型巡視船）',
+                name: 'みかづき',
+                type: '小型巡視艇',
+                image: ship_a72,
+                model: 'PS',
+                info: '',
+              },
+              {
+                title: 'さざんくろす（監視取締艇）',
+                name: 'さざんくろす',
+                type: '監視取締艇',
+                image: ship_a73,
+                model: 'SS',
+              }
+            ],
+            k15: [
+              {
+                title: 'たかとり（中型巡視船）',
+                name: 'たかとり',
+                type: '中型巡視船',
+                image: ship_a74,
+                model: 'PM',
+                info: '',
+              },
+              {
+                title: 'あしたか（小型巡視船）',
+                name: 'あしたか',
+                type: '小型巡視船',
+                image: ship_a75,
+                model: 'PS',
+                info: '',
+              },
+              {
+                title: 'すがなみ（大型巡視艇）',
+                name: 'すがなみ',
+                type: '大型巡視船',
+                image: ship_a76,
+                model: 'PC',
+                info: '',
+              },
+              {
+                title: 'うらゆき（大型巡視艇）',
+                name: 'うらゆき',
+                type: '大型巡視艇',
+                image: ship_a77,
+                model: 'PC',
+                info: '',
+              },
+              {
+                title: 'はたぐも（大型巡視艇）',
+                name: 'はたぐも',
+                type: '大型巡視艇',
+                image: ship_a78,
+                model: 'PC',
+              },
+              {
+                title: 'ゆうづき（大型巡視艇）',
+                name: 'ゆうづき',
+                type: '大型巡視艇',
+                image: ship_a79,
+                model: 'PC',
+              },
+              {
+                title: 'くりかぜ（小型巡視艇）',
+                name: 'くりかぜ',
+                type: '小型巡視艇',
+                image: ship_a80,
+                model: 'CL',
+              },
+              {
+                title: 'はかぜ（小型巡視艇）',
+                name: 'はかぜ',
+                type: '小型巡視艇',
+                image: ship_a81,
+                model: 'CL',
+              },
+              {
+                title: 'きぬがさ（特殊警備救難艇）',
+                name: 'きぬがさ',
+                type: '特殊警備救難艇',
+                image: ship_a82,
+                model: 'MS',
+              },
+              {
+                title: 'かしおぺあ（監視取締艇）',
+                name: 'かしおぺあ',
+                type: '監視取締艇',
+                image: ship_a83,
+                model: 'SS',
+              }
+            ],
+            k16: [
+              {
+                title: 'うみかぜ（小型巡視艇）',
+                name: 'うみかぜ',
+                type: '小型巡視艇',
+                image: ship_a84,
+                model: 'CL',
+                info: '',
+              },
+              {
+                title: 'ＣＬ－３５ｍ１（小型巡視艇）',
+                name: 'ＣＬ－３５ｍ１',
+                type: '小型巡視艇',
+                image: ship_a85,
+                model: 'CL',
+              }
+            ],
+            k17: [
+              {
+                title: 'おきつ（中型巡視船）',
+                name: 'おきつ',
+                type: '中型巡視船',
+                image: ship_a86,
+                model: 'PM',
+                info: '',
+              },
+              {
+                title: 'ふじ（中型巡視船）',
+                name: 'ふじ',
+                type: '中型巡視船',
+                image: ship_a87,
+                model: 'PM',
+              },
+              {
+                title: 'ふじかぜ（小型巡視艇）',
+                name: 'ふじかぜ',
+                type: '小型巡視艇',
+                image: ship_a88,
+                model: 'CL',
+              },
+              {
+                title: 'みほかぜ（小型巡視艇）',
+                name: 'みほかぜ',
+                type: '小型巡視艇',
+                image: ship_a89,
+                model: 'CL',
+              }
+            ],
+            k18: [
+            ],
+            k19: [
+            ],
+            k20: [
+              {
+                title: 'しきね（大型巡視船）',
+                name: 'しきね',
+                type: '大型巡視船',
+                image: ship_a90,
+                model: 'PL',
+                info: '',
+              },
+              {
+                title: 'かの（中型巡視船）',
+                name: 'かの',
+                type: '中型巡視船',
+                image: ship_a91,
+                model: 'PM',
+              },
+              {
+                title: 'いずなみ（大型巡視艇）',
+                name: 'いずなみ',
+                type: '小型巡視艇',
+                image: ship_a92,
+                model: 'PC',
+              }
+            ],
+            k21: [
+            ],
+            k22: [
+              {
+                title: 'ガルフファイブ（飛行機）',
+                name: 'ガルフファイブ',
+                type: '飛行機',
+                image: ship_a93,
+                model: '',
+                info: '',
+              },
+              {
+                title: 'ガルフファイブ（飛行機）',
+                name: 'ガルフファイブ',
+                type: '飛行機',
+                image: ship_a93,
+                model: '',
+                info: '',
+              },
+              {
+                title: 'ボンバル300（飛行機）',
+                name: 'ボンバル300',
+                type: '飛行機',
+                image: ship_a95,
+                model: '',
+              },
+              {
+                title: 'ボンバル300（飛行機）',
+                name: 'ボンバル300',
+                type: '飛行機',
+                image: ship_a95,
+                model: '',
+              },
+              {
+                title: 'ボンバル300（飛行機）',
+                name: 'ボンバル300',
+                type: '飛行機',
+                image: ship_a95,
+                model: '',
+              },
+              {
+                title: 'ボンバル300（飛行機）',
+                name: 'ボンバル300',
+                type: '飛行機',
+                image: ship_a95,
+                model: '',
+              },
+              {
+                title: 'スーパーピューマ332（回転翼航空機）',
+                name: 'スーパーピューマ332',
+                type: '回転翼航空機',
+                image: ship_a99,
+                model: '',
+              },
+              {
+                title: 'スーパーピューマ225（回転翼航空機）',
+                name: 'スーパーピューマ225',
+                type: '回転翼航空機',
+                image: ship_a100,
+                model: '',
+              },
+              {
+                title: 'かの（中型巡視船）',
+                name: 'かの',
+                type: '中型巡視船',
+                image: ship_a91,
+                model: 'PM',
+              },
+              {
+                title: 'いずなみ（大型巡視艇）',
+                name: 'いずなみ',
+                type: '大型巡視艇',
+                image: ship_a92,
+                model: 'PC',
+              }
+            ],
+            k23: [
+            ]
+          },
+        },
+      ],
+    },
+  },
+  2: {
+    t1: {
+      title: '2222222',
+      jianjie: [
+        {
+          type: 'image',
+          src: hsbad,
+          alt: '海上保安厅',
+          style: { width: '200px', height: '200px' },
+        },
+        {
+          type: 'text',
+          content: '日本海上保安厅管区',
+        },
+      ],
+    },
+  },
+}

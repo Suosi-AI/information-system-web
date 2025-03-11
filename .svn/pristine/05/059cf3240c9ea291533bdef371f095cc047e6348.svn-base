@@ -1,0 +1,17 @@
+.container {
+}
+
+:global(.ant-modal-content) {
+  background-color: #232632 !important;
+}
+:global(.ant-modal-close-x) {
+  color: white;
+}
+:global(.ant-modal-body) {
+  color: white;
+  border: none;
+}
+:global(.ant-modal-header) {
+  background-color: #232632 !important;
+  border: none;
+}

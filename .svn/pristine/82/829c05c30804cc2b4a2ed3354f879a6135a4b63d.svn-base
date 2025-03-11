@@ -1,0 +1,74 @@
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Drawer } from 'antd';
+import { CheckOutlined } from '@ant-design/icons';
+import cls from 'classnames';
+import styles from './index.less';
+
+const SettingMenu = () => {
+  const [settingVisible, setSettingVisible] = useState(false); // 默认设置抽屉为不可见
+  const dispatch = useDispatch();
+  const { theme, menuMode } = useSelector(state => state.SettingReducer);
+
+  // useEffect不再需要，因为我们改变了state的初始值
+  // useEffect(() => {
+  //   setSettingVisible(false);
+  // }, []);
+
+  return (
+    <>
+      <Drawer
+        closable={false}
+        visible={settingVisible}
+        onClose={() => setSettingVisible(false)}
+        width={300}
+        className={styles.container}
+      >
+        <div className={cls(styles.item, styles.vertical)}>
+          <p>主题风格</p>
+          <div style={{ display: 'flex' }}>
+            <div
+              className={cls(styles.dark, { [styles.disabled]: theme !== 'dark' })}
+              onClick={() => {
+                dispatch({ type: 'setTheme', data: 'dark' });
+              }}
+            >
+              {theme === 'dark' && <CheckOutlined />}
+            </div>
+            <div
+              className={cls(styles.light, { [styles.disabled]: theme !== 'light' })}
+              onClick={() => {
+                dispatch({ type: 'setTheme', data: 'light' });
+              }}
+            >
+              {theme === 'light' && <CheckOutlined />}
+            </div>
+          </div>
+        </div>
+        <div className={cls(styles.item, styles.vertical)}>
+          <p>页面布局</p>
+          <div style={{ display: 'flex' }}>
+            <div
+              className={styles.inline}
+              onClick={() => {
+                dispatch({ type: 'setMenuMode', data: 'inline' });
+              }}
+            >
+              {menuMode === 'inline' && <CheckOutlined />}
+            </div>
+            <div
+              className={styles.horizontal}
+              onClick={() => {
+                dispatch({ type: 'setMenuMode', data: 'horizontal' });
+              }}
+            >
+              {menuMode === 'horizontal' && <CheckOutlined />}
+            </div>
+          </div>
+        </div>
+      </Drawer>
+    </>
+  );
+};
+
+export default SettingMenu;

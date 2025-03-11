@@ -1,0 +1,13 @@
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import reduxThunk from 'redux-thunk'
+
+// reducer
+import { reducer as AntDReducer } from '@/pages/AntD/reducers'
+import { reducer as CNodeReducer } from '@/pages/CNode/reducers'
+
+const reducer = combineReducers({
+    antd: AntDReducer,
+    cnode: CNodeReducer
+})
+
+export default createStore(reducer, applyMiddleware(reduxThunk))

@@ -1,0 +1,18 @@
+:global(.ant-tabs > .ant-tabs-nav .ant-tabs-nav-list) {
+  padding-left: 15px;
+}
+:global(.ant-table-thead > tr > th) {
+  color: white;
+  background-color: #3b3d51;
+}
+:global(.ant-table-tbody) {
+  color: white;
+  background-color: #3b3d51;
+}
+:global(.ant-table-cell-row-hover) {
+  color: black;
+  background-color: none !important;
+}
+:global(.ant-table-tbody > tr > td) {
+  // border-bottom: 1px solid #3b3d51;
+}

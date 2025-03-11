@@ -1,0 +1,6 @@
+
+# dependence
+node_modules
+
+# build
+dist

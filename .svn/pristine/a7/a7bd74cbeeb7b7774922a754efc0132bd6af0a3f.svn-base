@@ -1,0 +1,33 @@
+import React from 'react';
+import { LikeOutlined, MessageOutlined, ShareAltOutlined, EyeOutlined } from '@ant-design/icons';
+
+const SocialMediaStats = ({ likes, messages, shares, views }) => {
+  return (
+    <p
+      style={{
+        display: 'flex',
+        width: '20%',
+        justifyContent: 'space-between',
+      }}
+    >
+      <span>
+        <LikeOutlined />
+        <span>{likes}</span>
+      </span>
+      <span>
+        <MessageOutlined />
+        <span>{messages}</span>
+      </span>
+      <span>
+        <ShareAltOutlined />
+        <span>{shares}</span>
+      </span>
+      <span>
+        <EyeOutlined />
+        <span>{views}</span>
+      </span>
+    </p>
+  );
+};
+
+export default SocialMediaStats;

@@ -1,0 +1,45 @@
+
+import { getTopicData } from '../api'
+
+const INIT_STATE = {
+    data: [],
+    pageSize: 10,
+    pageNumber: 1
+}
+
+const BASE = "CNode"
+// action type
+const GET_DATA = `${BASE}/GET_DATA`
+
+export function reducer(state = INIT_STATE, action) {
+    const { type, data } = action
+
+    switch (type) {
+        case GET_DATA: {
+            const { pageNumber, pageSize } = data
+            return {
+                data: data.data,
+                pageNumber,
+                pageSize
+            }
+        }
+        default:
+            return state
+    }
+}
+
+// fun
+export const getData = (params) => dispatch => {
+    getTopicData(params).then(({ success, data }) => {
+        if (success) {
+            dispatch({
+                type: GET_DATA,
+                data: {
+                    data,
+                    pageNumber: 1,
+                    pageSize: 50
+                }
+            })
+        }
+    })
+}

@@ -1,0 +1,226 @@
+import React, { useState, useEffect } from 'react';
+import {
+  Modal,
+  Form,
+  Input,
+  Menu,
+  Dropdown,
+  Button,
+  Checkbox,
+  Row,
+  Col,
+  Select,
+  Transfer,
+} from 'antd';
+import _ from 'lodash';
+import { SearchOutlined } from '@ant-design/icons';
+import styles from './index.less';
+const { Option } = Select;
+import { getSourcePage } from './../../../services/store';
+
+const selectOptions = [
+  {
+    value: '',
+    label: '全部',
+  },
+  {
+    value: '微博',
+    label: '微博',
+  },
+  {
+    value: '公众号',
+    label: '公众号',
+  },
+  {
+    value: '谷歌',
+    label: '谷歌',
+  },
+  {
+    value: '博客',
+    label: '博客',
+  },
+  {
+    value: '网站',
+    label: '网站',
+  },
+  {
+    value: '百度',
+    label: '百度',
+  },
+  {
+    value: '推特',
+    label: '推特',
+  },
+];
+
+const SocialEditor = ({ visible, onSave, isEditing, data, onCancel, editingId }) => {
+  const [row, setRow] = useState({ name: '' });
+  const [selectValue, setSelectValue] = useState('');
+  const [inputValue, setInputValue] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [targetKeys, setTargetKeys] = useState([]);
+  const [selectedKeys, setSelectedKeys] = useState([]);
+  const [page, setPage] = useState(1); // 当前页码
+  const [hasMore, setHasMore] = useState(true);
+  const [sourceData, setSourceData] = useState([]);
+
+  const save = () => {
+    if (!row.name) {
+      alert('信源档案名称不能为空');
+      return;
+    }
+    if (targetKeys.length < 1) {
+      alert('监测账号不能为空');
+      return;
+    }
+    console.log(targetKeys, 'console.log(targetKeys);');
+
+    const numericTargetKeys = targetKeys.map(key => parseInt(key, 10));
+    let dataToSave = {
+      archivesName: row.name,
+      sourceIdList: numericTargetKeys,
+    };
+
+    if (isEditing && editingId) {
+      dataToSave = {
+        ...dataToSave,
+        archivesId: editingId,
+      };
+    }
+    console.log(dataToSave, editingId, 'dataToSave');
+
+    onSave(dataToSave, isEditing);
+  };
+
+  const handleSearchZhang = () => {
+    setLoading(true);
+    setPage(1);
+    const params = {
+      page: page,
+      limit: '10',
+      type: selectValue,
+      name: inputValue,
+    };
+
+    getSourcePage(params)
+      .then(response => {
+        if (response && response.page && response.page.list) {
+          const newData = response.page.list.map((item, index) => ({
+            key: `${item.id + page * 10}`,
+            title: item.name,
+            description: item.description,
+          }));
+          setSourceData(newData);
+          if (response.page.list.length < 10) {
+            setHasMore(false);
+          }
+        }
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        setLoading(false);
+      });
+  };
+
+  const onScroll1 = (direction, event) => {
+    const { scrollTop, scrollHeight, clientHeight } = event.target;
+
+    if (scrollHeight - scrollTop === clientHeight && hasMore) {
+      setPage(prevPage => prevPage + 1);
+    }
+  };
+
+  useEffect(() => {
+    setRow({ name: '' });
+    setTargetKeys([]);
+    setSelectedKeys([]);
+    setSelectValue('');
+    setInputValue('');
+    if (isEditing && data) {
+      setRow({ ...row, name: data.name });
+      if (data.targetKeys) {
+        setTargetKeys(data.targetKeys);
+      }
+      if (data.selectedKeys) {
+        setSelectedKeys(data.selectedKeys);
+      }
+    }
+  }, [visible, isEditing, data]);
+
+  useEffect(() => {
+    handleSearchZhang();
+  }, [selectValue, page]);
+
+  const handleChange = value => {
+    setSelectValue(value);
+    setPage(1);
+    handleSearchZhang();
+  };
+
+  const onChange = (nextTargetKeys, direction, moveKeys) => {
+    setTargetKeys(nextTargetKeys);
+  };
+
+  const onSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {
+    setSelectedKeys([...sourceSelectedKeys, ...targetSelectedKeys]);
+  };
+
+  return (
+    <Modal
+      className={styles.modalAdd}
+      visible={visible}
+      onCancel={onCancel}
+      width={800}
+      onOk={save}
+      confirmLoading={loading}
+    >
+      <Form labelWidth={120} labelPosition="left">
+        <Form.Item label={isEditing ? '编辑信源档案名称：' : '信源档案名称：'}>
+          <Input
+            placeholder="信源档案名称"
+            value={row.name}
+            onChange={e => setRow({ ...row, name: e.target.value })}
+          />
+        </Form.Item>
+        <Form.Item label="账号池检索：" className={styles.inputTwo}>
+          <Input.Group compact className={styles.btnSearch}>
+            <Select
+              style={{ width: 120 }}
+              onChange={handleChange}
+              placeholder="请选择"
+              options={selectOptions}
+              value={selectValue}
+            />
+            <Input
+              className={styles.btnSearch}
+              style={{ width: 'calc(70% - 10px)' }}
+              placeholder="昵称"
+              value={inputValue}
+              onChange={e => setInputValue(e.target.value)}
+              allowClear
+            />
+            <Button
+              icon={<SearchOutlined />}
+              onClick={handleSearchZhang}
+              className={styles.btnSearch}
+            />
+          </Input.Group>
+        </Form.Item>
+        <Form.Item label="账号池：">
+          <Transfer
+            dataSource={sourceData}
+            targetKeys={targetKeys}
+            selectedKeys={selectedKeys}
+            onChange={onChange}
+            onScroll={onScroll1}
+            onSelectChange={onSelectChange}
+            render={item => item.title}
+          />
+        </Form.Item>
+      </Form>
+    </Modal>
+  );
+};
+
+export default SocialEditor;

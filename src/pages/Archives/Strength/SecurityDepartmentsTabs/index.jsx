@@ -1,0 +1,75 @@
+import React from 'react';
+import { Tabs, Button, Empty, Tooltip } from 'antd';
+import styles from './index.less';
+
+const SecurityDepartmentsTabs = ({ departmentsData, ships, showModal, showModalInfo }) => {
+  return (
+    <Tabs
+      tabPosition="left"
+      defaultActiveKey="k1"
+      style={{ color: 'white' }}
+      className={styles.tabsS}
+    >
+      {departmentsData.map(department => (
+        <Tabs.TabPane
+          tab={
+            <Tooltip title={department.name}>
+              <div
+                style={{
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  maxWidth: '100px',
+                  maxHeight: '20vh',
+                  overflowY: 'auto',
+                }}
+              >
+                {department.name}
+              </div>
+            </Tooltip>
+          }
+          key={department.key}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ color: '#EA9626' }}>{department.name}</span>
+            <Button
+              style={{
+                background: 'rgba(72,146,255,.3)',
+                border: '1px solid #4892ff',
+                color: 'white',
+                height: '30px',
+              }}
+              onClick={() => showModal(department)}
+            >
+              位置
+            </Button>
+          </div>
+          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+            {ships[department.key]?.length > 0 ? (
+              ships[department.key]?.map(ship => (
+                <div
+                  key={ship.name}
+                  style={{ margin: '10px 10px 0 0 ', cursor: 'pointer' }}
+                  onClick={() => showModalInfo(ship)}
+                >
+                  <img
+                    src={ship.image}
+                    alt={ship.name}
+                    style={{ width: '200px', height: '150px' }}
+                  />
+                  <p style={{ width: '200px', textAlign: 'center' }}>{ship.title}</p>
+                </div>
+              ))
+            ) : (
+              <div className={styles.centeredEmpty}>
+                <Empty />
+              </div>
+            )}
+          </div>
+        </Tabs.TabPane>
+      ))}
+    </Tabs>
+  );
+};
+
+export default SecurityDepartmentsTabs;

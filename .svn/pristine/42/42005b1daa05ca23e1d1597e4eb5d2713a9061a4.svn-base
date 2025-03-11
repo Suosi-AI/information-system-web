@@ -1,0 +1,129 @@
+import React from 'react';
+import { Layout as Container, Avatar, Dropdown, Menu, message, Popconfirm } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import { useSelector, useDispatch } from 'react-redux';
+import cls from 'classnames';
+import styles from './index.less';
+import logo from '@/assets/images/logo.png';
+import MenuList from '@/components/common/MenuList';
+import MixinMenuChild from '@/components/common/MixinMenuChild';
+import { Link, useNavigate, Routes, Route } from 'react-router-dom';
+import { logout } from './../../../../services/store';
+const { Sider } = Container;
+import UserManagement from '@/pages/UserManagement';
+
+const TopBar = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { sideBarCollapsed, theme, menuMode, sideBarHidden } = useSelector(
+    state => state.SettingReducer
+  );
+  const username = localStorage.getItem('username');
+  const rank = JSON.parse(localStorage.getItem('rank')); // 从本地存储中获取用户的权限等级
+
+  const handleMenuClick = async e => {
+    const { key } = e;
+    switch (key) {
+      case 'edit':
+        navigate('/password');
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      const response = await logout();
+      if (response.code === 200) {
+        localStorage.removeItem('token');
+        message.success('退出登录成功');
+        navigate('/login');
+      } else {
+        message.error('登出失败：' + (response.msg || '未知错误'));
+      }
+    } catch (error) {
+      console.error('Logout error:', error);
+      message.error('登出失败');
+    }
+  };
+
+  const confirmLogout = () => {
+    handleLogout();
+  };
+
+  const cancelLogout = () => {
+    message.error('取消操作');
+  };
+
+  return (
+    <>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          width: '90%',
+          padding: '0 20px',
+        }}
+      >
+        <MenuList />
+        <div style={{ lineHeight: '74px', color: 'white' }}>
+          <Dropdown
+            overlay={
+              <Menu style={{ width: '100px', textAlign: 'center' }} onClick={handleMenuClick}>
+                <Menu.Item key={'edit'}>
+                  <Link to="/password">修改密码</Link>
+                </Menu.Item>
+                {rank === 1 && (
+                  <>
+                    <Menu.Item key={'logs'}>
+                      <Link to="/userLogs">系统日志</Link>
+                    </Menu.Item>
+                    <Menu.Item key={'user'}>
+                      <Link to="/userManagement">用户管理</Link>
+                    </Menu.Item>
+                  </>
+                )}
+                <Popconfirm
+                  title="确认退出登录？"
+                  onConfirm={confirmLogout}
+                  onCancel={cancelLogout}
+                  okText="确认"
+                  cancelText="取消"
+                >
+                  <Menu.Item key={'exit'}>退出登录</Menu.Item>
+                </Popconfirm>
+              </Menu>
+            }
+          >
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <Avatar
+                size={28}
+                style={{ backgroundColor: '#5A637F', marginRight: 8, cursor: 'pointer' }}
+              >
+                <UserOutlined />
+              </Avatar>
+              <span style={{ cursor: 'pointer' }}>{username}</span>
+            </div>
+          </Dropdown>
+        </div>
+      </div>
+      {/* {menuMode !== 'horizontal' && (
+        <Sider
+          onCollapse={() => dispatch({ type: 'setSideBarCollapsed' })}
+          className={cls(styles[menuMode], styles[theme], {
+            [styles.sideBar]: !sideBarCollapsed,
+            [styles.sideBarCollapsed]: sideBarCollapsed,
+            [styles.light]: menuMode === 'mixin',
+            [styles.sideBarHidden]: sideBarHidden && menuMode === 'mixin',
+          })}
+        >
+          {menuMode === 'inline' ? <MenuList /> : <MixinMenuChild />}
+        </Sider>
+      )} */}
+    </>
+  );
+};
+
+export default TopBar;

@@ -1,0 +1,30 @@
+import React from "react"
+import ReactDOM from "react-dom"
+import "./index.css"
+import { ConfigProvider } from 'antd'
+import zhCN from 'antd/lib/locale/zh_CN';
+import { HashRouter, Routes, Route } from "react-router-dom"
+import { Provider } from 'react-redux'
+
+// store
+import store from './store'
+
+// view
+import Home from "./pages/index"
+
+function App() {
+
+    return <>
+        <Provider store={store}>
+            <ConfigProvider componentSize="small" locale={zhCN}>
+                <HashRouter>
+                    <Routes>
+                        <Route path='*' element={<Home />} />
+                    </Routes>
+                </HashRouter>
+            </ConfigProvider>
+        </Provider>
+    </>
+}
+
+ReactDOM.render(<App />, document.querySelector("#root"))

@@ -1,0 +1,1762 @@
+import idObj from 'identity-obj-proxy'
+import leader from '../../../assets/images/archives/zdrw.png'
+import leader1 from '../../../assets/images/archives/zdrw2.png'
+import leader3 from '../../../assets/images/archives/leader3.png'
+import leader4 from '../../../assets/images/archives/leader4.png'
+import leader5 from '../../../assets/images/archives/leader5.png'
+import leader6 from '../../../assets/images/archives/leader6.png'
+import leader7 from '../../../assets/images/archives/leader7.png'
+import leader8 from '../../../assets/images/archives/leader8.png'
+import leader9 from '../../../assets/images/archives/leader9.png'
+import leader10 from '../../../assets/images/archives/leader10.png'
+import leader11 from '../../../assets/images/archives/leader11.png'
+import leader12 from '../../../assets/images/archives/leader12.png'
+import leader13 from '../../../assets/images/archives/leader13.png'
+
+import { v4 as uuidv4 } from 'uuid'
+
+
+export const peopleData = {
+  1: {
+    t1: {
+      title: '现任长官',
+      infoData: [{ id: uuidv4(), careerProfileId: 'officer1', name: '长官信息' },
+      { id: uuidv4(), careerProfileId: 'personal1', name: '人物履历' },
+      { id: uuidv4(), careerProfileId: 'history1', name: '历任信息' }],
+
+      careerProfiles: [
+        {
+          id: "officer1",
+          jianjie: [
+            {
+              type: 'image',
+              src: leader,
+              alt: '海上保安厅',
+              style: { height: '200px', maxWidth: '300px' },
+            },
+            {
+              type: 'text',
+              title: '瀬口良夫（第48任海上保安厅长官）',
+            },
+
+            {
+              type: 'text',
+              content: '濑口良夫（Yoshio Seguchi）',
+            },
+            {
+              type: 'text',
+              content: `    1964年7月18日出生于爱知县，海上保安大学第36期学员。
+    曾担任安全救援部安全信息科安全信息协调官、对马海上保安厅主任、第五管区海上保安本部安全救援部长，总务部政务科政策评估与公共关系室主任，安全救援部管理处处长、第十管区海上保安本部副部长等。东日本大地震后，他参与了受灾地区的支援任务。 ”`,
+            },
+          ],
+
+        },
+        {
+          id: 'personal1',
+          careerProfileContent: '人物履历',
+          careerData: [
+            { num: 1, time: '2020年（令和2年）4月1日', position: '就任第九管区海上保安本部部长' },
+            { num: 2, time: '同年10月1日', position: '被任命为安全救援部部长' },
+            { num: 3, time: '2021年10月1日（令和3年）', position: '被任命为海上保安厅督察' },
+            { num: 3, time: '2022年6月28日', position: '就任日本海上保安厅副厅长' },
+            { num: 3, time: '2024年7月1日', position: '就任日本海上保安厅厅长' },
+
+          ],
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num',
+            },
+            {
+              title: '时间',
+              dataIndex: 'time',
+              key: 'time',
+            },
+            {
+              title: '职位',
+              dataIndex: 'position',
+              key: 'position',
+            },
+          ],
+        },
+        {
+          id: 'history1',
+          careerProfileContent: '历任信息',
+          careerData: [
+            { num: 1, name: '大久保武雄', time: ' 1948年（昭和23年）5月1日-1951年（昭和26年）5月4日 ', cause: '请辞', almaMater: '', office: '众议院议员、労働大臣', whereabouts: '众议院议员、労働大臣' },
+            { num: 2, name: '柳沢米吉', time: '1951年（昭和26年）5月4日-1953年（昭和28年）1月31日 ', cause: '请辞', almaMater: '', office: '海上保安庁次长', whereabouts: 'アジア航空测量社长、同会长' },
+            { num: 3, name: '山口传', time: ' 1953年（昭和28年）1月31日-1955年（昭和30年）5月4日 ', cause: '请辞', almaMater: '', office: '海上保安庁次长', whereabouts: '羽田空港ターミナルビル副社长' },
+            { num: 4, name: '岛居辰次郎', time: ' 1955年（昭和30年）5月4日-1958年（昭和33年）12月5日', cause: '请辞', almaMater: '', office: '海上保安庁次长', whereabouts: '日本原子力船开発事业団理事长' },
+            { num: 5, name: '安西正道', time: ' 1958年（昭和33年）12月5日-1959年（昭和34年）5月6日', cause: '请辞', almaMater: '', office: '海上保安庁次长', whereabouts: '全日本空输社长' },
+            { num: 6, name: '林坦', time: ' 1959年（昭和34年）5月6日-1961年（昭和36年）7月4日 ', cause: '请辞', almaMater: '', office: '航空局长', whereabouts: '船舶整备公団理事长' },
+            { num: 7, name: '和田勇', time: ' 1961年（昭和36年）7月4日-1963年（昭和38年）6月7日 ', cause: '请辞', almaMater: '', office: '海上保安庁次长', whereabouts: '' },
+            { num: 8, name: '辻章男', time: '1963年（昭和38年）6月7日-1964年（昭和39年）2月1日', cause: '请辞', almaMater: '', office: '海运局长', whereabouts: '关西国际空港ビルディング会长' },
+            { num: 9, name: '今井荣文', time: ' 1964年（昭和39年）2月1日-1965年（昭和40年）6月2日 ', cause: '请辞', almaMater: '', office: '大臣官房长', whereabouts: '新东京国际空港公団総裁' },
+            { num: 10, name: '栃内一彦', time: ' 1965年（昭和40年）6月2日-1966年（昭和41年）7月4日', cause: '请辞', almaMater: '', office: '航空局长', whereabouts: '日本航空开発社长' },
+            { num: 11, name: '佐藤光夫', time: '1966年（昭和41年）7月4日-1967年（昭和42年）3月14日 ', cause: '升迁', almaMater: '', office: '航空局长', whereabouts: '运输事务次官、日本民営铁道协会理事长、国际観光振兴会会长、京成电铁社长、京成百货店社长、北総开発铁道社长、オリエンタルランド取缔役、交通遗児育成基金会长' },
+            { num: 12, name: '亀山信郎', time: '1967年（昭和42年）3月14日-1968年（昭和43年）6月7日 ', cause: '请辞', almaMater: '', office: '海运局长', whereabouts: '船舶整备公団理事长' },
+            { num: 13, name: '河毛一郎', time: '1968年（昭和43年）6月7日-1970年（昭和45年）6月19日 ', cause: '请辞', almaMater: '', office: '船员局长', whereabouts: '' },
+            { num: 14, name: '手冢良成', time: '1970年（昭和45年）6月19日-1972年（昭和47年）6月30日 ', cause: '请辞', almaMater: '', office: '航空局长', whereabouts: '国际観光振兴会会长' },
+            { num: 15, name: '野村一彦', time: ' 1972年（昭和47年）6月30日-1973年（昭和48年）8月31日', cause: '请辞', almaMater: '', office: '自动车局长', whereabouts: '日本原子力船开発事业団理事长' },
+            { num: 16, name: '佐原亨', time: ' 1973年（昭和48年）8月31日-1974年（昭和49年）6月7日', cause: '请辞', almaMater: '', office: '海运局长', whereabouts: 'ジャパンライン副社长' },
+            { num: 17, name: '寺井久美', time: ' 1974年（昭和49年）6月7日-1975年（昭和50年）7月18日', cause: '请辞', almaMater: '', office: '航空局长', whereabouts: '日本アジア航空副社长日本货物航空副社长' },
+            { num: 18, name: '薗村泰彦', time: ' 1975年（昭和50年）7月18日-1978年（昭和53年）6月27日', cause: '请辞', almaMater: '', office: '海运局长', whereabouts: '帝都高速度交通営団総裁' },
+            { num: 19, name: '高桥寿夫', time: ' 1978年（昭和53年）6月27日-1979年（昭和54年）7月27日', cause: '请辞', almaMater: '', office: '航空局长', whereabouts: '日本空港ビルデング社长、同会长' },
+            { num: 20, name: '眞岛健', time: ' 1979年（昭和54年）7月27日-1980年（昭和55年）6月17日', cause: '请辞', almaMater: '', office: '海运局长', whereabouts: '船舶整备公団理事长、日本エアシステム社长' },
+            { num: 21, name: '妹尾弘人', time: ' 1980年（昭和55年）6月17日-1982年（昭和57年）6月11日', cause: '请辞', almaMater: '', office: '海运局长', whereabouts: '船舶整备公団理事长、京成电铁社长、同会长' },
+            { num: 22, name: '永井浩', time: ' 1982年（昭和57年）6月11日-1983年（昭和58年）6月3日', cause: '请辞', almaMater: '', office: '海运局长', whereabouts: '日本铁道建设公団総裁' },
+            { num: 23, name: '石月昭二', time: ' 1983年（昭和58年）6月3日-1984年（昭和59年）7月1日', cause: '请辞', almaMater: '', office: '海运局长', whereabouts: '新干线铁道保有机构理事长、日本国有铁道清算事业団理事长' },
+            { num: 24, name: '角田达郎', time: ' 1984年（昭和59年）7月1日-1985年（昭和60年）6月26日', cause: '请辞', almaMater: '', office: '自动车局长', whereabouts: '西日本旅客铁道社长、同会长' },
+            { num: 25, name: '山本长', time: ' 1985年（昭和60年）6月26日-1986年（昭和61年）6月14日', cause: '请辞', almaMater: '', office: '运输政策局长', whereabouts: '新东京国际空港公団総裁' },
+            { num: 26, name: '栗林贞一', time: ' 1986年（昭和61年）6月14日-1987年（昭和62年）10月6日', cause: '请辞', almaMater: '', office: '运输政策局长', whereabouts: '日本航空副社长、日本アジア航空会长' },
+            { num: 27, name: '山田隆英', time: ' 1987年（昭和62年）10月6日-1989年（平成元年）6月27日', cause: '请辞', almaMater: '', office: '航空局长', whereabouts: 'エアーニッポン社长、同会长' },
+            { num: 28, name: '塩田澄夫', time: ' 1989年（平成元年）6月27日-1990年（平成2年）6月27日', cause: '请辞', almaMater: '', office: '运输政策局长', whereabouts: '日本铁道建设公団総裁' },
+            { num: 29, name: '丹羽晟', time: ' 1990年（平成2年）6月27日-1991年（平成3年）6月18日', cause: '请辞', almaMater: '', office: '航空局长', whereabouts: '国际観光振兴会会长' },
+            { num: 30, name: '宫本春树', time: ' 1991年（平成3年）6月18日-1992年（平成4年）6月23日', cause: '请辞', almaMater: '', office: '航空局长', whereabouts: '船舶整备公団理事长、运输施设整备事业団理事长' },
+            { num: 31, name: '井山嗣夫', time: ' 1992年（平成4年）6月23日-1994年（平成6年）6月29日', cause: '请辞', almaMater: '', office: '铁道局长', whereabouts: '国际観光振兴会会长' },
+            {
+              num: 32, name: '秦野裕', time: '1994年（平成6年）6月29日-1996年（平成8年）6月25日', cause: '请辞', almaMater: '', office: '铁道局长', whereabouts: '帝都高速度交通営団副総裁'
+            },
+            { num: 33, name: '土坂泰敏', time: '1996年（平成8年）6月25日-1997年（平成9年）7月1日', cause: '请辞', almaMater: '', office: '运输政策局长', whereabouts: '帝都高速度交通営団総裁' },
+            { num: 34, name: '相原力', time: '1997年（平成9年）7月1日-1998年（平成10年）7月1日', cause: '请辞', almaMater: '', office: '运输政策局长', whereabouts: '运输施设整备事业団理事长' },
+            { num: 35, name: '楠木行雄', time: '1998年（平成10年）7月1日-1999年（平成11年）7月14日', cause: '请辞', almaMater: '', office: '航空局长', whereabouts: '軽自动车検査协会理事长' },
+            { num: 36, name: '荒井正吾', time: '1999年（平成11年）7月14日-2001年（平成13年）1月5日', cause: '请辞', almaMater: '', office: '自动车交通局长', whereabouts: '参议院议员、奈良県知事' },
+            { num: 37, name: '縄野克彦', time: '2001年（平成13年）1月6日-2002年（平成14年）8月1日', cause: '调任', almaMater: '', office: '自动车交通局长', whereabouts: '国土交通审议官、日本航空副社长、一般财団法人日本気象协会会长、株式会社ジェイアール货物・インターナショナル社长' },
+            { num: 38, name: '深谷宪一', time: '2002年（平成14年）8月1日-2004年（平成16年）7月1日', cause: '请辞', almaMater: '', office: '航空局长', whereabouts: '财団法人运输政策研究机构理事长、日本政策投资银行理事' },
+            { num: 39, name: '石川裕己', time: '2004年（平成16年）7月1日-2007年（平成19年）7月10日', cause: '请辞', almaMater: '', office: '航空局长', whereabouts: '独立行政法人铁道建设・运输施设整备支持机构理事长' },
+            { num: 40, name: '岩崎贞二', time: '2007年（平成19年）7月10日-2009年（平成21年）7月24日', cause: '请辞', almaMater: '东京大学', office: '自动车交通局长', whereabouts: '一般财団法人空港环境整备协会会长、独立行政法人铁道建设・运输施设整备支持机构理事长代理、公益社団法人日本海洋少年団连盟副会长' },
+            { num: 41, name: '铃木久泰', time: '2009年（平成21年）7月24日-2012年（平成24年）9月11日', cause: '请辞', almaMater: '东京大学', office: '海上保安庁次长', whereabouts: '日本空港ビルデング副社长' },
+            { num: 42, name: '北村隆志', time: '2012年（平成24年）9月11日-2013年（平成25年）8月1日', cause: '请辞', almaMater: '东京大学', office: '国土交通审议官', whereabouts: '内阁官房内阁审议官兼国土强靱化推进室次长、大阪国际空港ターミナル特别顾问、铁道建设・运输施设整备支持机构理事长' },
+            { num: 43, name: '佐藤雄二', time: '2013年（平成25年）8月1日-2016年（平成28年）6月21日', cause: '请辞', almaMater: '海保大23期', office: '海上保安监', whereabouts: '运输安全委员会委员' },
+            { num: 44, name: '中岛敏', time: '2016年（平成28年）6月21日-2018年（平成30年）7月31日', cause: '请辞', almaMater: '海保大25期', office: '海上保安监', whereabouts: '' },
+            { num: 45, name: '岩并秀一', time: '2018年（平成30年）7月31日-2020年　(令和2年)1月7日', cause: '请辞', almaMater: '海保大27期', office: '海上保安监', whereabouts: '' },
+            { num: 46, name: '奥岛高弘', time: '2020年（令和2年）1月7日-2022年（令和4年）6月28日', cause: '请辞', almaMater: '海保大28期', office: '海上保安监', whereabouts: '' },
+            { num: 47, name: '石井昌平', time: '2022年（令和4年）6月28日-2024年（令和6年）7月1日', cause: '请辞', almaMater: '东京大学', office: '海上保安庁次长', whereabouts: '' },
+            { num: 48, name: '瀬口良夫', time: '2024年（令和6年）7月1日-现职', cause: '请辞', almaMater: '海保大36期', office: '海上保安庁次长', whereabouts: '' },
+
+          ],
+          careerColumns: [
+            {
+              title: '届',
+              dataIndex: 'num',
+              key: 'num',
+            },
+            {
+              title: '姓名',
+              dataIndex: 'name',
+              key: 'name',
+            },
+            {
+              title: '在任时间',
+              dataIndex: 'time',
+              key: 'time',
+            },
+            {
+              title: '离任原因',
+              dataIndex: 'cause',
+              key: 'cause',
+            },
+            {
+              title: '母校·期',
+              dataIndex: 'almaMater',
+              key: 'almaMater',
+            },
+            {
+              title: '就任前职务',
+              dataIndex: 'office',
+              key: 'office',
+            },
+            {
+              title: '离任后去向',
+              dataIndex: 'whereabouts',
+              key: 'whereabouts',
+              render: (text, record) => <div style={{ maxWidth: '200px', }}>{text}</div>
+            }
+          ],
+        }
+      ],
+    },
+    t2: {
+      title: '其他官员',
+      // infoData: [
+      //   { id: uuidv4(), careerProfileId: 'guan1', name: '第一管区' },
+      //   { id: uuidv4(), careerProfileId: 'guan2', name: '第二管区' },
+      //   // { id: uuidv4(), careerProfileId: 'guan3', name: '第三管区' },
+      //   // { id: uuidv4(), careerProfileId: 'guan4', name: '第四管区' },
+      //   // { id: uuidv4(), careerProfileId: 'guan5', name: '第五管区' },
+      //   // { id: uuidv4(), careerProfileId: 'guan6', name: '第六管区' },
+      //   // { id: uuidv4(), careerProfileId: 'guan7', name: '第七管区' },
+      //   // { id: uuidv4(), careerProfileId: 'guan8', name: '第八管区' },
+      //   // { id: uuidv4(), careerProfileId: 'guan9', name: '第九管区' },
+      //   // { id: uuidv4(), careerProfileId: 'guan10', name: '第十管区' },
+      //   // { id: uuidv4(), careerProfileId: 'guan11', name: '第十一管区' },
+      //   // { id: uuidv4(), careerProfileId: 'guan12', name: '总务部' },
+      //   // { id: uuidv4(), careerProfileId: 'guan13', name: '海上保安学校' },
+      //   // { id: uuidv4(), careerProfileId: 'guan14', name: '海上保安大学' },
+      //   // { id: uuidv4(), careerProfileId: 'guan15', name: '装备技术部' },
+      //   // { id: uuidv4(), careerProfileId: 'guan16', name: '警备救难部' },
+      //   // { id: uuidv4(), careerProfileId: 'guan17', name: '海洋情报部' },
+      //   // { id: uuidv4(), careerProfileId: 'guan18', name: '交通部', },
+      //   // { id: uuidv4(), careerProfileId: 'guan19', name: '首席监察官' }
+      // ],
+
+      careerProfiles: [
+
+        // {
+        //   id: 'guan1',
+        //   careerProfileContent: '',
+        //   careerColumns: [
+        //     {
+        //       title: '序号',
+        //       dataIndex: 'num',
+        //       key: 'num',
+        //     },
+        //     {
+        //       title: '职位',
+        //       dataIndex: 'time',
+        //       key: 'time',
+        //     },
+        //     {
+        //       title: '姓名',
+        //       dataIndex: 'position',
+        //       key: 'position',
+        //     },
+        //     // {
+        //     //   title: '社交账号',
+        //     //   dataIndex: 'tel',
+        //     //   key: 'tel',
+        //     //   render: (text, record) => (
+        //     //     <div>
+        //     //       {record.tel.map((picture, index) => (
+        //     //         <img
+        //     //           key={index}
+        //     //           src={picture}
+        //     //           alt={`社交账号 ${index}`}
+        //     //           style={{ width: '50px', height: '50px', marginRight: '5px' }} // 根据需要调整图片大小和样式
+        //     //         />
+        //     //       ))}
+        //     //     </div>
+        //     //   ),
+        //     // },
+        //   ],
+        //   careerData: [
+        //     { num: 1, time: '2020年（令和2年）4月1日', position: '就任第九管区海上保安本部部长' },
+        //     { num: 2, time: '同年10月1日', position: '被任命为安全救援部部长' },
+
+        //   ],
+
+        // },
+        {
+          id: 'guan2',
+          careerProfileContent: '',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num',
+              // render: (text, record) => <div style={{ minWidth: '100px', }}>{text}</div>,  
+              width: '200px'
+            },
+            {
+              title: '姓名',
+              dataIndex: 'office',
+              key: 'office',
+              // render: (text, record) => <div style={{ minWidth: '200px', }}>{text}</div>,
+              width: '200px'
+            },
+            {
+              title: '职位',
+              dataIndex: 'name',
+              key: 'name',
+              // render: (text, record) => <div style={{ minWidth: '400px', }}>{text}</div>
+              width: '400px'
+            },
+
+          ],
+          careerData: [
+            { num: 1, name: '次長', office: '宮澤康一' },
+            { num: 2, name: '海上保安監', office: '彼末浩明' },
+          ],
+        },
+        {
+          id: 'guan3',
+          careerProfileContent: '总务部',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num', width: '200px'
+            },
+            {
+              title: '姓名',
+              dataIndex: 'office',
+              key: 'office', width: '200px'
+            },
+            {
+              title: '职位',
+              dataIndex: 'name',
+              key: 'name', width: '400px'
+            },
+
+          ],
+          careerData: [
+            { num: 1, name: '部長', office: '服部真樹' },
+            { num: 2, name: '参事官', office: '白﨑俊介' },
+            { num: 3, name: '参事官', office: '増田直樹' },
+            { num: 4, name: '参事官', office: '川越功一' },
+            { num: 5, name: '政務課長', office: '浅井俊隆' },
+            { num: 6, name: '政策評価広報室長', office: '岡光豊' },
+            { num: 7, name: '予算執行管理室長', office: '清水智司' },
+            { num: 8, name: '秘書課長', office: '安達貴弘' },
+            { num: 9, name: '人事課長', office: '古川大輔' },
+            { num: 10, name: '人事企画官', office: '木原洋' },
+            { num: 11, name: '情報通信課長', office: '荒川直秀' },
+            { num: 12, name: 'システム整備室長', office: '鮫島耕治' },
+            { num: 13, name: 'システム管理室長', office: '齊藤憲邦' },
+            { num: 14, name: 'サイバー対策室長', office: '潮平篤' },
+            { num: 15, name: '教育訓練管理官', office: '倉本明' },
+            { num: 16, name: '主計管理官', office: '内海雄介' },
+            { num: 17, name: '国際戦略官', office: '中川哲宏' },
+            { num: 18, name: '危機管理官', office: '石井龍' },
+            { num: 19, name: '海上保安試験研究ｾﾝﾀｰ所長', office: '久木正則' },
+            { num: 20, name: '危機管理調整官', office: '小山勇治' },
+            { num: 21, name: '職員相談室長', office: '時森康雄' }
+          ],
+        },
+        {
+          id: 'guan4',
+          careerProfileContent: '装備技術部',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num', width: '200px'
+            },
+            {
+              title: '姓名',
+              dataIndex: 'office',
+              key: 'office', width: '200px'
+            },
+            {
+              title: '职位',
+              dataIndex: 'name',
+              key: 'name', width: '400px'
+            },
+
+          ],
+          careerData: [
+            { num: 1, name: '部長', office: '矢頭康彦' },
+            { num: 2, name: '管理課長', office: '下矢浩介' },
+            { num: 3, name: '技術開発官', office: '中川誠' },
+            { num: 4, name: '施設補給課長', office: '小堀靖弘' },
+            { num: 5, name: '施設調整官', office: '菊池正幸' },
+            { num: 6, name: '船舶課長', office: '梶田智弘' },
+            { num: 7, name: '首席船舶工務官', office: '松居伸明' },
+            { num: 8, name: '船舶整備企画室長', office: '向原千文' },
+            { num: 9, name: '航空機課長', office: '久保田昌行' },
+            { num: 10, name: '航空機整備管理室長', office: '河野稔' }
+          ],
+        },
+        {
+          id: 'guan5',
+          careerProfileContent: '警備救難部',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num', width: '200px'
+            },
+            {
+              title: '姓名',
+              dataIndex: 'office',
+              key: 'office', width: '200px'
+            },
+            {
+              title: '职位',
+              dataIndex: 'name',
+              key: 'name', width: '400px'
+            },
+
+          ],
+          careerData: [
+            { num: 1, name: '部長', office: '山戸義勝' },
+            { num: 2, name: '管理課長', office: '佐々木渉' },
+            { num: 3, name: '航空業務管理室長', office: '深瀬真司' },
+            { num: 4, name: '運用司令ｾﾝﾀｰ所長', office: '小林正佳' },
+            { num: 5, name: '刑事課長', office: '春藤光' },
+            { num: 6, name: '外国人漁業対策室長', office: '児玉徹' },
+            { num: 7, name: '国際刑事課長', office: '野本英伸' },
+            { num: 8, name: '海賊対策室長', office: '長崎克明' },
+            { num: 9, name: '警備課長', office: '三盃晃' },
+            { num: 10, name: '領海警備対策室長', office: '田中航二郎' },
+            { num: 11, name: '警備企画官', office: '三嶋舟司' },
+            { num: 12, name: '警備情報課長', office: '丹野博信' },
+            { num: 13, name: '警備情報調整官', office: '松吉慎一郎' },
+            { num: 14, name: '救難課長', office: '上野春一郎' },
+            { num: 15, name: '環境防災課長', office: '平井洋次' }
+          ],
+        },
+        {
+          id: 'guan6',
+          careerProfileContent: '海洋情報部',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num', width: '200px'
+            },
+            {
+              title: '姓名',
+              dataIndex: 'office',
+              key: 'office', width: '200px'
+            },
+            {
+              title: '职位',
+              dataIndex: 'name',
+              key: 'name', width: '400px'
+            },
+
+          ],
+          careerData: [
+            { num: 1, name: '部長', office: '藤田雅之' },
+            { num: 2, name: '企画課長', office: '川村朋哉' },
+            { num: 3, name: '海洋調査運用室長', office: '山本享' },
+            { num: 4, name: '技術･国際課長', office: '冨山新一' },
+            { num: 5, name: '海洋研究室長', office: '小原泰彦' },
+            { num: 6, name: '国際業務室長', office: '金田謙太郎' },
+            { num: 7, name: '海洋情報技術調整室長', office: '鈴木英一' },
+            { num: 8, name: '沿岸調査課長', office: '森下泰成' },
+            { num: 9, name: '海洋防災調査室長', office: '佐藤まりこ' },
+            { num: 10, name: '大洋調査課長', office: '吉田剛' },
+            { num: 11, name: '海洋汚染調査室長', office: '岡野博文' },
+            { num: 12, name: '情報管理課長', office: '中林茂' },
+            { num: 13, name: '情報利用推進課長', office: '小森達雄' },
+            { num: 14, name: '水路通報室長', office: '畑生昭郎' },
+            { num: 15, name: '海洋空間情報室長', office: '勢田明大' },
+            { num: 16, name: '図誌審査室長', office: '増田貴仁' }
+          ],
+        },
+        {
+          id: 'guan7',
+          careerProfileContent: '交通部',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num', width: '200px'
+            },
+            {
+              title: '姓名',
+              dataIndex: 'office',
+              key: 'office', width: '200px'
+            },
+            {
+              title: '职位',
+              dataIndex: 'name',
+              key: 'name', width: '400px'
+            },
+
+          ],
+          careerData: [
+            { num: 1, name: '部長', office: '石塚智之' },
+            { num: 2, name: '企画課長', office: '森髙龍平' },
+            { num: 3, name: '海上交通企画室長', office: '花野一誠' },
+            { num: 4, name: '国際・技術開発室長', office: '田中一幸' },
+            { num: 5, name: '航行安全課長', office: '本位田拓' },
+            { num: 6, name: '航行指導室長', office: '福木俊朗' },
+            { num: 7, name: '交通管理室長', office: '西雄二' },
+            { num: 8, name: '安全対策課長', office: '大井良司' },
+            { num: 9, name: '安全情報提供センター所長', office: '久保剛' },
+            { num: 10, name: '整備課長', office: '冨田英利' },
+            { num: 11, name: '首席監察官', office: '天辰弘二' },
+            { num: 12, name: '監察官', office: '長谷川真琴' }
+          ],
+        },
+        {
+          id: 'guan8',
+          careerProfileContent: '海上保安大学校',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num', width: '200px'
+            },
+            {
+              title: '姓名',
+              dataIndex: 'office',
+              key: 'office', width: '200px'
+            },
+            {
+              title: '职位',
+              dataIndex: 'name',
+              key: 'name', width: '400px'
+            },
+
+          ],
+          careerData: [
+            { num: 1, name: '校長', office: '筒井直樹' },
+            { num: 2, name: '副校長', office: '福本拓也' },
+            { num: 3, name: '事務局長', office: '濵田哲郎' },
+            { num: 4, name: '教務部長（兼）', office: '神吉隆司' },
+            { num: 5, name: '訓練部長（兼）', office: '松山智' },
+            { num: 6, name: '海上保安国際研究ｾﾝﾀｰ長', office: '後藤宏明' }
+          ],
+        },
+        {
+          id: 'guan9',
+          careerProfileContent: '海上保安学校',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num', width: '200px'
+            },
+            {
+              title: '姓名',
+              dataIndex: 'office',
+              key: 'office', width: '200px'
+            },
+            {
+              title: '职位',
+              dataIndex: 'name',
+              key: 'name', width: '400px'
+            },
+
+          ],
+          careerData: [
+            { num: 1, name: '校長', office: '川上誠' },
+            { num: 2, name: '副校長', office: '辰巳屋誠' },
+            { num: 3, name: '事務部長', office: '中川武志' },
+            { num: 4, name: '教育訓練部長（兼）', office: '地村智明' },
+            { num: 5, name: '門司分校分校長', office: '遠田吉広' },
+            { num: 6, name: '宮城分校分校長', office: '川島喜与志' }
+          ],
+        },
+        {
+          id: 'guan10',
+          careerProfileContent: '第一管区海上保安本部',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num', width: '200px'
+            },
+            {
+              title: '姓名',
+              dataIndex: 'office',
+              key: 'office', width: '200px'
+            },
+            {
+              title: '职位',
+              dataIndex: 'name',
+              key: 'name', width: '400px'
+            },
+
+          ],
+          careerData: [
+            { num: 1, name: '本部長', office: '澤井俊' },
+            { num: 2, name: '次長', office: '吉本直哉' },
+            { num: 3, name: '総務部長', office: '蓮見純' },
+            { num: 4, name: '経理補給部長', office: '川谷内宏明' },
+            { num: 5, name: '警備救難部長', office: '藤田望' },
+            { num: 6, name: '海洋情報部長', office: '鐘尾誠' },
+            { num: 7, name: '交通部長', office: '蓮見由絵' },
+            { num: 8, name: '函館海上保安部長', office: '藤吉克博' },
+            { num: 9, name: '小樽海上保安部長', office: '小岩井直' },
+            { num: 10, name: '室蘭海上保安部長', office: '平山仁志' },
+            { num: 11, name: '釧路海上保安部長', office: '本田浩二' },
+            { num: 12, name: '留萌海上保安部長', office: '島田春吾' },
+            { num: 13, name: '稚内海上保安部長', office: '網信幸' },
+            { num: 14, name: '紋別海上保安部長', office: '枝村和茂' },
+            { num: 15, name: '根室海上保安部長', office: '真鍋朗宏' },
+            { num: 16, name: '函館航空基地長', office: '今井靖晃' },
+            { num: 17, name: '釧路航空基地長', office: '中村至宏' },
+            { num: 18, name: '千歳航空基地長', office: '扇谷佳秀' }
+          ],
+        },
+        {
+          id: 'guan11',
+          careerProfileContent: '第二管区海上保安本部',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num', width: '200px'
+            },
+            {
+              title: '姓名',
+              dataIndex: 'office',
+              key: 'office', width: '200px'
+            },
+            {
+              title: '职位',
+              dataIndex: 'name',
+              key: 'name', width: '400px'
+            },
+
+          ],
+          careerData: [
+            { num: 1, name: '本部長', office: '長井総和' },
+            { num: 2, name: '次長', office: '室田英樹' },
+            { num: 3, name: '総務部長', office: '髙橋修' },
+            { num: 4, name: '警備救難部長', office: '椎木紀文' },
+            { num: 5, name: '海洋情報部長', office: '片桐康孝' },
+            { num: 6, name: '交通部長', office: '小野祐輔' },
+            { num: 7, name: '青森海上保安部長', office: '植松剛紀' },
+            { num: 8, name: '八戸海上保安部長', office: '外賀新一' },
+            { num: 9, name: '釜石海上保安部長', office: '佐々木篤' },
+            { num: 10, name: '宮城海上保安部長', office: '木下秀樹' },
+            { num: 11, name: '秋田海上保安部長', office: '武智敬司' },
+            { num: 12, name: '酒田海上保安部長', office: '相川武司' },
+            { num: 13, name: '福島海上保安部長', office: '藤井雅文' },
+            { num: 14, name: '仙台航空基地長', office: '中上伸吾' }
+          ],
+        },
+        {
+          id: 'guan12',
+          careerProfileContent: '第三管区海上保安本部',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num', width: '200px'
+            },
+            {
+              title: '姓名',
+              dataIndex: 'office',
+              key: 'office', width: '200px'
+            },
+            {
+              title: '职位',
+              dataIndex: 'name',
+              key: 'name', width: '400px'
+            },
+
+          ],
+          careerData: [
+            { num: 1, name: '本部長', office: '宮本伸二' },
+            { num: 2, name: '次長', office: '木川嘉将' },
+            { num: 3, name: '総務部長', office: '寺前大' },
+            { num: 4, name: '経理補給部長', office: '小合俊一郎' },
+            { num: 5, name: '船舶技術部長', office: '髙橋大輔' },
+            { num: 6, name: '警備救難部長', office: '山田隆司' },
+            { num: 7, name: '海洋情報部長', office: '松本良浩' },
+            { num: 8, name: '交通部長', office: '稲葉健人' },
+            { num: 9, name: '茨城海上保安部長', office: '遠山良和' },
+            { num: 10, name: '千葉海上保安部長', office: '稲田健二' },
+            { num: 11, name: '銚子海上保安部長', office: '横山秀和' },
+            { num: 12, name: '東京海上保安部長', office: '中田光昭' },
+            { num: 13, name: '横浜海上保安部長', office: '松川勝紀' },
+            { num: 14, name: '横須賀海上保安部長', office: '惠谷修' },
+            { num: 15, name: '清水海上保安部長', office: '小川一夫' },
+            { num: 16, name: '下田海上保安部長', office: '山下雄一郎' },
+            { num: 17, name: '東京湾海上交通ｾﾝﾀｰ所長', office: '池田紀道' },
+            { num: 18, name: '羽田航空基地長', office: '林博之' },
+            { num: 19, name: '羽田特殊救難基地長', office: '岡大一郎' },
+            { num: 20, name: '横浜機動防除基地長', office: '大戸貴之' }
+          ],
+        },
+        {
+          id: 'guan13',
+          careerProfileContent: '第四管区海上保安本部',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num', width: '200px'
+            },
+            {
+              title: '姓名',
+              dataIndex: 'office',
+              key: 'office', width: '200px'
+            },
+            {
+              title: '职位',
+              dataIndex: 'name',
+              key: 'name', width: '400px'
+            },
+
+          ],
+          careerData: [
+            { num: 1, name: '本部長', office: '澤井幸保' },
+            { num: 2, name: '次長', office: '牧野充浩' },
+            { num: 3, name: '総務部長', office: '池田久志' },
+            { num: 4, name: '警備救難部長', office: '東條英一' },
+            { num: 5, name: '海洋情報部長', office: '狹間徹' },
+            { num: 6, name: '交通部長', office: '山本一' },
+            { num: 7, name: '名古屋海上保安部長', office: '千田亨' },
+            { num: 8, name: '四日市海上保安部長', office: '村松一昭' },
+            { num: 9, name: '尾鷲海上保安部長', office: '早川昌利' },
+            { num: 10, name: '鳥羽海上保安部長', office: '尾崎賢一' },
+            { num: 11, name: '中部空港海上保安航空基地長', office: '石田勝' },
+            { num: 12, name: '名古屋港海上交通ｾﾝﾀｰ所長', office: '灘波陽子' },
+            { num: 13, name: '伊勢湾海上交通ｾﾝﾀｰ所長', office: '山﨑陽三' }
+          ],
+        },
+        {
+          id: 'guan14',
+          careerProfileContent: '第五管区海上保安本部',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num', width: '200px'
+            },
+            {
+              title: '姓名',
+              dataIndex: 'office',
+              key: 'office', width: '200px'
+            },
+            {
+              title: '职位',
+              dataIndex: 'name',
+              key: 'name', width: '400px'
+            },
+
+          ],
+          careerData: [
+            { num: 1, name: '本部長', office: '鍬本浩司' },
+            { num: 2, name: '次長', office: '池上浩之' },
+            { num: 3, name: '総務部長', office: '上田浩一' },
+            { num: 4, name: '経理補給部長', office: '髙橋正伸' },
+            { num: 5, name: '船舶技術部長', office: '髙橋治' },
+            { num: 6, name: '警備救難部長', office: '境祥光' },
+            { num: 7, name: '海洋情報部長', office: '山﨑哲也' },
+            { num: 8, name: '交通部長', office: '伊藤智人' },
+            { num: 9, name: '大阪海上保安監部長', office: '宮本勝通' },
+            { num: 10, name: '神戸海上保安部長', office: '三柳裕二' },
+            { num: 11, name: '姫路海上保安部長', office: '浅野光行' },
+            { num: 12, name: '和歌山海上保安部長', office: '岡本顕' },
+            { num: 13, name: '田辺海上保安部長', office: '杉山陽二郎' },
+            { num: 14, name: '徳島海上保安部長', office: '野﨑威一郎' },
+            { num: 15, name: '高知海上保安部長', office: '佐藤哲' },
+            { num: 16, name: '関西空港海上保安航空基地長', office: '中林久子' },
+            { num: 17, name: '大阪湾海上交通ｾﾝﾀｰ所長', office: '三ケ田忠弘' }
+          ],
+        },
+        {
+          id: 'guan15',
+          careerProfileContent: '第六管区海上保安本部',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num', width: '200px'
+            },
+            {
+              title: '姓名',
+              dataIndex: 'office',
+              key: 'office', width: '200px'
+            },
+            {
+              title: '职位',
+              dataIndex: 'name',
+              key: 'name', width: '400px'
+            },
+
+          ],
+          careerData: [
+            { num: 1, name: '本部長', office: '小野雄介' },
+            { num: 2, name: '次長', office: '奥武' },
+            { num: 3, name: '総務部長', office: '木室貴行' },
+            { num: 4, name: '経理補給部長', office: '遠藤一彦' },
+            { num: 5, name: '船舶技術部長', office: '西敏英' },
+            { num: 6, name: '警備救難部長', office: '戸田陽一' },
+            { num: 7, name: '海洋情報部長', office: '松村治寿' },
+            { num: 8, name: '交通部長', office: '岩永洋' },
+            { num: 9, name: '水島海上保安部長', office: '田添太志' },
+            { num: 10, name: '玉野海上保安部長', office: '市丸和宏' },
+            { num: 11, name: '広島海上保安部長', office: '恵本康弘' },
+            { num: 12, name: '呉海上保安部長', office: '黒川亮' },
+            { num: 13, name: '尾道海上保安部長', office: '黒岩真一' },
+            { num: 14, name: '徳山海上保安部長', office: '西本和博' },
+            { num: 15, name: '高松海上保安部長', office: '萩中広樹' },
+            { num: 16, name: '松山海上保安部長', office: '坂中裕司' },
+            { num: 17, name: '今治海上保安部長', office: '谷口仁也' },
+            { num: 18, name: '宇和島海上保安部長', office: '田村誠' },
+            { num: 19, name: '備讃瀬戸海上交通ｾﾝﾀｰ所長', office: '平野宏志' },
+            { num: 20, name: '来島海峡海上交通ｾﾝﾀｰ所長', office: '岩﨑成晃' },
+            { num: 21, name: '広島航空基地長', office: '城前成男' }
+          ],
+        },
+        {
+          id: 'guan16',
+          careerProfileContent: '第七管区海上保安本部',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num', width: '200px'
+            },
+            {
+              title: '姓名',
+              dataIndex: 'office',
+              key: 'office', width: '200px'
+            },
+            {
+              title: '职位',
+              dataIndex: 'name',
+              key: 'name', width: '400px'
+            },
+
+          ],
+          careerData: [
+            { num: 1, name: '本部長', office: '倉田雄二' },
+            { num: 2, name: '次長', office: '髙橋裕之' },
+            { num: 3, name: '総務部長', office: '菊本豊' },
+            { num: 4, name: '経理補給部長', office: '毛井基昭' },
+            { num: 5, name: '船舶技術部長', office: '那須光展' },
+            { num: 6, name: '警備救難部長', office: '桑原裕志' },
+            { num: 7, name: '海洋情報部長', office: '高江洲剛' },
+            { num: 8, name: '交通部長', office: '真部克彦' },
+            { num: 9, name: '仙崎海上保安部長', office: '岩永尚哉' },
+            { num: 10, name: '門司海上保安部長', office: '大河内克朗' },
+            { num: 11, name: '若松海上保安部長', office: '橋本崇史' },
+            { num: 12, name: '福岡海上保安部長', office: '中嶋雅昭' },
+            { num: 13, name: '三池海上保安部長', office: '荒木正一郎' },
+            { num: 14, name: '唐津海上保安部長', office: '前田雅人' },
+            { num: 15, name: '長崎海上保安部長', office: '本野勝則' },
+            { num: 16, name: '佐世保海上保安部長', office: '井上昭典' },
+            { num: 17, name: '対馬海上保安部長', office: '奥田眞康' },
+            { num: 18, name: '大分海上保安部長', office: '立道英樹' },
+            { num: 19, name: '関門海峡海上交通ｾﾝﾀｰ所長', office: '剣持良彦' },
+            { num: 20, name: '北九州航空基地長', office: '中根教篤' }
+          ],
+        },
+        {
+          id: 'guan17',
+          careerProfileContent: '第八管区海上保安本部',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num', width: '200px'
+            },
+            {
+              title: '姓名',
+              dataIndex: 'office',
+              key: 'office', width: '200px'
+            },
+            {
+              title: '职位',
+              dataIndex: 'name',
+              key: 'name', width: '400px'
+            },
+
+          ],
+          careerData: [
+            { num: 1, name: '本部長', office: '久田隆弘' },
+            { num: 2, name: '次長', office: '林一馬' },
+            { num: 3, name: '総務部長', office: '秋山誠' },
+            { num: 4, name: '警備救難部長', office: '樋口則一' },
+            { num: 5, name: '海洋情報部長', office: '山本正' },
+            { num: 6, name: '交通部長', office: '寺本由紀夫' },
+            { num: 7, name: '敦賀海上保安部長', office: '真﨑和彦' },
+            { num: 8, name: '舞鶴海上保安部長', office: '松村謙一' },
+            { num: 9, name: '境海上保安部長', office: '西山博' },
+            { num: 10, name: '浜田海上保安部長', office: '岡野敏彦' },
+            { num: 11, name: '美保航空基地長', office: '椎野政男' }
+          ],
+        },
+        {
+          id: 'guan18',
+          careerProfileContent: '第九管区海上保安本部',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num', width: '200px'
+            },
+            {
+              title: '姓名',
+              dataIndex: 'office',
+              key: 'office', width: '200px'
+            },
+            {
+              title: '职位',
+              dataIndex: 'name',
+              key: 'name', width: '400px'
+            },
+
+          ],
+          careerData: [
+            { num: 1, name: '本部長', office: '猪瀬雅樹' },
+            { num: 2, name: '次長', office: '松浦あずさ' },
+            { num: 3, name: '総務部長', office: '安里匡' },
+            { num: 4, name: '警備救難部長', office: '滝田浩司' },
+            { num: 5, name: '海洋情報部長', office: '苅籠泰彦' },
+            { num: 6, name: '交通部長', office: '田中裕和' },
+            { num: 7, name: '新潟海上保安部長', office: '松本孝典' },
+            { num: 8, name: '伏木海上保安部長', office: '林睦' },
+            { num: 9, name: '金沢海上保安部長', office: '福井明裕' },
+            { num: 10, name: '七尾海上保安部長', office: '辻井道伸' },
+            { num: 11, name: '新潟航空基地長', office: '深浦裕紀' }
+          ],
+        },
+        {
+          id: 'guan19',
+          careerProfileContent: '第十管区海上保安本部',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num', width: '200px'
+            },
+            {
+              title: '姓名',
+              dataIndex: 'office',
+              key: 'office', width: '200px'
+            },
+            {
+              title: '职位',
+              dataIndex: 'name',
+              key: 'name', width: '400px'
+            },
+
+          ],
+          careerData: [
+            { num: 1, name: '本部長', office: '赤松宏樹' },
+            { num: 2, name: '次長', office: '谷川仁彦' },
+            { num: 3, name: '総務部長', office: '岡野勝' },
+            { num: 4, name: '経理補給部長', office: '金澤宏行' },
+            { num: 5, name: '船舶技術部長', office: '白澤尚' },
+            { num: 6, name: '警備救難部長', office: '村本克巳' },
+            { num: 7, name: '海洋情報部長', office: '新村拓郎' },
+            { num: 8, name: '交通部長', office: '前田健太' },
+            { num: 9, name: '熊本海上保安部長', office: '津村直文' },
+            { num: 10, name: '宮崎海上保安部長', office: '横内伸明' },
+            { num: 11, name: '鹿児島海上保安部長', office: '濵平清志' },
+            { num: 12, name: '串木野海上保安部長', office: '山景秀人' },
+            { num: 13, name: '奄美海上保安部長', office: '大場伊佐大' },
+            { num: 14, name: '鹿児島航空基地長', office: '平原文基' }
+          ],
+        },
+        {
+          id: 'guan20',
+          careerProfileContent: '第十一管区海上保安本部',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num', width: '200px'
+            },
+            {
+              title: '姓名',
+              dataIndex: 'office',
+              key: 'office', width: '200px'
+            },
+            {
+              title: '职位',
+              dataIndex: 'name',
+              key: 'name', width: '400px'
+            },
+
+          ],
+          careerData: [
+            { num: 1, name: '本部長', office: '坂本誠志郎' },
+            { num: 2, name: '次長', office: '大達弘明' },
+            { num: 3, name: '次長', office: '近藤修志' },
+            { num: 4, name: '次長', office: '税所百年' },
+            { num: 5, name: '総務部長', office: '中原浩二' },
+            { num: 6, name: '経理補給部長', office: '上野恭嗣' },
+            { num: 7, name: '船舶技術部長', office: '佐藤滋之' },
+            { num: 8, name: '警備救難部長', office: '小野純' },
+            { num: 9, name: '那覇海上保安部長', office: '山田宏一' },
+            { num: 10, name: '石垣海上保安部長', office: '田中健彦' },
+            { num: 11, name: '中城海上保安部長', office: '星﨑隆' },
+            { num: 12, name: '宮古島海上保安部長', office: '喜志多健史' },
+            { num: 13, name: '那覇航空基地長', office: '南條新一郎' },
+            { num: 14, name: '石垣航空基地長', office: '岡本雅彦' }
+          ],
+        }
+
+      ],
+    },
+
+  },
+  2: {
+    t1: {
+      title: '现任长官',
+      infoData: [
+        { id: uuidv4(), careerProfileId: 'officer1', name: '区指挥官肖恩·里根少将Sean P. Regan ' },
+        { id: uuidv4(), careerProfileId: 'officer2', name: '参谋长艾伦·麦凯布上校Alan B. McCabe' },
+        { id: uuidv4(), careerProfileId: 'officer3', name: '指挥总长迈克尔·布鲁尔总军士长Michael A. Brewer' },
+        { id: uuidv4(), careerProfileId: 'officer4', name: '地区牧师Pon Chanthaphon少校 ' },
+      ],
+
+      careerProfiles1: [
+        {
+          id: "officer1",
+          jianjie: [
+            {
+              type: 'image',
+              src: leader3,
+              alt: '海上保安厅',
+              style: { height: '200px', maxWidth: '300px' },
+            },
+            {
+              type: 'text',
+              title: '区指挥官肖恩·里根少将Sean P. Regan',
+            },
+
+            {
+              type: 'text',
+              content: '肖恩·里根少将Sean P. Regan',
+            },
+            {
+              type: 'text',
+              content: `    肖恩·里根少将于2024年6月就任第十四海岸警卫队区指挥官。他负责指挥整个大洋洲的海岸警卫队行动，包括夏威夷、关岛、北马里亚纳群岛联邦、美属萨摩亚以及在新加坡和日本的活动。海岸警卫队作为国土安全部保护美国团队的一部分，以及作为保卫美国的六个武装部队之一和联合部队的一部分，在第十四区开展行动和活动。海岸警卫队与盟友密切合作，推进海洋治理，这是基于规则的国际秩序的一部分，对自由开放的印度-太平洋至关重要。`,
+            },
+            {
+              type: 'text',
+              content: `    在担任现职之前，里根少将最近担任美国北方司令部(USNORTHCOM)总部训练、演习和兵棋推演主任兼作战副主任。作战局是美国北方司令部司令在所有作战事务上的首席顾问，为规划和执行美国北方司令部在责任区内的任务提供战略指导；开展包括陆地、空中和海上作战在内的国土防御工作，以及对民政当局的国防支援。
+    里根少将在担任海岸警卫队大西洋地区参谋长之前，曾在外交关系委员会完成军事研究金培训。
+    里根少将于1992年毕业于麻省海事学院。
+    1992年至2002年间，他参与了各种与石油和危险品应对、海事事故调查、商船检查、危险品货物管理和主要海港水道管理有关的行动。
+    2002年，他担任美国东海岸海岸警卫队第一支反恐小组的执行官。2004年，他指挥新奥尔良海事安全小组。在他的指挥下，新奥尔良海事安全小组在美国12个州和古巴关塔那摩湾执行国土安全任务。值得注意的是，该部队在2005年飓风卡特里娜过后提供了紧急关键支持，他率领400多名安全和搜救部队在大都市区开展救援并为大规模城市搜救工作提供安全保障。
+    2006年，他进入位于弗吉尼亚州匡蒂科的美国海军陆战队指挥参谋学院学习，获得军事学文学硕士学位。
+    2007年晋升为指挥官，他在海岸警卫队反恐和防御行动办公室管理海上国土安全政策。
+    2009年至2011年期间，他担任白宫海上安全政策主任和总统国家安全参谋部(NSS)北极地区政策主任。在国家安全局，他就海盗、北极石油钻探、大规模移民、福岛核泄漏和海上安全政策等问题为国家安全顾问、国土安全顾问和总统提供建议。
+    2011年，他进入位于罗得岛州纽波特的美国海军战争学院学习，获得国家安全和战略研究文学硕士学位。
+    2012年至2014年，他担任新英格兰东南区副司令，领导150多名海岸警卫队成员和6艘巡逻艇执行几乎所有海岸警卫队任务。在该区，他加强了区域港口安全、搜索和救援、船舶检查以及州、联邦和民间机构间协调。
+    2014年，他接管了海岸警卫队东海岸海上执法反恐单位海上安全反应小组(MSRT)。MSRT支持国家安全特别事件、加勒比海和美国中央司令部巴林的部署。
+    2016年至2019年，他担任美国海岸警卫队大西洋区作战部长，协调全球三分之二海岸警卫队行动的行动和政策支持。在这里，他协调海岸警卫队部队应对自然灾害、禁毒行动以及从落基山脉到阿拉伯湾的海岸警卫队行动。作为参谋长，他领导了三星作战司令部、五个下属地区司令部和49个海岸警卫队作战单位的组织和行政支持。
+    里根海军少将获得的奖项包括国防卓越服务勋章、功绩勋章（二级）、功绩服务勋章（五级）、海岸警卫队表彰勋章和海岸警卫队成就勋章（二级）。`,
+            },
+          ],
+        },
+        {
+          id: "officer2",
+          jianjie: [
+            {
+              type: 'image',
+              src: leader4,
+              alt: '海上保安厅',
+              style: { height: '200px', maxWidth: '300px' },
+            },
+            {
+              type: 'text',
+              title: '参谋长艾伦·麦凯布上校Alan B. McCabe',
+            },
+
+            {
+              type: 'text',
+              content: '艾伦·麦凯布上校Alan B. McCabe',
+            },
+            {
+              type: 'text',
+              content: `    麦凯布目前担任海岸警卫队第14区参谋长，负责监督第14区工作人员和四个下属指挥部，包括从夏威夷主岛到关岛和日本的1200多名人员。麦凯布上尉最近担任海岸警卫队第17区应急响应负责人，负责监督北太平洋、白令海和北极的行动。`,
+            },
+            {
+              type: 'text',
+              content: `   麦凯布上尉拥有超过13年的海上经验，曾担任过夏威夷檀香山USCGC MIDGETT号（WMSL757）指挥官、马萨诸塞州波士顿USCGC SENECA号（WMEC906）指挥官、佛罗里达州基韦斯特USCGC THETIS号（WMEC910）执行官、马萨诸塞州伍兹霍尔USCGC SANIBEL号（WPB1312）指挥官、阿拉斯加州荷马USCGC ROANOKE ISLAND号（WPB1346）执行官、阿拉斯加州凯奇坎USCGC ACUSHNET号（WMEC167）甲板值班军官和中尉以及华盛顿州西雅图USCGC MIDGETT号（WHEC726）水手。
+麦凯布上尉在岸上的职责包括担任海岸警卫队与美国参议院的联络官、海岸警卫队与欧洲非洲海军司令及意大利那不勒斯第六舰队司令的联络官、华盛顿特区海岸警卫队总部作战政策主任的行政助理以及阿拉斯加朱诺第17区的渔业执法政策官和海军上将助理。
+    麦凯布上尉于1994年毕业于蒙大拿州立大学，获得政治学文学士学位。他于1997年加入海岸警卫队，并于1998年毕业于军官候选人学校。他于2003年获得罗德岛大学海洋事务硕士学位。麦凯布上尉于2010年被选为战略与国际研究中心管理的Abshire-Inamori领导力学院的国际研究员。麦凯布上尉于2014年毕业于海军战争学院，获得国家安全和战略研究文学士学位，在海上高级作战学校专注于作战规划。
+他获得的奖项包括五枚功绩服务奖章、四枚海岸警卫队表彰奖章和海岸警卫队成就奖章以及各种单位奖励。
+    麦凯布上尉的妻子是金伯利·麦凯布，他们有两个儿子：迪伦(Dylan)和芬恩(Finn)。
+`},
+          ],
+        }, {
+          id: "officer3",
+          jianjie: [
+            {
+              type: 'image',
+              src: leader5,
+              alt: '海上保安厅',
+              style: { height: '200px', maxWidth: '300px' },
+            },
+            {
+              type: 'text',
+              title: '指挥总长迈克尔·布鲁尔总军士长Michael A. Brewer',
+            },
+
+            {
+              type: 'text',
+              content: '迈克尔·布鲁尔总军士长Michael A. Brewer',
+            },
+            {
+              type: 'text',
+              content: `    迈克尔·布鲁尔(Michael Brewer)军士长于2024年5月31日就任第十四海岸警卫队区的指挥军士长。作为指挥部高级士官长，他为指挥官提供有关所有劳动力事务和整个大洋洲海岸警卫队任务的士官长观点，包括夏威夷、关岛、北马里亚纳群岛联邦、美属萨摩亚以及新加坡和日本的活动。`,
+            },
+            {
+              type: 'text',
+              content: `    在就任第十四区指挥军士长之前，布鲁尔的最后一份职务是担任华盛顿特区海岸警卫队网络司令部的指挥长。
+    布鲁尔总长曾担任位于华盛顿特区的海岸警卫队总部的海洋科学技术员等级部队总长和位于马萨诸塞州波士顿的波士顿区银章指挥总长。他其他的履历包括加利福尼亚州阿拉米达的PACAREA事故管理；马萨诸塞州波士顿的波士顿预防区；弗吉尼亚州约克镇培训中心教员；加利福尼亚州旧金山的IMD区；古巴关塔那摩湾港口安全部队支队；加利福尼亚州旧金山湾海事安全办公室；以及夏威夷檀香山的USCGCRUSH。
+    除了这些经历之外，布鲁尔总长还参与了持久自由行动以及包括深水地平线和卡特里娜飓风在内的众多自然灾害和重大漏油事件的支援。
+    布鲁尔军士长毕业于国防大学基斯通指挥部高级士兵领导课程23-2班、海岸警卫队高级士兵领导课程03-12班、海岸警卫队首席士官学院CLXV班、空军士官学院、CG领导与管理学校以及其他与军事相关的学校。
+    布鲁尔军士长的个人奖项包括两枚海岸警卫队功绩奖章、三枚海岸警卫队表彰奖章、一枚联合服务成就奖章、三枚海岸警卫队成就奖章、两枚海岸警卫队表彰丝带，以及许多其他个人和服务奖章和奖项。他获得了永久的海上安全徽章和岸上反应行动徽章。布鲁尔军士长还被授予2005年旧金山地区年度士兵奖。
+    布鲁尔军士长出生于佐治亚州亚特兰大，在德克萨斯州休斯顿长大，最终于1999年8月17日加入美国海岸警卫队。他于2005年与妻子Kelly-Lynn结婚，育有三个孩子，分别是Emma、Keegan和Hanna。
+`,
+            },
+          ],
+        }, {
+          id: "officer4",
+          jianjie: [
+            {
+              type: 'image',
+              src: leader6,
+              alt: '海上保安厅',
+              style: { height: '200px', maxWidth: '300px' },
+            },
+            {
+              type: 'text',
+              title: '地区牧师Pon Chanthaphon少校',
+            },
+
+            {
+              type: 'text',
+              content: '地区牧师Pon Chanthaphon少校',
+            },
+            {
+              type: 'text',
+              content: `    2023年5月，海军少校Pon Chanthaphon前往夏威夷檀香山担任美国海岸警卫队第十四区牧师，负责为包括夏威夷群岛、关岛、日本、新加坡和美属萨摩亚在内的最大的海岸警卫队责任区内的3,800多名海岸警卫队军事人员、家属、辅助人员和文职工作人员提供宗教服务。`,
+            },
+            {
+              type: 'text',
+              content: `    从2020年到2023年，Chanthaphon牧师担任第24海军陆战队远征队(MEU)的监督牧师，并于2021年与IWOARG一起部署，支持“坚决支持”行动，通过非战斗撤离行动(NEO)结束阿富汗战争。
+    在2019-2020学年，Chanthaphon牧师就读于弗吉尼亚州匡蒂科海军陆战队大学指挥参谋学院，并在那里完成了JPME第一阶段的住院实习。他还是一名联合合格军官（JQO）。
+    2016年至2019年，Chanthaphon牧师被指派到CNSL作战部中心(OMC)Mayport的COMNAVSURFRON-14担任战术牧师，2017年他被派往USSHUÉCITY(CG-66)，作为航母打击群(CSG)TWO的一部分，支持“坚定决心”行动。随后，在部署归来后，他担任OMC副主任的参谋牧师、罗斯福号(DDG-80)和托马斯·哈德纳号(DDG-116)的指挥牧师，以及三艘海岸巡逻艇(PC)的参谋牧师：ZEPHYR号(PC-8)、TORNADO号(PC-14)和SHAMAL号(PC-13)。此外，他还担任USNAVSO/C4F的联络牧师。他于2018年完成海军牧师中级领导力课程。
+    2012年至2016年，Chanthaphon牧师向日本冲绳第三海军陆战队远征军第3D海军陆战队师FMFPAC汇报工作，他于2012年12月至2016年1月担任第3侦察营的战术牧师。在经过七个月的艰苦奋斗后，基地教堂面临着新的挑战，他于2016年2月被永久分配到第三海军陆战队远征军第3D海军陆战队师FMFPAC第4海军陆战团，之后他担任日本冲绳美国海军陆战队施瓦布营的基地牧师，直至2016年6月。
+    从海军牧师基础课程毕业后，Chanthaphon牧师到位于加利福尼亚州勒莫尔的海军航空站勒莫尔海军医院担任指挥牧师，任期从2009年11月至2012年11月。
+    2009年，Chanthaphon牧师完成了罗德岛州纽波特的军官发展学校的学业，并从南卡罗来纳州杰克逊堡的海军牧师学校和中心毕业。
+    2006年7月，Chanthaphon牧师被任命为密苏里路德教会(LCMS)牧师。他被任命为加利福尼亚州斯托克顿三一路德教会的唯一牧师，并于2006年7月至2008年8月在那里任职。2009年6月，他被直接任命为少尉。
+    2001年至2006年期间，Chanthaphon牧师就读于密苏里州圣路易斯的协和神学院，并获得了神学硕士学位(M.Div)。
+    1995年至2000年，Chanthaphon牧师就读于明尼苏达州圣保罗的康考迪亚大学，获得文学士学位，主修路德神学和基督教外展。随后，他在美国银行担任私人银行家，并在明尼苏达州圣保罗的Herberger's百货公司担任销售助理一年。
+    他个人获得的奖项包括海军和海军陆战队嘉奖奖章（4个）。
+`         },
+          ],
+        },
+
+      ],
+    },
+    t2: {
+      title: '其他官员',
+
+      infoData: [
+        { id: uuidv4(), careerProfileId: 'officer5', name: ' 远东活动/亚洲海事检查办公室 ' },
+        { id: uuidv4(), careerProfileId: 'officer51', name: '  ' },
+        { id: uuidv4(), careerProfileId: 'officer6', name: '关岛分区' },
+        { id: uuidv4(), careerProfileId: 'officer61', name: '' },
+        { id: uuidv4(), careerProfileId: 'officer71', name: '巴伯斯角空军基地' },
+        { id: uuidv4(), careerProfileId: 'officer7', name: '' },
+        { id: uuidv4(), careerProfileId: 'officer72', name: '' },
+      ],
+
+      careerProfiles1: [
+        {
+          id: "officer5",
+
+          jianjie: [
+            {
+              type: 'image',
+              src: leader7,
+              alt: '海上保安厅',
+              style: { height: '200px', maxWidth: '300px' },
+            },
+            {
+              type: 'text',
+              title: '远东活动/亚洲海事检查办公室',
+            },
+
+            {
+              type: 'text',
+              content: '指挥官詹姆斯·萨弗恩上校',
+            },
+            {
+              type: 'text',
+              content: `  萨弗恩上校目前担任海岸警卫队远东活动指挥官。他负责指挥40多个印度太平洋国家和地区的预防任务，这些国家和地区覆盖地球周长的40%，从马达加斯加到法属波利尼西亚。作为海事检查主管，他确保美国商船在穿越世界上最繁忙的航道时的安全、保障和环境合规性。他还领导一支国际港口安全联络官队伍，推动在外国港口有效实施全球公认的海事安全措施。远东活动总部设在日本，负责监督下属指挥部新加坡海事检查组。`,
+            },
+            {
+              type: 'text',
+              content: `    先前的职务包括担任德克萨斯州亚瑟港海事安全部队的执行官，该港是全美第三繁忙的商业港口、第三大石化综合体和最繁忙的军用货物装运战略港口。他曾担任海岸警卫队驻巴林麦纳麦海军中央司令部和第五舰队的高级代表，在国际安全海军联盟的发展中发挥了至关重要的作用，该联盟的使命是保护阿拉伯湾、亚丁湾和红海动荡水域的海上行动。他曾在海岸警卫队总部国防行动办公室担任全球部队管理(GFM)负责人，协调国防部/海岸警卫队的互动，并管理美国海岸警卫队高级领导层的国防应急计划和部队分配决策过程。他曾担任荷兰布伦瑟姆欧洲活动中心的调查主管，负责监督美国海岸警卫队最独特的国际案件，包括MV COSTA CONCORDIA的搁浅和沉没。他曾担任西南亚巡逻部队(PATFORSWA)重新部署援助和检查(RAID)小组的负责人，在那里他与美国陆军第595运输旅合作，指挥26名成员前往阿富汗、伊拉克和科威特。Suffern上尉曾担任荷兰鹿特丹欧洲活动中心的国际港口安全联络官(IPSLO)，在欧洲、非洲和中东各地的港口进行国际港口安全访问。他曾担任海岸警卫队迈阿密区的船舶检查员和规划与水道管理主管，负责管理区域应急和海事安全计划的所有修改、合规、演习和评估以及佛罗里达州埃弗格雷兹港商船停泊地的重组。他在新奥尔良开始了他的海岸警卫队职业生涯，曾在新奥尔良海事安全办公室担任伤亡调查员，在第八区担任污染基金管理员和响应和咨询小组(DRAT)成员。
+    萨弗恩上校拥有两个硕士学位，一个是海军陆战队大学指挥参谋学院的军事研究专业硕士学位，另一个是新奥尔良大学的金融和工商管理专业硕士学位。他获得了路易斯安那州立大学的金融理学学士学位。他于1999年10月毕业于康涅狄格州新伦敦的美国海岸警卫队预备役军官候选人学校。
+    萨弗恩上校出生于路易斯安那州新奥尔良，曾获得过铜星勋章、三枚功绩服务勋章、四枚海岸警卫队表彰勋章、司令官表彰信、阿富汗战役勋章和各种单位奖励。`,
+            },
+          ],
+        },
+        {
+          id: "officer51",
+          jianjie: [
+            {
+              type: 'image',
+              src: leader8,
+              alt: '海上保安厅',
+              style: { height: '200px', maxWidth: '300px' },
+            },
+            {
+              type: 'text',
+              title: ' 远东活动/亚洲海事检查办公室',
+            },
+
+            {
+              type: 'text',
+              content: '执行官杰亚尔·皮尔斯中校',
+            },
+            {
+              type: 'text',
+              content: `    皮尔斯中校于2022年7月出任美国海岸警卫队远东活动(FEACT)执行官。他是指挥官的主要顾问，并负责执行包括海事检查主管在内的一系列联邦授权。远东活动是海岸警卫队最大的责任区，负责监督从夏威夷群岛到印度/巴基斯坦边境、东南部非洲以及最南到新西兰的43个国家的行动。`,
+            },
+            {
+              type: 'text',
+              content: `    在被任命为FEACT之前，皮尔斯中校是德克萨斯城海事安全部队的执行官。他的职责包括在加尔维斯顿港、德克萨斯城港和自由港、墨西哥湾内陆航道120多英里、外大陆架40,000平方英里的区域以及美国最大的石化综合设施入口处执行海岸警卫队的国土安全、海事安全和海洋环境保护任务。
+    这是皮尔斯中校在海岸警卫队第五次被派往海外，最近一次被派往新加坡担任国际港口安全联络官(IPSLO)。作为IPSLO，他负责通过核实国际公约的实施情况来评估外国港口的反恐措施，并领导与印度太平洋地区各国的双边会谈。皮尔斯指挥官分享并协调了安全实践，以减少美国港口和船只受到不良行为者威胁的风险，同时确保全球海上运输系统的整体安全。
+    皮尔斯中校于2005年加入美国海岸警卫队，并以二级军士身份考入美国海岸警卫队军官候选人学校，并于2006年毕业。他之前的其他职务包括马里亚纳海军基地关岛区情势单位控制员；华盛顿西雅图区海事检查员；佛罗里达基韦斯特区检查部负责人；日本东京横田空军基地海岸警卫队远东活动海事检查员，以及美国驻韩国首尔大使馆海岸警卫队驻韩国联络官。
+    皮尔斯中校出生于韩国首尔，在华盛顿州贝灵厄姆长大。他以优异成绩毕业于檀香山夏米纳德大学，拥有历史和政治研究文学士学位。此外，皮尔斯中校还拥有俄克拉荷马大学的行政领导硕士学位、北中央大学的工商管理硕士学位和美国军事大学的刑事司法硕士学位。皮尔斯中校还完成了国土安全部、美国海岸警卫队和国防部各种任务领域的课程。 
+
+`},
+          ],
+        },
+        {
+          id: "officer6",
+          jianjie: [
+            {
+              type: 'image',
+              src: leader9,
+              alt: '海上保安厅',
+              style: { height: '200px', maxWidth: '300px' },
+            },
+            {
+              type: 'text',
+              title: '关岛分区',
+            },
+
+            {
+              type: 'text',
+              content: '关岛分区指挥官罗伯特·基斯特纳上校Robert R. Kistner',
+            },
+            {
+              type: 'text',
+              content: `   罗伯特·R·基斯特纳上校于2024年5月出任美国海岸警卫队密克罗尼西亚部队/关岛区司令兼关岛港区负责人，这一职务至关重要，负责监督该部队规模最大、最偏远的责任区，职责范围遍及西太平洋。`,
+            },
+            {
+              type: 'text',
+              content: `    此前，他于2022年5月至2024年5月担任美国海岸警卫队第14区预防部门负责人，负责监督1220万平方英里的海上安全和安保行动，覆盖21个海事国家和全球一半以上的航运。他还支持檀香山区、密克罗尼西亚部队及其下属单位以及USCGC Juniper(WLB201)和USCGC Sequoia(WLB215)加强海上事故预防、供应链弹性和治理。
+    基斯特纳上校的职业生涯始于1995年，当时他在美国海岸警卫队学院学习。此后，他担任过各种职务，每个职务都有助于他全面了解海岸警卫队的行动。这些职务包括担任USCGC Seneca(WMEC906)上的受训工程师和损害控制助理，担任巴尔的摩区设施检查处和深水船舶检查处处长，以及波士顿区检查部门负责人，负责监督新英格兰最大港口的监管合规情况。
+    作为西大湖区（原布法罗区）的副指挥官，他在由15个分队1,137名成员组成的团队的多任务行动中发挥了关键作用，覆盖了从俄亥俄州弗米利恩到圣劳伦斯航道和加拿大国际边界的1,000多英里的海岸线。
+    他的任职经历包括领导力发展中心研究与评估部门、美国海岸警卫队学院机构研究部门的职务、总部劳动力预测与分析办公室的入伍团队负责人以及美国海岸警卫队第一区预防司副司长。
+    他拥有学院的运筹学理学学士学位、马里兰大学学院的环境管理硕士证书以及马里兰大学帕克分校的应用数学理学硕士学位。
+    他获得的军事奖项包括三枚功绩服务奖章、三枚海岸警卫队表彰奖章、三枚海岸警卫队成就奖章以及各种单位和团队奖励。
+`,
+            },
+          ],
+        },
+        {
+          id: "officer61",
+          jianjie: [
+            {
+              type: 'image',
+              src: leader10,
+              alt: '海上保安厅',
+              style: { height: '200px', maxWidth: '300px' },
+            },
+            {
+              type: 'text',
+              title: '关岛分区',
+            },
+
+            {
+              type: 'text',
+              content: ' 关岛分区副指挥官瑞安·克罗斯中校RyanT.Crose',
+            },
+            {
+              type: 'text',
+              content: `    瑞安·克罗斯中校目前担任美国海岸警卫队密克罗尼西亚/关岛区副区长，负责监督该部门最大、作战距离最远的190万平方海里责任区。该管辖区包括关岛领土、北马里亚纳群岛联邦、帕劳共和国、密克罗尼西亚联邦和马绍尔群岛共和国。`,
+            },
+            {
+              type: 'text',
+              content: `    他担任该职位的多个重要职务，包括港口候补船长、联邦海事安全协调员、联邦现场协调员、海事检查主管以及搜救任务协调员。
+    此前，他于2021年至2023年担任密克罗尼西亚部队/关岛区应急部门负责人，直接管理所有执法、搜救、海洋环境保护、港口、水道和沿海安全，并打击非法、未报告和无管制的捕捞活动。他的战略领导能力促使扩大海上巡逻，利用“雷马陶行动”下的三艘新快速反应巡逻艇。他在超级台风玛瓦尔过后72小时内重新开放关岛港方面发挥了关键作用。
+    克罗斯中校的杰出职业生涯始于2001年9月11日事件后在美国海岸警卫队学院就读。他于2006年毕业，获得管理学理学学士学位。后来，他又在北中央大学获得心理学文学硕士学位，并在国际危机事件压力基金会获得大规模灾难和恐怖主义专业学位，进一步提升了自己的资历。
+    值得注意的是，他之前的职务包括担任美国驻洪都拉斯大使馆首任美国海岸警卫队海事顾问、弗吉尼亚州约克镇训练中心标准化和培训指挥中心负责人、新英格兰东南区执法部门负责人、第九区指挥中心指挥值班军官以及美国海岸警卫队贾维斯号（WHEC725）甲板值班军官。
+    他获得的荣誉包括海岸警卫队奖章、功绩服务奖章和四枚带有作战杰出装置的海岸警卫队嘉奖奖章。值得注意的是，他是第一位获得洪都拉斯一级功绩勋章的美国海岸警卫队成员，并两次获得大卫·贾维斯上校领导奖的荣誉提名。
+    克罗斯中校和他的妻子布列塔尼（他高中时的恋人）是米娅拉、梅萨迪斯、马蒂亚斯和麦肯利的骄傲父母。他将自己的职业成就归功于家人坚定不移的支持和牺牲。
+  `
+            },
+          ],
+        },
+        {
+          id: "officer7",
+          jianjie: [
+            {
+              type: 'image',
+              src: leader11,
+              alt: '海上保安厅',
+              style: { height: '200px', maxWidth: '300px' },
+            },
+            {
+              type: 'text',
+              title: '关岛分区',
+            },
+
+            {
+              type: 'text',
+              content: ' 指挥士官长杰里米·托马斯总军士长Jeremy V. Thomas',
+            },
+            {
+              type: 'text',
+              content: `    杰里米·V·托马斯(Jeremy V. Thomas)军士长于2023年7月就任美国海岸警卫队密克罗尼西亚部队/关岛区指挥军士长。`,
+            },
+            {
+              type: 'text',
+              content: `    在这个关键职位上，他担任指挥官的主要高级士兵顾问，就劳动力政策提供重要建议，指导士兵，并促进关键的行政行动和举措。他在监督该部队最大和最偏远的部门责任区方面发挥着重要作用。
+    托马斯总长来自加利福尼亚州安大略，于1997年加入美国海岸警卫队。在他杰出的职业生涯中，除了作为海洋科学技术员的主要专业之外，他还在各种角色中展现了多才多艺和领导能力。
+    他的服役经历丰富多彩，包括在多个部门和海上安全部门任职、领导加利福尼亚州诺瓦托太平洋打击队的响应小组、指导洛杉矶/长滩海上安全与安保小组(91103)的行动、以及监督国家响应中心和华盛顿特区海岸警卫队指挥中心的关键响应协调工作。担任这些职务期间，他参与了多方面的执法任务、应对全球紧急情况、管理全国性污染事件，并完善了以适应性和远见为标志的领导风格。
+    美国海岸警卫队授予托马斯军士长无数荣誉，以表彰他的奉献精神和卓越表现，包括八枚带有作战杰出装置的美国海岸警卫队嘉奖奖章和三枚美国海岸警卫队成就奖章。他还获得了2015年首席军士学院颁发的“士官长精神奖”，以表彰他协作型领导的体现，以及2022年指挥部高级士兵领导力课程颁发的亚历山大·帕尔默·哈利学术卓越奖。
+    除了职业成就之外，托马斯总长的个人生活也与家人息息相关。他和妻子曼迪是海莉、汉娜、阿米莉亚和格雷森的骄傲父母。全家人庆祝他们的女儿汉娜最近加入美国海岸警卫队，继续传承敬业服务的传统。
+    托马斯总长职业生涯的特点是他的专业成就以及对领导力、指导精神和家庭价值观的承诺，使他成为美国海岸警卫队密克罗尼西亚/关岛部队受人尊敬和不可或缺的一部分。
+`         },
+          ],
+        },
+        {
+          id: "officer71",
+          jianjie: [
+            {
+              type: 'image',
+              src: leader12,
+              alt: '海上保安厅',
+              style: { height: '200px', maxWidth: '300px' },
+            },
+            {
+              type: 'text',
+              title: '巴伯斯角空军基地',
+            },
+
+            {
+              type: 'text',
+              content: '指挥官莫里斯·墨菲上校Maurice D. Murphy',
+            },
+            {
+              type: 'text',
+              content: `     墨菲上校最近被任命为位于华盛顿特区海岸警卫队总部的海岸警卫队搜救办公室主任，负责监督国家的搜救系统，为联邦机构和州提供指导，领导国家搜救委员会，并代表美国参加国际航空和海事响应组织。`,
+            },
+            {
+              type: 'text',
+              content: `    墨菲上校于2002年毕业于佛罗里达州彭萨科拉的海军飞行学校，曾担任飞行教练、飞行考官和阿拉斯加合格飞机指挥官。他的航空任务包括北卡罗来纳州伊丽莎白市空军基地、加利福尼亚州圣地亚哥区、阿拉斯加锡特卡空军基地（担任作战官）和佛罗里达州克利尔沃特空军基地（担任执行官）。墨菲上校还曾在加利福尼亚州阿拉米达的美国海岸警卫队MUNRO号巡逻舰上担任实习工程师，并在康涅狄格州新伦敦的美国海岸警卫队学院担任数学教员。在学院，他担任沿海航行训练领导力教员和2012届学生顾问。
+    墨菲上尉拥有麻省理工学院运筹学硕士学位，是美国海岸警卫队学院1999届学员。他获得过的个人勋章包括带有一颗金星的海岸警卫队功绩服务奖章、带有两颗金星的海岸警卫队表彰奖章和带有三颗金星的海岸警卫队成就奖章。
+`         },
+          ],
+        },
+        {
+          id: "officer72",
+          jianjie: [
+            {
+              type: 'image',
+              src: leader13,
+              alt: '海上保安厅',
+              style: { height: '200px', maxWidth: '300px' },
+            },
+            {
+              type: 'text',
+              title: '巴伯斯角空军基地',
+            },
+
+            {
+              type: 'text',
+              content: ' 执行官总军士长马克·麦克唐纳Travis J Perryman ',
+            },
+            {
+              type: 'text',
+              content: `    佩里曼总军士长于2021年2月12日就任巴伯斯角空军站指挥总军士长(CMC)，此前他已在海岸警卫队服役24年。夏威夷巴伯斯角空军站是海岸警卫队第14区的航空兵力量提供者，该区的责任区(AOR)覆盖超过1220万平方英里，包括夏威夷群岛和南太平洋。该部队执行各种任务，包括搜索和救援、执法、国防准备和海洋环境响应。`,
+            },
+            {
+              type: 'text',
+              content: `    佩里曼军士长曾任职于新奥尔良空军站并担任其指挥中心。他还曾担任阿拉巴马州莫比尔航空训练中心MH-65部门主管。他曾担任过以下职务：加利福尼亚州萨克拉门托空军站HC-130车间主管；波多黎各波林肯空军站HH-65初级质量保证检查员；就读于普渡大学；加利福尼亚州旧金山空军站HH-65飞行机械师、飞行机械师教员、飞机机长、初级质量保证检查员；担任极地作业HH-65飞行机械师，并被派往南极洲麦克默多站；担任俄勒冈州北本德空军站HH-65飞行机械师；就读于斯巴达航空学校AMT“A”学校；以及海岸警卫队巡逻艇Boutwell的消防员。
+    佩里曼总长已完成海岸警卫队总长学院、海岸警卫队高级士兵领导力课程和多所技术“C”学校的课程。他拥有FAA机身和动力装置执照，并拥有普渡大学航空工程技术理学学士学位。他的个人奖项包括两枚海岸警卫队嘉奖奖章和一枚海岸警卫队成就奖章。 
+`         },
+          ],
+        },
+      ],
+    },
+
+  },
+  3: {
+    t1: {
+      title: '现任长官',
+      infoData: [{ id: uuidv4(), careerProfileId: 'officer1', name: '长官信息' },
+
+      { id: uuidv4(), careerProfileId: 'history1', name: '历任信息' }],
+
+      careerProfiles: [
+        {
+          id: "officer1",
+          jianjie: [
+            {
+              type: 'image',
+              src: leader1,
+              alt: '海上保安厅',
+              style: { height: '200px', maxWidth: '300px' },
+
+            },
+            {
+              type: 'text',
+              title: '张忠龙（第5任海巡署长）',
+            },
+
+            {
+              type: 'text',
+              content: ' 张忠龙',
+            },
+            {
+              type: 'text',
+              content: `    2024年5月21日-现任
+    海巡署新任署长张忠龙为中央警察大学54期毕业、具有淡江大学大陆研究所硕士学历，在海巡署任职超过18年，先后历任海巡署勤指中心主任、巡防处长、情报处长、侦防分署长、中部分署长、副署长等职务，历练相当完整，具有超前部署的前瞻思维以及实务推动经验，并且对海巡署的运作与挑战了解甚深，是首位由海巡体系内陞的署长。`,
+            },
+          ],
+
+        },
+
+        {
+          id: 'history1',
+          careerProfileContent: '历任信息',
+          careerData: [
+            {
+              num: 1, name: '李仲威', time: ' 2018年4月28日－2019年2月13日 ', cause: '海军', almaMater: '', office: '众议院议员、労働大臣', whereabouts: `海洋委员会政务副主任委员兼任2019年1月起代理海洋委员会主任委员，同年2月13日升任
+因家庭因素自2022年9月1日起辞去海洋委员会主任委员一职` },
+            {
+              num: 2, name: '陈国恩', time: '2019年2月19日－2020年10月1日 ', cause: '警察', almaMater: '', office: '海上保安庁次长', whereabouts: `海洋委员会常务副主任委员兼任
+中央警官学校正科44期，曾任警政署署长、国家安全局副局长
+因家庭因素提前于2020年10月1日退休
+现任中国信托育乐股份有限公司董事长、台湾地区篮球协会副理事长`},
+            {
+              num: 3, name: '庄庆达', time: ' 2020年10月1日－2020年12月31日 ', cause: '学者', almaMater: '', office: '海上保安庁次长', whereabouts: `海洋委员会政务副主任委员兼任
+北卡罗莱纳州立大学经济学博士，曾任台北海洋科技大学海洋事业学院院长
+过渡期间兼代署长职务，目前任期最短的署长` },
+            {
+              num: 4, name: '周美伍', time: ' 2020年12月31日-2024年5月20日', cause: '海军', almaMater: '', office: '海上保安庁次长', whereabouts: `海洋委员会政务副主任委员兼任
+海军军官学校正期69年班，台湾地区海军中将
+曾任国家安全局中将副局长、驻美国华盛顿特派员` },
+
+
+          ],
+          careerColumns: [
+            {
+              title: '任别',
+              dataIndex: 'num',
+              key: 'num',
+            },
+            {
+              title: '姓名',
+              dataIndex: 'name',
+              key: 'name',
+            },
+            {
+              title: '任职期间',
+              dataIndex: 'time',
+              key: 'time',
+            },
+            {
+              title: '背景 ',
+              dataIndex: 'cause',
+              key: 'cause',
+            },
+
+            {
+              title: '备注',
+              dataIndex: 'whereabouts',
+              key: 'whereabouts',
+              render: (text, record) => <div style={{ maxWidth: '500px', }}>{text}</div>
+            }
+          ],
+        }
+      ],
+    },
+    t2: {
+      title: '其他官员',
+
+
+      careerProfiles: [
+
+
+        {
+          id: 'guan2',
+          careerProfileContent: '',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num',
+              // render: (text, record) => <div style={{ minWidth: '100px', }}>{text}</div>
+              width: '300px'
+            },
+            {
+              title: '姓名',
+              dataIndex: 'office',
+              key: 'office',
+              // render: (text, record) => <div style={{ minWidth: '300px', }}>{text}</div>
+              width: '350px'
+            },
+            {
+              title: '职位',
+              dataIndex: 'name',
+              key: 'name',
+              width: '300px'
+              // render: (text, record) => <div style={{ minWidth: '300px', }}>{text}</div>
+            },
+
+          ],
+          careerData: [
+            { num: 1, name: '军职副署长', office: '许静芝（陆军中将）' },
+          ],
+        },
+        {
+          id: 'guan3',
+          careerProfileContent: '',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num',
+              width: '300px'
+            },
+            {
+              title: '姓名',
+              dataIndex: 'office',
+              key: 'office',
+              width: '350px'
+            },
+            {
+              title: '职位',
+              dataIndex: 'name',
+              key: 'name',
+              width: '300px'
+            },
+
+          ],
+          careerData: [
+            { num: 1, name: '警职副署长', office: '谢庆钦（警监一阶）' },
+
+          ],
+        },
+        {
+          id: 'guan4',
+          careerProfileContent: '舰队分署',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num',
+              width: '300px'
+            },
+            {
+              title: '姓名',
+              dataIndex: 'office',
+              key: 'office', width: '350px'
+            },
+            {
+              title: '职位',
+              dataIndex: 'name',
+              key: 'name', width: '300px'
+            },
+
+          ],
+          careerData: [
+            { num: 1, name: '分署长', office: '廖德成（警监二阶）' },
+            { num: 2, name: '副分署长', office: '杨朝卿（警监三阶）、吴瑞祥（警监三阶）' },
+            { num: 3, name: '主任秘书', office: '蔡崇谋（警监四阶）' },
+
+          ],
+        },
+        {
+          id: 'guan5',
+          careerProfileContent: '北部分署',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num',
+              width: '300px'
+            },
+            {
+              title: '姓名',
+              dataIndex: 'office',
+              key: 'office',
+              width: '350px'
+            },
+            {
+              title: '职位',
+              dataIndex: 'name',
+              key: 'name',
+              width: '300px'
+            },
+
+          ],
+          careerData: [
+            { num: 1, name: '分署长', office: '廖德圣（陆军少将）' },
+            { num: 2, name: '副分署长', office: '蔡胜利（警监三阶）、覃仁勇（陆军上校）' },
+          ],
+        },
+        {
+          id: 'guan6',
+          careerProfileContent: '中部分署',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num',
+              width: '300px'
+            },
+            {
+              title: '姓名',
+              dataIndex: 'office',
+              key: 'office', width: '350px'
+            },
+            {
+              title: '职位',
+              dataIndex: 'name',
+              key: 'name', width: '300px'
+            },
+
+          ],
+          careerData: [
+            { num: 1, name: '分署长', office: '主任秘书' },
+            { num: 2, name: '副分署长', office: '吴建冠（上校）、吴金河（警监三阶）' },
+            { num: 3, name: '主任秘书', office: '	陈志伟（警监四阶）  ' },
+          ],
+        },
+        {
+          id: 'guan7',
+          careerProfileContent: '南部分署',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num', width: '300px'
+            },
+            {
+              title: '姓名',
+              dataIndex: 'office',
+              key: 'office', width: '350px'
+            },
+            {
+              title: '职位',
+              dataIndex: 'name',
+              key: 'name', width: '300px'
+            },
+
+          ],
+          careerData: [
+            { num: 1, name: '分署长', office: '宋子阳（陆军少将）' },
+            { num: 2, name: '副分署长', office: '黄瑞原（警监三阶）、陈朝阳（陆军少将）' },
+            { num: 3, name: '主任秘书', office: '吴建冠（陆军上校）' },
+
+          ],
+        },
+        {
+          id: 'guan8',
+          careerProfileContent: '东部分署 ',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num', width: '300px'
+            },
+            {
+              title: '姓名',
+              dataIndex: 'office',
+              key: 'office', width: '350px'
+            },
+            {
+              title: '职位',
+              dataIndex: 'name',
+              key: 'name', width: '300px'
+            },
+
+          ],
+          careerData: [
+            { num: 1, name: '分署长', office: '蔡茂埕（警监二阶）' },
+            { num: 2, name: '副分署长', office: '侯安泰、简明胜' },
+            { num: 3, name: '主任秘书', office: '徐登平' },
+          ],
+        },
+        {
+          id: 'guan9',
+          careerProfileContent: '金马澎分署',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num', width: '300px'
+            },
+            {
+              title: '姓名',
+              dataIndex: 'office',
+              key: 'office', width: '350px'
+            },
+            {
+              title: '职位',
+              dataIndex: 'name',
+              key: 'name', width: '300px'
+            },
+
+          ],
+          careerData: [
+            { num: 1, name: '分署长', office: '陈泗川（警监二阶）' },
+            { num: 2, name: '副分署长', office: '熊同中（陆军上校）' },
+            { num: 3, name: '主任秘书', office: '庄峯钦（简任第十职等）' },
+          ],
+        },
+        {
+          id: 'guan10',
+          careerProfileContent: '东南沙分署',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num', width: '300px'
+            },
+            {
+              title: '姓名',
+              dataIndex: 'office',
+              key: 'office', width: '350px'
+            },
+            {
+              title: '职位',
+              dataIndex: 'name',
+              key: 'name', width: '300px'
+            },
+
+          ],
+          careerData: [
+            { num: 1, name: '分署长', office: '张尹俊（陆军少将）' },
+            { num: 2, name: '副分署长', office: '李志豪（陆军少将）、简明胜（陆军上校）' },
+            { num: 3, name: '主任秘书', office: '王宝庭（陆军上校）' },
+
+          ],
+        },
+        {
+          id: 'guan11',
+          careerProfileContent: '侦防分署',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num', width: '300px'
+            },
+            {
+              title: '姓名',
+              dataIndex: 'office',
+              key: 'office', width: '350px'
+            },
+            {
+              title: '职位',
+              dataIndex: 'name',
+              key: 'name', width: '300px'
+            },
+
+          ],
+          careerData: [
+            { num: 1, name: '分署长', office: '黄锡璋（警监二阶）' },
+            { num: 2, name: '副分署长', office: '方深滽（陆军少将）、林志宏（警监三阶）' },
+            { num: 3, name: '主任秘书', office: '李泉龙（陆军上校)' },
+
+          ],
+        },
+
+
+      ],
+    },
+
+  }
+
+}

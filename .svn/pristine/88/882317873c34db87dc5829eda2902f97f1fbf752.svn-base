@@ -1,0 +1,274 @@
+import React, { useState, useRef, useMemo } from 'react';
+import {
+  AimOutlined,
+  EnvironmentOutlined,
+  LinkOutlined,
+  CalendarOutlined,
+} from '@ant-design/icons';
+import styles from './index.less';
+import { Radio, Space, Tabs } from 'antd';
+import hsbad from './../../../assets/images/archives/hsbad.png';
+import EChartComponent from '@/components/common/EChartComponent';
+import { color } from 'echarts';
+
+export default function BasicInformation({ organizationData }) {
+  const [detail, setDetail] = useState(null);
+  // const [activeTab, setActiveTab] = useState('1');
+  const tabsKeys = Object.keys(organizationData);
+
+  const { treeData, img } = organizationData;
+  const handleNodeClick = nodeData => {};
+
+  const chartOption = useMemo(
+    () => ({
+      tooltip: {
+        trigger: 'item',
+        triggerOn: 'mousemove',
+        position: function (point, params, dom, rect, size) {
+          // 将 tooltip 显示在右侧
+          return [point[0] + size.viewSize[0] / 2];
+        },
+        formatter: function (params) {
+          const data = params.data || {}; // 确保数据对象存在
+
+          // 初始化 tooltip 的 HTML 结构
+          let tooltipHtml = '';
+
+          // 判断是否有有效的字段可以展示
+          const hasValidField =
+            data.departmentName || data.positionName || data.currentMinister || data.introduction;
+
+          if (hasValidField) {
+            tooltipHtml += `
+              <div style="max-width: 300px; padding: 10px; border-radius: 5px; background-color: rgba(0,0,0,0.7); color: #fff;">
+            `;
+
+            // 机构名称
+            if (data.departmentName) {
+              tooltipHtml += `
+                <div style="margin: 0;">机构名称: <p style="color: #00EDD8;">${data.name}</p></div>
+              `;
+            }
+
+            // 职位名称和值
+            const positionName = data.positionName ? data.positionName : '部长';
+            const positionValue = data.currentMinister;
+            if (positionName && positionValue) {
+              tooltipHtml += `
+                <div style="margin: 0;">现任${positionName}: <p style="color: #00EDD8;">${positionValue}</p></div>
+              `;
+            }
+
+            // 机构简介
+            if (data.introduction) {
+              tooltipHtml += `
+                <div style="margin: 0;">机构简介：
+                  <pre style="color: #00EDD8; width: 100%; white-space: pre-wrap; word-wrap: break-word; font-size: 12px; line-height: 26px;">${data.introduction}</pre>
+                </div>
+              `;
+            }
+          } else {
+            // 关闭 tooltip 的 HTML 结构
+            tooltipHtml += `
+            <div style="margin: 0;">名称：
+              <span style="color: #00EDD8; width: 100%; white-space: pre-wrap; word-wrap: break-word; font-size: 12px; line-height: 26px;">${data.name}</span>
+            </div>
+          `;
+          }
+
+          return tooltipHtml.trim();
+        },
+        backgroundColor: 'rgba(0,0,0,0.7)',
+        borderColor: '#333',
+        borderWidth: 1,
+        borderRadius: 5,
+        padding: [10, 10],
+      },
+      series: [
+        {
+          type: 'tree',
+          data: [treeData],
+          roam: true,
+          left: '2%',
+          right: '2%',
+          top: '8%',
+          bottom: '20%',
+          symbol: 'emptyCircle',
+          orient: 'vertical',
+          expandAndCollapse: true,
+          label: {
+            position: 'left',
+            rotate: 0,
+            verticalAlign: 'middle',
+            align: 'left',
+            fontSize: 16,
+            color: '#00EDD8',
+          },
+          leaves: {
+            label: {
+              position: 'bottom',
+              rotate: 0,
+              verticalAlign: 'middle',
+              align: 'left',
+            },
+          },
+          animationDurationUpdate: 750,
+        },
+      ],
+    }),
+    [treeData]
+  );
+  return (
+    <div className={styles.container}>
+      <div style={{ display: 'flex' }}>
+        <img src={img.src} alt="" style={{ width: '200px', height: '200px' }} />
+        <div style={{ marginLeft: '20px' }}>
+          <p style={{ fontSize: '18px', fontWeight: 'bold', height: '20px' }}>
+            {organizationData.jbTitle}
+          </p>
+          {organizationData.lianJie && (
+            <span style={{ color: '#999' }}>
+              {organizationData.lianJie && organizationData.lianJie}
+            </span>
+          )}
+          <div style={{ margin: '7px 0' }}>
+            {organizationData.address && (
+              <span style={{ marginRight: '45px', color: '#999' }}>
+                <EnvironmentOutlined style={{ marginRight: '5px' }} />
+                {organizationData.address && organizationData.address}
+              </span>
+            )}
+            {organizationData.website && (
+              <span style={{ marginRight: '45px', color: '#999' }}>
+                <LinkOutlined style={{ marginRight: '5px' }} />
+                {organizationData.website && organizationData.website}
+              </span>
+            )}
+            {organizationData.joinDate && (
+              <span style={{ color: '#999' }}>
+                <CalendarOutlined style={{ marginRight: '5px' }} />
+                {organizationData.joinDate && organizationData.joinDate}
+              </span>
+            )}
+          </div>
+          <span style={{ color: '#999' }}>{organizationData.spokesperson}</span>
+          <pre
+            style={{
+              maxHeight: '90px',
+              overflow: 'auto',
+              marginTop: '10px',
+              width: '100%;',
+              whiteSpace: 'pre-wrap',
+              wordWrap: 'break-word',
+            }}
+          >
+            {organizationData.description}
+          </pre>
+        </div>
+      </div>
+      <div>
+        <Tabs
+          defaultActiveKey="tabsKeys[0]"
+          style={{
+            marginTop: '30px',
+            color: 'white',
+            backgroundColor: '#282B39',
+            padding: ' 0 35px 35px  35px',
+            width: '100%',
+          }}
+        >
+          <Tabs.TabPane tab="组织结构" key="1">
+            <div style={{ height: '90vh' }}>
+              {organizationData.structure && (
+                <>
+                  <p
+                    style={{
+                      fontSize: '18px',
+                      fontWeight: 'bold',
+                      color: '#2bffe6',
+                    }}
+                  >
+                    简介
+                  </p>
+                  <pre
+                    style={{
+                      borderBottom: '1px solid #999',
+                      padding: '0 0 40px 0',
+                      width: '100%',
+                      whiteSpace: 'pre-wrap',
+                      wordWrap: 'break-word',
+                      color: '#D4D5D3',
+                      fontSize: '12px',
+                    }}
+                  >
+                    {organizationData.structure}
+                  </pre>
+                </>
+              )}
+
+              <div style={{ display: 'flex', height: '90vh' }}>
+                <div style={{ flex: 1 }}>
+                  <EChartComponent
+                    option={chartOption}
+                    onClick={handleNodeClick}
+                    style={{ width: '100%', height: '100%' }}
+                  />
+                </div>
+              </div>
+            </div>
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="业务机能" key="2">
+            <p
+              style={{
+                fontSize: '18px',
+                fontWeight: 'bold',
+                marginBottom: '20px',
+                color: '#2bffe6',
+              }}
+            >
+              简介
+            </p>
+            <pre
+              style={{
+                borderBottom: '1px solid #999',
+                padding: '0 0 40px 0',
+                color: '#D4D5D3',
+                width: '100%',
+                fontSize: '12px',
+                whiteSpace: 'pre-wrap',
+                wordWrap: 'break-word',
+              }}
+            >
+              {organizationData.functionsIntroduction}
+            </pre>
+            {organizationData.tabsData &&
+              organizationData.tabsData.map((item, index) => (
+                <div key={index}>
+                  <p
+                    style={{
+                      margin: '10px 0',
+                      color: '#2bffe6',
+                      fontSize: '14px',
+                    }}
+                  >
+                    {item.label}
+                  </p>
+                  <pre
+                    style={{
+                      color: '#D4D5D3',
+                      width: '100%',
+                      fontSize: '12px',
+                      whiteSpace: 'pre-wrap',
+                      wordWrap: 'break-word',
+                    }}
+                  >
+                    {item.content}
+                  </pre>
+                </div>
+              ))}
+          </Tabs.TabPane>
+        </Tabs>
+      </div>
+    </div>
+  );
+}

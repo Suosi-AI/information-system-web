@@ -1,0 +1,171 @@
+.cardModal {
+  .modalTop {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    // background-color: red !important;
+    .actionStats {
+      display: flex;
+      width: 30% !important;
+      // background-color: red !important;
+    }
+    .modalSpan {
+      color: #a1a1a2 !important;
+    }
+  }
+
+  .modalHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 16px;
+    .medalHeader1 {
+      display: flex;
+      align-items: center;
+    }
+  }
+  .modalBodyTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .ant-modal-body {
+    padding: 16px;
+  }
+
+  .modalContent {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sourceIcon {
+    width: 24px;
+    margin-right: 8px;
+  }
+
+  .info,
+  .metadata {
+    display: flex;
+    align-items: center;
+    margin-right: 16px;
+
+    .link {
+    }
+  }
+  .metadata1 {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    max-width: 50%;
+    margin-right: 16px;
+    overflow: hidden; /* 确保超出部分隐藏 */
+
+    .link {
+      max-width: 300px;
+      overflow: hidden;
+      // min-width: 0; /* 防止flex项目最小宽度导致的问题 */
+      // overflow: hidden; /* 隐藏超出的内容 */
+      // white-space: nowrap; /* 防止文本换行 */
+      // text-overflow: ellipsis; /* 如果文本太长，显示省略号 */
+      color: #02f3dd;
+      white-space: nowrap;
+      text-decoration: none;
+      background-color: transparent;
+      outline: none;
+      cursor: pointer;
+      transition: color 0.3s;
+      -webkit-text-decoration-skip: objects;
+    }
+  }
+
+  .label1 {
+    max-width: 285px;
+  }
+
+  .label {
+    margin-right: 4px;
+    color: #a1a1a2;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+  }
+
+  .actionItem {
+    margin-right: 16px;
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #797979;
+
+    .controlsSpan {
+      margin-right: 20%;
+      font-size: 16px;
+    }
+  }
+
+  .content {
+    margin-top: 16px;
+  }
+
+  .images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .image {
+    // maxwidth: 300px;
+  }
+}
+// antd弹出框
+.cardModal :global(.ant-modal-header) {
+  padding-top: 45px;
+  color: #02f3dd !important;
+  background-color: #232632 !important;
+  border: none !important;
+  border-radius: 0;
+}
+.cardModal :global(.ant-modal-title) {
+  color: #02f3dd !important;
+  font-weight: bolder;
+  text-align: center;
+}
+.cardModal :global(.ant-modal-content) {
+  border: 1px solid #797979;
+  border-radius: 0;
+}
+
+.cardModal :global(.ant-modal-body) {
+  color: white;
+  background-color: #232632 !important;
+  border-radius: none !important;
+}
+.cardModal :global(.ant-modal-body) {
+  color: white;
+  background-color: #232632 !important;
+  border-radius: none !important;
+}
+
+.cardModal :global(.ant-modal-close-x) {
+  color: white;
+}
+
+.cardModal :global(.ant-modal) {
+  width: 1000px !important;
+  // background-color: red !important;
+}
+:global(.ant-pagination-item-ellipsis) {
+  // background-color: red !important;
+  color: #02f3dd !important;
+}

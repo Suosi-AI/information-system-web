@@ -1,0 +1,716 @@
+import React, { useState, useEffect, useCallback } from 'react';
+import 'moment/locale/zh-cn';
+import locale from 'antd/es/date-picker/locale/zh_CN';
+import Icon from '@/components/Icon';
+import moment from 'moment';
+import {
+  PlusOutlined,
+  YuqueOutlined,
+  FolderOpenOutlined,
+  FolderOutlined,
+  DeleteOutlined,
+  EditOutlined,
+} from '@ant-design/icons';
+
+import styles from './index.less';
+import {
+  DatePicker,
+  Checkbox,
+  Pagination,
+  Button,
+  Input,
+  Tabs,
+  Menu,
+  Modal,
+  Dropdown,
+  Popconfirm,
+  message,
+} from 'antd';
+import DashboardCard from './../../components/common/DashboardCard';
+import ActionStats from '@/components/common/ActionStats';
+import CardModal from './../../components/common/CardModal';
+import SocialEditor from '@/components/common/SocialEditor';
+
+import weibo from './../../assets/images/icon/weibo.png';
+import weixin from './../../assets/images/icon/weixin.png';
+import google from './../../assets/images/icon/google.png';
+import blog from './../../assets/images/icon/blog.png';
+import wangzhan from './../../assets/images/icon/new.png';
+import baidu from './../../assets/images/icon/baidu.png';
+import twitter from './../../assets/images/icon/twitter.png';
+const { RangePicker } = DatePicker;
+const { Search } = Input;
+import { getQcArchivesPage, getQcArchivesSourcePage, getNewsPage } from './../../services/store';
+import img from '@/assets/images/logo.png';
+
+const mockCardsData = [
+  {
+    id: '1',
+    img,
+    sourceName: '微博',
+    sourceType: '微博',
+    lang: '中文',
+    contentRow: '原文',
+    contentZh: '中文',
+    titleRow: '标题-原文',
+    titleZh: '标题中文',
+    auth: '我我我',
+    title: '海上保安厅官方监测',
+    publishTime: '2024-8-19  13:14:00 ',
+    content:
+      '   俄亥俄州一位父亲告诉唐纳德·特朗普，不要再利用他儿子在一次由海地移民造成的校车事故中死亡来获取“政治利益”。2023 年 8 月，11 岁的艾登·克拉克 (Aiden Clark) 在俄亥俄州斯普林菲尔德的一场校车事故中丧生。由于特朗普竞选团队对那里的海地移民发表毫无根据的指控，这个小镇现在成为全国关注的焦点。周二，特朗普的竞选搭档 JD Vance 在 Twitter/X 的一篇帖子中提到艾登，称“一名儿童被一名海地移民杀害”。艾登的父亲内森当天晚些时候在市政委员会会议上表示内森当天晚内森当俄亥俄州一位父亲告诉唐纳德·特朗普，不要再利用他儿子在一次由海地移民造成的校车事故中死亡来获取“政治利益”。2023 年 8 月，11 岁的艾登·克拉克 (Aiden Clark) 在俄亥俄州斯普林菲尔德的一场校车事故中丧生。由于特朗普竞选团队对那里的海地移民发表毫无根据的指控，这个小镇现在成为全国关注的焦点。周二，特朗普的竞选搭档 JD Vance 在 Twitter/X 的一篇帖子中提到艾登，称“一名儿童被一名海地移民杀害”。艾登的父亲内森当俄亥俄州一位父亲告诉唐纳德·特朗普，不要再利用他儿子在一次由海地移民造成的校车事故中死亡来获取“政治利益”。2023 年 8 月，11 岁的艾登·克拉克 (Aiden Clark) 在俄亥俄州斯普林菲尔德的一场校车事故中丧生。由于特朗普竞选团队对那里的海地移民发表毫无根据的指控，这个小镇现在成为全国关注的焦点。周二，特朗普的竞选搭档 JD Vance 在 Twitter/X 的一篇帖子中提到艾登，称“一名儿童被一名海地移民杀害”。艾登的父亲内森当天晚些时候在市政委员会会议上表示内森当天晚内森当天晚些时候在市政委员会会议上表示内森当天晚内森当',
+    link: 'http://www.baidu.com',
+    images: ['http://180.167.238.140:18816/img/logo@2x.b20887ea.png'],
+    likeNum: '111',
+    commentNum: '222',
+    shareNum: '3',
+    readNum: '4',
+    showActions: true,
+  },
+  {
+    id: '2',
+    sourceName: '公众号',
+    sourceType: '公众号',
+    title: '日本海保船',
+    content: '日本海保船相关内容',
+    publishTime: '2024-8-19  13:14:00 ',
+    link: 'http://www.baidu.com',
+    images: ['http://180.167.238.140:18816/img/logo@2x.b20887ea.png'],
+    likeNum: '1',
+    commentNum: '2',
+    readNum: '3',
+    shareNum: '4',
+    showActions: false,
+  },
+  {
+    id: '3',
+    sourceName: '谷歌',
+    sourceType: '谷歌',
+    title: '台湾',
+    content: '台湾相关内容',
+    publishTime: '2024-8-19  13:14:00 ',
+    link: 'http://www.baidu.com',
+    likeNum: '1',
+    commentNum: '2',
+    shareNum: '4',
+    readNum: '3',
+    images: [
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+    ],
+    showActions: true,
+  },
+  {
+    id: '4',
+    sourceName: '博客',
+    sourceType: '博客',
+    title: '日本海鲜厅监测',
+    publishTime: '2024-8-19  13:14:00 ',
+    content: '日本海鲜厅监测内容',
+    link: 'http://www.baidu.com',
+    images: [
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+    ],
+    showActions: false,
+  },
+  {
+    id: '5',
+    sourceName: '网站',
+    sourceType: '网站',
+    title: '监测目标五',
+    content: '监测目标五内容',
+    link: 'http://www.baidu.com',
+    images: ['http://180.167.238.140:18816/img/logo@2x.b20887ea.png'],
+    showActions: true,
+  },
+  {
+    id: '6',
+    sourceName: '百度',
+    sourceType: '百度',
+    title: '监测目标六',
+    content: '监测目标六内容',
+    link: 'http://www.baidu.com',
+    images: [
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+    ],
+    showActions: false,
+  },
+  {
+    id: '7',
+    sourceName: '推特',
+    sourceType: '推特',
+    title: '监测目标七',
+    content: '监测目标七内容',
+    link: 'http://www.baidu.com',
+    images: [
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+    ],
+    showActions: true,
+  },
+  {
+    id: '8',
+    sourceName: '微博',
+    sourceType: '微博',
+    title: '监测目标八',
+    content: '监测目标八内容',
+    link: 'http://www.baidu.com',
+    images: ['http://180.167.238.140:18816/img/logo@2x.b20887ea.png'],
+    showActions: false,
+  },
+  {
+    id: '9',
+    sourceName: '微博',
+    sourceType: '微博',
+    title: '监测目标九',
+    content: '监测目标九内容',
+    link: 'http://www.baidu.com',
+    images: [
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+    ],
+    showActions: true,
+  },
+  {
+    id: '10',
+    sourceName: '微博',
+    sourceType: '微博',
+    title: '监测目标十',
+    content: '监测目标十内容',
+    link: 'http://www.baidu.com',
+    images: [
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+    ],
+    showActions: false,
+  },
+];
+
+const dynamicImg = sourceType => {
+  switch (sourceType) {
+    case '微博':
+      return weibo;
+    case '公众号':
+      return weixin;
+    case '谷歌':
+      return google;
+    case '博客':
+      return blog;
+    case '网站':
+      return wangzhan;
+    case '百度':
+      return baidu;
+    case '推特':
+      return twitter;
+
+    default:
+      return '';
+  }
+};
+
+export default function Dashboard() {
+  const [selectedRange, setSelectedRange] = useState('1m');
+  const [selectedLanguage, setSelectedLanguage] = useState('');
+  const [dateRange, setDateRange] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [recordsCount, setRecordsCount] = useState(0);
+
+  const [isExportMode, setIsExportMode] = useState(false); // 控制是否处于导出模式
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [currentCardId, setCurrentCardId] = useState(null); // 用于存储当前点击的卡片ID
+  const [currentCardData, setCurrentCardData] = useState(null);
+
+  const [firstLevelArchives, setFirstLevelArchives] = useState([]);
+  const [secondLevelArchives, setSecondLevelArchives] = useState({});
+  const [expanded, setExpanded] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [editingId, setEditingId] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+
+  const [isSocialEditorVisible, setIsSocialEditorVisible] = React.useState(false);
+  const [mockData, setMockData] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
+
+  const calculateTimeRange = range => {
+    const endDate = new Date(); // 结束时间为当前时间
+    let startTime;
+
+    switch (range) {
+      case '24h':
+        startTime = new Date(endDate.getTime() - 3600 * 1000 * 24 * 1); // 24小时
+        break;
+      case '1w':
+        startTime = new Date(endDate.getTime() - 3600 * 1000 * 24 * 7); // 一周
+        break;
+      case '1m':
+        startTime = new Date(endDate.getTime() - 3600 * 1000 * 24 * 30); // 一月
+        break;
+      case '1y':
+        startTime = new Date(endDate.getTime() - 3600 * 1000 * 24 * 365); // 一年
+        break;
+      default:
+        startTime = null;
+    }
+
+    // 使用 moment 来格式化日期
+    const formatTime = date => {
+      return date ? moment(date).format('YYYY-MM-DD HH:mm:ss') : '';
+    };
+    // console.log(startTime, endTime);
+    return {
+      startTime: formatTime(startTime),
+      endTime: formatTime(new Date()),
+    };
+  };
+
+  const handleRangeChange = range => {
+    console.log(range, totalCount);
+
+    setSelectedRange(range);
+
+    if (range !== 'custom') {
+      const { startTime, endTime } = calculateTimeRange(range);
+      setDateRange([
+        moment(startTime, 'YYYY-MM-DD HH:mm:ss'),
+        moment(endTime, 'YYYY-MM-DD HH:mm:ss'),
+      ]);
+    }
+
+    fetchListData();
+  };
+
+  const handleDateChange = (dates, dateStrings) => {
+    setDateRange(dates);
+    fetchListData();
+  };
+
+  const handleLanguageChange = language => {
+    setSelectedLanguage(language);
+    fetchListData();
+  };
+
+  const handleSearch = () => {
+    console.log('搜索内容:', searchQuery);
+    fetchListData();
+  };
+
+  useEffect(() => {
+    const fetchRecordsCount = async () => {
+      try {
+        const response = await fetch('/api/records/count');
+        const data = await response.json();
+        setRecordsCount(data.count);
+      } catch (error) {
+        console.error('获取记录数失败:', error);
+      }
+    };
+
+    fetchRecordsCount();
+
+    fetchFirstLevelArchives();
+    fetchListData();
+  }, [selectedRange, selectedLanguage, searchQuery, dateRange]);
+
+  // 获取一级档案数据
+  const fetchFirstLevelArchives = async () => {
+    try {
+      const response = await getQcArchivesPage({
+        page: '1',
+        limit: '10',
+      });
+      if (response.code === 200) {
+        const firstLevelData = response.page.list.map(item => ({
+          id: item.archives_id,
+          name: item.archives_name,
+          children: [],
+        }));
+        setFirstLevelArchives(firstLevelData);
+      }
+    } catch (error) {
+      console.error('获取一级档案数据失败:', error);
+    }
+  };
+
+  // 获取二级档案数据
+  const fetchSecondLevelArchives = async archivesId => {
+    try {
+      const response = await getQcArchivesSourcePage({
+        page: '1',
+        limit: '10',
+        archivesId,
+      });
+      if (response.code === 200) {
+        const secondLevelData = response.page.list.map(item => ({
+          id: item.asId,
+          name: item.name,
+          icon: 'MonitorOutlined', // 根据实际需要设置图标
+        }));
+        setSecondLevelArchives({
+          ...secondLevelArchives,
+          [archivesId]: secondLevelData,
+        });
+      }
+    } catch (error) {
+      console.error('获取二级档案数据失败:', error);
+    }
+  };
+
+  const handleMonitorItemClick = async id => {
+    // 首先，关闭所有一级档案
+    const newExpanded = { ...expanded };
+    for (const key in newExpanded) {
+      newExpanded[key] = false;
+    }
+    newExpanded[id] = true;
+    setExpanded(newExpanded);
+    await fetchSecondLevelArchives(id);
+  };
+
+  const handleEditClick = (id, event) => {
+    event.stopPropagation();
+    const itemToEdit = mockData.find(item => item.id === id);
+    setCurrentCardData(itemToEdit);
+    setIsEditing(true); // 设置为编辑状态
+    setIsSocialEditorVisible(true);
+  };
+
+  const handleDeleteClick = (id, event) => {
+    event.stopPropagation(); // 阻止事件冒泡
+    //添加删除逻辑
+    const newData = mockData.filter(item => item.id !== id);
+  };
+
+  const confirm = e => {
+    console.log(e);
+    message.success('删除成功');
+  };
+  const cancel = e => {
+    console.log(e);
+    message.error('取消操作');
+  };
+
+  const handleAddMonitor = () => {
+    setIsEditing(false); // 设置为新增状态
+    setIsSocialEditorVisible(true); // 显示编辑器
+  };
+
+  const handleSave = dataToSave => {
+    apiSaveData(dataToSave).then(response => {
+      if (response.data.state) {
+        alert('保存成功');
+
+        const newMockData = [...mockData, dataToSave];
+        setMockData(newMockData);
+        // 关闭弹框
+        setIsSocialEditorVisible(false);
+      } else {
+        alert(response.data.error);
+      }
+    });
+  };
+  const handleExportClick = exportType => {
+    console.log('导出类型:', exportType);
+    // 根据exportType执行不同的导出逻辑
+    if (isExportMode) {
+      // 执行导出逻辑
+      console.log('执行导出操作');
+      // 导出完成后，退出导出模式
+      setIsExportMode(false);
+    } else {
+      // 进入导出模式
+      setIsExportMode(true);
+    }
+  };
+
+  const fetchListData = async () => {
+    setIsLoading(true);
+    try {
+      let startTime;
+      let endTime;
+
+      if (selectedRange === 'custom') {
+        startTime = dateRange[0].format('YYYY-MM-DD HH:mm:ss');
+        endTime = dateRange[1].format('YYYY-MM-DD HH:mm:ss');
+      } else {
+        const { startTime: calculatedStartTime, endTime: calculatedEndTime } =
+          calculateTimeRange(selectedRange);
+        startTime = calculatedStartTime;
+        endTime = calculatedEndTime;
+      }
+
+      const response = await getNewsPage({
+        page: currentPage.toString(),
+        limit: pageSize.toString(),
+        sourceId: '66',
+        targetMatchedCondition: searchQuery,
+        startTime,
+        endTime,
+        lang: selectedLanguage,
+        searchContent: searchQuery,
+      });
+
+      setMockData(response.page.list);
+      setTotalCount(response.page.totalCount);
+    } catch (error) {
+      console.error('获取数据失败:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  const menu = (
+    <Menu>
+      <Menu.Item key="word" onClick={() => handleExportClick('word')}>
+        导出为Word
+      </Menu.Item>
+      <Menu.Item key="excel" onClick={() => handleExportClick('excel')}>
+        导出为Excel
+      </Menu.Item>
+    </Menu>
+  );
+
+  const handleModalVisibility = isVisible => {
+    setIsModalVisible(isVisible);
+  };
+
+  // 处理 SocialEditor 组件的取消操作
+  const handleCancel = () => {
+    console.log('取消操作');
+    // 这里可以执行取消操作，完成后隐藏编辑器
+    setIsSocialEditorVisible(false);
+  };
+  const handleSearchZhang = () => {
+    console.log('handleSearchZhang ');
+  };
+
+  const handleContentClick = id => {
+    const selectedCard = mockCardsData.find(card => card.id === id);
+    setCurrentCardData(selectedCard);
+    handleModalVisibility(true);
+  };
+  const handleExport = cardId => {
+    console.log('Exporting card with ID:', cardId);
+    // 实现导出逻辑
+  };
+
+  const handleCollect = (cardId, isCollected) => {
+    console.log('Card ID:', cardId, 'is now', isCollected ? 'collected' : 'not collected');
+    // 实现收藏逻辑
+  };
+  return (
+    <>
+      <div className={styles.container}>
+        <div className={styles.left}>
+          <Button onClick={handleAddMonitor} icon={<PlusOutlined />} className={styles.btn}>
+            添加信源档案
+          </Button>
+          <div>
+            {firstLevelArchives.map(item => {
+              return (
+                <div key={item.id}>
+                  <div className={styles.listItem}>
+                    {expanded[item.id] ? <FolderOpenOutlined /> : <FolderOutlined />}
+                    <span className={styles.title} onClick={() => handleMonitorItemClick(item.id)}>
+                      {item.name}
+                    </span>
+                    <React.Fragment>
+                      <EditOutlined
+                        className={styles.editIcon}
+                        name="EditOutlined"
+                        onClick={event => handleEditClick(item.id, event)}
+                      />
+                      <Popconfirm
+                        title="您确定要删除吗？"
+                        onConfirm={confirm}
+                        onCancel={cancel}
+                        okText="是"
+                        cancelText="否"
+                      >
+                        <DeleteOutlined
+                          className={styles.deleteIcon}
+                          name="DeleteOutlined"
+                          onClick={event => handleDeleteClick(item.id, event)}
+                        />
+                      </Popconfirm>
+                    </React.Fragment>
+                  </div>
+                  {expanded[item.id] && (
+                    <div className={styles.itemStyle}>
+                      {secondLevelArchives[item.id] &&
+                        secondLevelArchives[item.id].map(child => (
+                          <div key={child.id} className={styles.subItem}>
+                            <YuqueOutlined style={{ marginRight: '4px' }} />
+                            <span className={styles.title}>{child.name}</span>
+                          </div>
+                        ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        <SocialEditor
+          visible={isSocialEditorVisible}
+          onSave={handleSave}
+          onCancel={handleCancel}
+          data={currentCardData}
+          isEditing={isEditing}
+          handleSearchZhang={handleSearchZhang}
+        />
+
+        <div className={styles.container1}>
+          <div className={styles.countTop}>
+            <div className={styles.searchTop}>
+              <Search
+                placeholder="请输入您要搜索的内容"
+                allowClear
+                onSearch={e => handleSearch()}
+                style={{
+                  width: 200,
+                }}
+              />
+            </div>
+            <div className={styles.timeSelect}>
+              <span className={styles.curP}>时间范围：</span>
+              <span
+                className={`${styles.curP} ${selectedRange === '24h' ? styles.selected : ''}`}
+                onClick={() => handleRangeChange('24h')}
+              >
+                近一天
+              </span>
+              <span
+                className={`${styles.curP} ${selectedRange === '1w' ? styles.selected : ''}`}
+                onClick={() => handleRangeChange('1w')}
+              >
+                近一周
+              </span>
+              <span
+                className={`${styles.curP} ${selectedRange === '1m' ? styles.selected : ''}`}
+                onClick={() => handleRangeChange('1m')}
+              >
+                近一月
+              </span>
+              <span
+                className={`${styles.curP} ${selectedRange === '1y' ? styles.selected : ''}`}
+                onClick={() => handleRangeChange('1y')}
+              >
+                近一年
+              </span>
+              <span
+                className={`${styles.curP} ${selectedRange === 'custom' ? styles.selected : ''}`}
+                onClick={() => handleRangeChange('custom')}
+              >
+                自定义
+              </span>
+              {selectedRange === 'custom' && (
+                <RangePicker
+                  locale={locale}
+                  range-separator="至"
+                  start-placeholder="开始日期"
+                  end-placeholder="结束日期"
+                  value-format="yyyy-MM-dd HH:mm:ss"
+                  default-time={['00:00:00', '23:59:59']}
+                  className="mar-l-10"
+                  onChange={handleDateChange}
+                />
+              )}
+            </div>
+            <div className={styles.languageSelect}>
+              <span className={styles.curP}>语种筛选：</span>
+              <span
+                className={`${styles.curP1} ${selectedLanguage === '' ? styles.selected : ''}`}
+                onClick={() => handleLanguageChange('')}
+              >
+                全部
+              </span>
+              <span
+                className={`${styles.curP1} ${selectedLanguage === '中文' ? styles.selected : ''}`}
+                onClick={() => handleLanguageChange('中文')}
+              >
+                中文
+              </span>
+              <span
+                className={`${styles.curP1} ${selectedLanguage === '日语' ? styles.selected : ''}`}
+                onClick={() => handleLanguageChange('日语')}
+              >
+                日语
+              </span>
+              <span
+                className={`${styles.curP1} ${selectedLanguage === '英文' ? styles.selected : ''}`}
+                onClick={() => handleLanguageChange('英文')}
+              >
+                英文
+              </span>
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                padding: '0 20px 0 0 ',
+              }}
+            >
+              <span>
+                共<span style={{ color: '#FF8000', margin: '0 10px' }}>{totalCount}</span>
+                条记录
+              </span>
+
+              <Dropdown overlay={menu} placement="bottomCenter">
+                <Button style={{ backgroundColor: 'rgba(255, 128, 0, 0.5)', color: 'white' }}>
+                  批量导出
+                </Button>
+              </Dropdown>
+            </div>
+          </div>
+          {mockData.map((card, index) => (
+            <div key={card.id} style={{ display: 'flex', paddingLeft: '10px' }}>
+              <DashboardCard
+                className={styles.dashboardCardStyle}
+                key={card.id}
+                img={dynamicImg(card.sourceType)}
+                sourceName={card.sourceName}
+                publishTime={card.publishTime}
+                title={card.title}
+                content={card.contentZh}
+                link={card.url}
+                images={card.images}
+                likeNum={card.likeNum}
+                commentNum={card.commentNum}
+                shareNum={card.shareNum}
+                readNum={card.readNum}
+                showActions={card.showActions}
+                onClickContent={() => handleContentClick(card.id)}
+                onExport={() => handleExport(card.id)}
+                onCollect={isCollected => handleCollect(card.id, isCollected)}
+              />
+            </div>
+          ))}
+          <Pagination
+            defaultCurrent={currentPage}
+            total={totalCount}
+            pageSize={pageSize}
+            onChange={(page, pageSize) => setCurrentPage(page)}
+            onShowSizeChange={(current, size) => setPageSize(size)}
+            style={{ margin: '10px auto', display: 'flex', justifyContent: 'center' }}
+            showSizeChanger={false}
+          />
+        </div>
+      </div>
+
+      <CardModal
+        visible={isModalVisible}
+        onCancel={() => handleModalVisibility(false)}
+        currentCardData={currentCardData}
+        setIsModalVisible={handleModalVisibility}
+      />
+    </>
+  );
+}

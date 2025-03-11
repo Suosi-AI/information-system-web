@@ -1,0 +1,67 @@
+import axios from 'axios'
+import QueryString from 'qs'
+import { message } from 'antd'
+
+const defaultConfig = {
+  baseURL: 'http://192.168.160.174:8899',
+  timeout: 120 * 1000,
+  withCredentials: true,
+  headers: {
+    'content-type': 'application/json',
+  },
+}
+
+const request = (method = 'get', url, { params = {}, config } = {}) => {
+  const finalConfig = { ...defaultConfig, ...config }
+  const instance = axios.create(finalConfig)
+
+  // 请求拦截器
+  instance.interceptors.request.use(request => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      request.headers['token'] = token
+    }
+    return request
+  })
+
+  // 响应拦截器
+  instance.interceptors.response.use(
+    response => {
+      return response.data
+    },
+    error => {
+      // 在这里处理所有错误
+      if (error.response && error.response.data) {
+        // 处理带有响应数据的错误
+        message.error(error.response.msg || '系统出错！')
+      } else {
+        // 处理其他类型的错误
+        message.error('系统出错！')
+      }
+      return Promise.reject(error)
+    }
+  )
+
+  // 清理params中的undefined或null值
+  Object.keys(params).forEach(item => {
+    if (item && (params[item] === undefined || params[item] === null)) {
+      delete params[item]
+    }
+  })
+
+  const data =
+    finalConfig.headers['content-type'] === 'application/json'
+      ? JSON.stringify(params)
+      : QueryString.stringify(params)
+
+  return instance({
+    method,
+    url,
+    params: (method === 'get' || method === 'delete') && params,
+    data: (method === 'post' || method === 'put' || method === 'patch') && data,
+    headers: finalConfig.headers,
+    ...config,
+  })
+}
+
+export default request

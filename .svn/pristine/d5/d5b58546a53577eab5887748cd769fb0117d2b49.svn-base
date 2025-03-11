@@ -1,0 +1,165 @@
+import React from 'react';
+import { Tabs, Timeline } from 'antd';
+import styles from './index.less';
+
+const Development = deveData => {
+  const tabsKeys = Object.keys(deveData);
+
+  return (
+    <div className={styles.container}>
+      <Tabs
+        defaultActiveKey={tabsKeys[0]}
+        style={{
+          color: 'white',
+          width: '100%',
+          marginTop: '-20px',
+          paddingLeft: '20px',
+          height: '85vh',
+          overflow: 'hidden',
+        }}
+      >
+        {tabsKeys.map(key => {
+          const tabs = deveData[key];
+          return Object.keys(tabs).map(tabKey => {
+            const tabData = tabs[tabKey];
+            return (
+              <Tabs.TabPane
+                tab={tabData.title}
+                key={tabKey}
+                style={{
+                  height: '74vh',
+                  overflow: 'auto',
+                  paddingTop: '20px',
+                }}
+              >
+                {tabData.details.length > 0 ? (
+                  tabKey !== 't4' && tabKey !== 't3' ? (
+                    <Timeline>
+                      {tabData.details.map((detail, index) => (
+                        <Timeline.Item key={index}>
+                          <pre
+                            style={{
+                              color: '#D4D5D3',
+                              width: '100%',
+                              whiteSpace: 'pre-wrap',
+                              wordWrap: 'break-word',
+                              fontSize: '14px',
+                              lineHeight: '26px',
+                              fontWeight: 'bold',
+                            }}
+                          >
+                            {detail.Technical}
+                          </pre>
+                          {Array.isArray(detail.preContent)
+                            ? detail.preContent.map((item, contentIndex) => (
+                                <div key={contentIndex} style={{ marginTop: '8px' }}>
+                                  <a
+                                    href={item.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ fontSize: '12px', color: 'white' }}
+                                  >
+                                    {item.content}
+                                  </a>
+                                </div>
+                              ))
+                            : '暂无数据'}
+                        </Timeline.Item>
+                      ))}
+                    </Timeline>
+                  ) : tabKey === 't4' ? (
+                    <div className={styles.timeStyle}>
+                      {' '}
+                      <Timeline style={{ borderLeft: '0!important' }}>
+                        {tabData.details.map((detail, index) => (
+                          <Timeline.Item key={index}>
+                            <p
+                              // href={detail.altLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{ fontSize: '14px', fontWeight: 'bold', color: 'white' }}
+                            >
+                              {detail.Technical}
+                            </p>
+
+                            <pre
+                              style={{
+                                color: '#D4D5D3',
+                                width: '100%',
+                                whiteSpace: 'pre-wrap',
+                                wordWrap: 'break-word',
+                                fontSize: '12px',
+                                lineHeight: '26px',
+                              }}
+                            >
+                              {detail.preContent}
+                            </pre>
+                            {detail.imgBox.length > 0 && (
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  flexDirection: 'row',
+                                  alignItems: 'center',
+                                  gap: '10px',
+                                }}
+                              >
+                                {detail.imgBox.map((img, imgIndex) => (
+                                  <img
+                                    key={imgIndex}
+                                    src={img}
+                                    alt=""
+                                    style={{ height: '200px' }}
+                                  />
+                                ))}
+                              </div>
+                            )}
+                          </Timeline.Item>
+                        ))}
+                      </Timeline>
+                    </div>
+                  ) : (
+                    <div className={styles.timeStyle}>
+                      {' '}
+                      <Timeline style={{ borderLeft: '0!important' }}>
+                        {tabData.details.map((detail, index) => (
+                          <Timeline.Item key={index}>
+                            <p
+                              // href={detail.altLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{ fontSize: '14px', fontWeight: 'bold', color: 'white' }}
+                            >
+                              {detail.Technical}
+                            </p>
+
+                            <pre
+                              style={{
+                                color: '#D4D5D3',
+                                width: '100%',
+                                whiteSpace: 'pre-wrap',
+                                wordWrap: 'break-word',
+                                fontSize: '12px',
+                                lineHeight: '26px',
+                              }}
+                            >
+                              {detail.preContent}
+                            </pre>
+                          </Timeline.Item>
+                        ))}
+                      </Timeline>
+                    </div>
+                  )
+                ) : (
+                  '暂无数据'
+                )}
+                {/* </div> */}
+              </Tabs.TabPane>
+            );
+          });
+        })}
+      </Tabs>
+    </div>
+  );
+};
+
+export default Development;

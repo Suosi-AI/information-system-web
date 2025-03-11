@@ -1,0 +1,1156 @@
+import React, { useState, useEffect } from 'react';
+import 'moment/locale/zh-cn';
+import locale from 'antd/es/date-picker/locale/zh_CN';
+import Icon from '@/components/Icon';
+import {
+  PlusOutlined,
+  DownloadOutlined,
+  LeftOutlined,
+  RightOutlined,
+  RotateLeftOutlined,
+  RotateRightOutlined,
+  SwapOutlined,
+  UndoOutlined,
+  ZoomInOutlined,
+  ZoomOutOutlined,
+  DeleteOutlined,
+  EditOutlined,
+  AimOutlined,
+  CloseCircleOutlined,
+} from '@ant-design/icons';
+
+import styles from './index.less';
+import {
+  DatePicker,
+  Checkbox,
+  Pagination,
+  Button,
+  Divider,
+  Menu,
+  Modal,
+  Card,
+  Popconfirm,
+  message,
+  Input,
+  Form,
+  Tabs,
+  Space,
+  Table,
+  Image,
+  Tooltip,
+  Radio,
+  Dropdown,
+  Empty,
+  Upload,
+} from 'antd';
+const { RangePicker } = DatePicker;
+const { Search, TextArea } = Input;
+import {
+  getMonitorTargetNewsPage,
+  getInfo,
+  getList,
+  getSave,
+  getUpdate,
+  getDelete,
+  exportNewsToExcel,
+  downNewsWord,
+  exportNewsToWordZip,
+  getFavoritesList,
+  getFavoritesSave,
+  getFavoritesInfo,
+  getFavoritesUpdate,
+  getFavoritesDelete,
+  queryPage,
+  queryPageTable,
+  createReport,
+  deleteReport,
+  exportReportToWord,
+} from './../../services/store';
+
+import CardModal from './../../components/common/CardModal';
+
+import DashboardCard from './../../components/common/DashboardCard';
+import weibo from './../../assets/images/icon/weibo.png';
+import weixin from './../../assets/images/icon/weixin.png';
+import google from './../../assets/images/icon/google.png';
+import blog from './../../assets/images/icon/blog.png';
+import wangzhan from './../../assets/images/icon/new.png';
+import baidu from './../../assets/images/icon/baidu.png';
+import twitter from './../../assets/images/icon/twitter.png';
+const dynamicImg = sourceType => {
+  switch (sourceType) {
+    case '微博':
+      return weibo;
+    case '公众号':
+      return weixin;
+    case '谷歌':
+      return google;
+    case '博客':
+      return blog;
+    case '网站':
+      return wangzhan;
+    case '百度':
+      return baidu;
+    case '推特':
+      return twitter;
+
+    default:
+      return '';
+  }
+};
+const BASE_IP = '/images';
+
+const replaceIP = url => {
+  const urlObj = new URL(url);
+  return `${BASE_IP}${urlObj.pathname}`;
+};
+
+export default function Favorites() {
+  const [row, setRow] = useState({ name: '' });
+  const [current, setCurrent] = React.useState(0);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchKeywords, setSearchKeywords] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [currentCardData, setCurrentCardData] = useState(null);
+
+  const [expandedId, setExpandedId] = useState(null);
+  const [editingId, setEditingId] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [firstLevelArchives, setFirstLevelArchives] = useState([]);
+  const [selectedFirstLevelArchiveId, setSelectedFirstLevelArchiveId] = useState(null);
+  const [newMonitor, setNewMonitor] = useState({ name: '', matchConditions: '' });
+  const [currentMonitor, setCurrentMonitor] = useState({ folderName: '', folderId: null });
+  const [isSocialEditorVisible, setIsSocialEditorVisible] = React.useState(false);
+
+  const [isLeftPanelVisible, setIsLeftPanelVisible] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [mockCardsData, setMockCardsData] = useState([]);
+  const [selectedCard, setSelectedCard] = useState(null);
+  const [textAreaValue, setTextAreaValue] = useState('');
+  const [titleValue, setTitleValue] = useState('');
+  const [textAreaValue1, setTextAreaValue1] = useState('');
+  const [danweiValue, setDanweiValue] = useState('');
+  const [imageList, setImageList] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [shouldFetchData, setShouldFetchData] = useState(false);
+  const [initialFetch, setInitialFetch] = useState(false);
+  const [modalData, setModalData] = useState({});
+  const [isActive, setIsActive] = useState(false);
+  const [isActive2, setIsActive2] = useState(false);
+
+  const [isCollected, setIsCollected] = useState(false);
+  const [isExportMode, setIsExportMode] = useState(false);
+  const [selectedIds, setSelectedIds] = useState([]);
+
+  const [columns, setColumns] = useState([
+    {
+      title: '序号',
+      dataIndex: 'num',
+      key: 'num',
+      // width: 80,
+      render: (text, record, index) => `${(currentPage - 1) * pageSize + index + 1}`,
+    },
+    {
+      title: '报告名称',
+      dataIndex: 'reportTitle',
+      key: 'reportTitle',
+      ellipsis: {
+        showTitle: false,
+      },
+      render: reportTitle => (
+        <Tooltip placement="topLeft" title={reportTitle}>
+          {reportTitle}
+        </Tooltip>
+      ),
+    },
+    {
+      title: '日期',
+      dataIndex: 'createTime',
+      key: 'createTime',
+      // width: 200,
+    },
+    {
+      title: '创建者',
+      dataIndex: 'username',
+      key: 'username',
+      // width: 200,
+      ellipsis: {
+        showTitle: false,
+      },
+      render: username => (
+        <Tooltip placement="topLeft" title={username}>
+          {username}
+        </Tooltip>
+      ),
+    },
+
+    {
+      title: '操作',
+      key: 'action',
+      render: (_, reocrd) => (
+        <Space size="middle" style={{ textAlign: 'center' }}>
+          <a onClick={() => onExportFire(reocrd.reportId)}>导出</a>
+          <a onClick={() => onDel(reocrd.reportId)}>删除</a>
+        </Space>
+      ),
+    },
+  ]);
+  const [dataSource, setDataSource] = useState([]);
+
+  const onExportFire = async reportId => {
+    exportReportToWord({ reportId: reportId })
+      .then(resp => {
+        // 创建 Blob 对象
+        const blob = new Blob([resp], { type: 'application/vnd.ms-word;charset=utf-8' });
+
+        // 生成 URL
+        const url = window.URL.createObjectURL(blob);
+
+        // 创建一个 <a> 元素并设置相关属性
+        const link = document.createElement('a');
+        link.style.display = 'none';
+        link.href = url;
+        link.download = '新闻.doc'; // 设置下载文件的名称
+
+        // 将 <a> 元素添加到页面中并触发点击
+        document.body.appendChild(link);
+        link.click();
+
+        // 清理操作
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+
+        message.success('导出成功!');
+      })
+      .catch(error => {
+        console.error('导出失败:', error);
+        message.error('导出失败: ' + error.message);
+      });
+  };
+
+  const onDel = async reportId => {
+    try {
+      const response = await deleteReport({ reportId: reportId });
+
+      if (response.code === 200) {
+        message.success('删除成功');
+        handleTableReport();
+      } else {
+        message.error('删除失败');
+      }
+    } catch (error) {
+      console.error('删除失败:', error);
+      message.error('删除时发生错误');
+    }
+  };
+
+  const handleSearch = searchQuery => {
+    setCurrentPage(1);
+    setSearchQuery(searchQuery);
+    setSearchKeywords(searchQuery);
+  };
+
+  const highLight = (text, keyword) => {
+    if (!keyword || keyword.trim() === '') {
+      return text;
+    }
+    const regex = new RegExp(`(${keyword})`, 'gi');
+    const parts = text.split(regex);
+    return parts.map((part, index) => {
+      if (regex.test(part)) {
+        return (
+          <span key={index} style={{ color: 'yellow' }}>
+            {part}
+          </span>
+        );
+      } else {
+        return part;
+      }
+    });
+  };
+
+  useEffect(() => {
+    fetchFirstLevelArchives();
+  }, []);
+
+  // 获取左侧文件夹id
+  const fetchFirstLevelArchives = async () => {
+    try {
+      const response = await getFavoritesList();
+      if (response.code === 200) {
+        const firstLevelData = response.data.map(item => ({
+          id: item.folder_id,
+          name: item.folder_name,
+          // targetMatchedCondition: item.target_matched_condition,
+        }));
+        setFirstLevelArchives(firstLevelData);
+        setShouldFetchData(true);
+        if (firstLevelData.length > 0) {
+          setSelectedFirstLevelArchiveId(firstLevelData[0].id);
+
+          fetchListData(firstLevelData[0].id);
+        }
+      }
+    } catch (error) {
+      console.error('获取收藏文件夹数据失败:', error);
+    }
+  };
+
+  const handleEditClick = async (id, event) => {
+    event.stopPropagation();
+    try {
+      const response = await getFavoritesInfo({ folderId: id });
+      if (response.code === 200 && response.data) {
+        setCurrentMonitor(response.data);
+        setIsEditing(true);
+        setEditingId(id);
+        setIsSocialEditorVisible(true);
+      } else {
+        message.error('获取编辑详情失败');
+      }
+    } catch (error) {
+      console.error('获取编辑详情失败:', error);
+      message.error('获取编辑详情时发生错误');
+    }
+  };
+
+  const handleSaveMonitor = async () => {
+    try {
+      let response;
+      const saveData = {
+        folderName: isEditing ? currentMonitor.folderName : newMonitor.name,
+      };
+      if (isEditing) {
+        if (!currentMonitor.folderName) {
+          alert('文件夹名称不能为空');
+          return;
+        }
+        saveData.folderId = editingId;
+        response = await getFavoritesUpdate(saveData);
+      } else {
+        if (!newMonitor.name) {
+          alert('文件夹名称不能为空');
+          return;
+        }
+        response = await getFavoritesSave(saveData);
+      }
+      if (response.code === 200) {
+        message.success(isEditing ? '编辑文件夹成功' : '添加文件夹成功');
+        setIsSocialEditorVisible(false);
+        setShouldFetchData(true);
+        await fetchFirstLevelArchives();
+      } else {
+        message.error(`${response.msg}`);
+      }
+    } catch (error) {
+      console.error('操作失败:', error);
+      message.error('操作时发生错误');
+    }
+  };
+
+  const handleMonitorChange = e => {
+    const { value } = e.target;
+    if (isEditing) {
+      setCurrentMonitor(prevMonitor => ({ ...prevMonitor, folderName: value }));
+    } else {
+      setNewMonitor(prevNewMonitor => ({ ...prevNewMonitor, name: value }));
+    }
+  };
+
+  // 点击左侧文件夹
+  const handleMonitorItemClick = id => {
+    setSelectedIds([]); // 清空选中的ID
+    setIsExportMode(false); // 关闭复选框显示
+
+    const selectedArchive = firstLevelArchives.find(item => item.id === id);
+    if (selectedArchive) {
+      setSelectedFirstLevelArchiveId(selectedArchive.id);
+      setCurrentPage(1); // 重置为第一页
+      fetchListData(selectedArchive.id, searchQuery); // 传递folderId和searchContent
+      setExpandedId(id);
+    }
+    setSelectedCard(null);
+    setTextAreaValue(null);
+    setTextAreaValue1(null);
+    setTitleValue(null);
+    setDanweiValue(null);
+    setImageList([]);
+  };
+
+  // useEffect(() => {
+  //   if (selectedFirstLevelArchiveId) {
+  //     fetchListData(selectedFirstLevelArchiveId, searchQuery, currentPage, pageSize);
+  //   }
+  // }, [selectedFirstLevelArchiveId, searchQuery, currentPage, pageSize]);
+
+  // useEffect(() => {
+  //   if (firstLevelArchives.length > 0 && searchQuery) {
+  //     const firstFolderId = firstLevelArchives[0].id;
+  //     setSelectedFirstLevelArchiveId(firstFolderId);
+  //     fetchListData(firstFolderId, searchQuery);
+  //     setExpandedId(firstFolderId);
+  //   }
+  // }, [firstLevelArchives, searchQuery]);
+
+  // useEffect(() => {
+  //   if (isActive) {
+  //     handleTableReport();
+  //   }
+  // }, [currentPage, pageSize]);
+
+  useEffect(() => {
+    // 初始化时，如果firstLevelArchives有数据，设置第一个文件夹为选中状态，并获取数据
+    if (firstLevelArchives.length > 0 && !selectedFirstLevelArchiveId) {
+      const firstFolderId = firstLevelArchives[0].id;
+      setSelectedFirstLevelArchiveId(firstFolderId);
+      setExpandedId(firstFolderId);
+      fetchListData(firstFolderId, '', 1, 10); // 注意：这里searchQuery为空字符串，因为你可能不想在初始化时就根据searchQuery过滤数据
+    }
+
+    // 当selectedFirstLevelArchiveId或searchQuery变化时，获取数据
+    if (selectedFirstLevelArchiveId) {
+      fetchListData(selectedFirstLevelArchiveId, searchQuery, currentPage, pageSize);
+    }
+  }, [firstLevelArchives, selectedFirstLevelArchiveId, searchQuery, currentPage, pageSize]);
+
+  // 监听isActive的变化，以决定是否调用handleTableReport
+  useEffect(() => {
+    if (isActive) {
+      handleTableReport();
+    }
+  }, [isActive, currentPage, pageSize]);
+
+  const fetchListData = async (folderId, searchContent) => {
+    setIsLoading(true);
+    try {
+      const response = await queryPage({
+        page: currentPage.toString(),
+        limit: pageSize.toString(),
+        folderId: folderId,
+        searchContent: searchContent,
+      });
+      setMockCardsData(response.page.list);
+      setTotalCount(response.page.totalCount);
+    } catch (error) {
+      console.error('获取数据失败:', error);
+      message.error(`获取数据失败${response.msg}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handlePageChange = (page, pageSize) => {
+    setCurrentPage(page);
+    setPageSize(pageSize);
+  };
+
+  const handleTextAreaChange = event => {
+    setTextAreaValue(event.target.value);
+  };
+  const handleTitleValueChange = event => {
+    setTitleValue(event.target.value);
+  };
+
+  const confirmDelete = async (id, event) => {
+    event.stopPropagation(); // 阻止事件冒泡
+    try {
+      const response = await getFavoritesDelete({ folderId: id });
+
+      if (response.code === 200) {
+        await fetchFirstLevelArchives();
+        message.success('删除成功');
+      } else {
+        message.error('删除失败');
+      }
+    } catch (error) {
+      console.error('删除失败:', error);
+      message.error('删除时发生错误');
+    }
+  };
+
+  const handleAddMonitor = () => {
+    setIsEditing(false);
+    setNewMonitor({ name: '' }); // 清空输入框状态
+    setIsSocialEditorVisible(true);
+  };
+
+  const handleCancel = () => {
+    setIsSocialEditorVisible(false);
+  };
+
+  const handleSelectCard = card => {
+    setSelectedCard(null);
+    setSelectedCard(card);
+    setTextAreaValue(card.contentZh);
+    setTitleValue(card.titleZh);
+    setImageList(card.pics);
+    setCurrent(0);
+  };
+
+  const imagesArray = Array.isArray(imageList) ? imageList : imageList ? JSON.parse(imageList) : [];
+
+  const imagesWithNewIP = imagesArray.map(src => replaceIP(src));
+
+  const reset = () => {
+    setSelectedCard(null);
+    setTextAreaValue(null);
+    setTextAreaValue1(null);
+    setTitleValue(null);
+    setDanweiValue(null);
+    setImageList([]);
+    setCurrent(0);
+  };
+
+  const handleSave = async () => {
+    const folderId = selectedFirstLevelArchiveId;
+    const newsId = selectedCard ? selectedCard.id : null;
+    const reportTitle = titleValue; // 标题
+    const reportContent = textAreaValue; // 内容
+    const reportImgs = imagesArray; // 图片列表
+    const reportAnalyse = textAreaValue1; // 分析
+    const reportIntelligenceUnit = danweiValue; // 情报单位
+
+    const data = {
+      folderId,
+      newsId,
+      reportTitle,
+      reportContent,
+      reportImgs,
+      reportAnalyse,
+      reportIntelligenceUnit,
+    };
+
+    try {
+      const response = await createReport(data);
+      if (response.code === 200) {
+        // 处理成功的逻辑，比如关闭模态框，刷新列表等
+        message.success(`${response.msg}`);
+        setIsModalVisible(false);
+        setSelectedCard(null);
+        setTextAreaValue(null);
+        setTextAreaValue1(null);
+        setTitleValue(null);
+        setDanweiValue(null);
+        setImageList([]);
+        setCurrent(0);
+      } else {
+        message.error(`${response.msg}`);
+      }
+    } catch (error) {
+      console.error('报告创建失败:', error);
+    }
+  };
+
+  const handleModalVisibility = isVisible => {
+    setIsModalVisible(isVisible);
+  };
+
+  const handleContentClick = async (id, showActions) => {
+    // console.log(showActions, 'showActions');
+
+    try {
+      const response = await getInfo({ newsId: id });
+
+      if (response.code === 200 && response.data) {
+        setModalData(modalData => ({
+          ...modalData,
+          ...response.data,
+          // showActions: showActions,
+        }));
+      } else {
+        message.error(`获取数据失败${response.msg}`);
+      }
+    } catch (error) {
+      console.error('获取失败:', error);
+      message.error('获取时发生错误');
+    }
+    handleModalVisibility(true);
+  };
+
+  const handleExport = id => {
+    const newsId = id;
+
+    downNewsWord({ newsId })
+      .then(resp => {
+        // 创建 Blob 对象
+        const blob = new Blob([resp], { type: 'application/vnd.ms-word;charset=utf-8' });
+
+        // 生成 URL
+        const url = window.URL.createObjectURL(blob);
+
+        // 创建一个 <a> 元素并设置相关属性
+        const link = document.createElement('a');
+        link.style.display = 'none';
+        link.href = url;
+        link.download = '新闻.doc'; // 设置下载文件的名称
+
+        // 将 <a> 元素添加到页面中并触发点击
+        document.body.appendChild(link);
+        link.click();
+
+        // 清理操作
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+
+        message.success('导出成功!');
+      })
+      .catch(error => {
+        console.error('导出失败:', error);
+        message.error('导出失败: ' + error.message);
+      });
+  };
+
+  // 收集当前页新闻ID的方法
+  const collectCurrentPageNewsIds = () => {
+    const currentIds = mockCardsData.map(item => item.id);
+    return currentIds;
+  };
+
+  // 手动选中新闻id
+  const handleSelectChange = (id, checked) => {
+    if (checked) {
+      setSelectedIds([...selectedIds, id]);
+    } else {
+      setSelectedIds(selectedIds.filter(selectedId => selectedId !== id));
+    }
+  };
+
+  // 导出为Excel的方法
+  const handleExportToExcel = () => {
+    if (selectedIds.length === 0) {
+      message.error('请选择要导出的新闻');
+      return;
+    }
+
+    let newsIdL = {
+      newsIdList: selectedIds,
+    };
+
+    exportNewsToExcel(newsIdL)
+      .then(resp => {
+        // 创建 Blob 对象
+        const blob = new Blob([resp], { type: 'application/vnd.ms-xls;charset=utf-8' });
+
+        // 生成 URL
+        const url = window.URL.createObjectURL(blob);
+
+        // 创建一个 <a> 元素并设置相关属性
+        const link = document.createElement('a');
+        link.style.display = 'none';
+        link.href = url;
+        link.download = '新闻列表.xls'; // 设置下载文件的名称
+
+        // 将 <a> 元素添加到页面中并触发点击
+        document.body.appendChild(link);
+        link.click();
+
+        // 清理操作
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+
+        message.success('导出成功!');
+        setSelectedIds([]); // 清空选中的ID
+        setIsExportMode(false); // 关闭复选框显示
+      })
+      .catch(error => {
+        console.error('导出为Excel失败:', error);
+        message.error('导出为Excel失败');
+      });
+  };
+
+  // 导出多个Word压缩成Zip的方法
+  const handleExportToWordZip = () => {
+    if (selectedIds.length === 0) {
+      message.error('请选择要导出的新闻');
+      return;
+    }
+
+    let newsIdL = {
+      newsIdList: selectedIds,
+    };
+
+    exportNewsToWordZip(newsIdL)
+      .then(resp => {
+        // 创建 Blob 对象
+        const blob = new Blob([resp], { type: 'application/vnd.ms-zip;charset=utf-8' });
+
+        // 生成 URL
+        const url = window.URL.createObjectURL(blob);
+
+        // 创建一个 <a> 元素并设置相关属性
+        const link = document.createElement('a');
+        link.style.display = 'none';
+        link.href = url;
+        link.download = '新闻列表.zip'; // 设置下载文件的名称
+
+        // 将 <a> 元素添加到页面中并触发点击
+        document.body.appendChild(link);
+        link.click();
+
+        // 清理操作
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+
+        message.success('导出成功!');
+        setSelectedIds([]); // 清空选中的ID
+        setIsExportMode(false); // 关闭复选框显示
+      })
+      .catch(error => {
+        console.error('导出为Excel失败:', error);
+        message.error('导出为Excel失败');
+      });
+  };
+
+  const menu = (
+    <Menu>
+      <Menu.Item key="excel" onClick={handleExportToExcel}>
+        导出为Excel
+      </Menu.Item>
+      <Menu.Item key="wordZip" style={{ width: '150px' }} onClick={handleExportToWordZip}>
+        导出为WordZip
+      </Menu.Item>
+    </Menu>
+  );
+
+  const handleTabClick = (event, tab) => {
+    if (event === '1') {
+      setIsActive(false);
+      setCurrentPage(1);
+      setIsLeftPanelVisible(true);
+      // 如果firstLevelArchives有数据，选中第一个文件夹
+      if (firstLevelArchives.length > 0) {
+        const firstFolderId = firstLevelArchives[0].id;
+        setSelectedFirstLevelArchiveId(firstFolderId);
+        fetchListData(firstFolderId); // 传递folderId和searchContent
+        setExpandedId(firstFolderId);
+      }
+    } else if (event === '2') {
+      setIsActive(false);
+      setCurrentPage(1);
+      setIsLeftPanelVisible(true);
+      if (selectedFirstLevelArchiveId) {
+        fetchListData(selectedFirstLevelArchiveId, searchQuery);
+      }
+    } else if (event === '3') {
+      setIsActive(true);
+      setCurrentPage(1);
+      setIsLeftPanelVisible(false);
+      handleTableReport();
+    }
+  };
+  const handleTableReport = async () => {
+    setIsLoading(true);
+    try {
+      const response = await queryPageTable({
+        page: currentPage.toString(),
+        limit: pageSize.toString(),
+        // folderId: selectedFirstLevelArchiveId,
+      });
+
+      setDataSource(response.page.list);
+      setTotalCount(response.page.totalCount);
+    } catch (error) {
+      console.error('获取数据失败:', error);
+      message.error(`获取数据失败${response.msg}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handlePreviewImg = src => {
+    setPreviewImage(src);
+    setPreviewOpen(true);
+  };
+
+  const handleDeleteImg = src => {
+    const index = imagesWithNewIP.findIndex(item => item === src);
+    if (index !== -1) {
+      const newImages = [...imagesArray];
+      newImages.splice(index, 1);
+      setImageList(newImages.map(src => src)); // 更新 imageList 状态
+      // 如果 imageList 是字符串，需要转换回字符串
+      const imageListStr = JSON.stringify(newImages);
+      setImageList(imageListStr);
+    } else {
+      console.log('Image not found in the list');
+    }
+  };
+
+  return (
+    <>
+      <div className={styles.container}>
+        {isLeftPanelVisible && (
+          <div className={styles.left}>
+            <Button onClick={handleAddMonitor} icon={<PlusOutlined />} className={styles.btn}>
+              新增文件夹
+            </Button>
+            <div>
+              {firstLevelArchives.map(item => {
+                return (
+                  <div key={item.id}>
+                    <div
+                      className={styles.listItem}
+                      style={{ background: expandedId === item.id ? '#118D86' : '' }}
+                    >
+                      <AimOutlined />
+                      <span
+                        className={styles.title}
+                        onClick={() => handleMonitorItemClick(item.id)}
+                      >
+                        {item.name}
+                      </span>
+                      <React.Fragment>
+                        <EditOutlined
+                          className={styles.editIcon}
+                          name="EditOutlined"
+                          onClick={event => handleEditClick(item.id, event)}
+                        />
+                        <Popconfirm
+                          title="您确定要删除吗？"
+                          onConfirm={event => confirmDelete(item.id, event)}
+                          onCancel={() => console.log('Cancel clicked')}
+                          okText="是"
+                          cancelText="否"
+                        >
+                          <DeleteOutlined className={styles.deleteIcon} name="DeleteOutlined" />
+                        </Popconfirm>
+                      </React.Fragment>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+        {!isLeftPanelVisible && <div className={styles.left}></div>}
+
+        <div className={styles.container1}>
+          <Tabs defaultActiveKey="1" className={styles.tabBox} onTabClick={handleTabClick}>
+            <Tabs.TabPane tab="信息列表" key="1" className={styles.tabFirst}>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: '0 20px',
+                }}
+              >
+                <span>
+                  共<span style={{ color: '#FF8000', margin: '0 10px' }}>{totalCount}</span>
+                  条记录
+                </span>
+
+                {totalCount > 0 ? (
+                  <div>
+                    {selectedIds.length > 0 && (
+                      <span style={{ marginRight: 8 }}>
+                        已选择
+                        <span style={{ color: 'red', margin: '0 5px' }}>{selectedIds.length}</span>
+                        条新闻
+                      </span>
+                    )}
+                    <Dropdown
+                      overlay={menu}
+                      placement="bottom"
+                      onClick={() => setIsExportMode(true)}
+                    >
+                      <Button
+                        style={{
+                          backgroundColor: 'rgba(255, 128, 0, 0.5)',
+                          color: 'white',
+                          marginLeft: 8,
+                        }}
+                        disabled={selectedIds.length === 0}
+                      >
+                        批量导出
+                      </Button>
+                    </Dropdown>
+                  </div>
+                ) : (
+                  <div>
+                    <Button
+                      style={{ backgroundColor: 'rgba(255, 128, 0, 0.5)', color: 'white' }}
+                      disabled
+                    >
+                      批量导出
+                    </Button>
+                  </div>
+                )}
+              </div>
+
+              {mockCardsData.length === 0 ? (
+                <Empty style={{ margin: 'auto 8px', fontSize: '18px' }}></Empty>
+              ) : (
+                mockCardsData.map((card, index) => {
+                  const processedCard = {
+                    ...card,
+                    titleZh: highLight(card.titleZh, searchQuery),
+                    contentZh: highLight(card.contentZh, searchQuery),
+                  };
+
+                  return (
+                    <div
+                      key={card.id}
+                      style={{
+                        display: 'flex',
+                        paddingLeft: '10px',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}
+                    >
+                      {isExportMode && (
+                        <Checkbox
+                          value={card.id}
+                          checked={selectedIds.includes(card.id)}
+                          onChange={e => handleSelectChange(card.id, e.target.checked)}
+                          style={{ marginRight: '10px' }}
+                        />
+                      )}
+                      <DashboardCard
+                        className={styles.dashboardCardStyle}
+                        key={card.id}
+                        img={dynamicImg(card.sourceType)}
+                        sourceName={card.sourceName}
+                        publishTime={card.publishTime}
+                        title={processedCard.titleZh}
+                        content={processedCard.contentZh}
+                        link={card.url}
+                        images={card.pics}
+                        likeNum={card.likeNum}
+                        commentNum={card.commentNum}
+                        shareNum={card.shareNum}
+                        readNum={card.readNum}
+                        showActions={card.showActions}
+                        onClickContent={() => handleContentClick(card.id, card.showActions)}
+                        onCollect={isCollected => handleCollect(card.id, isCollected)}
+                        onExport={() => handleExport(card.id)}
+                        newsId={card.id}
+                        folderId={card.folderId}
+                        whetherCollect={card.whetherCollect}
+                        isCollected={isCollected}
+                        setIsCollected={setIsCollected}
+                        onHandle={fetchListData}
+                      />
+                    </div>
+                  );
+                })
+              )}
+              {mockCardsData.length > 0 && (
+                <Pagination
+                  current={currentPage}
+                  total={totalCount}
+                  pageSize={pageSize}
+                  onChange={handlePageChange}
+                  onShowSizeChange={handlePageChange}
+                  style={{ margin: '10px auto', display: 'flex', justifyContent: 'center' }}
+                  showSizeChanger={false}
+                />
+              )}
+            </Tabs.TabPane>
+            <Tabs.TabPane tab="报告制作" key="2">
+              <div className={styles.centerStyle}>
+                <div className={styles.centerLeft}>
+                  {' '}
+                  <div
+                    style={{
+                      height: '50px',
+                      display: 'grid',
+                      justifyContent: 'center',
+                      width: '97%',
+                    }}
+                  >
+                    <Input
+                      className={styles.titleInput}
+                      width={500}
+                      value={titleValue}
+                      onChange={handleTitleValueChange}
+                    ></Input>
+                  </div>
+                  <p className={styles.textStyle}>正文</p>
+                  <TextArea
+                    className={styles.textArea}
+                    autoSize={{
+                      minRows: 20,
+                    }}
+                    value={textAreaValue}
+                    onChange={handleTextAreaChange}
+                  />
+                  <p className={styles.textStyle}>图片</p>
+                  <div className={styles.imgBox}>
+                    {imagesWithNewIP.length > 0 &&
+                      imagesWithNewIP.map((src, index) => (
+                        <div
+                          key={index}
+                          style={{ display: 'flex', marginRight: '10px', height: '100px' }}
+                        >
+                          <Image
+                            src={src}
+                            alt={`Image ${index}`}
+                            style={{ width: '100px', height: '100px', margin: '0 10px' }}
+                            onClick={() => handlePreviewImg(src)}
+                          />
+                          <CloseCircleOutlined
+                            onClick={() => handleDeleteImg(src)}
+                            style={{ color: 'black' }}
+                          />
+                        </div>
+                      ))}
+                  </div>
+                  <p className={styles.textStyle}>分析</p>
+                  <div className={styles.fenxiBox}>
+                    <span style={{ width: '100px', fontSize: '16px' }}>分析认为：</span>
+                    <TextArea
+                      value={textAreaValue1}
+                      onChange={e => setTextAreaValue1(e.target.value)}
+                      autoSize={{
+                        minRows: 5,
+                      }}
+                      className={styles.textAreaFenxi}
+                    />
+                  </div>
+                  <div className={styles.huoQingBox}>
+                    <Input
+                      addonBefore="获情单位"
+                      placeholder="*************科室"
+                      value={danweiValue}
+                      className={styles.huoQing}
+                      onChange={e => setDanweiValue(e.target.value)}
+                    />
+                  </div>
+                  <div className={styles.bottomBox}>
+                    <Button className={styles.btn} onClick={reset}>
+                      重置
+                    </Button>
+                    <Button onClick={handleSave}> 生成报告</Button>
+                  </div>
+                </div>
+                <div className={styles.centerRight1}></div>
+                <div className={styles.centerRight}>
+                  <Search
+                    placeholder="请输入关键字"
+                    allowClear
+                    onSearch={e => handleSearch(e)}
+                    style={{
+                      width: 200,
+                    }}
+                    className={styles.searchStyle}
+                  />
+                  <div style={{ display: 'flex', justifyContent: 'right', marginRight: '-60%' }}>
+                    共<span style={{ color: 'red', margin: '0 8px' }}>{totalCount}</span>结果
+                  </div>
+                  <div className={styles.cardBox}>
+                    {mockCardsData.length === 0 ? (
+                      <Empty style={{ margin: '200px 8px', fontSize: '16px' }}></Empty>
+                    ) : (
+                      mockCardsData.map(card => {
+                        const processedCard = {
+                          ...card,
+                          titleZh: highLight(card.titleZh, searchQuery),
+                          contentZh: highLight(card.contentZh, searchQuery),
+                        };
+
+                        return (
+                          <div className={styles.cardStyle} key={card.id}>
+                            <Radio
+                              onChange={() => handleSelectCard(card)}
+                              value={card.id}
+                              checked={selectedCard && selectedCard.id === card.id}
+                            />
+                            <Card key={card.id} className={styles.card}>
+                              <Card.Meta
+                                className={styles.cardMeta}
+                                title={
+                                  <div
+                                    onClick={() => handleContentClick(card.id, card.showActions)}
+                                    style={{
+                                      overflow: 'hidden',
+                                      textOverflow: 'ellipsis',
+                                      whiteSpace: 'nowrap',
+                                      maxWidth: '250px',
+                                    }}
+                                  >
+                                    {processedCard.titleZh}
+                                  </div>
+                                }
+                                description={
+                                  <div
+                                    className={styles.contentStyle}
+                                    onClick={() => handleContentClick(card.id, card.showActions)}
+                                  >
+                                    {processedCard.contentZh}
+                                  </div>
+                                }
+                              />
+                            </Card>
+                          </div>
+                        );
+                      })
+                    )}
+                    {mockCardsData.length > 0 && (
+                      <Pagination
+                        current={currentPage}
+                        total={totalCount}
+                        pageSize={pageSize}
+                        onChange={handlePageChange}
+                        onShowSizeChange={handlePageChange}
+                        style={{ margin: '10px auto', display: 'flex', justifyContent: 'center' }}
+                        showSizeChanger={false}
+                      />
+                    )}
+                  </div>
+                </div>
+              </div>
+            </Tabs.TabPane>
+            <Tabs.TabPane tab="报告列表" key="3">
+              <Table
+                // key={`${index}+1`}
+                columns={columns}
+                dataSource={dataSource}
+                pagination={{
+                  position: ['bottomCenter'],
+                  current: currentPage,
+                  pageSize: pageSize,
+                  total: totalCount,
+                  onChange: handlePageChange,
+                }}
+              />
+            </Tabs.TabPane>
+          </Tabs>
+        </div>
+
+        <Modal
+          visible={isSocialEditorVisible}
+          onOk={handleSaveMonitor}
+          onCancel={handleCancel}
+          data={currentCardData}
+          isEditing={isEditing}
+          className={styles.modalSty}
+        >
+          <Form labelWidth={120} labelPosition="left">
+            <Form.Item label={isEditing ? '编辑文件夹名称：' : '文件夹名称'}>
+              <Input
+                placeholder="请输入文件夹名称"
+                value={isEditing ? currentMonitor.folderName : newMonitor.name}
+                onChange={handleMonitorChange}
+              />
+            </Form.Item>
+          </Form>
+        </Modal>
+
+        <CardModal
+          visible={isModalVisible}
+          onCancel={() => handleModalVisibility(false)}
+          modalData={modalData}
+          setIsModalVisible={handleModalVisibility}
+          handleExport={() => handleExport(modalData.id)}
+          images={modalData.pics}
+          isCollected={isCollected}
+          setIsCollected={setIsCollected}
+          onHandle={fetchListData}
+        />
+      </div>
+    </>
+  );
+}

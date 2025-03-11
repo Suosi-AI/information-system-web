@@ -1,0 +1,25 @@
+.box {
+  padding: 40px;
+
+  .top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .btn {
+    text-align: right;
+  }
+}
+
+.box :global(.ant-table-thead > tr > th) {
+  color: white;
+  background-color: #3b3d51;
+}
+.box :global(.ant-table-tbody) {
+  color: white;
+  background-color: #3b3d51;
+}
+.box :global(.ant-table-cell-row-hover) {
+  color: black;
+  background-color: none !important;
+}

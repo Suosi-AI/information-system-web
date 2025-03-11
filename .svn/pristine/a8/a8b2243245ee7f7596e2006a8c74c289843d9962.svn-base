@@ -1,0 +1,864 @@
+import chuan1 from '../../../assets//images/imgs/chuanbo1.jpg'
+import chuan2 from '../../../assets//images/imgs/chuanbo2.jpg'
+import zf from './../../../assets/images/zf.png'
+import zjz from './../../../assets/images/zjz.png'
+
+
+export const deveData = {
+  1: {
+    t1: {
+      title: '历年预算',
+      details: [
+        {
+          Technical: `年度预算执行报告 `,
+          preContent: [
+            { content: '2024年度', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R6koukyojigyo.pdf' },
+            { content: '2023年度', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R4koukyojigyo.pdf' },
+            { content: '2022年度', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R3koukyojigyo.pdf' },
+            { content: '2021年度', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R2koukyojigyo.pdf' },
+            { content: '2020年度', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R2koukyoujigyoukaiji.pdf' },
+            { content: '2019年度', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R1koukyojigyo%5B1%5D-1.pdf' }
+
+          ]
+        },
+        {
+          Technical: `历年预算概要 `,
+          preContent: [
+            { content: '2025年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/2024/08/27/nyusatsu/koukoku/201502/shiyousyo/R7youkyugaiyou.pdf' },
+            { content: '2024年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R6_yosan_gaiyou.pdf' },
+            { content: '2024年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R6kannkeiyosanngaiyou.pdf' },
+            { content: '2023年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R5hoseiyosan.pdf' },
+            { content: '2023年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R5yosanketteigaiyou.pdf' },
+            { content: '2023年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R5kannkeiyosanngaiyou.pdf' },
+            { content: '2022年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R4hoseigaiyou.pdf' },
+            { content: '2022年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R4yosanketteigaiyou.pdf' },
+            { content: '2022年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R4kannkeiyosanngaiyou.pdf' },
+            { content: '2021年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R3hoseigaiyou.pdf' },
+            { content: '2021年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R3yosanketteigaiyou.pdf' },
+            { content: '2021年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R3kannkeiyosanngaiyou.pdf' },
+            { content: '2020年海上保安庁第三次追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R2hoseigaiyou.pdf' },
+            { content: '2020年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R2yosanketteigaiyou.pdf' },
+            { content: '2020年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R2kannkeiyosanngaiyou.pdf' },
+            { content: '2019年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/nyusatsu/koukoku/201502/shiyousyo/R1hoseigaiyou.pdf' },
+            { content: '2019年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/2018/12/20/folder794/yosan/H31ketteishiropan.pdf' },
+            { content: '2019年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/folder794/yosan/31youkyuushiropan.pdf' },
+            { content: '2018年海上保安庁第二次追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/2018/12/20/folder794/yosan/H30hosei2shiropan.pdf' },
+            { content: '2018年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/folder794/yosan/H30hoseishiropan.pdf' },
+            { content: '2018年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/folder794/yosan/H30ketteishiropan.pdf' },
+            { content: '2018年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/30youkyuushiropan.pdf' },
+            { content: '2017年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/folder794/yosan/H29hoseishiropan.pdf' },
+            { content: '2017年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/H29ketteishiropan.pdf' },
+            { content: '2017年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/H29youkyuushiropan.pdf' },
+            { content: '2016年海上保安庁関係第二次補正予算の概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/H28hosei2shiropan.pdf' },
+            { content: '2016年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/folder794/yosan/28ketteishiropan.pdf' },
+            { content: '2016年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/yosan/h28shiropan.pdf' },
+            { content: '2015年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/kouhou/h27/k20151218/k151218-1.pdf' },
+            { content: '2015年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h27/k20150114/k150114-1.pdf' },
+            { content: '2015年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h26/k20140828/k140828-1.pdf' },
+
+            { content: '2014年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h27/k20150109/k150109-1.pdf' },
+            { content: '2014年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h27/k20150109/k150109-1.pdf' },
+            { content: '2014年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h25/k20130827/26yosan.pdf' },
+
+            { content: '2013年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h25/k20131212/k131212-1.pdf' },
+            { content: '2013年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h25/k20130129/25kettei.pdf' },
+
+            { content: '2012年日本海上保安厅追加预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h25/k20130115/k130115-2.pdf' },
+            { content: '2012年海上保安庁硬件基金概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h24/k20121026/k121026-1.pdf' },
+            { content: '2012年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h23/k20111224/24kettei.pdf' },
+            { content: '2012年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h23/k20110930/24yosan.pdf' },
+
+            { content: '2011年海上保安庁第四次追加预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h23/k20111220/k111220-1.pdf' },
+            { content: '2011年海上保安庁第三次追加预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h23/k20111021/k111021-2.pdf' },
+            { content: '2011年海上保安庁追加预算概算', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h23/k20110422/k110422-1.pdf' },
+            { content: '2011年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h22/k20101224/23yosan.pdf' },
+            { content: '2011年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h22/k20100827/23yosan.pdf' },
+
+            { content: '2010年日本海上保安厅预算概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h21/k20091225/22yosan.pdf' },
+            { content: '2010年日本海上保安厅预算请求概要', link: 'https://www.kaiho.mlit.go.jp/info/kouhou/h21/k20090831/22yosan.pdf' },
+
+
+
+
+          ],
+        },
+
+
+
+      ]
+    },
+    t2: {
+      title: '人员规模',
+      details: [
+        {
+          Technical: `海上保安庁定员概要 `,
+          preContent: [
+            { content: '2025年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/30_R7teiin_yokyu.pdf' },
+            { content: '2024年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/29_R6teiin_kettei.pdf' },
+            { content: '2024年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/28_R6teiinn_gaiyo.pdf' },
+
+            { content: '2023年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/27_R5teiin_kettei.pdf' },
+            { content: '2023年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/26_R5teiinn_gaiyo.pdf' },
+            { content: '2022年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/25_R4teiinn_kettei.pdf' },
+            { content: '2022年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/24_R4teiin_gaiyo.pdf' },
+            { content: '2021年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/soubi-yosan/22_R3teiin_satei.pdf' },
+            { content: '2021年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/soubi-yosan/21_R3teiin_gaiyo.pdf' },
+            { content: '2020年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/soubi-yosan/22_R2teiin_satei.pdf' },
+            { content: '2020年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/soubi-yosan/21_R2teiin_gaiyo.pdf' },
+            { content: '2019年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/folder794/yosan/20_H31teiin_satei.pdf' },
+            { content: '2019年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/folder794/yosan/19_h31teiin_gaiyo.pdf' },
+            { content: '2018年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/18_H30teiin_satei.pdf' },
+            { content: '2018年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/17_H30teiin_gaiyo .pdf' },
+            { content: '2017年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/16_H29teiin_satei.pdf' },
+            { content: '2017年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/15_h29teiin_gaiyo.pdf' },
+            { content: '2016年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/folder794/yosan/14_h28teiin_satei.pdf' },
+            { content: '2016年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/soubi/14_h28teiin_gaiyo.pdf' },
+            { content: '2015年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/13_h27teiin_satei.pdf' },
+            { content: '2015年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/12_h27teiin_gaiyo.pdf' },
+            { content: '2014年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/11_h26teiin_satei.pdf' },
+            { content: '2014年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/10_h26teiin_gaiyo.pdf' },
+            { content: '2013年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/08_h25teiin_satei.pdf' },
+            { content: '2013年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/07_h25teiin_gaiyo.pdf' },
+            { content: '2012年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/06_h24teiin_satei.pdf' },
+            { content: '2012年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/05_h24teiin_gaiyo.pdf' },
+            { content: '2011年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/04_h23teiin_satei.pdf' },
+            { content: '2011年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/03_h23teiin_gaiyo.pdf' },
+            { content: '2010年度定员要求査定概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/02_h22teiin_satei.pdf' },
+            { content: '2010年度定员要求概要', link: 'https://www.kaiho.mlit.go.jp/soubi-yosan/01_h22teiin_gaiyo.pdf' },
+
+          ]
+        },
+
+
+      ]
+    },
+
+    t3: {
+      title: '装备建造',
+      details: [
+
+        {
+          Technical: `船艇`,
+          preContent: `   海上保安厅船艇包括巡视船艇和特殊警备救难艇等警备救难业务用船、海洋情报业务用船、航路标识业务用船等。警备救难业务用船配备到全国的海上保安部、署，负责维持海上治安、确保海上交通安全、防止海上灾害、监视和取缔海洋污染等。海洋情报业务用船主要负责测量海底地形、观测海流和潮流、调查海洋污染等。航路标识业务用船主要负责灯塔、灯标、电波标识等航路标识的维护和管理等。教育业务用船配备海上保安学校，主要负责学生获取相应资格的实习等。
+   截止2022年4月1日`,
+          tableData: {
+            header: [
+              { title: '种类', colSpan: 2, rowSpan: null },
+              { title: '船型', colSpan: 1, rowSpan: null },
+              { title: '数量（架）', colSpan: 2, rowSpan: null }
+            ],
+            body: [
+              [
+                { content: '警备救难业务用船', rowSpan: 10, colSpan: 1 },
+                { content: '巡视船', rowSpan: 5, colSpan: 1 },
+                { content: 'PLH', rowSpan: 1, colSpan: 1 },
+                { content: '19', rowSpan: 1, colSpan: 1 },
+                { content: '145', rowSpan: 5, colSpan: 2, }
+              ],
+              [
+                { content: 'PL', rowSpan: 1, colSpan: 1 },
+                { content: '51', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: 'PM', rowSpan: 1, colSpan: 1 },
+                { content: '38', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: 'PS', rowSpan: 1, colSpan: 1 },
+                { content: '36', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: 'FL', rowSpan: 1, colSpan: 1 },
+                { content: '1', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '巡视艇', rowSpan: 2, colSpan: 1 },
+                { content: 'PC', rowSpan: 1, colSpan: 1 },
+                { content: '69', rowSpan: 1, colSpan: 1 },
+                { content: '238', rowSpan: 1, colSpan: 1, },
+              ],
+              [
+                { content: 'CL', rowSpan: 1, colSpan: 1 },
+                { content: '169', rowSpan: 1, colSpan: 1 },
+                { content: '', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '特殊警备救难艇', rowSpan: 2, colSpan: 1 },
+                { content: '放射能调查艇', rowSpan: 1, colSpan: 1 },
+                { content: '3', rowSpan: 1, colSpan: 1 },
+                { content: '67', rowSpan: 1, colSpan: 1, className: 't-c' },
+              ],
+              [
+                { content: '警备艇', rowSpan: 1, colSpan: 1 },
+                { content: '2', rowSpan: 1, colSpan: 1 },
+                { content: '', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '监视取缔艇', rowSpan: 1, colSpan: 1 },
+                { content: '62', rowSpan: 1, colSpan: 1 },
+                { content: '', rowSpan: 1, colSpan: 2 }
+              ],
+              [
+                { content: '海洋情报业务用船', rowSpan: 2, colSpan: 1 },
+                { content: '测量船', rowSpan: 2, colSpan: 1 },
+                { content: 'HL', rowSpan: 1, colSpan: 1 },
+                { content: '7', rowSpan: 1, colSpan: 1 },
+                { content: '15', rowSpan: 2, colSpan: 1, },
+              ],
+              [
+                { content: 'HS', rowSpan: 1, colSpan: 1 },
+                { content: '8', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '航路标识业务用船', rowSpan: 2, colSpan: 1 },
+                { content: '灯塔巡视船', rowSpan: 2, colSpan: 1 },
+                { content: 'LM', rowSpan: 1, colSpan: 1 },
+                { content: '3', rowSpan: 1, colSpan: 1 },
+                { content: '6', rowSpan: 2, colSpan: 1, },
+              ],
+              [
+                { content: 'LS', rowSpan: 1, colSpan: 1 },
+                { content: '3', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '教育业务用船', rowSpan: 1, colSpan: 1 },
+                { content: '实习艇', rowSpan: 1, colSpan: 1 },
+                { content: '', rowSpan: 1, colSpan: 1 },
+                { content: '3', rowSpan: 1, colSpan: 1, },
+                { content: '3', rowSpan: 1, colSpan: 1, }
+              ]
+            ],
+            total: {
+              content: '474',
+              colSpan: 5
+            }
+          }
+
+        },
+        {
+          Technical: `飞机`,
+          preContent: `   海上保安厅飞机包括固定翼飞机和旋转翼飞机。负责维持海上治安、确保海上交通安全、实施海难救助、防止海上灾害、监视和取缔海洋污染、进行火山状况监视及沿岸区域测量、向受灾地区运输物资等。
+   截止2022年4月1日`,
+          tableData: {
+            header: [
+              { title: '种类', colSpan: 1, rowSpan: null },
+              { title: '机型', colSpan: 1, rowSpan: null },
+              { title: '数量（架）', colSpan: 1, rowSpan: null }
+            ],
+            body: [
+              [
+                { content: '固定翼飞机	', rowSpan: 6, colSpan: 1 },
+                { content: '海湾V	', rowSpan: 1, colSpan: 1 },
+                { content: '2', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '猎鹰2000	', rowSpan: 1, colSpan: 1 },
+                { content: '5', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '庞巴迪315	', rowSpan: 1, colSpan: 1 },
+                { content: '9', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '萨布340	', rowSpan: 1, colSpan: 1 },
+                { content: '4', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '比奇350	', rowSpan: 1, colSpan: 1 },
+                { content: '10', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '塞斯纳172	', rowSpan: 1, colSpan: 1 },
+                { content: '5', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '旋转翼飞机	', rowSpan: 7, colSpan: 1 },
+                { content: '超级美洲豹225', rowSpan: 1, colSpan: 1 },
+                { content: '11', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '	超级美洲豹332	', rowSpan: 1, colSpan: 1 },
+                { content: '2', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: 'AW139	', rowSpan: 1, colSpan: 1 },
+                { content: '19', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: 'S76D	', rowSpan: 1, colSpan: 1 },
+                { content: '3', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: 'S76C	', rowSpan: 1, colSpan: 1 },
+                { content: '12', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '贝尔412	', rowSpan: 1, colSpan: 1 },
+                { content: '4', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '贝尔505	', rowSpan: 1, colSpan: 1 },
+                { content: '4', rowSpan: 1, colSpan: 1 },
+              ],
+
+            ],
+            total: {
+              content: '90',
+              colSpan: 2
+            }
+          }
+
+        },
+        {
+          Technical: `航路标识`,
+          preContent: `   航标是船舶为了确认己方位置和与目的地的位置关系，安全且有效地航行所必需的。航标的种类包括：指示海角和防波堤位置的灯塔、指示航线和障碍物所在的灯浮标等的“光波标识”；通过电波指示船舶的位置和标志方向的“电波标识”；在潮汐较大的关门海峡和来岛海峡，使用无线广播和电子显示屏通知潮流方向和速度的“潮流信号所”；以及在船舶交通所载海域使用雷达、AIS以及使用电视摄像机掌握航道和港口内船舶交通状况，通过无线电和AIS消息提供船舶交通信息的“船舶通航信号所”等。
+   截至2022年3月31日`,
+          tableData: {
+            header: [
+              { title: '种类', colSpan: 1, rowSpan: null },
+              { title: '数量', colSpan: 1, rowSpan: null }
+            ],
+            body: [
+              [
+                { content: '灯塔		', rowSpan: 1, colSpan: 1 },
+                { content: '3118	', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '灯浮标		', rowSpan: 1, colSpan: 1 },
+                { content: '1164', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '引导灯		', rowSpan: 1, colSpan: 1 },
+                { content: '44', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '指向灯		', rowSpan: 1, colSpan: 1 },
+                { content: '17', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '照射灯		', rowSpan: 1, colSpan: 1 },
+                { content: '136', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '立标		', rowSpan: 1, colSpan: 1 },
+                { content: '111', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '浮标		', rowSpan: 1, colSpan: 1 },
+                { content: '28', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '	无线方位信号所		', rowSpan: 1, colSpan: 1 },
+                { content: '15', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: 'AIS信号所		', rowSpan: 1, colSpan: 1 },
+                { content: '20', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '船舶通航信号所		', rowSpan: 1, colSpan: 1 },
+                { content: '27', rowSpan: 1, colSpan: 1 },
+              ],
+              [
+                { content: '潮流信号所		', rowSpan: 1, colSpan: 1 },
+                { content: '7', rowSpan: 1, colSpan: 1 },
+              ],
+
+
+            ],
+            total: {
+              content: '5142',
+              colSpan: 2
+            }
+          }
+
+        },
+        {
+          Technical: `工作制服`,
+          preContent: '',
+          imgBox: [
+            {
+              name: `   制服`,
+              img: zf,
+            },
+            {
+              name: `   职级章`,
+              img: zjz,
+            },
+          ],
+
+
+        },
+
+      ]
+    },
+    t4: {
+      title: '技术发展',
+      details: [
+        {
+          Technical: `船舶的建造和维护`,
+          preContent: `   海上保安厅的巡视船艇，在1948年创建之际，系收集了第二次世界大战后的各种杂务船。之后，自1949年开始建造新船艇，历经三次大规模建造更换后，发展到现在。
+在建造采用最先进技术的船舶的过程中，海上保安厅制订满足业务需求的性能基本计划，对于在造船厂进行的船体结构焊接加工情况、船体性能和搭载设备等功能确认等开展建造监督工作。
+另外，在维护现有船舶方面，除了在发生故障时由船员提供维修的技术支援、由船舶公司商讨维修方案外，还需要对老化、过时的船舶进行延长寿命、提高功能的大规模维修等，以维持船舶的性能和功能，从而力求能够精准应对多样化的海上保安业务`,
+          imgBox: [chuan1, chuan2],
+
+        },
+        {
+          Technical: `飞机的建造和维护`,
+          preContent: `   凭借飞机的机动能力和监视能力，能够从事维持海洋秩序、海难救助、防止海上灾害、监视管制海洋污染、确保海上交通安全等工作，以及应对监视火山和测量沿岸区域等各种业务需求。海上保安厅负责建造（采购·改造）飞机的规格制定，以及从预算要求到接收的一系列业务。在各种业务需求中，为保障飞机无故障运行，负责零部件采购、机体建造和维修、装备建造和维修、技术支援等。`,
+          imgBox: [],
+
+        },
+        {
+          Technical: `航标的建设和维护`,
+          preContent: `   船舶为了安全且有效率地航行，必须经常确认自己船只的位置，避开危险的障碍物，把握安全的航向，为此设置灯塔等航向标志进行管理。航标具有较高的公共性，因此被定位为公共事业对象。整备（工程）科除了进行航标设施的建设和整修之外，还进行航标用机器的采购、安装和更换。
+    为了让航标持续发挥其应有的功能，维护保养是非常重要的。海上保安厅职员定期巡视航标，确认设施和设置的机器有无异常。另外，在航标因风浪或台风而受损或灯光熄灭的情况下进行修复工作，努力确保船舶交通的安全。近年，通过将航标灯从灯泡更换为LED、金属光栅灯，或者使用不需要补充电解液的蓄电池等，努力推进维护保养的省力化。`,
+          imgBox: [],
+
+        },
+
+
+
+
+
+
+      ]
+    },
+
+
+  },
+  2: {
+
+
+    t1: {
+      title: '历史沿革',
+      contents: `   海岸警卫队的历史可以追溯到18世纪90年代美国财政部为执行关税（新国家的重要收入来源）而维护的小型舰队。财政部长 亚历山大·汉密尔顿游说国会资助建造十艘巡逻艇，国会于1790年8月4日（现在被定为海岸警卫队的官方生日）批准了建造。在1798年海军重建之前，这些“缉私巡逻艇”是美国早期唯一的海军力量。因此，巡逻艇及其船员经常承担额外的任务，包括打击海盗、营救遇险水手、运送政府官员，甚至运送邮件。最初，它根本不是一个有组织的联邦机构，只是一个“巡逻艇系统”，每艘船都在其所在港口的海关官员的指导下运行。随着该服务逐渐变得更加有组织，它使用了包括“缉私巡逻艇”在内的几个名称。最终，它正式组建为美国缉私巡逻艇服务队。除了常规的执法和海关任务外，缉私巡逻艇及其船员还被用于支持和补充海军参与各种武装冲突，包括美国内战。
+    一个独立的联邦机构——美国救生服务局与税务海军陆战队同时发展起来。1848年之前，有各种慈善努力试图建立系统从岸基站向遇难水手提供援助，最著名的是马萨诸塞州人道协会。联邦政府于1848年开始资助救生站，但资金并不稳定，而且该系统仍然依赖于全志愿者船员。1871年，萨姆纳·因克利斯·金博尔被任命为财政部新成立的税务海军部负责人，并开始将税务海军快艇组织成一个集中机构。金博尔还推动为救生站争取更多资金，并最终获得批准将救生服务局创建为一个独立的联邦机构，也隶属于财政部，拥有全职带薪船员。
+1915年，缉私船服务处和救生服务处合并，成立了现代的美国海岸警卫队。灯塔服务处和海事检查导航局分别于1939年和1942年并入海岸警卫队。  1967年，海岸警卫队从美国财政部划归新成立的美国运输部，这一安排一直持续到2003年，为了在2001年9月11日恐怖袭击后更有效地保护美国利益，根据相关立法，海岸警卫队划归美国国土安全部管辖。
+在战争时期，海岸警卫队或其各个组成部分可以作为海军部的一个部门开展行动。这种安排有着广泛的历史基础，因为海岸警卫队参与过各种各样的战争，如1812年战争、美墨战争和美国内战。在美国内战中，哈里特·莱恩号巡逻舰发射了第一发海军炮弹，试图解救被围困的萨姆特堡。海岸警卫队最后一次作为海军整体行动是在第二次世界大战期间，二战期间共有约25万人在海岸警卫队服役。
+    海岸警卫队第一中队是美国海岸警卫队于1965年为越南战争组建的作战部队。该中队由美国海军作战指挥，负责执行市场时间行动。它的成立标志着海岸警卫队人员自二战以来首次在战斗环境中得到广泛使用。1965年至1970年期间，该中队在三个不同地区开展作战行动。26艘点级巡逻艇及其船员和一个中队支援人员被指派给美国海军，其任务是拦截越共和北越的帆船和拖网渔船操作员从南海向南越运送武器和补给。该中队还为在南越海岸线作战的附近友军提供81毫米迫击炮海军炮火支援，并在海王行动期间协助美国海军。
+海岸警卫队第三中队是美国海岸警卫队于1967年组建的一支作战部队，用于越南战争。受美国海军指挥，驻扎在珍珠港。它由五艘美国海岸警卫队高耐久性巡逻艇组成，每六个月轮流部署一次。从1967年5月到1971年12月，共有35艘高耐久性巡逻艇参与了行动，最著名的是使用它们的5英寸炮提供海军炮火支援任务。
+通常情况下，海岸警卫队下属单位受海军行动指挥，而其他海岸警卫队单位则受国土安全部指挥。
+    可部署行动组(DOG)是海岸警卫队于2007年7月成立的一个司令部。DOG建立了一个单一的指挥机构，以迅速向海岸警卫队、国土安全部、国防部、司法部和其他跨部门作战指挥官提供来自海岸警卫队可部署专业部队的适应性部队包。DOG于2013年4月22日解散，并重组为可部署专业部队(DSF)单位，由大西洋和太平洋地区指挥官控制。
+该部队的筹备始于2001年9月11日恐怖袭击之后，并于2007年7月20日正式成立。其任务包括海上执法、反恐、港口安全、污染应对和潜水作业。 
+可部署行动组内有超过25个专业单位  ，包括海上安全响应小组、海上安全与安保小组、执法支队、港口安保单位、国家打击部队和区域潜水舱。可部署行动组还管理分配给海军远征作战司令部的海岸警卫队人员，并参与挑选参加海军BUD/S和海军海豹突击队服役的海岸警卫队候选人。`
+    },
+    t2: {
+      title: '历年预算',
+      details: [
+        {
+          Technical: `2024 `,
+          preContent: [
+            { content: '2024财年预算申请概览',           link: 'http://180.167.238.140:10000/hj-news/pdf/2024财年预算申请概览.pdf		' },
+            { content: '2024财年总统预算情况说明书',     link: 'http://180.167.238.140:10000/hj-news/pdf/2024财年总统预算情况说明书.pdf		' },
+            { content: '2024财年预算国会审查',           link: 'http://180.167.238.140:10000/hj-news/pdf/2024财年预算国会审查.pdf		' },
+            { content: '2024财年未获拨款的优先事项清单', link: 'http://180.167.238.140:10000/hj-news/pdf/2024财年未获拨款的优先事项清单.pdf	' }
+          ]
+        },
+        {
+          Technical: `2023 `,
+          preContent: [
+            { content: '2023财年总统预算情况说明书', link: 'http://180.167.238.140:10000/hj-news/pdf/2023财年总统预算情况说明书.pdf	' },
+            { content: '2023财年预算国会审查',       link: 'http://180.167.238.140:10000/hj-news/pdf/2023财年预算国会审查.pdf	' }
+          ],
+        },
+        {
+          Technical: `2022 `,
+          preContent: [
+            { content: '2022财年预算申请概览',   link: 'http://180.167.238.140:10000/hj-news/pdf/2022财年预算申请概览.pdf		' },
+            { content: '2022财年预算情况说明书', link: 'http://180.167.238.140:10000/hj-news/pdf/2022财年预算情况说明书.pdf		' },
+            { content: '2022财年预算国会审查',   link: 'http://180.167.238.140:10000/hj-news/pdf/2022财年预算国会审查.pdf		' },
+            { content: '2022年绩效衡量定义',     link: 'http://180.167.238.140:10000/hj-news/pdf/2022年绩效衡量定义.pdf			' }
+          ],
+        },
+        {
+          Technical: `2021 `,
+          preContent: [
+            { content: '2021财年预算申请概览',          link: 'http://180.167.238.140:10000/hj-news/pdf/2021财年预算申请概览.pdf' },
+            { content: '2021财年预算国会审查',          link: 'http://180.167.238.140:10000/hj-news/pdf/2021财年预算国会审查.pdf' },
+            { content: '2021财年总统预算情况说明书',    link: 'http://180.167.238.140:10000/hj-news/pdf/2021财年总统预算情况说明书.pdf' },
+            { content: '2020财年年度业绩报告',          link: 'http://180.167.238.140:10000/hj-news/pdf/2020财年年度业绩报告.pdf' }
+          ],
+        },
+        {
+          Technical: `2020 `,
+          preContent: [
+            { content: '2020财年预算申请概览',          link: 'http://180.167.238.140:10000/hj-news/pdf/2020财年预算申请概览.pdf' },
+            { content: '2020财年预算国会审查',          link: 'http://180.167.238.140:10000/hj-news/pdf/2020财年总统预算情况说明书.pdf' },
+            { content: '2020财年总统预算情况说明书',    link: 'http://180.167.238.140:10000/hj-news/pdf/2020财年总统预算情况说明书.pdf	' },
+            { content: '2019财年年度业绩报告',          link: 'http://180.167.238.140:10000/hj-news/pdf/2019财年年度业绩报告.pdf' }
+          ],
+        },
+      ]
+    },
+    t3: {
+      title: '人员编制',
+      details: [
+        {
+          title: `  海岸警卫队共有87,569名员工。海岸警卫队制服成员的正式名称是“海岸警卫队员”，与性别无关。“海岸警卫队员”是一个非正式术语，通常用于指代现任或前任海岸警卫队人员。2008年，“卫兵”一词被引入作为替代，但后来被放弃。海军上将罗伯特·J·帕普二世表示，他认为任何指挥官都没有权力改变海岸警卫队成员的称呼，因为“海岸警卫队员”一词出现在1915年成立海岸警卫队的《美国法典》第14章中。“海岸警卫队”是指整个海岸警卫队的四个组成部分：正规军、预备役、辅助部队和海岸警卫队文职雇员。 `,
+          Technical: `委任军官 `,
+          preContent: [
+            { content: `  海岸警卫队的军官薪级从O-1到O-10不等，军衔结构与海军相同。少尉（O-1）至中尉（O-4）军衔的军官被视为初级军官，指挥官（O-5）和上尉（O-6）被视为高级军官，少将（O-7）至上将（O-10）被视为将官。海岸警卫队司令和副司令是海岸警卫队中唯一被授权拥有上将军衔的成员。  \n  海岸警卫队没有自己的医务官或牧师。相反，美国海军的牧师以及美国公共卫生服务团的军官被派往海岸警卫队，分别履行与牧师相关的职责和与医疗相关的职责。这些军官穿着海岸警卫队的制服，但用自己部队的徽章代替了海岸警卫队的徽章。  \n  海军和海岸警卫队拥有相同的军官军衔徽章，只是海岸警卫队军官佩戴金色海岸警卫队盾牌，而不是线星或参谋团军官徽章。`, link: '' },
+          ]
+        },
+        {
+          title: ` `,
+          Technical: `准尉 `,
+          preContent: [
+            { content: `  薪级为E-6至E-9且至少有八年经验的高素质士兵每年都可以竞争准尉(WO)的职位。成功的候选人由委员会选出，然后被任命为21个专业之一的二级准尉(CWO2)。随着时间的推移，一级准尉可能会晋升为三级准尉(CWO3)和四级准尉(CWO4)。海岸警卫队目前不使用准尉(WO1)和五级准尉(CWO5)的军衔。一级准尉还可以竞争一级准尉升中尉计划。如果被选中，准尉将晋升为中尉(O-3E)。“E”表示在现役中担任准尉或士兵超过四年，并且该成员有权获得比其他中尉更高的薪资率。`, link: '' },
+          ]
+        },
+        {
+          title: ` `,
+          Technical: `士官 `,
+          preContent: [
+            { content: '海岸警卫队的士兵薪级从E-1到E-9，军衔结构与海军相同。薪级为E-4及以上的士兵被视为士官，其职业发展路径与海军士官非常相似。 \n  薪级为E-7及以上的军士为首席军士，必须参加海岸警卫队首席军士学院或国防部同等学校，才能晋升为薪级为E-8的军士。学校的基本主题是：专业性、领导、通讯、系统思维和终身学习。  \n  士兵军衔徽章也与海军士兵徽章几乎相同。海岸警卫队的盾牌取代了士官领子和帽子上的鹰徽，或有资格成为“指定击球手”的海员的士兵等级徽章。初级士兵（E-3及以下）的团体等级标记（条纹）也遵循海军惯例，白色代表海员，红色代表消防员，绿色代表飞行员。与海军惯例不同的是，所有E-6及以下的士官都佩戴红色V形臂章，所有首席士官都佩戴金色。', link: '' },
+          ]
+        },
+        {
+          title: ` `,
+          Technical: `文职人员 `,
+          preContent: [
+            { content: `  海岸警卫队雇佣了超过8,577名文职人员，从事超过200种不同的工作类型，其中包括海岸警卫队调查局特工、律师、工程师、技术人员、行政人员、商人和联邦消防员。文职雇员在海岸警卫队的各个级别工作，以支持其各种任务。 `, link: '' },
+          ]
+        },
+        {
+          title: ` `,
+          Technical: `海岸警卫队预备队 `,
+          preContent: [
+            { content: `  美国海岸警卫队预备役是海岸警卫队的预备役军事力量。海岸警卫队预备役成立于1941年2月19日。海岸警卫队有8700名预备役人员，他们通常每月训练两天，每年额外服现役12天，尽管许多人要参加额外的训练和服现役期，包括那些被动员延长现役期的人。海岸警卫队预备役人员拥有与现役人员相同的训练和资格，因此，每天都可以看到他们在增援现役海岸警卫队部队。 \n  在越南战争期间以及战后不久，海岸警卫队曾考虑放弃预备役计划，但后来该部队改组为兵力增强部队，其主要重点不再只是预备役行动，而是增强现役人员日常的战备能力和任务执行能力。  \n  自2001年9月11日以来，预备役军人已被征召并服现役，包括部署到波斯湾，并作为美国北方司令部和中央司令部等国防部作战司令部的一部分。海岸警卫队港口安全部队全部由预备役军人组成，只有5至7名现役人员除外。此外，海岸警卫队为海军远征作战司令部提供的大部分人员都是预备役军人。 \n  预备役由美国海岸警卫队预备役助理司令、海军少将詹姆斯·凯利管理。`, link: '' },
+          ]
+        },
+        {
+          title: ` `,
+          Technical: `海岸警卫队辅助部队 `,
+          preContent: [
+            { content: `  美国海岸警卫队辅助部队是美国海岸警卫队的制服非军事志愿部队，于1939年6月23日根据国会法案成立。虽然是一个民间组织，但它最初名为“美国海岸警卫队预备队”，后来于1941年2月19日海岸警卫队成立军事预备队时更名为“美国海岸警卫队辅助部队”。作为“海岸警卫队团队”（用于统称所有现役、预备役、辅助部队和文职雇员）的一部分，辅助部队执行或协助海岸警卫队的几乎所有非战斗和非执法任务。辅助人员受海岸警卫队司令的指导。截至2022年，美国海岸警卫队辅助部队约有26,000名成员。  \n  海岸警卫队的政策已将许多与休闲划船安全有关的职责分配给了辅助人员，包括公共划船安全教育和宣传。其中包括提供划船技能课程、与当地海洋相关企业联络以及向公众提供自愿船舶安全检查（以前称为礼貌检查）。此外，辅助人员使用自己的船只、艇和飞机（一旦注册为海岸警卫队设施）为海岸警卫队提供运营支持，包括进行安全巡逻、协助搜救任务、检查助航设备以及代表海岸警卫队执行其他任务。  \n  1997年之前，辅助人员的活动范围主要限于保障休闲船舶安全。然而，1997年，新立法授权辅助人员参与海岸警卫队的所有任务，但直接军事和直接执法任务除外。辅助人员可以直接增援现役海岸警卫队人员的非战斗、非执法角色（例如无线电通信值班人员、翻译、厨师等），并可以协助现役人员检查商船和维护助航设备。辅助人员可以支持海岸警卫队的执法和国土安全任务，但不能直接参与（逮捕等），辅助人员在担任任何辅助职务时不得携带武器。`, link: '' },
+          ]
+        }
+
+      ]
+    },
+
+    t4: {
+      title: '武器装备',
+      details: [
+
+        {
+          Technical: `巡逻缉私船`,
+          mixBox: [
+            {
+              preContents: `  海岸警卫队拥有243艘巡逻艇，巡逻艇是指任何长度超过65英尺（20米）的船只，配有固定配属的船员，并为船员提供长期支持而提供的住宿。`,
+              timeContent: [
+                { Technical1: `国家安全巡逻艇(WMSL)：也称为传奇级，这是海岸警卫队最新级的418英尺（127米）巡逻艇。418英尺长，是美国海岸警卫队现役最大的军用巡逻艇。传奇级船只一对一取代了20世纪60年代单独退役的汉密尔顿级巡逻艇（也称为高耐久性巡逻艇(WHEC)）。共批准并预算了11艘。` },
+                { Technical1: `中型耐力巡逻艇（WMEC）：主要包括210英尺（64米）的Reliance级和270英尺（82米）的Famous级巡逻艇，不过283英尺（86米）的Alex Haley级也属于这一类。主要任务是执法、搜救和军事防御。预计Heritage级巡逻艇最终将取代Reliance级和Famous级巡逻艇。` },
+                { Technical1: `极地级破冰船(WAGB)：目前有三艘WAGB用于破冰和研究，但只有两艘仍在使用，分别是399英尺（122米）长的重型“极地之星”号和较新的420英尺（130米）长的中型“希利”号。极地海位于华盛顿州西雅图，但目前已停用。根据“极地破冰船计划”，这些破冰船将被新型重型破冰船取代，该计划是世界上最大的海岸警卫队船只，预计于2025年交付。` },
+                { Technical1: `美国海岸警卫队鹰号：一艘295英尺（90米）长的帆船，用作海岸警卫队学院学员和海岸警卫队军官候选人的训练船。该船最初在德国建造，原名为霍斯特·威塞尔号，1945年被美国作为战利品缴获。` },
+                { Technical1: `USCGC Mackinaw：一艘240英尺（73米）长的重型破冰船，专为在五大湖地区作业而建造。` },
+                { Technical1: `海上浮标补给船(WLB)：这些225英尺（69米）长的船只用于维护助航设备并协助执法和搜救。` },
+                { Technical1: `沿海浮标招标船(WLM)：175英尺（53米）长的守护级沿海浮标招标船用于维护沿海航标。` },
+                { Technical1: `哨兵级巡逻艇(WPC)：长154英尺（47米）的哨兵级巡逻艇，也称为“快速反应巡逻艇”级，用于搜索救援工作和执法。` },
+                { Technical1: `海湾级破冰拖船（WTGB）：140英尺（43米）破冰船，主要用于国内破冰任务。其他任务包括搜索和救援、执法和航海辅助维护。` },
+                { Technical1: `巡逻艇(WPB)：目前服役的WPB有两种类型：110英尺（34米）的岛级巡逻艇和87英尺（27米）的海军陆战队护卫者级巡逻艇` },
+                { Technical1: `小型港口拖船(WYTL)：65英尺（20米）小型破冰拖船，主要用于国内港口清冰，以及有限的搜索救援和执法任务。` }
+              ],
+            }
+          ],
+        },
+        {
+          Technical: `其它船只`,
+          mixBox: [
+            {
+              preContents: `  海岸警卫队拥有大约1,650艘船只，这些船只是指长度不超过65英尺（20米）的船只，通常在近岸和内陆水道作业。海岸警卫队船只舰队包括：`,
+              timeContent: [
+                { Technical1: `47英尺机动救生艇(MLB)：海岸警卫队的47英尺（14米）主要恶劣天气船，用于搜索和救援以及执法和国土安全。` },
+                { Technical1: `应急船-中型(RB-M)：一种新型多用途45英尺（14米）船，旨在取代41英尺（12米）多用途船。计划建造170艘` },
+                { Technical1: `特殊用途救生艇-近岸救生艇：仅建造了2艘。吃水浅，42英尺（13米）长的救生艇取代了47英尺（14米）长的机动救生艇，基地位于马萨诸塞州查塔姆` },
+                { Technical1: `可部署追击艇（DPB）：一艘38英尺（12米）长的艇，能够追击快速可卡因走私船。` },
+                { Technical1: `远程拦截器(LRI)：一种36英尺（11米）的高速发射装置，可以从较大的深水巡逻艇的船尾坡道发射。` },
+                { Technical1: `航标船（TANB/BUSL/ATON/ANB）：用于维护航标的各种设计，长度从26到55英尺（7.9到16.8米）。` },
+                { Technical1: `特殊用途船艇–执法(SPC-LE)：旨在支持专门的执法任务，使用三台300马力(220千瓦)的Mercury Marine发动机。SPC-LE长33英尺(10米)，速度超过50节(93公里/小时；58英里/小时)，可在离岸30英里(48公里)以上的地方作业。` },
+                { Technical1: `防御级船：25英尺（7.6米）高速船，可执行多种任务，包括搜索和救援、港口安全和执法任务。也称为小型应急船(RB-S)。` },
+                { Technical1: `25英尺可运输港口安全船(TPSB)：一艘25英尺（7.6米）长的装备精良的船，供港口安全部队用于武力保护。` },
+                { Technical1: `特殊用途船舶，浅水（SPC-SW）：24英尺（7.3米）[需要澄清]` },
+                { Technical1: `巡逻艇-超视距（OTH）：长23英尺（7.0米）的刚性船体充气艇，供中高耐力巡逻艇和专业单位使用。` },
+                { Technical1: `短程检察官(SRP)：一艘23英尺（7.0米）刚性船体充气艇，可从国家安全巡逻舰的船尾下水坡道发射。` }
+              ],
+            }
+          ],
+        },
+        {
+          Technical: `飞机`,
+          mixBox: [
+            {
+              preContents: `  海岸警卫队在美国本土、阿拉斯加、夏威夷和波多黎各的24个海岸警卫队航空站运营着大约201架固定翼和旋翼飞机。这些航空站大部分是民用机场的租户活动，其中一些是前空军基地和海军航空站，尽管有几个也是独立的军事设施。海岸警卫队航空站也位于现役海军航空站、空军国民警卫队基地和陆军航空场。 \n  海岸警卫队飞行员在佛罗里达州惠廷菲尔德海军航空站和德克萨斯州科珀斯克里斯蒂海军航空站接受海军和海军陆战队同行的初级（固定翼）和高级（固定翼或旋翼）飞行训练，并被视为海军飞行员。获得海军飞行员联队资格后，海岸警卫队飞行员（预定驾驶HC-130的飞行员除外）前往阿拉巴马州莫比尔的美国海岸警卫队航空训练中心接受6-12周的海岸警卫队舰队飞机专门训练。HC-130飞行员前往阿肯色州小石城空军基地接受由美国空军第314空运联队主持的联合C-130训练。  \n  固定翼飞机从空军基地起飞执行长期任务。直升机从空军基地起飞，可部署在多艘不同的快艇上。直升机可以营救人员或拦截走私移民或毒品的船只。自2001年9月11日恐怖袭击以来，海岸警卫队在国家安全中发挥了更加突出的作用，现在武装直升机在高风险地区执行海上执法和反恐任务。 \n  海岸警卫队目前正在开发一项无人机项目，该项目将利用MQ-9“死神”无人机平台执行国土安全和搜救任务。为了支持这项工作，海岸警卫队与海军和美国海关和边境保护局合作，研究各自组织内现有/新兴的无人机系统(UAS)能力。随着这些系统的成熟，从这一联合努力中获得的研究和运营经验将使海岸警卫队能够开发自己的巡逻艇和陆基UAS能力。`,
+              timeContent: [],
+            }
+          ],
+        },
+        {
+          Technical: `舰炮`,
+          mixBox: [
+            {
+              preContents: `  大多数海岸警卫队巡逻艇都安装了一个或多个舰炮系统，其中包括：`,
+              timeContent: [
+                { Technical1: `奥托梅莱拉76毫米，一种雷达制导计算机控制火炮系统，用于中型耐力快艇。3 英寸火炮的高射速和专用弹药的可用性使其成为一种多用途火炮，能够进行反舰、防空、地面支援和短程反导防御。` },
+                { Technical1: `MK 110 57毫米火炮是博福斯57毫米火炮的雷达制导计算机控制版本。它用于传奇级巡逻舰，也称为国家安全巡逻舰 (NSC)。它是一种多用途火炮，能够进行反舰、防空和短程反导防御。隐形炮架降低了雷达轮廓。此外，该火炮在炮管上安装了一个小型雷达，用于测量炮口速度以进行火控，并且由于采用双进给系统，可以即时更换弹药类型。它还可以使用操纵杆和摄像机（安装在火炮上）手动操作/射击。` },
+                { Technical1: `Mk38 Mod 0武器系统由M242 Bushmaster 25毫米链式机枪和Mk 88 Mod 0机枪架组成。该系统为有人驾驶系统，其陀螺稳定系统可补偿甲板的倾斜。它为舰船提供防御和进攻炮火能力，可打击各种水面目标。它主要设计为近距离防御措施，可防御巡逻艇、浮动水雷和各种岸基目标。` },
+                { Technical1: `Mk38 Mod 2武器系统是一种遥控Mk 38，配备电子光学瞄准器、激光测距仪、前视红外系统(FLIR)和更可靠的供弹系统，所有这些都增强了武器系统的能力和准确性。` },
+                { Technical1: `Phalanx CIWS（发音为“sea-wiz”）是一种近距离武器系统，用于防御飞机和反舰导弹。它还可用于对付各种水面目标。它由安装在旋转底座上的雷达制导20毫米6管M61 Vulcan机炮组成，用于海岸警卫队的国家安全巡逻艇。该系统可以自主操作以对抗空中威胁，也可以手动操作，使用电子光学瞄准器、激光测距仪和FLIR系统对付水面目标。` },
+                { Technical1: `Sea PROTECTOR MK50是一款遥控陀螺稳定M2 .50口径重机枪。瞄准具套件包括日光摄像机、热像仪和由操纵杆操作的护眼激光测距仪。它还配备了一个完全集成的火控系统，可提供弹道校正。Mk50仅在四艘海军陆战队Protector级巡逻艇上使用，即USCGC Sea Fox (WPB-87374)、USCGC Sea Devil (WPB-87368)、USCGC Sea Dragon(WPB-87367)和USCGC Sea Dog(WPB-87373)` }
+              ],
+            }
+          ],
+        },
+        {
+          Technical: `小武器和轻武器`,
+          mixBox: [
+            {
+              preContents: `美国海岸警卫队使用各种小型武器和轻武器。手枪、霰弹枪和步枪用于武装船员和登船队员，机关枪则安装在快艇、船只和直升机上。小武器和轻武器包括：`,
+              timeContent: [
+                { Technical1: `M9 9毫米手枪` },
+                { Technical1: `SIG Sauer P229R DAK .40 S&W手枪` },
+                { Technical1: `雷明顿 M870P 12 号霰弹枪` },
+                { Technical1: `M16A2步枪` },
+                { Technical1: `M4卡宾枪` },
+                { Technical1: `Mk 18 卡宾枪` },
+                { Technical1: `M14战术步枪` },
+                { Technical1: `Mk 11（KAC SR-25）` },
+                { Technical1: `Mk 11 Mod 2 精密步枪` },
+                { Technical1: `FN M240机枪` },
+                { Technical1: `M2 .50 口径重机枪` },
+                { Technical1: `Mk 19 40毫米榴弹发射器` },
+                { Technical1: `巴雷特M107 .50口径步枪，直升机拦截战术中队和执法支队的射击手使用它来破坏逃跑船只的引擎。` }
+              ],
+            }
+          ],
+        }
+
+
+      ]
+    },
+
+
+  },
+  3: {
+    t1: {
+      title: '历史沿革',
+      contents: `   海岸警卫队的历史可以追溯到18世纪90年代美国财政部为执行关税（新国家的重要收入来源）而维护的小型舰队。财政部长 亚历山大·汉密尔顿游说国会资助建造十艘巡逻艇，国会于1790年8月4日（现在被定为海岸警卫队的官方生日）批准了建造。在1798年海军重建之前，这些“缉私巡逻艇”是美国早期唯一的海军力量。因此，巡逻艇及其船员经常承担额外的任务，包括打击海盗、营救遇险水手、运送政府官员，甚至运送邮件。最初，它根本不是一个有组织的联邦机构，只是一个“巡逻艇系统”，每艘船都在其所在港口的海关官员的指导下运行。随着该服务逐渐变得更加有组织，它使用了包括“缉私巡逻艇”在内的几个名称。最终，它正式组建为美国缉私巡逻艇服务队。除了常规的执法和海关任务外，缉私巡逻艇及其船员还被用于支持和补充海军参与各种武装冲突，包括美国内战。
+    一个独立的联邦机构——美国救生服务局与税务海军陆战队同时发展起来。1848年之前，有各种慈善努力试图建立系统从岸基站向遇难水手提供援助，最著名的是马萨诸塞州人道协会。联邦政府于1848年开始资助救生站，但资金并不稳定，而且该系统仍然依赖于全志愿者船员。1871年，萨姆纳·因克利斯·金博尔被任命为财政部新成立的税务海军部负责人，并开始将税务海军快艇组织成一个集中机构。金博尔还推动为救生站争取更多资金，并最终获得批准将救生服务局创建为一个独立的联邦机构，也隶属于财政部，拥有全职带薪船员。
+1915年，缉私船服务处和救生服务处合并，成立了现代的美国海岸警卫队。灯塔服务处和海事检查导航局分别于1939年和1942年并入海岸警卫队。  1967年，海岸警卫队从美国财政部划归新成立的美国运输部，这一安排一直持续到2003年，为了在2001年9月11日恐怖袭击后更有效地保护美国利益，根据相关立法，海岸警卫队划归美国国土安全部管辖。
+在战争时期，海岸警卫队或其各个组成部分可以作为海军部的一个部门开展行动。这种安排有着广泛的历史基础，因为海岸警卫队参与过各种各样的战争，如1812年战争、美墨战争和美国内战。在美国内战中，哈里特·莱恩号巡逻舰发射了第一发海军炮弹，试图解救被围困的萨姆特堡。海岸警卫队最后一次作为海军整体行动是在第二次世界大战期间，二战期间共有约25万人在海岸警卫队服役。
+    海岸警卫队第一中队是美国海岸警卫队于1965年为越南战争组建的作战部队。该中队由美国海军作战指挥，负责执行市场时间行动。它的成立标志着海岸警卫队人员自二战以来首次在战斗环境中得到广泛使用。1965年至1970年期间，该中队在三个不同地区开展作战行动。26艘点级巡逻艇及其船员和一个中队支援人员被指派给美国海军，其任务是拦截越共和北越的帆船和拖网渔船操作员从南海向南越运送武器和补给。该中队还为在南越海岸线作战的附近友军提供81毫米迫击炮海军炮火支援，并在海王行动期间协助美国海军。
+海岸警卫队第三中队是美国海岸警卫队于1967年组建的一支作战部队，用于越南战争。受美国海军指挥，驻扎在珍珠港。它由五艘美国海岸警卫队高耐久性巡逻艇组成，每六个月轮流部署一次。从1967年5月到1971年12月，共有35艘高耐久性巡逻艇参与了行动，最著名的是使用它们的5英寸炮提供海军炮火支援任务。
+通常情况下，海岸警卫队下属单位受海军行动指挥，而其他海岸警卫队单位则受国土安全部指挥。
+    可部署行动组(DOG)是海岸警卫队于2007年7月成立的一个司令部。DOG建立了一个单一的指挥机构，以迅速向海岸警卫队、国土安全部、国防部、司法部和其他跨部门作战指挥官提供来自海岸警卫队可部署专业部队的适应性部队包。DOG于2013年4月22日解散，并重组为可部署专业部队(DSF)单位，由大西洋和太平洋地区指挥官控制。
+该部队的筹备始于2001年9月11日恐怖袭击之后，并于2007年7月20日正式成立。其任务包括海上执法、反恐、港口安全、污染应对和潜水作业。 
+可部署行动组内有超过25个专业单位  ，包括海上安全响应小组、海上安全与安保小组、执法支队、港口安保单位、国家打击部队和区域潜水舱。可部署行动组还管理分配给海军远征作战司令部的海岸警卫队人员，并参与挑选参加海军BUD/S和海军海豹突击队服役的海岸警卫队候选人。`
+    },
+    t2: {
+      title: '历年预算',
+      details: [
+        {
+          Technical: `法定预算 `,
+          preContent: [
+            { content: '2024年海巡署级所属单位预算', link: 'http://180.167.238.140:10000/hj-news/pdf/2024年海巡署级所属单位预算.pdf' },
+            { content: '2023年海巡署级所属单位预算', link: 'http://180.167.238.140:10000/hj-news/pdf/2023年海巡署级所属单位预算.pdf' },
+            { content: '2022年海巡署级所属单位预算', link: 'http://180.167.238.140:10000/hj-news/pdf/2022年海巡署级所属单位预算.pdf' },
+            { content: '2021年海巡署级所属单位预算', link: 'http://180.167.238.140:10000/hj-news/pdf/2021年海巡署级所属单位预算.pdf' },
+            { content: '2020年海巡署级所属单位预算', link: 'http://180.167.238.140:10000/hj-news/pdf/2020年海巡署级所属单位预算.pdf' }
+          ]
+        },
+        {
+          Technical: `预算案 `,
+          preContent: [
+            { content: '2025年海巡署级所属单位预算案', link: 'http://180.167.238.140:10000/hj-news/pdf/2025年海巡署级所属单位预算案.pdf' },
+            { content: '2024年海巡署级所属单位预算案', link: 'http://180.167.238.140:10000/hj-news/pdf/2024年海巡署级所属单位预算案.pdf' },
+            { content: '2023年海巡署级所属单位预算案', link: 'http://180.167.238.140:10000/hj-news/pdf/2023年海巡署级所属单位预算案.pdf' },
+            { content: '2022年海巡署级所属单位预算案', link: 'http://180.167.238.140:10000/hj-news/pdf/2022年海巡署级所属单位预算案.pdf' },
+            { content: '2021年海巡署级所属单位预算案', link: 'http://180.167.238.140:10000/hj-news/pdf/2021年海巡署级所属单位预算案.pdf' },
+            { content: '2020年海巡署级所属单位预算案', link: 'http://180.167.238.140:10000/hj-news/pdf/2020年海巡署级所属单位预算案.pdf' }
+          ],
+        },
+        {
+          Technical: `单位决算 `,
+          preContent: [
+            { content: '2023年海巡署级所属单位决算', link: 'http://180.167.238.140:10000/hj-news/pdf/2023年海巡署级所属单位决算.pdf' },
+            { content: '2022年海巡署级所属单位决算', link: 'http://180.167.238.140:10000/hj-news/pdf/2022年海巡署级所属单位决算.pdf' },
+            { content: '2021年海巡署级所属单位决算', link: 'http://180.167.238.140:10000/hj-news/pdf/2021年海巡署级所属单位决算.pdf' },
+            { content: '2020年海巡署级所属单位决算', link: 'http://180.167.238.140:10000/hj-news/pdf/2020年海巡署级所属单位决算.pdf' }
+          ],
+        }
+      ]
+    },
+    t3: {
+      title: '人员编制',
+      details: [
+        {
+          Technical: ` `,
+          preContent: [
+            { content: '海洋委员会海巡署编制表', 				        link: 'http://180.167.238.140:10000/hj-news/pdf/海洋委员会海巡署编制表.pdf' },	
+            { content: '海巡署北部分署编制表',                  link: 'http://180.167.238.140:10000/hj-news/pdf/海巡署北部分署编制表.pdf' },
+            { content: '海巡署中部分署编制表',                  link: 'http://180.167.238.140:10000/hj-news/pdf/海巡署中部分署编制表.pdf' },
+            { content: '海巡署南部分署编制表',                  link: 'http://180.167.238.140:10000/hj-news/pdf/海巡署南部分署编制表.pdf' },
+            { content: '海巡署东部分署编制表',                  link: 'http://180.167.238.140:10000/hj-news/pdf/海巡署东部分署编制表.pdf' },
+            { content: '海巡署金马澎分署编制表',                link: 'http://180.167.238.140:10000/hj-news/pdf/海巡署金马澎分署编制表.pdf' },
+            { content: '海巡署东南沙分署编制表',                link: 'http://180.167.238.140:10000/hj-news/pdf/海巡署东南沙分署编制表.pdf' },
+            { content: '海巡署舰队分署编制表',                  link: 'http://180.167.238.140:10000/hj-news/pdf/海巡署舰队分署编制表.pdf' },
+            { content: '海巡署侦防分署编制表',                  link: 'http://180.167.238.140:10000/hj-news/pdf/海巡署侦防分署编制表.pdf' },
+            { content: '海洋委员会海巡署教育训练测考中心编制表',  link: 'http://180.167.238.140:10000/hj-news/pdf/海洋委员会海巡署教育训练测考中心编制表.pdf' }
+          ]
+        }
+      ]
+    },
+
+    t4: {
+      title: '装备建造',
+      details: [
+        {
+          Technical: `舰船`,
+          mixBox: [
+            {
+              preContents: `巡防救难舰`,
+              timeContent: [
+                { Technical1: `1800吨级（伟星舰）（1艘）` },
+                { Technical1: `500吨级（台中级）（2艘）` },
+                { Technical1: `500吨级（南投舰）（1艘）` },
+                { Technical1: `500吨级（金门级）（1艘）` },
+                { Technical1: `2000吨级（台南级）（2艘）` },
+                { Technical1: `3000吨级（宜兰级）（2艘）` },
+                { Technical1: `1000吨级（苗栗级）（4艘）` },
+                { Technical1: `600吨级（安平级）（8艘现役，1艘已下水，2艘建造中，1艘计划中）` },
+                { Technical1: `4000吨级（嘉义级）（3艘现役，1艘已下水）` },
+                { Technical1: `1000吨级（彰化级）（2艘现役，1艘已下水，3艘计划中）` }
+              ]
+            },
+            {
+              preContents: `远洋巡护船`,
+              timeContent: [
+                { Technical1: `800吨级（1艘）` },
+                { Technical1: `1000吨级（3艘）` },
+                { Technical1: `3000吨级（6艘计划中）` }
+              ]
+            },
+            {
+              preContents: `搜救艇（2艘）`,
+              timeContent: []
+            },
+            {
+              preContents: `除污船（4艘）`,
+              timeContent: []
+            },
+            {
+              preContents: `另有100吨级以下巡防艇共192艘。`,
+              timeContent: []
+            },
+            {
+              preContents: `目前依“筹建海巡舰艇发展计划（107–116）”筹建中的大型舰艇计有12艘600吨级巡防舰、6艘1,000吨级巡防舰、4艘4000吨级巡防舰，共计22艘，并于2021年宣布加购6艘3,000吨级远洋巡护船。1,000吨级以上大型舰艇将扩充至24艘，500吨以上1,000吨以下中型舰艇将扩充至20艘以上，舰队规模甚至超过戒严时期的海军巡防舰编织数量。  \n  早期由财政部移拨的船舰均命名为星字号，2000年1月海巡署成立后新造船舰多以台湾地区各乡镇市区与县市命名。`,
+              timeContent: []
+            },
+          ],
+        },
+        {
+          Technical: `海岸巡防机关配备器械种类表`,
+          mixBox: [
+            {
+              preContents: `棍`,
+              timeContent: [
+                { Technical1: `警棍` },
+              ]
+            },
+            {
+              preContents: `刀`,
+              timeContent: [
+                { Technical1: `刺刀` },
+              ]
+            },
+            {
+              preContents: `枪`,
+              timeContent: [
+                { Technical1: `手枪` },
+                { Technical1: `冲锋枪` },
+                { Technical1: `步枪` },
+                { Technical1: `机枪` },
+                { Technical1: `霰弹枪` },
+                { Technical1: `狙击枪` },
+                { Technical1: `镇暴枪` },
+                { Technical1: `榴弹枪` }
+              ]
+            },
+            {
+              preContents: `炮`,
+              timeContent: [
+                { Technical1: `舰炮` },
+                { Technical1: `机炮` },
+                { Technical1: `高炮` },
+                { Technical1: `战防炮` },
+                { Technical1: `无后座力炮` },
+                { Technical1: `迫击炮` },
+                { Technical1: `榴弹炮` },
+                { Technical1: `火箭弹` },
+                { Technical1: `火箭弹系统` }
+              ]
+            },
+            {
+              preContents: `戒具`,
+              timeContent: [
+                { Technical1: `手铐` },
+                { Technical1: `捕绳` },
+                { Technical1: `束带` },
+                { Technical1: `脚镣` }
+              ]
+            },
+            {
+              preContents: `其他器械`,
+              timeContent: [
+                { Technical1: `瓦斯器械` },
+                { Technical1: `手榴弹` },
+                { Technical1: `电气器械` },
+                { Technical1: `防护型喷雾器` },
+                { Technical1: `喷水器械` },
+                { Technical1: `抛射型器械` },
+                { Technical1: `雷射眩目器械` },
+                { Technical1: `声波器械` }
+              ]
+            },
+          ],
+        }
+      ]
+    },
+    t5: {
+      title: '技术发展',
+      details: [
+        {
+          Technical: `船舶的建造和维护`,
+          preContent: `   海上保安厅的巡视船艇，在1948年创建之际，系收集了第二次世界大战后的各种杂务船。之后，自1949年开始建造新船艇，历经三次大规模建造更换后，发展到现在。
+在建造采用最先进技术的船舶的过程中，海上保安厅制订满足业务需求的性能基本计划，对于在造船厂进行的船体结构焊接加工情况、船体性能和搭载设备等功能确认等开展建造监督工作。
+另外，在维护现有船舶方面，除了在发生故障时由船员提供维修的技术支援、由船舶公司商讨维修方案外，还需要对老化、过时的船舶进行延长寿命、提高功能的大规模维修等，以维持船舶的性能和功能，从而力求能够精准应对多样化的海上保安业务`,
+          imgBox: [chuan1, chuan2],
+
+        },
+        {
+          Technical: `飞机的建造和维护`,
+          preContent: `   凭借飞机的机动能力和监视能力，能够从事维持海洋秩序、海难救助、防止海上灾害、监视管制海洋污染、确保海上交通安全等工作，以及应对监视火山和测量沿岸区域等各种业务需求。海上保安厅负责建造（采购·改造）飞机的规格制定，以及从预算要求到接收的一系列业务。在各种业务需求中，为保障飞机无故障运行，负责零部件采购、机体建造和维修、装备建造和维修、技术支援等。`,
+          imgBox: [],
+
+        },
+        {
+          Technical: `航标的建设和维护`,
+          preContent: `   船舶为了安全且有效率地航行，必须经常确认自己船只的位置，避开危险的障碍物，把握安全的航向，为此设置灯塔等航向标志进行管理。航标具有较高的公共性，因此被定位为公共事业对象。整备（工程）科除了进行航标设施的建设和整修之外，还进行航标用机器的采购、安装和更换。
+    为了让航标持续发挥其应有的功能，维护保养是非常重要的。海上保安厅职员定期巡视航标，确认设施和设置的机器有无异常。另外，在航标因风浪或台风而受损或灯光熄灭的情况下进行修复工作，努力确保船舶交通的安全。近年，通过将航标灯从灯泡更换为LED、金属光栅灯，或者使用不需要补充电解液的蓄电池等，努力推进维护保养的省力化。`,
+          imgBox: [],
+
+        },
+
+
+
+
+
+
+      ]
+    },
+
+  }
+}

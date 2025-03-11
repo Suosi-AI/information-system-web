@@ -1,0 +1,66 @@
+const path = require("path")
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+const webpack = require("webpack")
+
+module.exports = {
+    entry: "./src/index.js",
+    output: {
+        filename: "[name].[contenthash].js",
+        path: path.resolve(__dirname, "../dist"),
+        clean: true,
+    },
+    module: {
+        rules: [
+            {
+                test: /\.(js|ts)$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader"
+                }
+            },
+            {
+                test: /\.css$/i,
+                use: ["style-loader", "css-loader"]
+            }, {
+                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                type: "asset/resource"
+            }, {
+                test: /\.(woff|woff2|eot|ttf|otf)$/,
+                type: "asset/resource"
+            },
+            {
+                test: /\.(csv|tsv)$/i,
+                use: ["csv-loader"]
+            },
+            {
+                test: /\.xml$/i,
+                use: ["xml-loader"]
+            }
+        ]
+    },
+    plugins: [
+        // html template
+        new HtmlWebpackPlugin({
+            title: "react-webpack",
+            template: path.join(__dirname, "../public/index.html")
+        }),
+        // 全局提供解析，代码中访问到 _ 时对应到lodash
+        new webpack.ProvidePlugin({
+            _: "lodash"
+        })
+    ],
+    optimization: {
+        moduleIds: "deterministic",
+        runtimeChunk: "single",
+        splitChunks: {
+            chunks: "all"
+        }
+    },
+    resolve: {
+        symlinks: false,
+        extensions: [".ts", ".js", ".tsx"],
+        alias: {
+            "@": path.join(__dirname, '../src')
+        }
+    }
+}

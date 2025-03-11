@@ -1,0 +1,21 @@
+.modalAdd :global(.ant-transfer) {
+  color: white !important;
+}
+.modalAdd :global(.ant-empty-description) {
+  color: white !important;
+}
+.modalAdd :global(.ant-transfer-list-content-item-text) {
+  color: white !important;
+}
+.modalAdd :global(.ant-transfer-list-header) {
+  color: white !important;
+  background: none !important;
+}
+.modalAdd :global(.ant-transfer-list-content-item-checked) {
+  background: none !important;
+}
+.modalAdd
+  :global(.ant-transfer-list-content-item:not(.ant-transfer-list-content-item-disabled):hover) {
+  // color: black !important;
+  background: none !important;
+}

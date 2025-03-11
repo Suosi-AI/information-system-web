@@ -1,0 +1,8 @@
+import React, { useState } from 'react';
+import { AimOutlined } from '@ant-design/icons';
+import styles from './index.less';
+import { Radio, Space, Tabs } from 'antd';
+
+export default function Documentation() {
+  return <div className={styles.container}></div>;
+}

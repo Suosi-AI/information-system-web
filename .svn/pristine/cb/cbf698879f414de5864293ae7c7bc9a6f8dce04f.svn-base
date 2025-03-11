@@ -1,0 +1,27 @@
+import * as echarts from 'echarts';
+import React, { useEffect, useRef } from 'react';
+
+const EChartComponent = ({ option, notMerge, lazyUpdate }) => {
+  const chartRef = useRef(null);
+
+  useEffect(() => {
+    if (chartRef.current) {
+      const chartDom = chartRef.current;
+      const myChart = echarts.init(chartDom);
+
+      // 如果图表已经存在，根据配置项和数据进行更新
+      if (notMerge) {
+        myChart.clear();
+      }
+      myChart.setOption(option, notMerge);
+
+      return () => {
+        myChart.dispose();
+      };
+    }
+  }, [option, notMerge, lazyUpdate]);
+
+  return <div ref={chartRef} style={{ width: '100%', height: '300px' }} />;
+};
+
+export default EChartComponent;

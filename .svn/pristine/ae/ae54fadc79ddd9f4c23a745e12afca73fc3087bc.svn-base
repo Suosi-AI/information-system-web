@@ -1,0 +1,16 @@
+/**
+ * 文件切割块
+ * @param {*} file 
+ * @param {*} size 
+ */
+export function splitFileChunk(file, size) {
+    let arr = []
+
+    let i = 0
+    while (i < file.size) {
+        arr.push(file.slice(i, i + size))
+        i += size
+    }
+
+    return arr
+}

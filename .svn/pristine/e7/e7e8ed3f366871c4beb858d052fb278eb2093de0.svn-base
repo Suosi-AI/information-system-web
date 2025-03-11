@@ -1,0 +1,86 @@
+.container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+
+  .containerLeft {
+    flex-direction: column;
+    justify-content: center;
+    width: 14%;
+    height: 90vh;
+    margin-right: 1%;
+    padding-top: 20px !important;
+    overflow: auto;
+    background-color: #171b28 !important;
+
+    .leftBox {
+      padding-left: 19%;
+      font-size: 16px;
+      line-height: 60px;
+      cursor: pointer;
+    }
+  }
+
+  .containerRight {
+    display: flex;
+    // justify-content: center;
+    width: 85%;
+    height: 90vh;
+    padding: 2% 1% 1% 0;
+    overflow: hidden;
+    background-color: #171b28;
+
+    .rightBox {
+      background-color: red;
+    }
+  }
+}
+
+.rightTab :global(.ant-tabs > .ant-tabs-nav) {
+  margin-top: 20px;
+}
+.containerRight :global(.ant-tabs-left > .ant-tabs-content-holder) {
+  height: 83vh;
+  overflow: auto;
+  border-left: 0px !important;
+}
+.containerRight :global(.ant-tabs-left > .ant-tabs-content-holder) {
+}
+
+///  全局滚动条样式
+.container ::-webkit-scrollbar {
+  width: 10px !important;
+  max-height: 12px;
+}
+.cardBox ::-webkit-scrollbar {
+  width: 5px !important;
+  max-height: 12px;
+}
+
+/* 滚动条的滑块 */
+.container ::-webkit-scrollbar-thumb {
+  // background-color: rgba(251, 251, 251, 0.7);
+  // background-color: #6f7179;
+  color: #6f7179;
+  border-radius: 6px;
+}
+
+/* 滚动条的轨道 */
+.container ::-webkit-scrollbar-track {
+  background-color: none !important;
+  // background-color: none;
+  border-radius: 6px;
+}
+
+/* 滚动条的轨道的两端按钮 */
+.container ::-webkit-scrollbar-button {
+  display: none;
+  height: 10px;
+  background-color: none;
+}
+
+/* 当滚动条处于 hover 状态时 */
+.container ::-webkit-scrollbar-thumb:hover {
+  background-color: #6f7179;
+}

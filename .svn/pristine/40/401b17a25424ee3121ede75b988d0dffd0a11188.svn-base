@@ -1,0 +1,64 @@
+import React, { useState } from 'react';
+import Icon from '@/components/Icon';
+import styles from './topMenu.less';
+import './topMenu.less';
+
+const TopMenu = () => {
+  const [topMenuList, setTopMenuList] = useState([
+    {
+      name: '海清速查',
+      id: '1',
+      icon: 'MonitorOutlined',
+      url: '/dashboard', // 菜单项对应的URL
+    },
+    {
+      name: '专题监测',
+      id: '2',
+      icon: 'LineChartOutlined',
+      url: '/topic',
+    },
+    {
+      name: '海警情报',
+      id: '3',
+      icon: 'ReconciliationOutlined',
+      url: '/intelligence',
+    },
+    {
+      name: '收藏管理',
+      id: '4',
+      icon: 'StarOutlined',
+      url: '/favorites',
+    },
+  ]);
+  const [active, setActive] = useState('1');
+
+  const changeMenu = p => {
+    setActive(p.id);
+  };
+
+  const navigateTo = url => {
+    window.location.href = url + '/';
+  };
+
+  const getTopMenuList = () => {
+    return topMenuList.map(p => (
+      <div
+        key={p.id}
+        className={[styles.topMenuContent, active === p.id ? styles.topMenuContentActive : ''].join(
+          ' '
+        )}
+        onClick={() => {
+          changeMenu(p);
+          navigateTo(p.url);
+        }}
+      >
+        <Icon name={p.icon} />
+        <div>{p.name}</div>
+      </div>
+    ));
+  };
+
+  return <div className={styles.TopMenu}>{getTopMenuList()}</div>;
+};
+
+export default TopMenu;

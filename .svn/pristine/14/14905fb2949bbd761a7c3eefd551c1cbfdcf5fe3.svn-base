@@ -1,0 +1,91 @@
+import React from 'react';
+import { Layout as Container, Avatar, Dropdown, Menu } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import { useSelector, useDispatch } from 'react-redux';
+import styles from './index.less';
+import logo from '@/assets/images/logo.png';
+import cls from 'classnames';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import TopMenu from './TopMenu/TopMenu';
+import img from '@/assets/images/login_logo.png';
+
+const { Header } = Container;
+const NavBar = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { sideBarCollapsed, theme, menuMode } = useSelector(state => state.SettingReducer);
+
+  const handleMenuClick = e => {
+    const { key } = e;
+    switch (key) {
+      case 'edit':
+        navigate('/edit-password'); // 修改密码页面的路由
+        break;
+      case 'logs':
+        navigate('/system-logs'); // 系统日志页面的路由
+        break;
+      case 'user':
+        navigate('/user-management'); // 用户管理页面的路由
+        break;
+      case 'exit':
+        navigate('/login');
+        break;
+      default:
+        break;
+    }
+  };
+
+  return (
+    <Header
+      className={cls(styles.navBar, styles[menuMode], {
+        [styles[theme]]: menuMode !== 'inline',
+        [styles.navBarCollapsed]: sideBarCollapsed,
+      })}
+    >
+      <div className={styles.navHeader}>
+        <div className={styles.inlineLeft}>
+          {/* <Link to="/"> */}
+          <div
+            className={cls(styles.logo, {
+              [styles.logoCollapsed]: sideBarCollapsed,
+            })}
+          >
+            <img className={styles.navLogo} src={img} alt="logo" />
+          </div>
+          {/* </Link> */}
+          <TopMenu></TopMenu>
+        </div>
+        <div>
+          <div>
+            {/* <Dropdown
+              overlay={
+                <Menu style={{ width: '100px', textAlign: 'center' }} onClick={handleMenuClick}>
+                  <Menu.Item key={'edit'}>
+                    <Link to="/editPassword">修改密码</Link>
+                  </Menu.Item>
+                  <Menu.Item key={'logs'}>
+                    <Link to="/system-logs">系统日志</Link>
+                  </Menu.Item>
+                  <Menu.Item key={'user'}>
+                    <Link to="/user-management">用户管理</Link>
+                  </Menu.Item>
+                  <Menu.Item key={'exit'}>退出登录</Menu.Item>
+                </Menu>
+              }
+            >
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <Avatar size={28} style={{ backgroundColor: '#5A637F', marginRight: 8 }}>
+                  <UserOutlined />
+                </Avatar>
+                <span>管理员</span>
+              </div>
+            </Dropdown> */}
+          </div>
+        </div>
+      </div>
+    </Header>
+  );
+};
+
+export default NavBar;

@@ -1,0 +1,7 @@
+.container :global(.ant-timeline-item-tail) {
+  color: white;
+  border-left: 0px;
+}
+.container :global(.ant-timeline-item-last > .ant-timeline-item-content) {
+  color: white;
+}

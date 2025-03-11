@@ -1,0 +1,285 @@
+import React, { useState, useEffect } from 'react';
+import { Card, Dropdown, Menu, Image } from 'antd';
+import {
+  FileWordTwoTone,
+  StarOutlined,
+  LinkOutlined,
+  LikeOutlined,
+  MessageOutlined,
+  ShareAltOutlined,
+  EyeOutlined,
+  StarFilled,
+} from '@ant-design/icons';
+import styles from './index.less';
+
+const BASE_IP = '/images';
+
+const replaceIP = url => {
+  const urlObj = new URL(url);
+  return `${BASE_IP}${urlObj.pathname}`;
+};
+
+import { collectNew, getFavoritesList, cancelCollectNew } from './../../../services/store';
+
+const DashboardCard = ({
+  img,
+  sourceName,
+  title,
+  content,
+  link,
+  images, // 图片数组
+  videos, // 视频数组
+  likeNum,
+  commentNum,
+  shareNum,
+  readNum,
+  showActions = true,
+  onClickContent,
+  publishTime,
+  lang,
+  onExport,
+  newsId,
+  whetherCollect,
+  folderId,
+  onHandle,
+  onHandleHq,
+  onHandleJc,
+  isCollected,
+  setIsCollected,
+  ...props
+}) => {
+  // const [isCollected, setIsCollected] = useState(false);
+  const [favorites, setFavorites] = useState([]);
+  const [currentFavorite, setCurrentFavorite] = useState(null);
+  const [showMenu, setShowMenu] = useState(false);
+  const handleCollect = () => {
+    setIsCollected(!isCollected);
+  };
+
+  // useEffect(() => {
+  //   // 根据whetherCollect的值来设置isCollected状态
+  //   if (typeof whetherCollect === 'string' && whetherCollect === '1') {
+  //     setIsCollected(true);
+  //   } else {
+  //     setIsCollected(false);
+  //   }
+  // }, [whetherCollect]);
+
+  console.log('====================================');
+  console.log(folderId);
+  console.log('====================================');
+
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      try {
+        const response = await getFavoritesList();
+        if (response.code === 200 && response.data) {
+          setFavorites(response.data);
+        }
+      } catch (error) {
+        console.error('获取收藏夹列表失败:', error);
+      }
+    };
+
+    fetchFavorites();
+  }, []);
+
+  const toggleMenu = () => {
+    if (whetherCollect === '1') {
+      cancelCollect();
+    } else {
+      handleMenuClick();
+    }
+  };
+
+  const handleOpenChange = val => {
+    if (!val) {
+      setShowMenu(false);
+    }
+  };
+
+  const handleMenuClick = async e => {
+    const favoriteId = e.key;
+    setCurrentFavorite(favorite => (favoriteId === favorite?.id ? null : favoriteId));
+
+    setShowMenu(true);
+    try {
+      const response = await collectNew({
+        newsId: newsId,
+        folderId: favoriteId,
+      });
+      if (response.code === 200) {
+        console.log('收藏成功');
+        // setIsCollected(true);
+        // getFavoritesList();
+        onHandle && onHandle(favoriteId);
+        onHandleHq && onHandleHq();
+        onHandleJc && onHandleJc(favoriteId);
+      } else {
+        console.error('收藏失败:', response.message);
+      }
+    } catch (error) {
+      console.error('收藏失败:', error);
+    }
+    // }
+  };
+
+  const cancelCollect = async () => {
+    try {
+      const response = await cancelCollectNew({
+        newsId: newsId,
+        folderId: folderId,
+      });
+      if (response.code === 200) {
+        console.log('取消收藏成功');
+        onHandleHq && onHandleHq(); //海情速查列表数据
+        onHandle && onHandle(folderId); //收藏管理列表数据
+        onHandleJc && onHandleJc(folderId);
+        // setIsCollected(false);
+      } else {
+        console.error('取消收藏失败:', response.message);
+      }
+    } catch (error) {
+      console.error('取消收藏失败:', error);
+    }
+  };
+
+  const menu = (
+    <Menu
+      onClick={handleMenuClick}
+      style={{
+        maxWidth: '250px',
+        minWidth: '200px',
+        minHeight: '200px',
+        maxHeight: '350px',
+        overflow: 'auto',
+      }}
+    >
+      {favorites.map(favorite => (
+        <Menu.Item key={favorite.folder_id}>{favorite.folder_name}</Menu.Item>
+      ))}
+    </Menu>
+  );
+
+  const imagesArray = Array.isArray(images) ? images : images ? JSON.parse(images) : [];
+  const videosArray = Array.isArray(videos) ? videos : videos ? JSON.parse(videos) : [];
+
+  const imagesWithNewIP = imagesArray.map(src => replaceIP(src));
+  const videosWithNewIP = videosArray.map(src => replaceIP(src));
+  // console.log(videosWithNewIP);
+
+  return (
+    <Card className={styles.cardStyle}>
+      <p className={styles.topCard}>
+        <span className={styles.topLeft} onClick={onClickContent}>
+          <span className={styles.topImg}>
+            <img
+              style={{ width: '20px', height: '20px', marginRight: '12px' }}
+              src={img}
+              alt="Logo"
+            />
+            <span className={styles.topLeft1}>{sourceName}</span>
+          </span>
+          <span style={{ width: '149px' }}>{publishTime}</span>
+        </span>
+        <span className={styles.topRight}>
+          <span style={{ display: 'flex', lineHeight: '20px' }}>
+            <FileWordTwoTone style={{ fontSize: '22px', marginRight: '2px' }} />
+            <a style={{ color: 'white' }} onClick={onExport}>
+              导出
+            </a>
+          </span>
+          <span style={{ display: 'flex', lineHeight: '20px' }}>
+            {whetherCollect === '1' ? (
+              <StarFilled
+                onClick={cancelCollect}
+                style={{ fontSize: '22px', marginRight: '2px', color: 'orange' }}
+              />
+            ) : (
+              <StarOutlined style={{ fontSize: '22px', marginRight: '2px', color: 'orange' }} />
+            )}
+            {whetherCollect !== '1' ? (
+              <Dropdown
+                overlay={menu}
+                placement="bottomCenter"
+                trigger={['click']}
+                open={showMenu}
+                onOpenChange={handleOpenChange}
+              >
+                <a style={{ color: 'white' }} className="ant-dropdown-link" onClick={toggleMenu}>
+                  收藏
+                </a>
+              </Dropdown>
+            ) : (
+              <a style={{ color: 'white' }} className="ant-dropdown-link" onClick={toggleMenu}>
+                取消收藏
+              </a>
+            )}
+          </span>
+        </span>
+      </p>
+      <div onClick={onClickContent}>
+        <h3 style={{ color: 'white', fontWeight: 'bolder' }}>{title || ''}</h3>
+        <p className={styles.pContent}>{content}</p>
+      </div>
+      {showActions && (
+        <p style={{ display: 'flex', width: '25%', justifyContent: 'space-between' }}>
+          <span>
+            <LikeOutlined />
+            <span>{likeNum || 0}</span>
+          </span>
+          <span>
+            <MessageOutlined />
+            <span>{commentNum || 0}</span>
+          </span>
+          <span>
+            <ShareAltOutlined />
+            <span>{shareNum || 0}</span>
+          </span>
+          <span>
+            <EyeOutlined />
+            <span>{readNum || 0}</span>
+          </span>
+        </p>
+      )}
+      {link && (
+        <p
+          style={{
+            maxWidth: '100%',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          <LinkOutlined style={{ marginRight: '4px' }} />
+          <a href={link} target="_blank" rel="noopener noreferrer">
+            {link}
+          </a>
+        </p>
+      )}
+      {(imagesArray.length > 0 || videosArray.length > 0) && (
+        <div className={styles.mediaContainer} style={{ display: 'flex', overflowX: 'auto' }}>
+          {imagesWithNewIP.map((src, index) => (
+            <Image
+              key={index}
+              src={src}
+              alt="Logo"
+              style={{ width: '150px', height: '100px', marginRight: '8px' }}
+            />
+          ))}
+          {videosWithNewIP.map((src, index) => (
+            <video
+              key={index}
+              controls
+              style={{ width: '150px', height: '100px', marginRight: '8px' }}
+            >
+              <source src={src} type="video/mp4" />
+            </video>
+          ))}
+        </div>
+      )}
+    </Card>
+  );
+};
+
+export default DashboardCard;

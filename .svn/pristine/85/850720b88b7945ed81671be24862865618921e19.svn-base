@@ -1,0 +1,54 @@
+import React, { lazy } from 'react'
+import { DashboardOutlined, StarOutlined, AimOutlined, FormOutlined, MonitorOutlined, LineChartOutlined, ReconciliationOutlined } from '@ant-design/icons'
+
+export const insideRoutes = [
+  {
+    path: '/',
+    hidden: true,
+    redirect: 'login',
+  },
+  {
+    path: 'home',
+    title: '海情速查',
+    id: '1',
+    icon: <MonitorOutlined />,
+    element: lazy(() => import('@/pages/Dashboard')),
+  },
+  {
+    path: 'social',
+    title: '专题监测',
+    id: '2',
+    icon: <LineChartOutlined style={{ fontSize: '16px' }} />,
+    element: lazy(() => import('@/pages/Social')),
+  },
+  {
+    path: 'archives',
+    title: '海警情报',
+    id: '3',
+    icon: <ReconciliationOutlined style={{ fontSize: '16px' }} />,
+    element: lazy(() => import('@/pages/Archives')),
+  },
+
+  {
+    path: 'favorites',
+    title: '收藏管理',
+    id: '4',
+    icon: <StarOutlined style={{ fontSize: '16px' }} />,
+    element: lazy(() => import('@/pages/Favorites/index.jsx')),
+  },
+
+  {
+    path: 'monitoring',
+    title: '天眼监控',
+    id: '5',
+    icon: <AimOutlined style={{ fontSize: '16px' }} />,
+    element: lazy(() => import('@/pages/Monitoring/index.jsx')),
+  },
+
+  {
+    path: '*',
+    title: '404',
+    element: lazy(() => import('@/components/common/NotFound')),
+    hidden: true,
+  },
+]

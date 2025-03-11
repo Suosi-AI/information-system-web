@@ -1,0 +1,203 @@
+import React, { useState } from 'react';
+import { AimOutlined } from '@ant-design/icons';
+import styles from './index.less';
+import { Button, Modal, Radio, Space, Tabs, Image } from 'antd';
+import SecurityDepartmentsTabs from './SecurityDepartmentsTabs';
+
+export default function Strength({ strengthData }) {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalDetailVisible, setIsModalDetailVisible] = useState(false);
+  const [currentShip, setCurrentShip] = useState(null);
+  const tabsKeys = Object.keys(strengthData);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+  const showModalInfo = ship => {
+    setCurrentShip(ship);
+    setIsModalDetailVisible(true);
+  };
+  const handleCancelInfo = () => {
+    setIsModalDetailVisible(false);
+  };
+
+  // 处理弹窗关闭的函数
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  // 处理弹窗取消的函数
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  return (
+    <div className={styles.container}>
+      <Tabs
+        defaultActiveKey={tabsKeys[0]} // 默认激活第一个标签页
+        style={{ color: 'white', width: '100%', marginTop: '-30px' }}
+      >
+        {tabsKeys.map(key => {
+          const tabData = strengthData[key];
+          const { departmentsData = [], shipsData = {} } = tabData.guanquTabs?.[0] || {};
+
+          return (
+            <Tabs.TabPane tab={tabData.title} key={key}>
+              <div
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    width: '200px',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Image
+                    src={tabData.jianjie[0].src}
+                    alt={tabData.jianjie[0].alt}
+                    style={tabData.jianjie[0].style}
+                  />
+                </div>
+                <div style={{ height: '200px', flex: '1', margin: '0 20px' }}>
+                  <p
+                    style={{
+                      borderRadius: '25px',
+                      backgroundColor: '#292B39',
+                      color: '#EA9626',
+                      padding: '5px',
+                      textAlign: 'center',
+                      width: '30%',
+                      height: '30px',
+                    }}
+                  >
+                    {tabData.jianjie[1].title}
+                  </p>
+                  <div style={{ display: 'flex', margin: '20px 0' }}>
+                    {tabData.jianjie[2].iconData.map((item, index) => (
+                      <div
+                        key={index}
+                        style={{ marginRight: '30px', display: 'flex', alignItems: 'center' }}
+                      >
+                        <img
+                          src={item.src}
+                          alt={item.alt}
+                          style={{ width: '20px', height: '20px', marginRight: '10px' }}
+                        />
+                        <span>{item.count}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      margin: '20px 0',
+                      overflow: 'auto',
+                      flexWrap: 'wrap',
+                    }}
+                  >
+                    {tabData.jianjie[3].guanqu.map((guanqu, index) => (
+                      <p
+                        key={index}
+                        style={{
+                          width: '100px',
+                          borderRadius: '10px',
+                          border: '1px solid #4892FF',
+                          textAlign: 'center',
+                          fontSize: '12px',
+                          padding: '2px',
+                          marginRight: guanqu.index === guanqu.length ? '0' : '10px',
+                        }}
+                      >
+                        {guanqu.name}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+                <div
+                  style={{
+                    width: '600px',
+                    maxHeight: '200px',
+                    overflow: 'auto',
+                    backgroundColor: '#282B39',
+                    padding: '20px',
+                  }}
+                >
+                  <p>描述</p>
+                  <pre
+                    style={{
+                      color: 'white',
+                      width: '100%',
+                      whiteSpace: 'pre-wrap',
+                      wordWrap: 'break-word',
+                      color: '#D4D5D3',
+                      fontSize: '12px',
+                      height: '200px',
+                      lineHeight: '26px',
+                    }}
+                  >
+                    {tabData.jianjie[4].info}
+                  </pre>
+                </div>
+              </div>
+              {key === 't1' && (
+                <div style={{ backgroundColor: '#282B39', padding: '20px', marginTop: '20px' }}>
+                  画布1111111111111
+                </div>
+              )}
+              {key !== 't1' && (
+                <div
+                  style={{
+                    backgroundColor: '#282B39',
+                    padding: '20px 20px 20px 0',
+                    marginTop: '20px',
+                  }}
+                  className={styles.box}
+                >
+                  <SecurityDepartmentsTabs
+                    departmentsData={departmentsData}
+                    ships={shipsData}
+                    showModal={showModal}
+                    showModalInfo={showModalInfo}
+                  />
+                  <Modal
+                    visible={isModalVisible}
+                    onOk={handleOk}
+                    onCancel={handleCancel}
+                    footer={false}
+                    width={800}
+                    style={{ textAlign: 'center', background: '#282B39!important' }}
+                  >
+                    <img
+                      src={tabData.jianjie[0].src}
+                      alt="位置"
+                      style={{ width: '100%', marginTop: '30px' }}
+                    />
+                  </Modal>
+                </div>
+              )}
+            </Tabs.TabPane>
+          );
+        })}
+      </Tabs>
+
+      <Modal
+        visible={isModalDetailVisible}
+        onCancel={handleCancelInfo}
+        footer={false}
+        style={{ color: 'white' }}
+        width={800}
+      >
+        {currentShip && (
+          <div style={{ display: 'flex', color: 'white', margin: '10px 10px' }}>
+            名称 : <span style={{ marginRight: '20px' }}>{currentShip.name}</span>
+            型号：<span style={{ marginRight: '20px' }}>{currentShip.model}</span>
+            类型：<span>{currentShip.type}</span>
+          </div>
+        )}
+        {currentShip && <img src={currentShip.image} alt="" style={{ width: '100%' }} />}
+      </Modal>
+    </div>
+  );
+}

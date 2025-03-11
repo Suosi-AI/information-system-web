@@ -1,0 +1,137 @@
+// People.js
+import React from 'react';
+import { Tabs, Image, Tooltip, Table } from 'antd';
+import styles from './index.less';
+
+export default function People({ peopleData }) {
+  const tabsKeys = Object.keys(peopleData);
+
+  return (
+    <div className={styles.container}>
+      <Tabs
+        defaultActiveKey={tabsKeys[0]}
+        style={{
+          color: 'white',
+          width: '100%',
+          marginTop: '-30px',
+          height: '86vh',
+          overflow: 'hidden',
+        }}
+      >
+        {tabsKeys.map(key => {
+          const tabData = peopleData[key];
+          return (
+            <Tabs.TabPane
+              tab={tabData.title}
+              key={key}
+              style={{
+                width: '100%',
+                overflow: 'auto',
+                display: 'flex',
+              }}
+            >
+              {tabData.infoData && Array.isArray(tabData.infoData) ? (
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    color: '#02F3DD',
+                    alignContent: 'center',
+                    paddingTop: '10px',
+                    alignItems: 'center',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {tabData.infoData.map(item => (
+                    <Tooltip title={item} key={item.id || item.uniqueIdentifier}>
+                      <p
+                        style={{
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          width: '100px',
+                          display: 'inline-block',
+                        }}
+                      >
+                        {item}
+                      </p>
+                    </Tooltip>
+                  ))}
+                </div>
+              ) : (
+                <div>暂无信息</div>
+              )}
+
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  flexDirection: 'column',
+                  overflow: 'auto',
+                }}
+              >
+                <div style={{ display: 'flex' }}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      margin: '0 20px',
+                    }}
+                  >
+                    {tabData.jianjie && tabData.jianjie[0].type === 'image' && (
+                      <Image
+                        src={tabData.jianjie[0].src}
+                        alt={tabData.jianjie[0].alt}
+                        style={tabData.jianjie[0].style}
+                      />
+                    )}
+                  </div>
+                  <div>
+                    {tabData.jianjie && tabData.jianjie[1].type === 'text' && (
+                      <p style={{ fontSize: '20px', margin: '5px 0' }}>
+                        {tabData.jianjie[1].title}
+                      </p>
+                    )}
+                    {tabData.jianjie && tabData.jianjie[2].type === 'text' && (
+                      <p>{tabData.jianjie[2].content}</p>
+                    )}
+                    {tabData.jianjie && tabData.jianjie[3].type === 'text' && (
+                      <pre
+                        style={{
+                          color: 'white',
+                          whiteSpace: 'pre-wrap',
+                          wordWrap: 'break-word',
+                          color: '#D4D5D3',
+                          fontSize: '12px',
+                          height: '140px',
+                          lineHeight: '26px',
+                          overflow: 'auto',
+                        }}
+                      >
+                        {tabData.jianjie[3].content}
+                      </pre>
+                    )}
+                  </div>
+                </div>
+
+                {tabData.careerProfiles &&
+                  tabData.careerProfiles.map((profile, index) => (
+                    <div key={index} style={{ width: '100%' }}>
+                      <p>{profile.careerProfileContent}</p>
+                      <Table
+                        dataSource={profile.careerData}
+                        columns={profile.careerColumns}
+                        pagination={false}
+                      />
+                    </div>
+                  ))}
+              </div>
+            </Tabs.TabPane>
+          );
+        })}
+      </Tabs>
+    </div>
+  );
+}

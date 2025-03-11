@@ -1,0 +1,10 @@
+import styles from './index.less';
+
+export default function Dashboard() {
+  return (
+    <div className={styles.container}>
+      首页 下载ant desgin pro javascript版本的关注mob64ca12f3bbc7 下载ant desgin pro
+      javascript版本的 原创 mob64ca12f3bbc72024-07-31 07:26:26
+    </div>
+  );
+}

@@ -1,0 +1,31 @@
+import API from '@/api'
+
+// 实例
+const api = new API({
+    baseURL: 'http://localhost:8088'
+})
+
+// 上传图片
+export const uploadImg = (params) => {
+    return api.request({
+        type: "post",
+        url: '/upload/img',
+        data: params
+    })
+}
+// 上传图片 - 切片上传
+export const uploadChunkImg = (params) => {
+    return api.request({
+        type: "post",
+        url: '/uploadChunk/img',
+        data: params
+    })
+}
+// 上传图片 - 切片上传后 进行合并
+export const mergeChunkImg = (params) => {
+    return api.request({
+        type: "post",
+        url: '/mergeChunk/img',
+        data: params
+    })
+}

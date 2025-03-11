@@ -1,0 +1,470 @@
+import ren from './../../../assets/images/archives/ico/ren@3x.png'
+import feiji from './../../../assets/images/archives/ico/feiji@3x.png'
+import chuan from './../../../assets/images/archives/ico/chuan@3x.png'
+import jidi from './../../../assets/images/archives/ico/jidi@3x.png'
+
+import hsbad from './../../../assets/images/archives/hsbad.png'
+import guanqu01 from './../../../assets/images/archives/address/guanqu01.png'
+import guanqu02 from './../../../assets/images/archives/thumb/003.png'
+
+import ship_001 from '../../../assets/images/archives/model/ship_001.jpeg'
+import ship_002 from './../../../assets/images/archives/model/ship_002.jpeg'
+import ship_003 from './../../../assets/images/archives/model/ship_003.jpeg'
+import ship_004 from './../../../assets/images/archives/model/ship_004.jpeg'
+import ship_005 from './../../../assets/images/archives/model/ship_005.jpeg'
+import ship_006 from './../../../assets/images/archives/model/ship_006.jpeg'
+
+import ship_007 from './../../../assets/images/archives/model/ship_007.jpeg'
+import ship_008 from './../../../assets/images/archives/model/ship_008.jpeg'
+import ship_009 from './../../../assets/images/archives/model/ship_009.jpeg'
+import ship_0010 from './../../../assets/images/archives/model/ship_010.jpeg'
+import ship_0011 from './../../../assets/images/archives/model/ship_011.jpeg'
+import ship_0012 from './../../../assets/images/archives/model/ship_012.jpeg'
+
+
+export const strengthData = {
+  1: {
+    t1: {
+      title: '总体实力',
+      jianjie: [
+        {
+          type: 'image',
+          src: hsbad,
+          alt: '海上保安厅',
+          style: { width: '200px', height: '200px' },
+        },
+        {
+          type: 'text',
+          title: '日本海上保安厅管区',
+        },
+        {
+          iconData: [
+            { src: ren, alt: '人', count: 102 },
+            { src: feiji, alt: '飞机', count: 134 },
+            { src: chuan, alt: '船', count: 594 },
+            { src: jidi, alt: '基地', count: 84 },
+          ],
+        },
+        {
+          guanqu: [
+            {
+              index: 1,
+              name: '第一管区',
+            },
+            {
+              index: 2,
+              name: '第二管区',
+            },
+            {
+              index: 3,
+              name: '第三管区',
+            },
+            {
+              index: 4,
+              name: '第四管区',
+            },
+            {
+              index: 5,
+              name: '第五管区',
+            },
+            {
+              index: 6,
+              name: '第六管区',
+            },
+            {
+              index: 7,
+              name: '第七管区',
+            },
+            {
+              index: 8,
+              name: '第八管区',
+            },
+            {
+              index: 9,
+              name: '第九管区',
+            },
+            {
+              index: 10,
+              name: '第十管区',
+            },
+            {
+              index: 11,
+              name: '第十一管区',
+            },
+          ],
+        },
+        {
+          info: '   海上保安厅职员称海上保安官。截至2020年，海上保安厅现有人员约1.3万余人，拥有各型船艇460余艘（总计20余万吨）、飞机70多架，拥有一支数量质量均极其可观的水面舰艇与航空巡逻机兵力，在全球海岸防卫队中仅次于美国海岸警卫队，整体实力甚至高出许多小国海军，是日本不折不扣的“第二海军”。',
+        },
+      ],
+    },
+    t2: {
+      title: '第一管区',
+      jianjie: [
+        {
+          type: 'image',
+          src: guanqu01,
+          alt: '海上保安厅',
+          style: { width: '200px', height: '200px' },
+        },
+        {
+          type: 'text',
+          title: '第一管区海上保安本部',
+        },
+        {
+          iconData: [
+            { src: ren, alt: '人', count: 8 },
+            { src: feiji, alt: '飞机', count: 32 },
+            { src: jidi, alt: '基地', count: 9 },
+          ],
+        },
+        {
+          guanqu: [
+            {
+              index: 1,
+              name: '函馆海上保安部',
+            },
+            {
+              index: 2,
+              name: '小樽海上保安部',
+            },
+            {
+              index: 3,
+              name: '室兰海上保安部',
+            },
+            {
+              index: 4,
+              name: '钏路海上保安部',
+            },
+            {
+              index: 5,
+              name: '留萌海上保安部',
+            },
+            {
+              index: 6,
+              name: '稚内海上保安部',
+            },
+            {
+              index: 7,
+              name: '纹别海上保安部',
+            },
+            {
+              index: 8,
+              name: '根室海上保安部',
+            },
+            {
+              index: 9,
+              name: '函馆航空基地',
+            },
+            {
+              index: 10,
+              name: '钏路航空基地',
+            },
+            {
+              index: 11,
+              name: '千歳航空基地',
+            },
+          ],
+        },
+        {
+          info: '   第一管区海上保安本部（だいいちかんくかいじょうほあんほんぶ），是日本国土交通省海上保安厅的一个海上保安本部，司法管辖区主要以北海道地区为主，包括北海道地区的鄂霍次克海、与现由俄罗斯控制的北方领土（北方四岛）。',
+        },
+      ],
+      guanquTabs: [
+        {
+          departmentsData: [
+            { key: 'k1', name: '函馆海上保安部' },
+            { key: 'k2', name: '小樽海上保安部' },
+            { key: 'k3', name: '室兰海上保安部' },
+            { key: 'k4', name: '钏路海上保安部' },
+            { key: 'k5', name: '留萌海上保安部' },
+            { key: 'k6', name: '稚内海上保安部' },
+            { key: 'k7', name: '纹别海上保安部' },
+            { key: 'k8', name: '根室海上保安部' },
+            { key: 'k9', name: '函馆航空基地' },
+            { key: 'k10', name: '钏路航空基地' },
+            { key: 'k11', name: '千歳航空基地' },
+          ],
+          shipsData: {
+            k1: [
+              {
+                title: 'つがる（搭載大型巡視船）',
+                name: 'つがる',
+                type: '搭載大型巡視船',
+                image: ship_001,
+                model: 'PLH',
+                info: '',
+              },
+              {
+                title: 'おくしり（中型巡視船）',
+                name: 'おくしり',
+                type: '中型巡視船',
+                image: ship_002,
+                model: 'PM',
+              },
+              {
+                title: 'ゆきぐも（大型巡視艇）',
+                name: 'おくしり',
+                type: '大型巡視艇',
+                image: ship_003,
+                model: 'PC',
+              },
+              {
+                title: 'すずらん（小型巡視艇）',
+                name: 'すずらん',
+                type: '小型巡視艇',
+                image: ship_004,
+                model: 'CL',
+              },
+              {
+                title: 'かむい（小型巡視船）',
+                name: 'かむい',
+                type: '小型巡視船',
+                image: ship_005,
+                model: 'PS',
+              },
+              {
+                title: 'あかしあ（小型巡視艇）',
+                name: 'あかしあ',
+                type: '小型巡視艇',
+                image: ship_006,
+                model: 'CL',
+              },
+            ],
+            k2: [
+              {
+                title: 'えさん（大型巡視船）',
+                name: 'えさん',
+                type: '大型巡視船',
+                image: ship_007,
+                model: 'PL',
+                info: '',
+              },
+              {
+                title: 'しれとこ（大型巡視船）',
+                name: 'しれとこ',
+                type: '大型巡視船',
+                image: ship_008,
+                model: 'PL',
+              },
+              {
+                title: 'ほろべつ（中型巡視船）',
+                name: 'ほろべつ',
+                type: '中型巡視船',
+                image: ship_009,
+                model: 'PM',
+              },
+              {
+                title: 'すずかぜ（小型巡視艇）',
+                name: 'すずかぜ',
+                type: '小型巡視艇',
+                image: ship_0010,
+                model: 'CL',
+              },
+              {
+                title: 'やぐるま（小型巡視艇）',
+                name: 'やぐるま',
+                type: '小型巡視艇',
+                image: ship_0011,
+                model: 'CL',
+              },
+            ],
+          },
+        },
+      ],
+    },
+    t3: {
+      title: '第二管区',
+      jianjie: [
+        {
+          type: 'image',
+          src: guanqu02,
+          alt: '海上保安厅',
+          style: { maxWidth: '200px', height: '200px' },
+        },
+        {
+          type: 'text',
+          title: '第二管区海上保安本部',
+        },
+        {
+          iconData: [
+            { src: ren, alt: '人', count: 10 },
+            { src: feiji, alt: '飞机', count: 24 },
+            { src: chuan, alt: '船', count: 10 },
+            { src: jidi, alt: '基地', count: 12 },
+          ],
+        },
+        {
+          guanqu: [
+            {
+              index: 1,
+              name: '函馆海上保安部',
+            },
+            {
+              index: 2,
+              name: '小樽海上保安部',
+            },
+            {
+              index: 3,
+              name: '室兰海上保安部',
+            },
+            {
+              index: 4,
+              name: '钏路海上保安部',
+            },
+            {
+              index: 5,
+              name: '留萌海上保安部',
+            },
+            {
+              index: 6,
+              name: '稚内海上保安部',
+            },
+            {
+              index: 7,
+              name: '纹别海上保安部',
+            },
+            {
+              index: 8,
+              name: '根室海上保安部',
+            },
+            {
+              index: 9,
+              name: '函馆航空基地',
+            },
+            {
+              index: 10,
+              name: '钏路航空基地',
+            },
+            {
+              index: 11,
+              name: '千歳航空基地',
+            },
+          ],
+        },
+        {
+          info: '   第一管区海上保安本部（だいいちかんくかいじょうほあんほんぶ），是日本国土交通省海上保安厅的一个海上保安本部，司法管辖区主要以北海道地区为主，包括北海道地区的鄂霍次克海、与现由俄罗斯控制的北方领土（北方四岛）。',
+        },
+      ],
+      guanquTabs: [
+        {
+          departmentsData: [
+            { key: 'k1', name: '函馆海上保安部' },
+            { key: 'k2', name: '小樽海上保安部' },
+            { key: 'k3', name: '室兰海上保安部' },
+            { key: 'k4', name: '钏路海上保安部' },
+            { key: 'k5', name: '留萌海上保安部' },
+            { key: 'k6', name: '稚内海上保安部' },
+            { key: 'k7', name: '纹别海上保安部' },
+            { key: 'k8', name: '根室海上保安部' },
+            { key: 'k9', name: '函馆航空基地' },
+            { key: 'k10', name: '钏路航空基地' },
+            { key: 'k11', name: '千歳航空基地' },
+          ],
+          shipsData: {
+            k1: [
+              {
+                title: 'つがる（搭載大型巡視船）',
+                name: 'つがる',
+                type: '搭載大型巡視船',
+                image: ship_001,
+                model: 'PLH',
+                info: '',
+              },
+              {
+                title: 'おくしり（中型巡視船）',
+                name: 'おくしり',
+                type: '中型巡視船',
+                image: ship_002,
+                model: 'PM',
+              },
+              {
+                title: 'ゆきぐも（大型巡視艇）',
+                name: 'おくしり',
+                type: '大型巡視艇',
+                image: ship_003,
+                model: 'PC',
+              },
+              {
+                title: 'すずらん（小型巡視艇）',
+                name: 'すずらん',
+                type: '小型巡視艇',
+                image: ship_004,
+                model: 'CL',
+              },
+              {
+                title: 'かむい（小型巡視船）',
+                name: 'かむい',
+                type: '小型巡視船',
+                image: ship_005,
+                model: 'PS',
+              },
+              {
+                title: 'あかしあ（小型巡視艇）',
+                name: 'あかしあ',
+                type: '小型巡視艇',
+                image: ship_006,
+                model: 'CL',
+              },
+            ],
+            k2: [
+              {
+                title: 'えさん（大型巡視船）',
+                name: 'えさん',
+                type: '大型巡視船',
+                image: ship_007,
+                model: 'PL',
+                info: '',
+              },
+              {
+                title: 'しれとこ（大型巡視船）',
+                name: 'しれとこ',
+                type: '大型巡視船',
+                image: ship_008,
+                model: 'PL',
+              },
+              {
+                title: 'ほろべつ（中型巡視船）',
+                name: 'ほろべつ',
+                type: '中型巡視船',
+                image: ship_009,
+                model: 'PM',
+              },
+              {
+                title: 'すずかぜ（小型巡視艇）',
+                name: 'すずかぜ',
+                type: '小型巡視艇',
+                image: ship_0010,
+                model: 'CL',
+              },
+              {
+                title: 'やぐるま（小型巡視艇）',
+                name: 'やぐるま',
+                type: '小型巡視艇',
+                image: ship_0011,
+                model: 'CL',
+              },
+            ],
+          },
+        },
+      ],
+    },
+  },
+  2: {
+    t1: {
+      title: '2222222',
+      jianjie: [
+        {
+          type: 'image',
+          src: hsbad,
+          alt: '海上保安厅',
+          style: { width: '200px', height: '200px' },
+        },
+        {
+          type: 'text',
+          content: '日本海上保安厅管区',
+        },
+      ],
+    },
+  },
+}

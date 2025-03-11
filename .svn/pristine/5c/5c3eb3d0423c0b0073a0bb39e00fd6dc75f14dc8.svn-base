@@ -1,0 +1,107 @@
+.modalAdd {
+  .inputTwo {
+    display: flex !important;
+    color: rgb(191, 50, 50) !important;
+    background-color: #232632 !important;
+  }
+
+  .btnSearch {
+    color: white;
+    background: none !important;
+  }
+  .btnSearch1 {
+    width: 15%;
+    color: white;
+    background: none !important;
+  }
+
+  .quanxuan {
+    display: flex;
+    color: white !important;
+  }
+
+  .checkoutStyle {
+    display: flex;
+    // align-items: center;
+    flex-direction: column;
+    // background-color: red;
+  }
+  .curP {
+    color: white;
+    background: none;
+    border: none;
+  }
+}
+
+.modalAdd :global(.ant-transfer-list-header-selected) {
+  display: none !important;
+}
+.btnSearch :global(.ant-select-selector) {
+  color: white !important;
+  background-color: #232632 !important;
+}
+.modalAdd :global(.ant-modal-close-x) {
+  color: white !important;
+}
+.modalAdd :global(.ant-checkbox-wrapper + .ant-checkbox-wrapper) {
+  margin: 0 !important;
+}
+.modalAdd :global(.ant-checkbox + span) {
+  color: white !important;
+}
+.modalAdd :global(.ant-input) {
+  width: 500px;
+  color: white !important;
+  background-color: #232632 !important;
+}
+.modalAdd :global(.ant-modal-content) {
+  color: white !important;
+  background-color: #232632 !important;
+}
+
+.modalAdd :global(.ant-modal-header) {
+  color: white !important;
+  background-color: #232632 !important;
+}
+.modalAdd :global(.ant-modal-title) {
+  color: white !important;
+}
+.modalAdd :global(.ant-form-item-label > label) {
+  color: white !important;
+}
+
+// 输入框清除图标
+.modalAdd :global(.ant-input-clear-icon > label) {
+  color: white !important;
+}
+
+// 账号池样式
+.modalAdd :global(.ant-transfer) {
+  color: white !important;
+}
+// 账号池样式
+.modalAdd :global(.ant-select-arrow) {
+  color: white !important;
+}
+.modalAdd :global(.ant-empty-description) {
+  color: white !important;
+}
+.modalAdd :global(.ant-transfer-list) {
+  width: 320px;
+  height: 300px;
+}
+.modalAdd :global(.ant-transfer-list-content-item-text) {
+  color: white !important;
+}
+.modalAdd :global(.ant-transfer-list-header) {
+  color: white !important;
+  background: none !important;
+}
+.modalAdd :global(.ant-transfer-list-content-item-checked) {
+  background: none !important;
+}
+.modalAdd
+  :global(.ant-transfer-list-content-item:not(.ant-transfer-list-content-item-disabled):hover) {
+  // color: black !important;
+  background: none !important;
+}

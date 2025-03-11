@@ -1,0 +1,356 @@
+import React, { useState, useEffect } from 'react';
+import { Modal, Form, Input, Menu, Dropdown, Button, Checkbox, Row, Col, Select } from 'antd';
+import _ from 'lodash';
+import { DownOutlined, SearchOutlined, RightOutlined, LeftOutlined } from '@ant-design/icons';
+import styles from './index.less';
+const { Option } = Select;
+
+const SocialEditor = ({ visible, onSave, onCancel }) => {
+  const [row, setRow] = useState({ name: '' });
+  const [where, setWhere] = useState({ name: '', source: '' });
+  const [checkedLeft, setCheckedLeft] = useState({
+    isIndeterminate: false,
+    checkAll: false,
+    checkedList: [],
+    list: [],
+  });
+  const [checkedRight, setCheckedRight] = useState({
+    isIndeterminate: false,
+    checkAll: false,
+    checkedList: [],
+    list: [],
+  });
+  const [loading, setLoading] = useState(false);
+  const [accountLoading, setAccountLoading] = useState(false);
+
+  const accounts = [
+    {
+      id: 1,
+      name: '账号1',
+      source: 'Facebook',
+    },
+    {
+      id: 2,
+      name: '账号2',
+      source: 'Twitter',
+    },
+    {
+      id: 3,
+      name: '账号3',
+      source: 'Instagram',
+    },
+    // ... 更多账号
+  ];
+
+  useEffect(() => {
+    fetchAccounts();
+  }, []);
+
+  const show = folder => {
+    if (folder) {
+      setRow(folder);
+      if (folder.hasOwnProperty('accounts')) {
+        setCheckedRight({ ...checkedRight, list: folder.accounts });
+      }
+    } else {
+      setRow({ name: '' });
+      setCheckedRight({
+        isIndeterminate: false,
+        checkAll: false,
+        checkedList: [],
+        list: [],
+      });
+    }
+    setLoading(false);
+    fetchAccounts();
+  };
+
+  const save = () => {
+    if (!row.name) {
+      alert('信源档案名称不能为空');
+      return;
+    }
+
+    const { list } = checkedRight;
+    if (list.length < 1) {
+      alert('监测账号不能为空');
+      return;
+    }
+
+    row.type = 'social';
+    row.folder = list.map(row => parseInt(row.id)).join(',');
+
+    setLoading(true);
+    // 假设store函数已定义
+    store(row).then(res => {
+      if (res.data.state) {
+        alert('保存成功');
+        onSave();
+        onCancel();
+      } else {
+        alert(res.data.error);
+      }
+      setLoading(false);
+    });
+  };
+
+  const fetchAccounts = () => {
+    setAccountLoading(true);
+    const data = accounts;
+
+    setCheckedLeft({
+      ...checkedLeft,
+      list: _.filter(data, row => !_.find(checkedRight.list, { id: row.id })),
+      checkedList: [],
+    });
+
+    setAccountLoading(false);
+  };
+
+  const handleLeftCheckedChange = checkedList => {
+    const { list } = checkedLeft;
+    setCheckedLeft({
+      ...checkedLeft,
+      checkedList,
+      isIndeterminate: checkedList.length > 0 && checkedList.length < list.length,
+      checkAll: checkedList.length === list.length,
+    });
+  };
+
+  const handleLeftCheckAllChange = checked => {
+    const { list } = checkedLeft;
+    const checkedList = checked ? list.map(row => row.id) : [];
+
+    setCheckedLeft({
+      ...checkedLeft,
+      checkedList,
+      isIndeterminate: false,
+      checkAll: checked,
+    });
+  };
+
+  const handleRightCheckAllChange = checked => {
+    const { list } = checkedRight;
+    const checkedList = checked ? list.map(row => row.id) : [];
+
+    setCheckedRight({
+      ...checkedRight,
+      checkedList,
+      isIndeterminate: false,
+      checkAll: checked,
+    });
+  };
+  const handleRightCheckedChange = checkedList => {
+    const { list } = checkedRight;
+    setCheckedRight({
+      ...checkedRight,
+      checkedList,
+      isIndeterminate: checkedList.length > 0 && checkedList.length < list.length,
+      checkAll: checkedList.length === list.length,
+    });
+  };
+
+  const toRight = () => {
+    const { checkedList } = checkedLeft;
+    const { checkedList: rightCheckedList } = checkedRight;
+
+    // 获取左侧选中的数据项
+    const checkedData = checkedLeft.list.filter(account => checkedList.includes(account.id));
+
+    // 将选中的数据项添加到右侧列表中
+    setCheckedRight({
+      ...checkedRight,
+      list: [...checkedRight.list, ...checkedData],
+      // 仅添加新的选中项到右侧的选中列表中
+      checkedList: [...rightCheckedList, ...checkedData.map(account => account.id)],
+    });
+
+    // 清除左侧的选中状态，但不影响列表中的数据项
+    setCheckedLeft({
+      ...checkedLeft,
+      checkedList: [], // 清空左侧选中列表，但不影响列表中的数据项
+      //
+    });
+  };
+
+  const toLeft = () => {
+    const { checkedList: rightCheckedList } = checkedRight;
+    const checkedData = checkedRight.list.filter(account => rightCheckedList.includes(account.id));
+
+    // 从右侧的选中列表中移除
+    setCheckedRight({
+      ...checkedRight,
+      checkedList: rightCheckedList.filter(id => !checkedData.some(data => data.id === id)),
+      list: checkedRight.list.filter(account => !rightCheckedList.includes(account.id)),
+    });
+  };
+  const handleMenuChange = e => {
+    setWhere({ ...where, source: e.key });
+  };
+  useEffect(() => {
+    fetchAccounts();
+  }, []);
+
+  const handleChange = value => {
+    console.log(`selected ${value}`);
+  };
+
+  return (
+    <Modal
+      className={styles.modalAdd}
+      visible={visible}
+      onCancel={onCancel}
+      width={800}
+      onOk={save}
+      loading={loading}
+    >
+      <Form labelWidth={120} labelPosition="left">
+        <Form.Item label="信源档案名称：">
+          <Input
+            placeholder="信源档案名称"
+            value={row.name}
+            onChange={e => setRow({ ...row, name: e.target.value })}
+          />
+        </Form.Item>
+        <Form.Item label="账号池检索：" className={styles.inputTwo}>
+          <Input.Group compact className={styles.btnSearch}>
+            <Select
+              style={{
+                width: 120,
+              }}
+              onChange={handleChange}
+              placeholder="请选择"
+              options={[
+                {
+                  value: '',
+                  label: '全部',
+                },
+                {
+                  value: '1',
+                  label: '微博',
+                },
+                {
+                  value: '2',
+                  label: '公众号',
+                },
+                {
+                  value: '3',
+                  label: '谷歌',
+                },
+                {
+                  value: '4',
+                  label: '博客',
+                },
+                {
+                  value: '5',
+                  label: '网站',
+                },
+                {
+                  value: '6',
+                  label: '百度',
+                },
+                {
+                  value: '7',
+                  label: '推特',
+                },
+              ]}
+            />
+            <Input
+              className={styles.btnSearch}
+              style={{
+                width: '70%',
+              }}
+              placeholder="请输入"
+            />
+            <Button
+              icon={<SearchOutlined />}
+              onClick={fetchAccounts}
+              className={styles.btnSearch}
+            />
+          </Input.Group>
+        </Form.Item>
+        <Form.Item label="账号池：">
+          <Row>
+            <Col span={11}>
+              <div
+                style={{
+                  width: '100%',
+                  height: 400,
+                  overflowY: 'scroll',
+                  border: '1px silver solid',
+                  padding: 10,
+                }}
+              >
+                <Checkbox
+                  indeterminate={checkedLeft.isIndeterminate}
+                  checked={checkedLeft.checkAll}
+                  onChange={handleLeftCheckAllChange}
+                  className={styles.quanxuan}
+                >
+                  全选
+                </Checkbox>
+                <Checkbox.Group
+                  value={checkedLeft.checkedList}
+                  onChange={handleLeftCheckedChange}
+                  className={styles.checkoutStyle}
+                >
+                  {checkedLeft.list.map(account => (
+                    <Checkbox key={account.id} value={account.id}>
+                      {account.name}
+                    </Checkbox>
+                  ))}
+                </Checkbox.Group>
+              </div>
+            </Col>
+            <Col span={2}>
+              <div
+                className="t-c"
+                style={{
+                  height: 400,
+                  paddingTop: 180,
+                  margin: '0 10px',
+                }}
+              >
+                <Button icon={<RightOutlined />} className={styles.curP} onClick={toRight} />
+                <Button icon={<LeftOutlined />} className={styles.curP} onClick={toLeft} />
+              </div>
+            </Col>
+            <Col span={11}>
+              <div
+                style={{
+                  width: '100%',
+                  height: 400,
+                  overflowY: 'scroll',
+                  border: '1px silver solid',
+                  padding: 10,
+                }}
+              >
+                <Checkbox
+                  indeterminate={checkedRight.isIndeterminate}
+                  checked={checkedRight.checkAll}
+                  onChange={handleRightCheckAllChange}
+                  className={styles.quanxuan}
+                >
+                  全选
+                </Checkbox>
+                <Checkbox.Group
+                  value={checkedRight.checkedList}
+                  onChange={handleRightCheckedChange}
+                  className={styles.checkoutStyle}
+                >
+                  {checkedRight.list.map(account => (
+                    <Checkbox key={account.id} value={account.id}>
+                      {account.name}
+                    </Checkbox>
+                  ))}
+                </Checkbox.Group>
+              </div>
+            </Col>
+          </Row>
+        </Form.Item>
+      </Form>
+    </Modal>
+  );
+};
+
+export default SocialEditor;

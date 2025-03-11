@@ -1,0 +1,679 @@
+import React, { useState, useEffect, useCallback } from 'react';
+import 'moment/locale/zh-cn';
+import locale from 'antd/es/date-picker/locale/zh_CN';
+import Icon from '@/components/Icon';
+import moment from 'moment';
+import {
+  PlusOutlined,
+  YuqueOutlined,
+  FolderOpenOutlined,
+  FolderOutlined,
+  DeleteOutlined,
+  EditOutlined,
+} from '@ant-design/icons';
+
+import styles from './index.less';
+import {
+  DatePicker,
+  Checkbox,
+  Pagination,
+  Button,
+  Input,
+  Tabs,
+  Menu,
+  Modal,
+  Dropdown,
+  Popconfirm,
+  message,
+} from 'antd';
+import DashboardCard from './../../components/common/DashboardCard';
+import ActionStats from '@/components/common/ActionStats';
+import CardModal from './../../components/common/CardModal';
+import SocialEditor from '@/components/common/SocialEditor';
+
+import weibo from './../../assets/images/icon/weibo.png';
+import weixin from './../../assets/images/icon/weixin.png';
+import google from './../../assets/images/icon/google.png';
+import blog from './../../assets/images/icon/blog.png';
+import wangzhan from './../../assets/images/icon/new.png';
+import baidu from './../../assets/images/icon/baidu.png';
+import twitter from './../../assets/images/icon/twitter.png';
+const { RangePicker } = DatePicker;
+const { Search } = Input;
+import {
+  getQcArchivesPage,
+  getQcArchivesSourcePage,
+  getNewsPage,
+  getQcArchivesSave,
+  getQcArchivesDelete,
+  getQcArchivesUpdate,
+  getInfo,
+} from './../../services/store';
+import img from '@/assets/images/logo.png';
+
+const dynamicImg = sourceType => {
+  switch (sourceType) {
+    case '微博':
+      return weibo;
+    case '公众号':
+      return weixin;
+    case '谷歌':
+      return google;
+    case '博客':
+      return blog;
+    case '网站':
+      return wangzhan;
+    case '百度':
+      return baidu;
+    case '推特':
+      return twitter;
+
+    default:
+      return '';
+  }
+};
+
+export default function Dashboard() {
+  const [selectedRange, setSelectedRange] = useState('1m');
+  const [selectedLanguage, setSelectedLanguage] = useState('');
+  const [dateRange, setDateRange] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const [isExportMode, setIsExportMode] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const [currentCardData, setCurrentCardData] = useState(null);
+
+  const [firstLevelArchives, setFirstLevelArchives] = useState([]);
+  const [secondLevelArchives, setSecondLevelArchives] = useState({});
+  const [selectedFirstLevelArchiveId, setSelectedFirstLevelArchiveId] = useState(null);
+  const [selectedSecondLevelArchiveId, setSelectedSecondLevelArchiveId] = useState(null);
+  const [expanded, setExpanded] = useState({});
+
+  const [editingId, setEditingId] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+
+  const [isSocialEditorVisible, setIsSocialEditorVisible] = React.useState(false);
+  const [mockData, setMockData] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
+  const [searchKeywords, setSearchKeywords] = useState('');
+  const [modalData, setModalData] = useState({});
+  const [isLoading, setIsLoading] = useState({});
+
+  const calculateTimeRange = range => {
+    const endDate = new Date(); // 结束时间为当前时间
+    let startTime;
+
+    switch (range) {
+      case '24h':
+        startTime = new Date(endDate.getTime() - 3600 * 1000 * 24 * 1); // 24小时
+        break;
+      case '1w':
+        startTime = new Date(endDate.getTime() - 3600 * 1000 * 24 * 7); // 一周
+        break;
+      case '1m':
+        startTime = new Date(endDate.getTime() - 3600 * 1000 * 24 * 30); // 一月
+        break;
+      case '1y':
+        startTime = new Date(endDate.getTime() - 3600 * 1000 * 24 * 365); // 一年
+        break;
+      default:
+        startTime = null;
+    }
+
+    const formatTime = date => {
+      return date ? moment(date).format('YYYY-MM-DD HH:mm:ss') : '';
+    };
+
+    return {
+      startTime: formatTime(startTime),
+      endTime: formatTime(new Date()),
+    };
+  };
+
+  const handleRangeChange = range => {
+    console.log(range, totalCount);
+
+    setSelectedRange(range);
+
+    if (range !== 'custom') {
+      const { startTime, endTime } = calculateTimeRange(range);
+      setDateRange([
+        moment(startTime, 'YYYY-MM-DD HH:mm:ss'),
+        moment(endTime, 'YYYY-MM-DD HH:mm:ss'),
+      ]);
+    }
+
+    // fetchListData();
+  };
+
+  const handleDateChange = (dates, dateStrings) => {
+    setDateRange(dates);
+    // fetchListData();
+  };
+
+  const handleLanguageChange = language => {
+    setSelectedLanguage(language);
+    // fetchListData();
+  };
+
+  const handleSearch = searchQuery => {
+    setSearchQuery(searchQuery);
+    setSearchKeywords(searchQuery);
+    // fetchListData();
+  };
+  const highLight = (text, keyword) => {
+    if (!keyword || keyword.trim() === '') {
+      return text;
+    }
+    return text.replace(
+      new RegExp(`(${keyword})`, 'gi'),
+      match => `<span style="color:#12B8D7">${match}</span>`
+    );
+  };
+
+  useEffect(() => {
+    fetchFirstLevelArchives();
+  }, []);
+
+  useEffect(() => {
+    fetchListData();
+  }, [
+    currentPage,
+    selectedFirstLevelArchiveId,
+    selectedSecondLevelArchiveId,
+    selectedRange,
+    selectedLanguage,
+    dateRange,
+    searchQuery,
+  ]);
+  useEffect(() => {
+    setCurrentPage(1);
+    setMockData([]);
+  }, [selectedFirstLevelArchiveId, selectedSecondLevelArchiveId]);
+
+  // 获取一级档案数据
+  const fetchFirstLevelArchives = async () => {
+    try {
+      const response = await getQcArchivesPage({
+        page: currentPage,
+        limit: pageSize,
+      });
+      if (response.code === 200) {
+        const firstLevelData = response.page.list.map(item => ({
+          id: item.archives_id,
+          name: item.archives_name,
+          children: [],
+        }));
+        setFirstLevelArchives(firstLevelData);
+      }
+    } catch (error) {
+      console.error('获取一级档案数据失败:', error);
+      message.error('获取数据失败');
+    }
+  };
+
+  // 获取二级档案数据
+  const fetchSecondLevelArchives = async archivesId => {
+    try {
+      const response = await getQcArchivesSourcePage({
+        page: currentPage,
+        limit: pageSize,
+        archivesId,
+      });
+      if (response.code === 200) {
+        const secondLevelData = response.page.list.map(item => ({
+          id: item.asId,
+          name: item.name,
+          icon: 'MonitorOutlined',
+        }));
+        setSecondLevelArchives({
+          ...secondLevelArchives,
+          [archivesId]: secondLevelData,
+        });
+      }
+    } catch (error) {
+      console.error('获取二级档案数据失败:', error);
+    }
+  };
+  const handleMonitorItemClick = async id => {
+    // 关闭所有一级档案
+    const newExpanded = { ...expanded };
+    for (const key in newExpanded) {
+      newExpanded[key] = false;
+    }
+    newExpanded[id] = true;
+    setExpanded(newExpanded);
+
+    // 获取二级档案数据
+    await fetchSecondLevelArchives(id);
+
+    // 使用一级档案的archivesId来获取新闻列表
+    setSelectedFirstLevelArchiveId(id);
+    setSelectedSecondLevelArchiveId(null);
+    setCurrentPage(1);
+  };
+
+  const handleSecondLevelItemClick = (firstLevelId, secondLevelId) => {
+    setSelectedFirstLevelArchiveId(firstLevelId);
+    setSelectedSecondLevelArchiveId(secondLevelId);
+    setCurrentPage(1);
+  };
+
+  // 新闻列表
+  const fetchListData = async () => {
+    setIsLoading(true);
+    try {
+      let startTime, endTime;
+
+      if (selectedRange === 'custom' && dateRange.length) {
+        startTime = dateRange[0].format('YYYY-MM-DD HH:mm:ss');
+        endTime = dateRange[1].format('YYYY-MM-DD HH:mm:ss');
+      } else {
+        const { startTime: calculatedStartTime, endTime: calculatedEndTime } =
+          calculateTimeRange(selectedRange);
+        startTime = calculatedStartTime;
+        endTime = calculatedEndTime;
+      }
+
+      const response = await getNewsPage({
+        page: currentPage,
+        limit: pageSize,
+        archivesId: selectedFirstLevelArchiveId,
+        sourceId: selectedSecondLevelArchiveId || '',
+        startTime,
+        endTime,
+        lang: selectedLanguage || '',
+        searchContent: searchQuery || '',
+      });
+
+      setMockData(response.page.list);
+      setTotalCount(response.page.totalCount);
+    } catch (error) {
+      console.error('获取数据失败:', error);
+      message.error('获取数据失败');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleModalVisibility = isVisible => {
+    setIsModalVisible(isVisible);
+  };
+
+  const handleEditClick = (id, event) => {
+    // event.stopPropagation();
+    const selectedArchive = firstLevelArchives.find(archive => archive.id === id);
+    setCurrentCardData(selectedArchive);
+    setIsEditing(true);
+    setEditingId(id);
+    setIsSocialEditorVisible(true);
+  };
+
+  const handleSave = async (dataToSave, event) => {
+    try {
+      let response;
+      // const isEditing = isEditing;
+
+      if (isEditing) {
+        setIsEditing(true);
+        // const data = { ...dataToSave, archivesId: editingId };
+        response = await getQcArchivesUpdate(dataToSave); // 调用更新接口
+        setEditingId(null); // 清除编辑id
+      } else {
+        response = await getQcArchivesSave(dataToSave); // 调用新增接口
+      }
+
+      if (response && response.code === 200) {
+        await fetchFirstLevelArchives(); // 刷新数据
+        message.success(isEditing ? '编辑成功' : '保存成功');
+        setIsSocialEditorVisible(false);
+      } else {
+        if (response && response.data && response.error) {
+          message.error(response.error);
+        } else if (response) {
+          debugger;
+          message.error(response.msg ? response.msg : '操作失败，未知错误');
+        } else {
+          message.error('操作失败，未收到响应');
+        }
+      }
+    } catch (error) {
+      console.error('操作失败:', error);
+      message.error('操作时发生错误');
+    }
+  };
+
+  const confirmDelete = async (id, event) => {
+    event.stopPropagation(); // 阻止事件冒泡
+    try {
+      const response = await getQcArchivesDelete({ archivesId: id });
+
+      if (response.code === 200) {
+        await fetchFirstLevelArchives();
+        message.success('删除成功');
+      } else {
+        message.error('删除失败');
+      }
+    } catch (error) {
+      console.error('删除失败:', error);
+      message.error('删除时发生错误');
+    }
+  };
+
+  const handleAddMonitor = () => {
+    setIsEditing(false); // 设置为新增状态
+    setIsSocialEditorVisible(true); // 显示编辑器
+  };
+
+  const handleCancel = () => {
+    console.log('取消操作');
+    setIsSocialEditorVisible(false);
+  };
+
+  const handleContentClick = async (id, showActions) => {
+    console.log(showActions, 'showActions');
+
+    try {
+      const response = await getInfo({ newsId: id });
+
+      if (response.code === 200 && response.data) {
+        setModalData(modalData => ({
+          ...modalData,
+          ...response.data,
+          showActions: showActions,
+        }));
+      } else {
+        message.error('获取失败');
+      }
+    } catch (error) {
+      console.error('获取失败:', error);
+      message.error('获取时发生错误');
+    }
+    handleModalVisibility(true);
+  };
+
+  const handleExport = id => {
+    const newsId = id;
+    debugger;
+    // 创建一个新的 XMLHttpRequest 对象
+    var xhr = new XMLHttpRequest();
+    // 配置请求
+    xhr.open('GET', `/intelligence/api/news/exportNewsToWord?newsId=${newsId}`, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.responseType = 'blob'; // 设置响应类型为 blob
+
+    // 处理响应
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        var blob = xhr.response; // 获取响应数据的 Blob 对象
+        const url = window.URL.createObjectURL(
+          new Blob([blob], { type: 'application/vnd.ms-excel;charset=utf-8' })
+        );
+        // 创建一个链接并点击下载
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', '新闻.doc');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+        message.success('导出成功!');
+      } else {
+        message.error('导出失败');
+      }
+    };
+    // 发送请求
+    xhr.send();
+  };
+
+  const handleExportClick = exportType => {
+    console.log('导出类型:', exportType);
+
+    if (isExportMode) {
+      console.log('执行导出操作');
+
+      setIsExportMode(false);
+    } else {
+      setIsExportMode(true);
+    }
+  };
+  const menu = (
+    <Menu>
+      <Menu.Item key="word" onClick={() => handleExportClick('word')}>
+        导出为Word
+      </Menu.Item>
+      <Menu.Item key="excel" onClick={() => handleExportClick('excel')}>
+        导出为Excel
+      </Menu.Item>
+    </Menu>
+  );
+
+  const handleCollect = (cardId, isCollected) => {
+    console.log('Card ID:', cardId, 'is now', isCollected ? 'collected' : 'not collected');
+  };
+  return (
+    <>
+      <div className={styles.container}>
+        <div className={styles.left}>
+          <Button onClick={handleAddMonitor} icon={<PlusOutlined />} className={styles.btn}>
+            添加信源档案
+          </Button>
+          <div>
+            {firstLevelArchives.map(item => (
+              <div key={item.id}>
+                <div className={styles.listItem}>
+                  {expanded[item.id] ? <FolderOpenOutlined /> : <FolderOutlined />}
+                  <span className={styles.title} onClick={() => handleMonitorItemClick(item.id)}>
+                    {item.name}
+                  </span>
+                  <React.Fragment>
+                    <EditOutlined
+                      className={styles.editIcon}
+                      name="EditOutlined"
+                      onClick={event => handleEditClick(item.id, event)}
+                    />
+                    <Popconfirm
+                      title="您确定要删除吗？"
+                      onConfirm={event => confirmDelete(item.id, event)}
+                      onCancel={() => console.log('Cancel clicked')}
+                      okText="是"
+                      cancelText="否"
+                    >
+                      <DeleteOutlined className={styles.deleteIcon} name="DeleteOutlined" />
+                    </Popconfirm>
+                  </React.Fragment>
+                </div>
+                {expanded[item.id] && (
+                  <div className={styles.itemStyle}>
+                    {secondLevelArchives[item.id] &&
+                      secondLevelArchives[item.id].map(child => (
+                        <div
+                          key={child.id}
+                          className={styles.subItem}
+                          onClick={() => handleSecondLevelItemClick(item.id, child.id)}
+                        >
+                          <YuqueOutlined style={{ marginRight: '4px' }} />
+                          <span className={styles.title}>{child.name}</span>
+                        </div>
+                      ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+        <SocialEditor
+          visible={isSocialEditorVisible}
+          onSave={handleSave}
+          onCancel={handleCancel}
+          data={currentCardData}
+          isEditing={isEditing}
+          editingId={editingId}
+        />
+
+        <div className={styles.container1}>
+          <div className={styles.countTop}>
+            <div className={styles.searchTop}>
+              <Search
+                placeholder="请输入您要搜索的内容"
+                allowClear
+                onSearch={e => handleSearch(e)}
+                style={{
+                  width: 200,
+                }}
+              />
+            </div>
+            <div className={styles.timeSelect}>
+              <span className={styles.curP}>时间范围：</span>
+              <span
+                className={`${styles.curP} ${selectedRange === '24h' ? styles.selected : ''}`}
+                onClick={() => handleRangeChange('24h')}
+              >
+                近一天
+              </span>
+              <span
+                className={`${styles.curP} ${selectedRange === '1w' ? styles.selected : ''}`}
+                onClick={() => handleRangeChange('1w')}
+              >
+                近一周
+              </span>
+              <span
+                className={`${styles.curP} ${selectedRange === '1m' ? styles.selected : ''}`}
+                onClick={() => handleRangeChange('1m')}
+              >
+                近一月
+              </span>
+              <span
+                className={`${styles.curP} ${selectedRange === '1y' ? styles.selected : ''}`}
+                onClick={() => handleRangeChange('1y')}
+              >
+                近一年
+              </span>
+              <span
+                className={`${styles.curP} ${selectedRange === 'custom' ? styles.selected : ''}`}
+                onClick={() => handleRangeChange('custom')}
+              >
+                自定义
+              </span>
+              {selectedRange === 'custom' && (
+                <RangePicker
+                  locale={locale}
+                  range-separator="至"
+                  start-placeholder="开始日期"
+                  end-placeholder="结束日期"
+                  value-format="yyyy-MM-dd HH:mm:ss"
+                  default-time={['00:00:00', '23:59:59']}
+                  className="mar-l-10"
+                  onChange={handleDateChange}
+                />
+              )}
+            </div>
+            <div className={styles.languageSelect}>
+              <span className={styles.curP}>语种筛选：</span>
+              <span
+                className={`${styles.curP1} ${selectedLanguage === '' ? styles.selected : ''}`}
+                onClick={() => handleLanguageChange('')}
+              >
+                全部
+              </span>
+              <span
+                className={`${styles.curP1} ${selectedLanguage === '中文' ? styles.selected : ''}`}
+                onClick={() => handleLanguageChange('中文')}
+              >
+                中文
+              </span>
+              <span
+                className={`${styles.curP1} ${selectedLanguage === '日语' ? styles.selected : ''}`}
+                onClick={() => handleLanguageChange('日语')}
+              >
+                日语
+              </span>
+              <span
+                className={`${styles.curP1} ${selectedLanguage === '英文' ? styles.selected : ''}`}
+                onClick={() => handleLanguageChange('英文')}
+              >
+                英文
+              </span>
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                padding: '0 20px 0 0 ',
+              }}
+            >
+              <span>
+                共<span style={{ color: '#FF8000', margin: '0 10px' }}>{totalCount}</span>
+                条记录
+              </span>
+
+              <Dropdown overlay={menu} placement="bottomCenter">
+                <Button style={{ backgroundColor: 'rgba(255, 128, 0, 0.5)', color: 'white' }}>
+                  批量导出
+                </Button>
+              </Dropdown>
+            </div>
+          </div>
+          {mockData.map((card, index) => {
+            const processedCard = {
+              ...card,
+              titleZh: highLight(card.titleZh, searchQuery),
+              contentZh: highLight(card.contentZh, searchQuery),
+            };
+
+            return (
+              <div key={card.id} style={{ display: 'flex', paddingLeft: '10px' }}>
+                <DashboardCard
+                  className={styles.dashboardCardStyle}
+                  key={card.id}
+                  img={dynamicImg(card.sourceType)}
+                  sourceName={card.sourceName}
+                  publishTime={card.publishTime}
+                  title={processedCard.titleZh}
+                  content={processedCard.contentZh}
+                  link={card.url}
+                  images={card.pics}
+                  likeNum={card.likeNum}
+                  commentNum={card.commentNum}
+                  shareNum={card.shareNum}
+                  readNum={card.readNum}
+                  showActions={card.showActions}
+                  onClickContent={() => handleContentClick(card.id, card.showActions)}
+                  onCollect={isCollected => handleCollect(card.id, isCollected)}
+                  onExport={() => handleExport(card.id)}
+                />
+              </div>
+            );
+          })}
+          <Pagination
+            current={currentPage}
+            total={totalCount}
+            pageSize={pageSize}
+            onChange={(page, pageSize) => {
+              setCurrentPage(page);
+              setPageSize(pageSize);
+            }}
+            onShowSizeChange={(current, size) => {
+              setCurrentPage(1);
+              setPageSize(size);
+            }}
+            style={{ margin: '10px auto', display: 'flex', justifyContent: 'center' }}
+            showSizeChanger={false}
+          />
+        </div>
+      </div>
+
+      <CardModal
+        visible={isModalVisible}
+        onCancel={() => handleModalVisibility(false)}
+        modalData={modalData}
+        setIsModalVisible={handleModalVisibility}
+        handleExport={() => handleExport(modalData.id)}
+      />
+    </>
+  );
+}

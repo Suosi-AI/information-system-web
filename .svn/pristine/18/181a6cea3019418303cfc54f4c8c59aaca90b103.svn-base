@@ -1,0 +1,29 @@
+import React, { lazy } from 'react'
+import { DashboardOutlined, TableOutlined, SettingOutlined, FormOutlined } from '@ant-design/icons'
+
+export const insideRoutes = [
+  {
+    path: '/',
+    hidden: true,
+    redirect: 'home',
+  },
+  {
+    path: 'home',
+    title: '分析页',
+    icon: <DashboardOutlined />,
+    element: lazy(() => import('@/pages/Dashboard')),
+  },
+  {
+    path: 'settings',
+    title: '系统设置',
+    icon: <SettingOutlined />,
+    element: lazy(() => import('@/pages/Settings')),
+  },
+
+  {
+    path: '*',
+    title: '404',
+    element: lazy(() => import('@/components/common/NotFound')),
+    hidden: true,
+  },
+]

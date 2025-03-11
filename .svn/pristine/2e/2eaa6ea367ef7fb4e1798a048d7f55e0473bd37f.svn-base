@@ -1,0 +1,288 @@
+import idObj from 'identity-obj-proxy'
+import leader from '../../../assets/images/archives/zdrw.png'
+
+import { v4 as uuidv4 } from 'uuid'
+
+
+export const peopleData = {
+  1: {
+    t1: {
+      title: '现任长官',
+      infoData: [{ id: uuidv4(), careerProfileId: 'officer1', name: '长官信息' },
+      { id: uuidv4(), careerProfileId: 'personal1', name: '人物履历' },
+      { id: uuidv4(), careerProfileId: 'history1', name: '历任信息' }],
+
+      careerProfiles: [
+        {
+          id: "officer1",
+          jianjie: [
+            {
+              type: 'image',
+              src: leader,
+              alt: '海上保安厅',
+              style: { height: '200px', maxWidth: '300px' },
+            },
+            {
+              type: 'text',
+              title: '瀬口良夫（第48任海上保安厅长官）',
+            },
+
+            {
+              type: 'text',
+              content: '濑口良夫（Yoshio Seguchi）',
+            },
+            {
+              type: 'text',
+              content: `    1964年7月18日出生于爱知县，海上保安大学第36期学员。
+    曾担任安全救援部安全信息科安全信息协调官、对马海上保安厅主任、第五管区海上保安本部安全救援部长，总务部政务科政策评估与公共关系室主任，安全救援部管理处处长、第十管区海上保安本部副部长等。东日本大地震后，他参与了受灾地区的支援任务。 ”`,
+            },
+          ],
+
+        },
+        {
+          id: 'personal1',
+          careerProfileContent: '人物履历',
+          careerData: [
+            { num: 1, time: '2020年（令和2年）4月1日', position: '就任第九管区海上保安本部部长' },
+            { num: 2, time: '同年10月1日', position: '被任命为安全救援部部长' },
+            { num: 3, time: '2021年10月1日（令和3年）', position: '被任命为海上保安厅督察' },
+            { num: 3, time: '2022年6月28日', position: '就任日本海上保安厅副厅长' },
+            { num: 3, time: '2024年7月1日', position: '就任日本海上保安厅厅长' },
+
+          ],
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num',
+            },
+            {
+              title: '时间',
+              dataIndex: 'time',
+              key: 'time',
+            },
+            {
+              title: '职位',
+              dataIndex: 'position',
+              key: 'position',
+            },
+          ],
+        },
+        {
+          id: 'history1',
+          careerProfileContent: '历任信息',
+          careerData: [
+            { num: 1, name: '大久保武雄', time: ' 1948年（昭和23年）5月1日-1951年（昭和26年）5月4日 ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 2, name: '柳沢米吉', time: '1951年（昭和26年）5月4日-1953年（昭和28年）1月31日 ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 3, name: '山口传', time: '  ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 4, name: '岛居辰次郎', time: ' ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 5, name: '安西正道', time: ' ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 6, name: '林坦', time: '  ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 7, name: '和田勇', time: '  ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 8, name: '辻章男', time: '', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 9, name: '今井荣文', time: '  ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 10, name: '栃内一彦', time: ' ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 11, name: '佐藤光夫', time: ' ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 12, name: '亀山信郎', time: ' ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 13, name: '河毛一郎', time: ' ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 14, name: '手冢良成', time: ' ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 15, name: '野村一彦', time: ' ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 16, name: '佐原亨', time: ' ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 17, name: '寺井久美', time: ' ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 18, name: '薗村泰彦', time: ' ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 19, name: '高桥寿夫', time: ' ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 20, name: '眞岛健', time: ' ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 21, name: '妹尾弘人', time: ' ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 22, name: '永井浩', time: ' ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 23, name: '石月昭二', time: ' ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 24, name: '角田达郎', time: ' ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 25, name: '山本长', time: ' ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 26, name: '栗林贞一', time: ' ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 27, name: '山田隆英', time: ' ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 28, name: '塩田澄夫', time: ' ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 29, name: '丹羽晟', time: ' ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 30, name: '宫本春树', time: ' ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 31, name: '井山嗣夫', time: ' ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            {
+              num: 32, name: '秦野裕', time: '', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣'
+            },
+            { num: 33, name: '土坂泰敏', time: '', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 34, name: '相原力', time: '', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 35, name: '楠木行雄', time: '', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 36, name: '荒井正吾', time: '', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 37, name: '縄野克彦', time: '', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 38, name: '深谷宪一', time: '', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 39, name: '石川裕己', time: '', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 40, name: '岩崎贞二', time: '', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 41, name: '铃木久泰', time: '', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 42, name: '北村隆志', time: '', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 43, name: '佐藤雄二', time: '', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 44, name: '中岛敏', time: '', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 45, name: '岩并秀一', time: '', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 46, name: '奥岛高弘', time: '', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 47, name: '石井昌平', time: '', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+            { num: 48, name: '瀬口良夫', time: '', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+
+          ],
+          careerColumns: [
+            {
+              title: '届',
+              dataIndex: 'num',
+              key: 'num',
+            },
+            {
+              title: '姓名',
+              dataIndex: 'name',
+              key: 'name',
+            },
+            {
+              title: '在任时间',
+              dataIndex: 'time',
+              key: 'time',
+            },
+            {
+              title: '离任原因',
+              dataIndex: 'cause',
+              key: 'cause',
+            },
+            {
+              title: '母校·期',
+              dataIndex: 'almaMater  ',
+              key: 'almaMater',
+            },
+            {
+              title: '就任前职务',
+              dataIndex: 'office',
+              key: 'office',
+            },
+            {
+              title: '离任后去向',
+              dataIndex: 'whereabouts',
+              key: 'whereabouts',
+            },
+          ],
+        }
+      ],
+    },
+    t2: {
+      title: '其他官员',
+      infoData: [
+        { id: uuidv4(), careerProfileId: 'guan1', name: '第一管区' },
+        { id: uuidv4(), careerProfileId: 'guan2', name: '第二管区' },
+        // { id: uuidv4(), careerProfileId: 'guan3', name: '第三管区' },
+        // { id: uuidv4(), careerProfileId: 'guan4', name: '第四管区' },
+        // { id: uuidv4(), careerProfileId: 'guan5', name: '第五管区' },
+        // { id: uuidv4(), careerProfileId: 'guan6', name: '第六管区' },
+        // { id: uuidv4(), careerProfileId: 'guan7', name: '第七管区' },
+        // { id: uuidv4(), careerProfileId: 'guan8', name: '第八管区' },
+        // { id: uuidv4(), careerProfileId: 'guan9', name: '第九管区' },
+        // { id: uuidv4(), careerProfileId: 'guan10', name: '第十管区' },
+        // { id: uuidv4(), careerProfileId: 'guan11', name: '第十一管区' },
+        // { id: uuidv4(), careerProfileId: 'guan12', name: '总务部' },
+        // { id: uuidv4(), careerProfileId: 'guan13', name: '海上保安学校' },
+        // { id: uuidv4(), careerProfileId: 'guan14', name: '海上保安大学' },
+        // { id: uuidv4(), careerProfileId: 'guan15', name: '装备技术部' },
+        // { id: uuidv4(), careerProfileId: 'guan16', name: '警备救难部' },
+        // { id: uuidv4(), careerProfileId: 'guan17', name: '海洋情报部' },
+        // { id: uuidv4(), careerProfileId: 'guan18', name: '交通部', },
+        // { id: uuidv4(), careerProfileId: 'guan19', name: '首席监察官' }
+      ],
+
+      careerProfiles: [
+
+        {
+          id: 'guan1',
+          careerProfileContent: '第一管区',
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num',
+            },
+            {
+              title: '职位',
+              dataIndex: 'time',
+              key: 'time',
+            },
+            {
+              title: '姓名',
+              dataIndex: 'position',
+              key: 'position',
+            },
+            // {
+            //   title: '社交账号',
+            //   dataIndex: 'tel',
+            //   key: 'tel',
+            //   render: (text, record) => (
+            //     <div>
+            //       {record.tel.map((picture, index) => (
+            //         <img
+            //           key={index}
+            //           src={picture}
+            //           alt={`社交账号 ${index}`}
+            //           style={{ width: '50px', height: '50px', marginRight: '5px' }} // 根据需要调整图片大小和样式
+            //         />
+            //       ))}
+            //     </div>
+            //   ),
+            // },
+          ],
+          careerData: [
+            { num: 1, time: '2020年（令和2年）4月1日', position: '就任第九管区海上保安本部部长' },
+            { num: 2, time: '同年10月1日', position: '被任命为安全救援部部长' },
+
+          ],
+
+        },
+        {
+          id: 'guan2',
+          careerProfileContent: '第二管区',
+          careerData: [
+            { num: 1, name: '大久保武雄', time: ' 1948年（昭和23年）5月1日-1951年（昭和26年）5月4日 ', cause: '请辞', almaMater: '', office: '不法入国船舶取缔本部长', whereabouts: '众议院议员、労働大臣' },
+
+          ],
+          careerColumns: [
+            {
+              title: '届',
+              dataIndex: 'num',
+              key: 'num',
+            },
+            {
+              title: '姓名',
+              dataIndex: 'name',
+              key: 'name',
+            },
+            {
+              title: '在任时间',
+              dataIndex: 'time',
+              key: 'time',
+            },
+            {
+              title: '离任原因',
+              dataIndex: 'cause',
+              key: 'cause',
+            },
+            {
+              title: '母校·期',
+              dataIndex: 'almaMater  ',
+              key: 'almaMater',
+            },
+            {
+              title: '就任前职务',
+              dataIndex: 'office',
+              key: 'office',
+            },
+            {
+              title: '离任后去向',
+              dataIndex: 'whereabouts',
+              key: 'whereabouts',
+            },
+          ],
+        }
+
+      ],
+    },
+
+  },
+
+}

@@ -1,0 +1,199 @@
+// api.js
+import request from '@/utils/request'
+import { Layout as Container, Avatar, Dropdown, Menu, message } from 'antd'
+const token = localStorage.getItem('token')
+
+export const testQuery = (options) =>
+  request('post', `/usher/web/testQuery/${options?.methodId}`, options)
+
+
+// 登录
+export const getLogin = (data) => {
+  return request('post', '/intelligence/api/sysUser/login', { params: data })
+}
+
+export const logout = () => {
+  return request('post', '/intelligence/api/user/logout', {}
+  )
+}
+
+export const updatePassword = (data) => {
+  return request('post', '/intelligence/api/user/updatePassword', {
+    params: data
+  })
+}
+
+
+
+// 档案名称列表  一级
+export const getQcArchivesPage = (data) => {
+  return request('post', '/intelligence/api/qcArchives/qcArchivesList', {
+    params: data
+  })
+}
+// 二级
+export const getQcArchivesSourcePage = (data) => {
+  return request('post', '/intelligence/api/qcArchives/qcArchivesSourceList', {
+    params: data
+  })
+}
+// 新闻列表
+export const getNewsPage = (data) => {
+  return request('post', '/intelligence/api/news/archivesNewsPage', {
+    params: data
+  })
+}
+// 新闻详情
+export const getInfo = (data) => {
+  return request('post', '/intelligence/api/news/info', {
+    params: data
+  })
+}
+
+
+// 根据信源名称查询所有信源清单信息
+export const getSourcePage = (data) => {
+  return request('post', '/intelligence/api/qcArchives/sourceList', {
+    params: data
+  })
+}
+// 新增信源菜单
+export const getQcArchivesSave = (data) => {
+  return request('post', '/intelligence/api/qcArchives/qcArchivesSave', {
+    params: data
+  })
+}
+// 编辑信源菜单
+export const getQcArchivesUpdate = (data) => {
+  return request('post', '/intelligence/api/qcArchives/qcArchivesUpdate', {
+    params: data
+  })
+}
+
+// 删除信源菜单
+export const getQcArchivesDelete = (data) => {
+  return request('post', '/intelligence/api/qcArchives/qcArchivesDelete', {
+    params: data,
+
+  })
+}
+// 编辑
+export const getQcArchivesById = (data) => {
+  return request('post', '/intelligence/api/qcArchives/qcArchivesById', {
+    config: {
+      data: data,
+    }
+  })
+}
+
+//导出
+export const downNewsWord = (data) => {
+  return request('get', '/intelligence/api/news/exportNewsToWord', {
+    params: data,
+    config: {
+      responseType: "blob",
+      headers: { 'content-type': 'application/json;charset=UTF-8' }
+    }
+  })
+}
+
+export const exportNewsToExcel = (data) => {
+  return request('post', '/intelligence/api/news/exportNewsToExcel', {
+    config: {
+      data: data,
+      responseType: "blob",
+      headers: { 'content-type': 'application/json;charset=UTF-8' }
+    }
+  })
+}
+// request('post', '/api/user', { data: { name: 'John' }, config: {xxx } });
+export const exportNewsToWordZip = (data) => {
+  return request('post', '/intelligence/api/news/exportNewsToWordZip', {
+
+    config: {
+      data: data,
+      responseType: "blob",
+      headers: { 'content-type': 'application/json;charset=UTF-8' }
+    }
+  })
+}
+
+//专题监测列表
+export const getList = (data) => {
+  return request('post', '/intelligence/api/monitorTarget/list', {
+    params: data
+  })
+}
+export const getMonitorTargetNewsPage = (data) => {
+  return request('post', '/intelligence/api/news/monitorTargetNewsPage', {
+    params: data
+  })
+}
+//专题监测 新增
+export const getSave = (data) => {
+  return request('post', '/intelligence/api/monitorTarget/save', {
+    params: data
+  })
+}
+//专题监测 修改
+export const getUpdate = (data) => {
+  return request('post', '/intelligence/api/monitorTarget/update', {
+    params: data
+  })
+}
+//专题监测 修改
+export const getDelete = (data) => {
+  return request('post', '/intelligence/api/monitorTarget/delete', {
+    params: data
+  })
+}
+
+
+
+
+// 收藏管理
+// 列表
+export const getFavoritesList = (data) => {
+  return request('post', '/intelligence/api/collectFolder/list', {
+    config: {
+      data: data,
+    }
+  })
+}
+// 新增
+export const getFavoritesSave = (data) => {
+  return request('post', '/intelligence/api/collectFolder/save', {
+    config: {
+      data: data,
+    }
+  })
+}
+// 编辑
+export const getFavoritesInfo = (data) => {
+  return request('post', '/intelligence/api/collectFolder/info', {
+    config: {
+      data: data,
+    }
+  })
+}
+// 修改
+export const getFavoritesUpdate = (data) => {
+  return request('post', '/intelligence/api/collectFolder/update', {
+    config: {
+      data: data,
+    }
+  })
+}
+// 删除
+export const getFavoritesDelete = (data) => {
+  return request('post', '/intelligence/api/collectFolder/delete', {
+    config: {
+      data: data,
+    }
+  })
+}
+
+
+
+
+

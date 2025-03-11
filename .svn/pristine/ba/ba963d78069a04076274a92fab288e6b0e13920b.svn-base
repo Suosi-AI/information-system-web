@@ -1,0 +1,18 @@
+.breadcrumb {
+  margin-bottom: 12px;
+}
+.content {
+  max-height: calc(100vh - 75px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: rgb(60, 61, 61);
+  color: white;
+}
+.inline {
+  height: 100vh;
+  overflow-y: auto;
+}
+.mixin {
+  height: calc(100vh - 48px);
+  overflow-y: auto;
+}

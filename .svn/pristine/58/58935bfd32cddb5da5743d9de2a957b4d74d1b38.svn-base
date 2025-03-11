@@ -1,0 +1,4 @@
+.timeStyle :global(.ant-timeline-item-tail) {
+  color: white;
+  border-left: 0px;
+}

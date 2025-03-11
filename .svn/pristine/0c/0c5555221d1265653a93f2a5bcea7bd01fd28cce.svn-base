@@ -1,0 +1,301 @@
+import React, { useState, useEffect } from 'react';
+import 'moment/locale/zh-cn';
+import locale from 'antd/es/date-picker/locale/zh_CN';
+import Icon from '@/components/Icon';
+import {
+  PlusOutlined,
+  SearchOutlined,
+  FileWordTwoTone,
+  StarOutlined,
+  LinkOutlined,
+  ShareAltOutlined,
+  LikeOutlined,
+  MessageOutlined,
+  EyeOutlined,
+} from '@ant-design/icons';
+
+import styles from './index.less';
+import { DatePicker } from 'antd';
+import { Button, Input, Tabs, Card } from 'antd';
+const { RangePicker } = DatePicker;
+
+import img from '@/assets/images/logo.png';
+// 后续换成从接口请求的数据
+const mockData = [
+  {
+    id: 'baoan',
+    name: '海上保安厅官方监测',
+    icon: 'MonitorOutlined',
+  },
+  {
+    id: 'haibao',
+    name: '日本海保船',
+    icon: 'MonitorOutlined',
+  },
+  {
+    id: 'taiwan',
+    name: '台湾',
+    icon: 'MonitorOutlined',
+  },
+  {
+    id: 'haixiangting',
+    name: '日本海鲜厅监测',
+    icon: 'MonitorOutlined',
+  },
+];
+
+export default function Dashboard() {
+  const [selectedRange, setSelectedRange] = useState('1m');
+  const [selectedLanguage, setSelectedLanguage] = useState('all');
+  const [dateRange, setDateRange] = useState([]);
+  const [recordsCount, setRecordsCount] = useState(0);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleRangeChange = (range, lang = null) => {
+    setSelectedRange(range);
+    if (range !== 'custom') {
+      setDateRange([]);
+    }
+    if (lang) {
+      setSelectedLanguage(lang);
+    }
+  };
+
+  const handleDateChange = (dates, dateStrings) => {
+    setDateRange(dates);
+  };
+
+  const handleSearch = () => {
+    console.log('搜索内容:', searchQuery);
+    // 在这里添加你的搜索逻辑
+  };
+
+  useEffect(() => {
+    const fetchRecordsCount = async () => {
+      try {
+        const response = await fetch('/api/records/count');
+        const data = await response.json();
+        setRecordsCount(data.count);
+      } catch (error) {
+        console.error('获取记录数失败:', error);
+      }
+    };
+
+    fetchRecordsCount();
+  }, []);
+
+  const handleCollection = () => {
+    console.log('handleCollection');
+  };
+  const handleExport = () => {
+    console.log('handleExport');
+  };
+
+  const handleMonitorItemClick = id => {
+    console.log(id);
+  };
+  const handleAddMonitor = () => {
+    console.log('add monitor');
+    // 后续请求添加接口，请求成功后获取列表接口
+  };
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.left}>
+        <Button onClick={handleAddMonitor} icon={<PlusOutlined />}>
+          添加监测目标
+        </Button>
+        <div>
+          {mockData.map(item => {
+            return (
+              <div
+                key={item.id}
+                className={styles.listItem}
+                onClick={() => handleMonitorItemClick(item.id)}
+              >
+                <Icon className={styles.icon} name={item.icon} />
+                <span className={styles.title}>{item.name}</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className={styles.container1}>
+        <div className={styles.countTop}>
+          <div className={styles.searchTop}>
+            <Input
+              className={styles.inputTop}
+              placeholder="请输入您要搜索的内容"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              suffix={
+                <SearchOutlined
+                  style={{ fontSize: '28px', cursor: 'pointer' }}
+                  onClick={handleSearch}
+                />
+              }
+            />
+          </div>
+          <div className={styles.timeSelect}>
+            <span className={styles.curP}>时间范围：</span>
+            <span
+              className={`${styles.curP} ${selectedRange === '24h' ? styles.selected : ''}`}
+              onClick={() => handleRangeChange('24h')}
+            >
+              近一天
+            </span>
+            <span
+              className={`${styles.curP} ${selectedRange === '1w' ? styles.selected : ''}`}
+              onClick={() => handleRangeChange('1w')}
+            >
+              近一周
+            </span>
+            <span
+              className={`${styles.curP} ${selectedRange === '1m' ? styles.selected : ''}`}
+              onClick={() => handleRangeChange('1m')}
+            >
+              近一月
+            </span>
+            <span
+              className={`${styles.curP} ${selectedRange === '1y' ? styles.selected : ''}`}
+              onClick={() => handleRangeChange('1y')}
+            >
+              近一年
+            </span>
+            <span
+              className={`${styles.curP} ${selectedRange === 'custom' ? styles.selected : ''}`}
+              onClick={() => handleRangeChange('custom')}
+            >
+              自定义
+            </span>
+            {selectedRange === 'custom' && (
+              <RangePicker
+                locale={locale}
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                value-format="yyyy-MM-dd HH:mm:ss"
+                default-time={['00:00:00', '23:59:59']}
+                className="mar-l-10"
+                onChange={handleDateChange}
+              />
+            )}
+          </div>
+          <div className={styles.languageSelect}>
+            <span className={styles.curP}>语种筛选：</span>
+            <span
+              className={`${styles.curP1} ${selectedLanguage === 'all' ? styles.selected : ''}`}
+              onClick={() => handleRangeChange(null, 'all')}
+            >
+              全部
+            </span>
+            <span
+              className={`${styles.curP1} ${selectedLanguage === 'ch' ? styles.selected : ''}`}
+              onClick={() => handleRangeChange(null, 'ch')}
+            >
+              中文
+            </span>
+            <span
+              className={`${styles.curP1} ${selectedLanguage === 'j' ? styles.selected : ''}`}
+              onClick={() => handleRangeChange(null, 'j')}
+            >
+              日语
+            </span>
+            <span
+              className={`${styles.curP1} ${selectedLanguage === 'en' ? styles.selected : ''}`}
+              onClick={() => handleRangeChange(null, 'en')}
+            >
+              英文
+            </span>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              padding: '0 20px 0 0 ',
+            }}
+          >
+            <span>
+              共<span style={{ color: '#FF8000', margin: '0 10px' }}>{recordsCount}</span>
+              条记录
+            </span>
+            <Button style={{ backgroundColor: 'rgba(255, 128, 0, 0.5)', color: 'white' }}>
+              批量导出
+            </Button>
+          </div>
+        </div>
+        <div className={styles.listStyle}>
+          <Card className={styles.cardStyle}>
+            <p className={styles.topCard}>
+              <span className={styles.topLeft}>
+                <span className={styles.topImg}>
+                  <img
+                    style={{ width: '20px', height: '20px', marginRight: '12px' }}
+                    src={img}
+                  ></img>
+                  <span className={styles.topLeft1}>title66666666666666</span>
+                </span>
+                <span>2024-8-19 13:14:00</span>
+              </span>
+              <span className={styles.topRight}>
+                <span style={{ display: 'flex', lineHeight: '20px' }}>
+                  <FileWordTwoTone style={{ fontSize: '22px', marginRight: '2px' }} />
+                  <a style={{ color: 'white' }} onClick={handleExport}>
+                    导出
+                  </a>
+                </span>
+                <span style={{ display: 'flex', lineHeight: '20px' }}>
+                  <StarOutlined style={{ fontSize: '22px', marginRight: '2px', color: 'orange' }} />
+                  <a style={{ color: 'white' }} onClick={handleCollection}>
+                    收藏
+                  </a>
+                </span>
+              </span>
+            </p>
+            <p>
+              <h3 style={{ color: 'white' }}>我是标题标题</h3>
+              <p className={styles.pContent}>
+                内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
+                内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
+                内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容{' '}
+              </p>
+            </p>
+            <p>
+              <LinkOutlined style={{ marginRight: '4px' }} />
+              <a href="  http://www.baidu.com" target="_blank" rel="noopener noreferrer">
+                http://www.baidu.com
+              </a>
+            </p>
+            <p
+              style={{
+                display: 'flex',
+                width: '20%',
+                justifyContent: 'space-between  ',
+              }}
+            >
+              <span>
+                <LikeOutlined />
+                <span>10</span>
+              </span>
+              <span>
+                <MessageOutlined />
+                <span>10</span>
+              </span>
+              <span>
+                <ShareAltOutlined />
+                <span>10</span>
+              </span>
+              <span>
+                <EyeOutlined />
+                <span>100</span>
+              </span>
+            </p>
+            <p>图片</p>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+}

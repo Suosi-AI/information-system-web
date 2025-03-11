@@ -1,0 +1,113 @@
+.dataAnalysis {
+  min-height: calc(100vh - 48px);
+  padding: 24px;
+  overflow-y: auto;
+  background: #191922;
+
+  :global {
+    .ant-card {
+      background: #1a1b24; // #3f4258;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+
+      .ant-card-head {
+        background: #3b3d51;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+        .ant-card-head-title {
+          color: white;
+          font-weight: bold;
+        }
+      }
+
+      .ant-card-body {
+        height: auto;
+        padding: 24px;
+
+        > div {
+          height: 400px !important;
+          margin-bottom: 24px;
+        }
+      }
+    }
+
+    .ant-tabs {
+      color: rgb(150, 85, 85); // white;
+
+      .ant-tabs-nav {
+        margin-bottom: 16px;
+
+        .ant-tabs-tab {
+          color: rgb(255, 255, 255);
+
+          &.ant-tabs-tab-active {
+            color: #ffffff;
+          }
+        }
+      }
+
+      .ant-tabs-content-holder {
+        overflow: visible;
+      }
+
+      .ant-tabs-content {
+        height: auto;
+
+        .ant-tabs-tabpane {
+          height: 450px;
+          visibility: visible;
+        }
+      }
+    }
+
+    .ant-plot {
+      background: transparent !important;
+    }
+  }
+}
+
+.rankList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  .rankItem {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .rankNum {
+    width: 20px;
+    height: 20px;
+    margin-right: 16px;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    background: #f0f0f0;
+    border-radius: 10px;
+
+    &.top3 {
+      color: #fff;
+      background: #ff4d4f;
+    }
+  }
+
+  .rankTitle {
+    flex: 1;
+    color: rgba(0, 0, 0, 0.85);
+  }
+
+  .rankValue {
+    color: rgba(0, 0, 0, 0.45);
+  }
+}
+
+.container {
+  height: 100vh;
+  overflow-y: auto;
+  background: #3b3d51;
+}

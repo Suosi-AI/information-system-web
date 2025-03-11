@@ -1,0 +1,142 @@
+import React, { useRef, useEffect, useState } from 'react';
+import { Tabs, Image, Tooltip, Table } from 'antd';
+import styles from './index.less';
+
+export default function People({ peopleData }) {
+  const tabsKeys = Object.keys(peopleData);
+
+  return (
+    <div className={styles.container}>
+      <Tabs
+        defaultActiveKey={tabsKeys[0]}
+        style={{
+          color: 'white',
+          width: '100%',
+          marginTop: '-30px',
+          height: '86vh',
+          overflow: 'hidden',
+        }}
+      >
+        {tabsKeys.map(key => {
+          const tabData = peopleData[key];
+          return (
+            <Tabs.TabPane tab={tabData.title} key={key}>
+              <div style={{ width: '100%', overflow: 'auto', display: 'flex' }}>
+                {tabData.infoData && Array.isArray(tabData.infoData) ? (
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      color: '#02F3DD',
+                      alignContent: 'center',
+                      paddingTop: '10px',
+                      alignItems: 'center',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {tabData.infoData.map((item, index) => (
+                      <Tooltip title={item} key={index}>
+                        <p
+                          style={{
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            width: '100px',
+                            display: 'inline-block',
+                          }}
+                        >
+                          {item}
+                        </p>
+                      </Tooltip>
+                    ))}
+                  </div>
+                ) : (
+                  <div>暂无信息</div>
+                )}
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    flexDirection: 'column',
+                    overflow: 'auto',
+                    height: '77vh',
+                  }}
+                >
+                  {tabData.careerProfiles &&
+                    tabData.careerProfiles.map((profile, index) => (
+                      <div key={index} style={{ width: '100%' }}>
+                        <div style={{ display: 'flex' }}>
+                          <div
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              margin: '0 20px',
+                            }}
+                          >
+                            {profile.jianjie &&
+                              profile.jianjie[0] &&
+                              profile.jianjie[0].type === 'image' && (
+                                <Image
+                                  src={profile.jianjie[0].src}
+                                  alt={profile.jianjie[0].alt}
+                                  style={profile.jianjie[0].style}
+                                />
+                              )}
+                          </div>
+                          <div>
+                            {profile.jianjie &&
+                              profile.jianjie[1] &&
+                              profile.jianjie[1].type === 'text' && (
+                                <p style={{ fontSize: '20px', margin: '5px 0' }}>
+                                  {profile.jianjie[1].title}
+                                </p>
+                              )}
+                            {profile.jianjie &&
+                              profile.jianjie[2] &&
+                              profile.jianjie[2].type === 'text' && (
+                                <p>{profile.jianjie[2].content}</p>
+                              )}
+                            {profile.jianjie &&
+                              profile.jianjie[3] &&
+                              profile.jianjie[3].type === 'text' && (
+                                <pre
+                                  style={{
+                                    color: 'white',
+                                    whiteSpace: 'pre-wrap',
+                                    wordWrap: 'break-word',
+                                    color: '#D4D5D3',
+                                    fontSize: '12px',
+                                    height: '140px',
+                                    lineHeight: '26px',
+                                    overflow: 'auto',
+                                  }}
+                                >
+                                  {profile.jianjie[3].content}
+                                </pre>
+                              )}
+                          </div>
+                        </div>
+
+                        <p style={{ color: '#02F3DD', margin: '10px 0' }} id={`profile-${index}`}>
+                          {profile.careerProfileContent}
+                        </p>
+                        {profile.careerData && (
+                          <Table
+                            dataSource={profile.careerData}
+                            columns={profile.careerColumns}
+                            pagination={false}
+                          />
+                        )}
+                      </div>
+                    ))}
+                </div>
+              </div>
+            </Tabs.TabPane>
+          );
+        })}
+      </Tabs>
+    </div>
+  );
+}

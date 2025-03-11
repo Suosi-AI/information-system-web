@@ -1,0 +1,515 @@
+import React, { useState, useEffect } from 'react';
+import { Card, Row, Col, Tabs } from 'antd';
+import { Line, Pie, Column, WordCloud } from '@ant-design/plots';
+import { ChoroplethMap } from '@ant-design/maps';
+import styles from './index.less';
+
+
+// 信息走势数据
+const trendData = [
+  { date: '2024-01', type: '新闻', value: 350 },
+  { date: '2024-01', type: '社交媒体', value: 520 },
+  { date: '2024-01', type: '论坛', value: 280 },
+  { date: '2024-01', type: '博客', value: 190 },
+  { date: '2024-02', type: '新闻', value: 410 },
+  { date: '2024-02', type: '社交媒体', value: 610 },
+  { date: '2024-02', type: '论坛', value: 310 },
+  { date: '2024-02', type: '博客', value: 210 },
+  { date: '2024-03', type: '新闻', value: 480 },
+  { date: '2024-03', type: '社交媒体', value: 670 },
+  { date: '2024-03', type: '论坛', value: 350 },
+  { date: '2024-03', type: '博客', value: 200 },
+  { date: '2024-04', type: '新闻', value: 520 },
+  { date: '2024-04', type: '社交媒体', value: 620 },
+  { date: '2024-04', type: '论坛', value: 280 },
+  { date: '2024-04', type: '博客', value: 150 },
+  { date: '2024-05', type: '新闻', value: 590 },
+  { date: '2024-05', type: '社交媒体', value: 810 },
+  { date: '2024-05', type: '论坛', value: 420 },
+  { date: '2024-05', type: '博客', value: 270 },
+  { date: '2024-06', type: '新闻', value: 630 },
+  { date: '2024-06', type: '社交媒体', value: 900 },
+  { date: '2024-06', type: '论坛', value: 460 },
+  { date: '2024-06', type: '博客', value: 320 },
+  { date: '2024-07', type: '新闻', value: 680 },
+  { date: '2024-07', type: '社交媒体', value: 920 },
+  { date: '2024-07', type: '论坛', value: 490 },
+  { date: '2024-07', type: '博客', value: 340 },
+  { date: '2024-08', type: '新闻', value: 620 },
+  { date: '2024-08', type: '社交媒体', value: 930 },
+  { date: '2024-08', type: '论坛', value: 430 },
+  { date: '2024-08', type: '博客', value: 370 },
+  { date: '2024-09', type: '新闻', value: 790 },
+  { date: '2024-09', type: '社交媒体', value: 1100 },
+  { date: '2024-09', type: '论坛', value: 580 },
+  { date: '2024-09', type: '博客', value: 350 },
+  { date: '2024-10', type: '新闻', value: 850 },
+  { date: '2024-10', type: '社交媒体', value: 1250 },
+  { date: '2024-10', type: '论坛', value: 620 },
+  { date: '2024-10', type: '博客', value: 450 },
+  { date: '2024-11', type: '新闻', value: 820 },
+  { date: '2024-11', type: '社交媒体', value: 1200 },
+  { date: '2024-11', type: '论坛', value: 670 },
+  { date: '2024-11', type: '博客', value: 480 },
+  { date: '2024-12', type: '新闻', value: 980 },
+  { date: '2024-12', type: '社交媒体', value: 1300 },
+  { date: '2024-12', type: '论坛', value: 710 },
+  { date: '2024-12', type: '博客', value: 520 }
+];
+
+// 媒体舆情数据
+const mediaData = [
+  { type: '新闻网站', value: 40 },
+  { type: '推特', value: 20 },
+  { type: '脸书', value: 15 },
+  { type: 'Telegram', value: 12 },
+  { type: '百度', value: 8 },
+  { type: '谷歌', value: 3 },
+  { type: '微信公众号', value: 2 },
+  { type: '微博', value: 2 },
+  { type: '博客', value: 1 },
+];
+
+// 情绪分析数据
+const emotionData = [
+  { type: '积极', value: 45000 },
+  { type: '中性', value: 35612 },
+  { type: '消极', value: 20023 },
+];
+
+// 热词图谱数据
+const hotwordsData = [
+  { name: '经济发展', value: 1234 },
+  { name: '科技创新', value: 1156 },
+  { name: '乡村振兴', value: 998 },
+  { name: '教育改革', value: 887 },
+  { name: '医疗健康', value: 856 },
+  { name: '文化产业', value: 765 },
+  { name: '环境保护', value: 754 },
+  { name: '数字经济', value: 743 },
+  { name: '民生工程', value: 654 },
+  { name: '社会治理', value: 645 },
+  { name: '产业升级', value: 567 },
+  { name: '创新驱动', value: 534 },
+  { name: '绿色发展', value: 523 },
+  { name: '区域协调', value: 512 },
+  { name: '改革开放', value: 498 },
+  { name: '人才培养', value: 476 },
+  { name: '科技进步', value: 465 },
+  { name: '城市建设', value: 432 },
+  { name: '交通运输', value: 421 },
+  { name: '金融创新', value: 398 },
+  { name: '智慧城市', value: 387 },
+  { name: '生态文明', value: 376 },
+  { name: '文化传承', value: 365 },
+  { name: '国际合作', value: 354 },
+  { name: '创业创新', value: 343 },
+  { name: '民生保障', value: 332 },
+  { name: '产业链', value: 321 },
+  { name: '数字化', value: 310 },
+  { name: '高质量', value: 298 },
+  { name: '现代化', value: 287 }
+];
+
+// 添加 RankList 组件
+const RankList = ({ data }) => {
+  return (
+    <ul className={styles.rankList}>
+      {data?.map((item, index) => (
+        <li key={item.id || index} className={styles.rankItem}>
+          <span className={`${styles.rankNum} ${index < 3 ? styles.top3 : ''}`}>
+            {index + 1}
+          </span>
+          <span className={styles.rankTitle}>{item.title}</span>
+          <span className={styles.rankValue}>{item.value}</span>
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+const Monitoring = () => {
+  // 添加发布地域和作者地域的数据
+  const publishRegionData = [
+    { region: '中国', value: 2345 },
+    { region: '美国', value: 1234 },
+    { region: '韩国', value: 876 },
+    { region: '日本', value: 654 }
+  ];
+
+  const authorRegionData = [
+    { region: '中国', value: 1876 },
+    { region: '美国', value: 987 },
+    { region: '韩国', value: 654 },
+    { region: '日本', value: 432 }
+  ];
+
+  // 将数据移到组件内部
+  const websiteTop10 = [
+    { title: '新浪新闻', value: 2345 },
+    { title: '腾讯新闻', value: 2156 },
+    { title: '网易新闻', value: 1897 },
+    { title: '搜狐新闻', value: 1654 },
+    { title: '凤凰网', value: 1432 },
+    { title: '人民网', value: 1298 },
+    { title: '央视网', value: 1187 },
+    { title: '环球网', value: 1089 },
+    { title: '澎湃新闻', value: 987 },
+    { title: '新华网', value: 876 }
+  ];
+
+  const authorTop10 = [
+    { title: '张三', value: 156 },
+    { title: '李四', value: 143 },
+    { title: '王五', value: 138 },
+    { title: '赵六', value: 127 },
+    { title: '孙七', value: 119 },
+    { title: '周八', value: 112 },
+    { title: '吴九', value: 98 },
+    { title: '郑十', value: 87 },
+    { title: '钱十一', value: 76 },
+    { title: '孙十二', value: 65 }
+  ];
+
+  const wechatTop10 = [
+    { title: '人民日报', value: 1234 },
+    { title: '新华社', value: 1156 },
+    { title: '央视新闻', value: 1098 },
+    { title: '环球时报', value: 987 },
+    { title: '澎湃新闻', value: 876 },
+    { title: '财经杂志', value: 765 },
+    { title: '科技日报', value: 654 },
+    { title: '经济观察报', value: 543 },
+    { title: '中国日报', value: 432 },
+    { title: '南方周末', value: 321 }
+  ];
+
+  const weiboTop10 = [
+    { title: '人民日报', value: 2345 },
+    { title: '新华社', value: 2156 },
+    { title: '央视新闻', value: 1987 },
+    { title: '环球时报', value: 1876 },
+    { title: '澎湃新闻', value: 1765 },
+    { title: '中国新闻网', value: 1654 },
+    { title: '新京报', value: 1543 },
+    { title: '财经网', value: 1432 },
+    { title: '第一财经', value: 1321 },
+    { title: '科技日报', value: 1210 }
+  ];
+
+  const hotinfoTop10 = [
+    { title: '两会热点讨论', value: 8765 },
+    { title: '经济发展新动向', value: 7654 },
+    { title: '科技创新成果', value: 6543 },
+    { title: '教育改革政策', value: 5432 },
+    { title: '医疗健康发展', value: 4321 },
+    { title: '环境保护措施', value: 3456 },
+    { title: '文化产业振兴', value: 2345 },
+    { title: '乡村振兴战略', value: 2123 },
+    { title: '体育赛事新闻', value: 1987 },
+    { title: '国际关系动态', value: 1876 }
+  ];
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.dataAnalysis}>
+        <Row gutter={[16, 16]}>
+          {/* 信息走势 */}
+          <Col span={24}>
+            <Card title="信息走势分析">
+              <div style={{ height: '400px' }}>
+                <Line 
+                  data={trendData}
+                  xField="date"
+                  yField="value"
+                  seriesField="type"
+                  height={350}
+                />
+              </div>
+            </Card>
+          </Col>
+          
+          {/* 媒体舆情与热词图谱 */}
+          <Col span={12}>
+            <Card title="媒体舆情分布">
+              <div style={{ height: '400px' }}>
+                <Pie 
+                  data={mediaData}
+                  angleField="value"
+                  colorField="type"
+                  height={350}
+                />
+              </div>
+            </Card>
+          </Col>
+          <Col span={12}>
+            <Card title="热词图谱">
+              <div style={{ height: '400px' }}>
+                <WordCloud
+                  data={hotwordsData}
+                  wordField="name"
+                  weightField="value"
+                  colorField="name"
+                  height={350}
+                  wordStyle={{
+                    fontFamily: 'Verdana',
+                    fontSize: [12, 32],
+                    rotation: 0
+                  }}
+                  random={() => 0.5}
+                />
+              </div>
+            </Card>
+          </Col>
+          
+          {/* 情绪分析与地域分布 */}
+          <Col span={24}>
+            <Card title="情绪分析">
+              <div style={{ height: '400px' }}>
+                <Column 
+                  data={emotionData}
+                  xField="type"
+                  yField="value"
+                  height={350}
+                />
+              </div>
+            </Card>
+          </Col>
+          <Col span={12}>
+            <Card title="发布地域分布">
+              <div style={{ height: '400px' }}>
+                <Column 
+                  data={publishRegionData}
+                  xField="region"
+                  yField="value"
+                  height={350}
+                  label={{
+                    position: 'top',
+                    style: { fill: '#fff' }
+                  }}
+                  xAxis={{
+                    label: {
+                      style: { fill: '#fff' }
+                    }
+                  }}
+                  yAxis={{
+                    label: {
+                      style: { fill: '#fff' }
+                    }
+                  }}
+                  color="#1890ff"
+                  // columnStyle={{
+                    // radius: [20, 20, 0, 0]
+                  // }}
+                />
+              </div>
+            </Card>
+          </Col>
+          <Col span={12}>
+            <Card title="作者地域分布">
+              <div style={{ height: '400px' }}>
+                <Column 
+                  data={authorRegionData}
+                  xField="region"
+                  yField="value"
+                  height={350}
+                  label={{
+                    position: 'top',
+                    style: { fill: '#fff' }
+                  }}
+                  xAxis={{
+                    label: {
+                      style: { fill: '#fff' }
+                    }
+                  }}
+                  yAxis={{
+                    label: {
+                      style: { fill: '#fff' }
+                    }
+                  }}
+                  color="#52c41a"
+                  // columnStyle={{
+                    // radius: [20, 20, 0, 0]
+                  // }}
+                />
+              </div>
+            </Card>
+          </Col>
+          
+          {/* 拆分后的 TOP10 展示 */}
+          <Col span={24}>
+            <Card title="网站TOP10">
+              <div style={{ height: '450px', width: '100%', position: 'relative' }}>
+                <Column 
+                  data={websiteTop10}
+                  xField="title"
+                  yField="value"
+                  height={400}
+                  autoFit={true}
+                  label={{
+                    position: 'top',
+                    style: { fill: '#fff' }
+                  }}
+                  xAxis={{
+                    label: {
+                      style: { fill: '#fff' },
+                      autoRotate: true,
+                      angle: 45
+                    }
+                  }}
+                  yAxis={{
+                    label: {
+                      style: { fill: '#fff' }
+                    }
+                  }}
+                  color="#1890ff"
+                  // columnStyle={{
+                  //   radius: [20, 20, 0, 0]
+                  // }}
+                />
+              </div>
+            </Card>
+          </Col>
+
+          <Col span={24}>
+            <Card title="作者TOP10">
+              <div style={{ height: '450px', width: '100%', position: 'relative' }}>
+                <Column 
+                  data={authorTop10}
+                  xField="title"
+                  yField="value"
+                  height={400}
+                  autoFit={true}
+                  label={{
+                    position: 'top',
+                    style: { fill: '#fff' }
+                  }}
+                  xAxis={{
+                    label: {
+                      style: { fill: '#fff' },
+                      autoRotate: true,
+                      angle: 45
+                    }
+                  }}
+                  yAxis={{
+                    label: {
+                      style: { fill: '#fff' }
+                    }
+                  }}
+                  color="#52c41a"
+                  // columnStyle={{
+                  //   radius: [20, 20, 0, 0]
+                  // }}
+                />
+              </div>
+            </Card>
+          </Col>
+
+          <Col span={24}>
+            <Card title="微信公众号TOP10">
+              <div style={{ height: '450px', width: '100%', position: 'relative' }}>
+                <Column 
+                  data={wechatTop10}
+                  xField="title"
+                  yField="value"
+                  height={400}
+                  autoFit={true}
+                  label={{
+                    position: 'top',
+                    style: { fill: '#fff' }
+                  }}
+                  xAxis={{
+                    label: {
+                      style: { fill: '#fff' },
+                      autoRotate: true,
+                      angle: 45
+                    }
+                  }}
+                  yAxis={{
+                    label: {
+                      style: { fill: '#fff' }
+                    }
+                  }}
+                  color="#faad14"
+                  // columnStyle={{
+                  //   radius: [20, 20, 0, 0]
+                  // }}
+                />
+              </div>
+            </Card>
+          </Col>
+
+          <Col span={24}>
+            <Card title="微博账号TOP10">
+              <div style={{ height: '450px', width: '100%', position: 'relative' }}>
+                <Column 
+                  data={weiboTop10}
+                  xField="title"
+                  yField="value"
+                  height={400}
+                  autoFit={true}
+                  label={{
+                    position: 'top',
+                    style: { fill: '#fff' }
+                  }}
+                  xAxis={{
+                    label: {
+                      style: { fill: '#fff' },
+                      autoRotate: true,
+                      angle: 45
+                    }
+                  }}
+                  yAxis={{
+                    label: {
+                      style: { fill: '#fff' }
+                    }
+                  }}
+                  color="#f5222d"
+                  // columnStyle={{
+                  //   radius: [20, 20, 0, 0]
+                  // }}
+                />
+              </div>
+            </Card>
+          </Col>
+
+          <Col span={24}>
+            <Card title="热点信息TOP10">
+              <div style={{ height: '450px', width: '100%', position: 'relative' }}>
+                <Column 
+                  data={hotinfoTop10}
+                  xField="title"
+                  yField="value"
+                  height={400}
+                  autoFit={true}
+                  label={{
+                    position: 'top',
+                    style: { fill: '#fff' }
+                  }}
+                  xAxis={{
+                    label: {
+                      style: { fill: '#fff' },
+                      autoRotate: true,
+                      angle: 45
+                    }
+                  }}
+                  yAxis={{
+                    label: {
+                      style: { fill: '#fff' }
+                    }
+                  }}
+                  color="#722ed1"
+                  // columnStyle={{
+                  //   radius: [20, 20, 0, 0]
+                  // }}
+                />
+              </div>
+            </Card>
+          </Col>
+        </Row>
+      </div>
+    </div>
+  );
+};
+
+export default Monitoring;

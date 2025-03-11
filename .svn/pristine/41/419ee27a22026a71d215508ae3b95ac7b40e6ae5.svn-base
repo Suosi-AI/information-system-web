@@ -1,0 +1,29 @@
+// EChartComponent.js
+import React, { useEffect, useRef, memo } from 'react';
+import * as echarts from 'echarts';
+
+const EChartComponent = memo(({ option, notMerge = false, lazyUpdate = false, onClick }) => {
+  const chartRef = useRef(null);
+  const chartInstance = useRef(null);
+
+  useEffect(() => {
+    if (chartRef.current) {
+      chartInstance.current = echarts.init(chartRef.current);
+      chartInstance.current.setOption(option, notMerge);
+
+      chartInstance.current.on('click', params => {
+        if (params.componentType === 'series' && params.data) {
+          onClick(params.data);
+        }
+      });
+
+      return () => {
+        chartInstance.current.dispose();
+      };
+    }
+  }, [option, notMerge, onClick]);
+
+  return <div ref={chartRef} style={{ width: '100%', height: '100%' }} />;
+});
+
+export default EChartComponent;

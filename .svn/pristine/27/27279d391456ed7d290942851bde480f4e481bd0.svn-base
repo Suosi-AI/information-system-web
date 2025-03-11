@@ -1,0 +1,19 @@
+### axios
+
+ 1. 浏览器创建XMLHttpRequest；node 创建http
+ 2. 拦截请求、响应
+ 3. 转换响应数据和请求数据
+ 4. 取消请求
+ 5. 自动转换JSON数据
+ 6. 防御XSRF攻击
+
+#### 请求拦截、响应拦截
+
+请求拦截 - `Axios.interceptors.request.use(config=>)`
+相应拦截 - `Axios.interceptors.response.use(config=>)`
+
+#### API
+
+* 数据响应
+* 图片、文件上传切片
+* 切片断点续传

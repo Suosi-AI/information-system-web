@@ -1,0 +1,75 @@
+import React, { lazy } from 'react'
+import { DashboardOutlined, StarOutlined, AimOutlined, FormOutlined, MonitorOutlined, LineChartOutlined, ReconciliationOutlined } from '@ant-design/icons'
+import { Navigate } from 'react-router-dom'
+export const insideRoutes = [
+
+  {
+    path: 'home',
+    title: '海情速查',
+    id: '1',
+    icon: <MonitorOutlined />,
+    element: lazy(() => import('@/pages/Dashboard')),
+  },
+  {
+    path: 'social',
+    title: '专题监测',
+    id: '2',
+    icon: <LineChartOutlined style={{ fontSize: '16px' }} />,
+    element: lazy(() => import('@/pages/Social')),
+  },
+  {
+    path: 'archives',
+    title: '海警情报',
+    id: '3',
+    icon: <ReconciliationOutlined style={{ fontSize: '16px' }} />,
+    element: lazy(() => import('@/pages/Archives')),
+    disabled: true,
+  },
+
+  {
+    path: 'favorites',
+    title: '收藏管理',
+    id: '4',
+    icon: <StarOutlined style={{ fontSize: '16px' }} />,
+
+    element: lazy(() => import('@/pages/Favorites/index.jsx')),
+    // disabled: true,
+  },
+
+  {
+    path: 'monitoring',
+    title: '天眼监控',
+    id: '5',
+    icon: <AimOutlined style={{ fontSize: '16px' }} />,
+    // element: (
+    //   window.location.href = 'https://www.baidu.com' // 使用Navigate组件进行重定向
+    // ),
+    element: lazy(() => import('@/pages/Monitoring/index.jsx')),
+    // disabled: true,
+  },
+  {
+    path: 'userManagement',
+    title: '用户管理',
+    id: '5',
+    icon: <AimOutlined style={{ fontSize: '16px' }} />,
+    // element: (
+    //   window.location.href = 'https://www.baidu.com' // 使用Navigate组件进行重定向
+    // ),
+    element: lazy(() => import('@/pages/UserManagement/index.jsx')),
+    hidden: true
+    // disabled: true,
+  },
+  {
+    path: '/',
+    hidden: true,
+    redirect: 'login',
+  },
+
+  // {
+  //   path: '*',
+  //   title: '404',
+  //   element: lazy(() => import('@/components/common/NotFound')),
+  //   hidden: true,
+  //   disabled: true,
+  // },
+]

@@ -1,0 +1,77 @@
+.cardStyle {
+  width: 100%;
+  min-height: 260px;
+  margin: 10px 10px 0 0;
+  color: white;
+  background-color: #171b28 !important;
+  border: 1px solid #797979;
+
+  .topCard {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+    line-height: 20px;
+    // background-color: yellow;
+
+    .topLeft {
+      display: flex;
+      align-items: center;
+      width: 32%;
+      // justify-content: space-between;
+
+      line-height: 20px;
+      // background-color: #969c9c;
+
+      .topImg {
+        display: flex;
+        // flex: 1;
+        align-items: center;
+        // background-color: red;
+        // min-width: 27%;
+        // max-width: 60%;
+        margin-right: 14%;
+      }
+      .topLeft1 {
+        // margin-right: 1%;
+        color: #02f3dd;
+        font-weight: 200;
+        // line-height: 20px;
+        // background-color: red;
+      }
+    }
+    .topRight {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 22%;
+      // margin-left: 100px;
+      // background-color: #02f3dd;
+
+      .daochu {
+        font-size: 20px;
+      }
+    }
+  }
+  .pContent {
+    display: -webkit-box;
+    max-height: 4.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: 'pointer';
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+  .imageContainer {
+    display: flex;
+    flex-wrap: nowrap; /* 确保图片不换行 */
+    // justify-content: space-between; /* 图片之间间隔均匀 */
+    height: 90px; /* 容器高度 */
+  }
+
+  .imageContainer img {
+    // width: 50px;
+    // height: 30px;
+    margin: 0 10px;
+  }
+}

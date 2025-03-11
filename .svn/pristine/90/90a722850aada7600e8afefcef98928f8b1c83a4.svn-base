@@ -1,0 +1,202 @@
+.container {
+  display: flex;
+  flex: 1;
+  flex-basis: auto;
+  flex-direction: row;
+  box-sizing: border-box;
+  // width: 100vh;
+  min-width: 0;
+  .left {
+    // display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 18%;
+    height: calc(100vh);
+    margin-right: 10px;
+    padding-top: 20px !important;
+    background-color: #171b28 !important;
+    .btn {
+      width: 90%;
+      height: 60px;
+      margin-left: 5%;
+      color: #02f3dd;
+      background: none !important;
+      border-color: #02f3dd;
+    }
+
+    .listItem {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      height: 50px;
+      padding-left: 20px;
+      line-height: 50px;
+      cursor: pointer;
+      .icon {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+      }
+      .title {
+        margin-left: 10px;
+        color: #fff;
+        font-size: 14px;
+      }
+      &:hover {
+        background-color: #1c1f2e;
+      }
+    }
+  }
+
+  .container1 {
+    // display: flex;
+    flex: 1;
+    // align-items: center;
+    // justify-content: center;
+    height: 89vh;
+    padding-top: 28px !important;
+    // padding: 0 20px 0 0;
+    overflow: auto;
+    background-color: #171b28 !important;
+
+    .searchTop {
+      display: flex;
+      justify-content: center;
+
+      .inputTop {
+        width: 600px;
+        height: 40px;
+        // background-color: black;
+      }
+    }
+
+    .timeSelect {
+      margin: 10px 0;
+      line-height: 38px;
+      // background-color: #02f3dd;
+    }
+    .languageSelect {
+      margin-bottom: 5px;
+      // background-color: #647c7a;
+    }
+    .curP {
+      margin: 20px 10px 20px 0;
+      cursor: pointer;
+    }
+
+    .selected {
+      color: #02f3dd; /* 选中项的颜色 */
+    }
+
+    .curP1 {
+      margin: 20px 16px 20px 0;
+      cursor: pointer;
+    }
+    .countTop {
+      // margin-bottom: 20px;
+      padding: 0 0 20px 20px;
+      background-color: #171b28;
+    }
+    .listStyle {
+      height: 50%;
+      height: 100vh;
+      // overflow: auto;
+      // background-color: #02f3dd;
+      // background-color: red;
+      .dashboardCardStyle {
+        flex: 1;
+      }
+    }
+  }
+}
+
+:global(.index_container__wJVGX .index_main__bTif2) {
+  height: calc(100vh-74px) !important;
+
+  padding-top: 20px;
+  // overflow: hidden !important;
+  background-color: #232533 !important;
+}
+
+:global(.index_container__wJVGX .index_main__bTif2 .index_content__HkW2K) {
+  overflow: visible;
+}
+
+:global(.index_container__wJVGX) {
+  width: 100vw;
+  height: 100vh;
+  // padding: 0 10px;
+  overflow: hidden;
+  background-color: #001529;
+}
+:global(.index_header__hC0te) {
+  background-color: #171b28 !important;
+}
+
+:global(.index_container__FamAB) {
+  overflow: hidden;
+}
+:global(.index_navLogo__Rgbel) {
+  height: 35px !important;
+}
+.searchTop :global(.ant-input-affix-wrapper) {
+  width: 600px;
+  height: 40px !important;
+  color: #02f3dd !important;
+  background-color: #171b28 !important;
+  border-color: #02f3dd !important;
+}
+.searchTop :global(.ant-input-group-wrapper) {
+  display: flex !important;
+  justify-content: center !important;
+}
+.searchTop :global(.ant-input-affix-wrapper > input.ant-input) {
+  color: white !important;
+  background-color: #171b28 !important;
+}
+.searchTop
+  :global(.ant-input-search
+    > .ant-input-group
+    > .ant-input-group-addon:last-child
+    .ant-input-search-button:not(.ant-btn-primary)) {
+  width: 60px;
+  height: 40px;
+  color: white !important;
+  font-size: 24px;
+  background-color: #171b28 !important;
+  border-color: #02f3dd !important;
+  // border-top-right-radius: 47% !important;
+  // border-bottom-right-radius: 47% !important;
+}
+
+//  全局滚动条样式
+::-webkit-scrollbar {
+  width: 6px;
+  height: 12px;
+}
+
+/* 滚动条的滑块 */
+::-webkit-scrollbar-thumb {
+  // background-color: rgba(251, 251, 251, 0.7);
+  background-color: #282b39;
+  border-radius: 6px;
+}
+
+/* 滚动条的轨道 */
+::-webkit-scrollbar-track {
+  // background-color: rgba(177, 177, 177, 0.8);
+  background-color: #282b39;
+  border-radius: 6px;
+}
+
+/* 滚动条的轨道的两端按钮 */
+::-webkit-scrollbar-button {
+  display: none;
+  height: 10px;
+  background-color: #f1f1f1;
+}
+
+/* 当滚动条处于 hover 状态时 */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #ebe8e8;
+}

@@ -1,0 +1,85 @@
+import React, { useState } from "react";
+import { Row, Col, Table, Timeline } from 'antd'
+import { ClockCircleOutlined } from '@ant-design/icons'
+
+// 子组件
+const UploadFile = React.lazy(() => import('./components/UploadFile'))
+
+export default function AntD() {
+    // tabl data
+    const [columns] = useState([
+        {
+            title: 'Name',
+            dataIndex: 'name',
+            render: text => <a>{text}</a>,
+        },
+        {
+            title: 'Cash Assets',
+            className: 'column-money',
+            dataIndex: 'money',
+            align: 'right',
+        },
+        {
+            title: 'Address',
+            dataIndex: 'address',
+        },
+    ])
+    const [data] = useState([
+        {
+            key: '1',
+            name: 'John Brown',
+            money: '￥300,000.00',
+            address: 'New York No. 1 Lake Park',
+        },
+        {
+            key: '2',
+            name: 'Jim Green',
+            money: '￥1,256,000.00',
+            address: 'London No. 1 Lake Park',
+        },
+        {
+            key: '3',
+            name: 'Joe Black',
+            money: '￥120,000.00',
+            address: 'Sidney No. 1 Lake Park',
+        },
+    ])
+    return <>
+        <Row>
+            <Col span={16}>
+                <Table columns={columns}
+                    dataSource={data}
+                    bordered
+                    title={() => 'Header'}
+                    footer={() => 'Footer'} />
+            </Col>
+            <Col span={8}>
+                <Timeline mode="alternate">
+                    <Timeline.Item>Create a services site 2015-09-01</Timeline.Item>
+                    <Timeline.Item color="green">Solve initial network problems 2015-09-01</Timeline.Item>
+                    <Timeline.Item dot={<ClockCircleOutlined style={{ fontSize: '16px' }} />}>
+                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+                        laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
+                        beatae vitae dicta sunt explicabo.
+                    </Timeline.Item>
+                    <Timeline.Item color="red">Network problems being solved 2015-09-01</Timeline.Item>
+                    <Timeline.Item>Create a services site 2015-09-01</Timeline.Item>
+                    <Timeline.Item dot={<ClockCircleOutlined style={{ fontSize: '16px' }} />}>
+                        Technical testing 2015-09-01
+                    </Timeline.Item>
+                </Timeline>
+            </Col>
+            <Col span={16}>
+                <div style={{ height: 500, backgroundColor: "GrayText", display: 'flex', flexDirection: "column" }}>
+                    <header style={{ backgroundColor: 'wheat', flex: '1' }}>这是一段话</header>
+                    <main>内容区</main>
+                    <footer style={{ backgroundColor: "aquamarine", flex: '1' }}>底部内容</footer>
+                </div>
+            </Col>
+            <Col offset={2} span={6}>
+                <UploadFile />
+                <UploadFile mode="split" />
+            </Col>
+        </Row>
+    </>
+}

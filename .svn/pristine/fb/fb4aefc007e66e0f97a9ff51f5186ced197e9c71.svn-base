@@ -1,0 +1,133 @@
+import React, { useState } from 'react';
+import { Card, Dropdown, Menu } from 'antd';
+import {
+  FileWordTwoTone,
+  StarOutlined,
+  LinkOutlined,
+  LikeOutlined,
+  MessageOutlined,
+  ShareAltOutlined,
+  EyeOutlined,
+  StarFilled,
+} from '@ant-design/icons';
+import styles from './index.less';
+import ActionStats from '../ActionStats';
+
+const DashboardCard = ({
+  img,
+  sourceName,
+  title,
+  content,
+  link,
+  images,
+  likeNum,
+  commentNum,
+  shareNum,
+  readNum,
+  showActions = true,
+  onClickContent,
+  publishTime,
+  lang,
+  ...props
+}) => {
+  const [isCollected, setIsCollected] = useState(false);
+
+  const handleExport = () => {};
+
+  // 处理下拉菜单项的点击事件
+  const handleMenuClick = e => {
+    // 如果已经收藏，则取消收藏；如果未收藏，则收藏
+    setIsCollected(!isCollected);
+    // 这里可以添加更多的逻辑，比如发送请求到服务器收藏或取消收藏文章
+  };
+
+  // 创建下拉菜单
+  const menu = (
+    <Menu onClick={handleMenuClick}>
+      <Menu.Item key="0">默认收藏夹</Menu.Item>
+      <Menu.Item key="1">工作收藏夹</Menu.Item>
+      <Menu.Item key="2">个人收藏夹</Menu.Item>
+    </Menu>
+  );
+
+  return (
+    <Card className={styles.cardStyle}>
+      <p className={styles.topCard}>
+        <span className={styles.topLeft}>
+          <span className={styles.topImg}>
+            <img
+              style={{ width: '20px', height: '20px', marginRight: '12px' }}
+              src={img}
+              alt="Logo"
+            />
+            <span className={styles.topLeft1}>{sourceName}</span>
+          </span>
+          <span>{publishTime}</span>
+        </span>
+        <span className={styles.topRight}>
+          <span style={{ display: 'flex', lineHeight: '20px' }}>
+            <FileWordTwoTone style={{ fontSize: '22px', marginRight: '2px' }} />
+            <a style={{ color: 'white' }} onClick={handleExport}>
+              导出
+            </a>
+          </span>
+          <span style={{ display: 'flex', lineHeight: '20px' }}>
+            {isCollected ? (
+              <StarFilled style={{ fontSize: '22px', marginRight: '2px', color: 'orange' }} />
+            ) : (
+              <StarOutlined style={{ fontSize: '22px', marginRight: '2px', color: 'orange' }} />
+            )}
+            <Dropdown overlay={menu} placement="bottomCenter" trigger={['click']}>
+              <a style={{ color: 'orange' }} className="ant-dropdown-link">
+                {isCollected ? '取消收藏' : '收藏'}
+              </a>
+            </Dropdown>
+          </span>
+        </span>
+      </p>
+      <div>
+        <h3 style={{ color: 'white' }}>{title}</h3>
+        <p onClick={onClickContent} className={styles.pContent}>
+          {content}
+        </p>
+      </div>
+      {showActions && (
+        <p style={{ display: 'flex', width: '25%', justifyContent: 'space-between' }}>
+          <span>
+            <LikeOutlined />
+            <span>{likeNum}</span>
+          </span>
+          <span>
+            <MessageOutlined />
+            <span>{commentNum}</span>
+          </span>
+          <span>
+            <ShareAltOutlined />
+            <span>{shareNum}</span>
+          </span>
+          <span>
+            <EyeOutlined />
+            <span>{readNum}</span>
+          </span>
+        </p>
+      )}
+      {link && (
+        <p>
+          <LinkOutlined style={{ marginRight: '4px' }} />
+          <a href={link} target="_blank" rel="noopener noreferrer">
+            {link}
+          </a>
+        </p>
+      )}
+      {images && (
+        <p className={styles.imageContainer}>
+          {images.map((src, index) => (
+            <img key={index} src={src} alt="Logo" />
+          ))}
+        </p>
+      )}
+    </Card>
+  );
+};
+
+export default DashboardCard;

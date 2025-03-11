@@ -1,0 +1,79 @@
+import leader from '../../../assets/images/archives/zdrw.png'
+
+
+export const peopleData = {
+
+  1: {
+    t1: {
+      title: '现任长官',
+      infoData: ['长官信息', '人物履历', '历任信息'],
+      jianjie: [
+        {
+          type: 'image',
+          src: leader,
+          alt: '海上保安厅',
+          style: { height: '200px', maxWidth: '300px' },
+        },
+        {
+          type: 'text',
+          title: '瀬口良夫（第48任海上保安厅长官）',
+        },
+
+        {
+          type: 'text',
+          content: '濑口良夫（Yoshio Seguchi）',
+        },
+        {
+          type: 'text',
+          content: `    1964年7月18日出生于爱知县，海上保安大学第36期学员。
+曾担任安全救援部安全信息科安全信息协调官、对马海上保安厅主任、第五管区海上保安本部安全救援部长，总务部政务科政策评估与公共关系室主任，安全救援部管理处处长、第十管区海上保安本部副部长等。东日本大地震后，他参与了受灾地区的支援任务。 ”`,
+        },
+      ],
+
+      careerProfiles: [
+        {
+          careerProfileContent: '人物履历',
+          careerData: [
+            { num: 1, time: '2020年（令和2年）4月1日', position: '就任第九管区海上保安本部部长' },
+            { num: 2, time: '同年10月1日', position: '被任命为安全救援部部长' },
+            { num: 3, time: '2021年10月1日（令和3年）', position: '被任命为海上保安厅督察' },
+            { num: 3, time: '2022年6月28日', position: '就任日本海上保安厅副厅长' },
+            { num: 3, time: '2024年7月1日', position: '就任日本海上保安厅厅长' },
+
+          ],
+          careerColumns: [
+            {
+              title: '序号',
+              dataIndex: 'num',
+              key: 'num',
+            },
+            {
+              title: '时间',
+              dataIndex: 'time',
+              key: 'time',
+            },
+            {
+              title: '职位',
+              dataIndex: 'position',
+              key: 'position',
+            },
+          ],
+        },
+
+      ],
+
+
+
+
+    },
+    t2: {
+      title: '其他官员',
+      infoData: ['第一管区', '第二管区', '第三管区', '第四管区', '第五管区',
+        '第六管区', '第七管区', '第八管区', '第九管区', '第十管区', '第十一管区', '总务部',
+        '海上保安学校', '海上保安大学', '装备技术部', '警备救难部', '海洋情报部', '交通部', '首席监察官'],
+
+    },
+
+  },
+
+}

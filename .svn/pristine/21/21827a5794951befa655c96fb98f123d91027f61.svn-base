@@ -1,0 +1,53 @@
+import React, { useEffect, useState } from "react";
+import { List, Avatar, Space } from 'antd'
+import moment from "moment";
+import { useDispatch, useSelector } from 'react-redux'
+
+// api
+// import { getTopicData } from './api'
+// action
+import { getData } from './reducers'
+
+export default function CNode() {
+    const dispatch = useDispatch()
+    const { data } = useSelector(state => {
+        const { data } = state.cnode
+        return {
+            data
+        }
+    })
+
+    // const [data, setData] = useState([])
+
+    useEffect(() => {
+        // getTopicData({
+        //     page: 1,
+        //     tab: 'ask',
+        //     limit: 50,
+        //     mdrender: true
+        // }).then(({ success, data }) => {
+        //     // 处理数据
+        //     if (success) {
+        //         setData(data)
+        //     }
+        // })
+        dispatch(getData({
+            page: 1,
+            tab: 'ask',
+            limit: 50,
+            mdrender: true
+        }))
+    }, [])
+    return <>
+        <List itemLayout="horizontal" dataSource={data} renderItem={(item) => <List.Item>
+            <List.Item.Meta
+                avatar={<Avatar src={item?.author.avatar_url} />}
+                title={item.title}
+                description={<Space>
+                    <span>创建时间:{moment(item.create_at).format("YYYY-MM-DD hh:mm:ss")}</span>
+                    <span>最后一次回复:{moment(item.last_reply_at).format("YYYY-MM-DD hh:mm:ss")}</span>
+                </Space>}
+            />
+        </List.Item>} />
+    </>
+}

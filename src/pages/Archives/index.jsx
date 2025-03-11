@@ -1,0 +1,101 @@
+import React, { useState } from 'react';
+import { AimOutlined } from '@ant-design/icons';
+import styles from './index.less';
+import { Tabs } from 'antd';
+import BasicInformation from './BasicInformation';
+import Strength from './Strength';
+import People from './People';
+import ForeignPolicy from './ForeignPolicy';
+import Development from './Development';
+import Documentation from './Documentation';
+
+import { organizationsData } from './../Archives/jsonData/organizationsData';
+import { strengthData } from './../Archives/jsonData/strengthData';
+import { peopleData } from './../Archives/jsonData/people';
+import { foreignPolicyData } from './../Archives/jsonData/foreignPolicyData';
+import { documentationData } from './../Archives/jsonData/documentationData';
+import { deveData } from './../Archives/jsonData/deveData';
+import Wiki from './../Wiki/index';
+import { wikiData } from './../Archives/jsonData/wikiData';
+
+const leftMenu = [
+  {
+    title: '日本海上保安厅',
+    key: '1',
+  },
+  {
+    title: '美国海岸警卫队',
+    key: '2',
+  },
+  {
+    title: '台湾海巡署',
+    key: '3',
+  },
+];
+
+const Archives = () => {
+  const [selectedKey, setSelectedKey] = useState(leftMenu[0].key);
+
+  const handleMenuClick = key => {
+    setSelectedKey(key);
+  };
+
+  const getTabContent = key => {
+    const menu = leftMenu.find(item => item.key === selectedKey);
+    const tab = menu.tabs?.find(item => item.key === key);
+    return tab ? tab.content : null;
+  };
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.containerLeft}>
+        {leftMenu.map(item => (
+          <div
+            key={item.key}
+            className={styles.leftBox}
+            onClick={() => handleMenuClick(item.key)}
+            style={{ backgroundColor: item.key === selectedKey ? '#02f3dd' : 'transparent' }}
+          >
+            <AimOutlined style={{ marginRight: '10px' }} />
+            <span>{item.title}</span>
+          </div>
+        ))}
+      </div>
+      <div className={styles.containerRight}>
+        <Tabs
+          defaultActiveKey="item1"
+          tabPosition="left"
+          style={{ width: '100%', height: '97vh', color: '#fff' }}
+          className={styles.rightTab}
+        >
+          <Tabs.TabPane tab="基本信息" key="item1">
+            <BasicInformation organizationData={organizationsData[selectedKey]} />
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="实力部署" key="item2">
+            <Strength strengthData={strengthData[selectedKey]} />
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="重点人物" key="item3">
+            <People peopleData={peopleData[selectedKey]} />
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="对外政策" key="item4">
+            <ForeignPolicy foreignPolicyData={foreignPolicyData[selectedKey]} />
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="发展建设" key="item5">
+            <Development deveData={deveData[selectedKey]} />
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="文件资料" key="item6">
+            <Documentation documentationData={documentationData[selectedKey]} />
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="Wiki维基百科" key="item7">
+            <Wiki site="wiki" wikiData={wikiData[selectedKey]} />
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="百度百科" key="item8">
+            <Wiki site="baike" wikiData={wikiData[selectedKey]} />
+          </Tabs.TabPane>
+        </Tabs>
+      </div>
+    </div>
+  );
+};
+
+export default Archives;

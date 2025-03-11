@@ -1,0 +1,37 @@
+export const foreignPolicyData = {
+  1: {
+    t1: {
+      title: '国际交流',
+      content: `
+## 概述
+国际交流是促进不同国家间相互理解和合作的重要途径。
+
+## 活动
+- 举办国际会议
+- 学术交流
+- 文化交流
+      `.trim()
+    },
+    t2: {
+      title: '双边合作',
+      content: `
+# 双边合作
+      `.trim()
+    },
+    t3: {
+      title: '对外援助',
+      content: `
+# 对外援助
+      `.trim()
+    },
+    t4: {
+      title: '国际合作',
+      content: `
+# 国际合作
+      `.trim()
+    },
+  },
+  2: {
+    // 可以在这里添加更多的标签页数据
+  }
+}

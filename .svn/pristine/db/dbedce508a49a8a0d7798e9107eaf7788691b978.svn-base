@@ -1,0 +1,20 @@
+
+### react-router-dom
+
+版本更新最新版 `v6.2.1`， 目前文档还是不完善。API没法查询
+
+1. 路由重定向`/` 重定向到`/home`
+
+    ```js
+    import { Link, Routes, Route, Outlet, Navigate } from "react-router-dom"
+
+    return <>
+        <Route path="/" element={<Navigate to="/cnode" />} />
+    </>
+    ```
+
+2. `Route` 属性定义，目前只有`element` 渲染元素
+3. `React.lazy`加载的组件，没法动态渲染；
+4. 手动刷新URL地址，路由无法加载
+    `BrowserRouter` 需要重新设置devSever代理各个路由地址到当前`index.html`中
+    `HashRouter` 则不需要考虑这些

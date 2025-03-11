@@ -1,0 +1,116 @@
+import React, { useState, useEffect } from 'react';
+import { Form, Input, Button, message } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+// import { login } from './../../redux/actions/authActions';
+import { getLogin } from './../../services/store';
+import img from '@/assets/images/login_logo.png';
+import './index.css';
+
+const Login = () => {
+  const [form] = Form.useForm();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/home');
+    }
+  }, []);
+
+  const onFinish = async values => {
+    try {
+      const response = await getLogin(values);
+      if (response.code === 200) {
+        const { token, rank } = response;
+        if (token) {
+          localStorage.setItem('token', token);
+          localStorage.setItem('username', values.username);
+          localStorage.setItem('rank', rank);
+          navigate('/home');
+        } else {
+          message.error('登录失败,未获取到token');
+        }
+      } else {
+        message.error(response.msg || '登录失败');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      message.error(error.message || '登录请求失败');
+    }
+  };
+
+  const onKeyDown = e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      form.submit();
+    }
+  };
+
+  return (
+    <div className="appHeader">
+      <div className="loginContent">
+        <img className="login-img" src={img} />
+        <Form
+          form={form}
+          name="normal_login"
+          className="login-form"
+          onFinish={onFinish}
+          autoComplete="off"
+          wrapperCol={{
+            span: 24,
+          }}
+        >
+          <Form.Item
+            name="username"
+            className="login-form-item"
+            onKeyDown={onKeyDown}
+            rules={[
+              {
+                required: true,
+                message: '请输入正确用户名!',
+              },
+            ]}
+          >
+            <Input
+              className="login-form-input"
+              prefix={<UserOutlined className="site-form-item-icon" />}
+              placeholder="请输入用户名"
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="password"
+            className="login-form-item"
+            rules={[
+              {
+                required: true,
+                message: '请输入密码!',
+              },
+            ]}
+          >
+            <Input.Password
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              type="password"
+              placeholder="请输入密码"
+              className="login-form-input"
+              onKeyDown={onKeyDown}
+            />
+          </Form.Item>
+
+          <Button
+            type="primary"
+            htmlType="submit"
+            style={{ background: '#02f3dd' }}
+            className="login-form-button"
+          >
+            登录
+          </Button>
+        </Form>
+      </div>
+    </div>
+  );
+};
+
+export default Login;

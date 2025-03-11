@@ -1,0 +1,61 @@
+
+#### redux \ react-redux
+
+全局数据状态管理
+
+```js
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import reduxThunk from 'redux-thunk'
+
+// reducer
+import { reducer as AntDReducer } from '@/pages/AntD/reducers'
+import { reducer as CNodeReducer } from '@/pages/CNode/reducers'
+
+const reducer = combineReducers({
+    antd: AntDReducer,
+    cnode: CNodeReducer
+})
+
+export default createStore(reducer, applyMiddleware(reduxThunk))
+```
+
+#### redux-thunk
+
+中间件、处理异步调用
+
+```js
+
+// reducer.js
+export const getData = (params) => dispatch => {
+    getTopicData(params).then(({ success, data }) => {
+        if (success) {
+            dispatch({
+                type: GET_DATA,
+                data: {
+                    data,
+                    pageNumber: 1,
+                    pageSize: 50
+                }
+            })
+        }
+    })
+}
+
+// CNode.sj
+import React,{useEffect} from 'react';
+import { useDispatch } from 'react-redux'
+
+export default ()=>{
+    const dispatch = useDispatch()
+
+    useEffect(()=>{
+        dispatch(getData({
+            page: 1,
+            tab: 'ask',
+            limit: 50,
+            mdrender: true
+        }))
+    },[])
+    return <></>
+}
+```

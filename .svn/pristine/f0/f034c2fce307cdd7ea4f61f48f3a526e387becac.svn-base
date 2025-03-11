@@ -1,0 +1,977 @@
+import React, { useState, useEffect } from 'react';
+import 'moment/locale/zh-cn';
+import locale from 'antd/es/date-picker/locale/zh_CN';
+import Icon from '@/components/Icon';
+import {
+  PlusOutlined,
+  DownloadOutlined,
+  LeftOutlined,
+  RightOutlined,
+  RotateLeftOutlined,
+  RotateRightOutlined,
+  SwapOutlined,
+  UndoOutlined,
+  ZoomInOutlined,
+  ZoomOutOutlined,
+  DeleteOutlined,
+  EditOutlined,
+  AimOutlined,
+} from '@ant-design/icons';
+
+import styles from './index.less';
+import {
+  DatePicker,
+  Checkbox,
+  Pagination,
+  Button,
+  Divider,
+  Menu,
+  Modal,
+  Card,
+  Popconfirm,
+  message,
+  Input,
+  Form,
+  Tabs,
+  Space,
+  Table,
+  Image,
+  Tooltip,
+  Radio,
+  Dropdown,
+} from 'antd';
+const { RangePicker } = DatePicker;
+const { Search, TextArea } = Input;
+import {
+  getMonitorTargetNewsPage,
+  getInfo,
+  getList,
+  getSave,
+  getUpdate,
+  getDelete,
+  exportNewsToExcel,
+  downNewsWord,
+  exportNewsToWordZip,
+  getFavoritesList,
+  getFavoritesSave,
+  getFavoritesInfo,
+  getFavoritesUpdate,
+  getFavoritesDelete,
+} from './../../services/store';
+
+const cardDemoData = [
+  {
+    id: '1',
+    title: '很长的标题一很长的标题一很长的标题一题一很长的标题题一很长的标题题一很长的标题',
+    content:
+      '这是内容区域，显示三行文本，如果超出则显示题一很长的标题题一很长的标题题一很长的标题省略号。这是内容区域，显示三行文本，如果超出则显示省略号。',
+    image: [
+      'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
+      'https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg',
+    ],
+  },
+  {
+    id: '2',
+    title: '22很长的标题一很长的标题一很长的标题一题一很长的标题题一很长的标题题一很长的标题',
+    content:
+      '22222222222222222这是内容区域，显示三行文本，如果超出则显示题一很长的标题题一很长的标题题一很长的标题省略号。这是内容区域，显示三行文本，如果超出则显示省略号。',
+    image: [
+      'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
+      'https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg',
+    ],
+  },
+  {
+    id: '3',
+    title: '333333很长的标题一很长的标题一很长的标题一题一很长的标题题一很长的标题题一很长的标题',
+    content:
+      '333333333333333333333这是内容区域，显示三行文本，如果超出则显示题一很长的标题题一很长的标题题一很长的标题省略号。这是内容区域，显示三行文本，如果超出则显示省略号。',
+    image: [
+      'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
+      'https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg',
+    ],
+  },
+  {
+    id: '4',
+    title: '333333很长的标题一很长的标题一很长的标题一题一很长的标题题一很长的标题题一很长的标题',
+    content:
+      '333333333333333333333这是内容区域，显示三行文本，如果超出则显示题一很长的标题题一很长的标题题一很长的标题省略号。这是内容区域，显示三行文本，如果超出则显示省略号。',
+    image: [
+      'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
+      'https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg',
+    ],
+  },
+  {
+    id: '5',
+    title: '333333很长的标题一很长的标题一很长的标题一题一很长的标题题一很长的标题题一很长的标题',
+    content:
+      '333333333333333333333这是内容区域，显示三行文本，如果超出则显示题一很长的标题题一很长的标题题一很长的标题省略号。这是内容区域，显示三行文本，如果超出则显示省略号。',
+    image: [
+      'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
+      'https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg',
+    ],
+  },
+  {
+    id: '6',
+    title: '333333很长的标题一很长的标题一很长的标题一题一很长的标题题一很长的标题题一很长的标题',
+    content:
+      '333333333333333333333这是内容区域，显示三行文本，如果超出则显示题一很长的标题题一很长的标题题一很长的标题省略号。这是内容区域，显示三行文本，如果超出则显示省略号。',
+    image: [
+      'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
+      'https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg',
+    ],
+  },
+  {
+    id: '7',
+    title: '333333很长的标题一很长的标题一很长的标题一题一很长的标题题一很长的标题题一很长的标题',
+    content:
+      '333333333333333333333这是内容区域，显示三行文本，如果超出则显示题一很长的标题题一很长的标题题一很长的标题省略号。这是内容区域，显示三行文本，如果超出则显示省略号。',
+    image: [
+      'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
+      'https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg',
+    ],
+  },
+  {
+    id: '8',
+    title: '333333很长的标题一很长的标题一很长的标题一题一很长的标题题一很长的标题题一很长的标题',
+    content:
+      '333333333333333333333这是内容区域，显示三行文本，如果超出则显示题一很长的标题题一很长的标题题一很长的标题省略号。这是内容区域，显示三行文本，如果超出则显示省略号。',
+    image: [
+      'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
+      'https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg',
+    ],
+  },
+];
+
+const mockCardsData = [
+  {
+    id: '1',
+    sourceName: '微博',
+    sourceType: '微博',
+    lang: '中文',
+    contentRow: '原文',
+    contentZh: '中文',
+    titleRow: '标题-原文',
+    titleZh: '标题中文',
+    auth: '我我我',
+    title: '海上保安厅官方监测',
+    publishTime: '2024-8-19  13:14:00 ',
+    contentZh:
+      '   俄亥俄州一位父亲告诉唐纳德·特朗普，不要再利用他儿子在一次由海地移民造成的校车事故中死亡来获取“政治利益”。2023 年 8 月，11 岁的艾登·克拉克 (Aiden Clark) 在俄亥俄州斯普林菲尔德的一场校车事故中丧生。由于特朗普竞选团队对那里的海地移民发表毫无根据的指控，这个小镇现在成为全国关注的焦点。周二，特朗普的竞选搭档 JD Vance 在 Twitter/X 的一篇帖子中提到艾登，称“一名儿童被一名海地移民杀害”。艾登的父亲内森当天晚些时候在市政委员会会议上表示内森当天晚内森当俄亥俄州一位父亲告诉唐纳德·特朗普，不要再利用他儿子在一次由海地移民造成的校车事故中死亡来获取“政治利益”。2023 年 8 月，11 岁的艾登·克拉克 (Aiden Clark) 在俄亥俄州斯普林菲尔德的一场校车事故中丧生。由于特朗普竞选团队对那里的海地移民发表毫无根据的指控，这个小镇现在成为全国关注的焦点。周二，特朗普的竞选搭档 JD Vance 在 Twitter/X 的一篇帖子中提到艾登，称“一名儿童被一名海地移民杀害”。艾登的父亲内森当俄亥俄州一位父亲告诉唐纳德·特朗普，不要再利用他儿子在一次由海地移民造成的校车事故中死亡来获取“政治利益”。2023 年 8 月，11 岁的艾登·克拉克 (Aiden Clark) 在俄亥俄州斯普林菲尔德的一场校车事故中丧生。由于特朗普竞选团队对那里的海地移民发表毫无根据的指控，这个小镇现在成为全国关注的焦点。周二，特朗普的竞选搭档 JD Vance 在 Twitter/X 的一篇帖子中提到艾登，称“一名儿童被一名海地移民杀害”。艾登的父亲内森当天晚些时候在市政委员会会议上表示内森当天晚内森当天晚些时候在市政委员会会议上表示内森当天晚内森当',
+    link: 'http://www.baidu.com',
+    pics: ['http://180.167.238.140:18816/img/logo@2x.b20887ea.png'],
+    likeNum: '111',
+    commentNum: '222',
+    shareNum: '3',
+    readNum: '4',
+    showActions: true,
+  },
+  {
+    id: '2',
+    sourceName: '公众号',
+    sourceType: '公众号',
+    title: '日本海保船',
+    contentZh: '日本海保船相关内容',
+    publishTime: '2024-8-19  13:14:00 ',
+    link: 'http://www.baidu.com',
+    pics: ['http://180.167.238.140:18816/img/logo@2x.b20887ea.png'],
+    likeNum: '1',
+    commentNum: '2',
+    readNum: '3',
+    shareNum: '4',
+    showActions: false,
+  },
+  {
+    id: '3',
+    sourceName: '谷歌',
+    sourceType: '谷歌',
+    title: '台湾',
+    titleZh: '台湾相关内容',
+    publishTime: '2024-8-19  13:14:00 ',
+    link: 'http://www.baidu.com',
+    likeNum: '1',
+    commentNum: '2',
+    shareNum: '4',
+    readNum: '3',
+    images: [
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+    ],
+    showActions: true,
+  },
+  {
+    id: '4',
+    sourceName: '博客',
+    sourceType: '博客',
+    title: '日本海鲜厅监测',
+    publishTime: '2024-8-19  13:14:00 ',
+    content: '日本海鲜厅监测内容',
+    link: 'http://www.baidu.com',
+    images: [
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+    ],
+    showActions: false,
+  },
+  {
+    id: '5',
+    sourceName: '网站',
+    sourceType: '网站',
+    title: '监测目标五',
+    content: '监测目标五内容',
+    link: 'http://www.baidu.com',
+    images: ['http://180.167.238.140:18816/img/logo@2x.b20887ea.png'],
+    showActions: true,
+  },
+  {
+    id: '6',
+    sourceName: '百度',
+    sourceType: '百度',
+    title: '监测目标六',
+    content: '监测目标六内容',
+    link: 'http://www.baidu.com',
+    images: [
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+    ],
+    showActions: false,
+  },
+  {
+    id: '7',
+    sourceName: '推特',
+    sourceType: '推特',
+    title: '监测目标七',
+    content: '监测目标七内容',
+    link: 'http://www.baidu.com',
+    images: [
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+    ],
+    showActions: true,
+  },
+  {
+    id: '8',
+    sourceName: '微博',
+    sourceType: '微博',
+    title: '监测目标八',
+    content: '监测目标八内容',
+    link: 'http://www.baidu.com',
+    images: ['http://180.167.238.140:18816/img/logo@2x.b20887ea.png'],
+    showActions: false,
+  },
+  {
+    id: '9',
+    sourceName: '微博',
+    sourceType: '微博',
+    title: '监测目标九',
+    content: '监测目标九内容',
+    link: 'http://www.baidu.com',
+    images: [
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+    ],
+    showActions: true,
+  },
+  {
+    id: '10',
+    sourceName: '微博',
+    sourceType: '微博',
+    title: '监测目标十',
+    content: '监测目标十内容',
+    link: 'http://www.baidu.com',
+    images: [
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+      'http://180.167.238.140:18816/img/logo@2x.b20887ea.png',
+    ],
+    showActions: false,
+  },
+];
+
+import DashboardCard from './../../components/common/DashboardCard';
+import weibo from './../../assets/images/icon/weibo.png';
+import weixin from './../../assets/images/icon/weixin.png';
+import google from './../../assets/images/icon/google.png';
+import blog from './../../assets/images/icon/blog.png';
+import wangzhan from './../../assets/images/icon/new.png';
+import baidu from './../../assets/images/icon/baidu.png';
+import twitter from './../../assets/images/icon/twitter.png';
+const dynamicImg = sourceType => {
+  switch (sourceType) {
+    case '微博':
+      return weibo;
+    case '公众号':
+      return weixin;
+    case '谷歌':
+      return google;
+    case '博客':
+      return blog;
+    case '网站':
+      return wangzhan;
+    case '百度':
+      return baidu;
+    case '推特':
+      return twitter;
+
+    default:
+      return '';
+  }
+};
+export default function Social() {
+  const [row, setRow] = useState({ name: '' });
+  const [current, setCurrent] = React.useState(0);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
+  const [currentCardData, setCurrentCardData] = useState(null);
+
+  const [expandedId, setExpandedId] = useState(null);
+  const [editingId, setEditingId] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [firstLevelArchives, setFirstLevelArchives] = useState([]);
+  const [selectedFirstLevelArchiveId, setSelectedFirstLevelArchiveId] = useState(null);
+  const [newMonitor, setNewMonitor] = useState({ name: '', matchConditions: '' });
+  const [currentMonitor, setCurrentMonitor] = useState({});
+  const [isSocialEditorVisible, setIsSocialEditorVisible] = React.useState(false);
+  // const [mockData, setMockData] = useState([
+  //   // {
+  //   //   id: 'baoan',
+  //   //   name: '海上保安厅官方监测',
+  //   //   icon: 'MonitorOutlined',
+  //   // },
+  //   // {
+  //   //   id: 'haibao',
+  //   //   name: '日本海保船',
+  //   //   icon: 'MonitorOutlined',
+  //   // },
+  //   // {
+  //   //   id: 'taiwan',
+  //   //   name: '台湾',
+  //   //   icon: 'MonitorOutlined',
+  //   // },
+  //   // {
+  //   //   id: 'haixiangting',
+  //   //   name: '日本海鲜厅监测',
+  //   //   icon: 'MonitorOutlined',
+  //   // },
+  // ]);
+
+  const [selectedCard, setSelectedCard] = useState(null);
+  const [textAreaValue, setTextAreaValue] = useState('');
+  const [titleValue, setTitleValue] = useState('');
+  const [textAreaValue1, setTextAreaValue1] = useState('');
+  const [danweiValue, setDanweiValue] = useState('');
+  const [imageList, setImageList] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const handleSearch = () => {
+    console.log('搜索内容:', searchQuery);
+    // 在这里添加你的搜索逻辑
+  };
+  const highLight = (text, keyword) => {
+    if (!keyword || keyword.trim() === '') {
+      return text;
+    }
+    return text.replace(
+      new RegExp(`(${keyword})`, 'gi'),
+      match => `<span style="color:#12B8D7">${match}</span>`
+    );
+  };
+
+  const onDownload = () => {
+    const url = imageList[current];
+    const suffix = url.slice(url.lastIndexOf('.'));
+    const filename = Date.now() + suffix;
+    fetch(url)
+      .then(response => response.blob())
+      .then(blob => {
+        const blobUrl = URL.createObjectURL(new Blob([blob]));
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        URL.revokeObjectURL(blobUrl);
+        link.remove();
+      });
+  };
+
+  useEffect(() => {
+    fetchFirstLevelArchives();
+  }, []);
+
+  // 获取左侧文件夹数据
+  const fetchFirstLevelArchives = async () => {
+    try {
+      const response = await getFavoritesList();
+      if (response.code === 200) {
+        const firstLevelData = response.data.map(item => ({
+          id: item.folder_id,
+          name: item.folder_name,
+          // targetMatchedCondition: item.target_matched_condition,
+        }));
+        setFirstLevelArchives(firstLevelData);
+        if (firstLevelData.length > 0) {
+          // setTargetMatchedCondition(firstLevelData[0].targetMatchedCondition);
+          setSelectedFirstLevelArchiveId(firstLevelData[0].id);
+        }
+      }
+    } catch (error) {
+      console.error('获取收藏文件夹数据失败:', error);
+    }
+  };
+  // const handleEditClick = (id, event) => {
+  //   // event.stopPropagation();
+  //   const selectedArchive = firstLevelArchives.find(archive => archive.id === id);
+  //   setCurrentCardData(selectedArchive);
+  //   setCurrentMonitor(selectedArchive);
+  //   setIsEditing(true);
+  //   setEditingId(id);
+  //   setIsSocialEditorVisible(true);
+  // };
+  const handleEditClick = async (id, event) => {
+    event.stopPropagation();
+    try {
+      const response = await getFavoritesInfo({ folderId: id });
+      if (response.code === 200 && response.data) {
+        setCurrentMonitor(response.data);
+        setIsEditing(true);
+        setEditingId(id);
+        setIsSocialEditorVisible(true);
+      } else {
+        message.error('获取编辑详情失败');
+      }
+    } catch (error) {
+      console.error('获取编辑详情失败:', error);
+      message.error('获取编辑详情时发生错误');
+    }
+  };
+
+  const handleSaveMonitor = async () => {
+    try {
+      let response;
+      const saveData = {
+        folderName: isEditing ? currentMonitor.name : newMonitor.name,
+      };
+      if (isEditing) {
+        if (!currentMonitor.name) {
+          alert('文件夹名称不能为空');
+          return;
+        }
+        saveData.folderId = editingId;
+        response = await getFavoritesUpdate(saveData);
+      } else {
+        if (!newMonitor.name) {
+          alert('文件夹名称不能为空');
+          return;
+        }
+        response = await getFavoritesSave(saveData);
+      }
+      if (response.code === 200) {
+        message.success(isEditing ? '编辑文件夹成功' : '添加文件夹成功');
+        setIsSocialEditorVisible(false);
+        await fetchFirstLevelArchives(); // 重新获取监测目标列表
+      } else {
+        message.error('操作失败');
+      }
+    } catch (error) {
+      console.error('操作失败:', error);
+      message.error('操作时发生错误');
+    }
+  };
+
+  const handleMonitorChange = e => {
+    const { value } = e.target;
+    if (isEditing) {
+      setCurrentMonitor(prevMonitor => ({ ...prevMonitor, name: value }));
+    } else {
+      setNewMonitor(prevNewMonitor => ({ ...prevNewMonitor, name: value }));
+    }
+  };
+
+  const handleMonitorItemClick = id => {
+    if (expandedId === id) {
+      setExpandedId(null);
+    } else {
+      setExpandedId(id);
+    }
+  };
+  const handleTextAreaChange = event => {
+    setTextAreaValue(event.target.value);
+  };
+
+  const handleDeleteClick = (id, event) => {
+    event.stopPropagation();
+    const newData = mockData.filter(item => item.id !== id);
+  };
+
+  const confirm = e => {
+    console.log(e);
+    message.success('删除成功');
+  };
+  const cancel = e => {
+    console.log(e);
+    message.error('取消操作');
+  };
+
+  const handleAddMonitor = () => {
+    setIsEditing(false);
+    setNewMonitor({ name: '' }); // 清空输入框状态
+    setIsSocialEditorVisible(true);
+  };
+
+  const handleCancel = () => {
+    console.log('取消操作');
+    setIsSocialEditorVisible(false);
+  };
+  const handleSearchZhang = () => {
+    console.log('handleSearchZhang ');
+  };
+
+  // tab切换
+  const onChangeTab = key => {
+    console.log(key);
+  };
+
+  const handleSelectCard = card => {
+    setSelectedCard(null);
+    setSelectedCard(card);
+    setTextAreaValue(card.content);
+    setTitleValue(card.title);
+    setImageList(card.image);
+    setCurrent(0);
+  };
+  const reset = () => {
+    setSelectedCard(null);
+    setSelectedCard(null);
+    setTextAreaValue(null);
+    setTextAreaValue1(null);
+    setTitleValue(null);
+    setDanweiValue(null);
+    setImageList([]);
+    setCurrent(0);
+  };
+
+  const columns = [
+    {
+      title: '序号',
+      dataIndex: 'name',
+      key: 'name',
+      render: text => <a>{text}</a>,
+    },
+    {
+      title: '报告名称',
+      dataIndex: 'age',
+      key: 'age',
+    },
+    {
+      title: '日期',
+      dataIndex: 'address',
+      key: 'address',
+    },
+    {
+      title: '创建者',
+      dataIndex: 'address',
+      key: 'address',
+    },
+
+    {
+      title: '操作',
+      key: 'action',
+      render: (_, record) => (
+        <Space size="middle">
+          <a>导出</a>
+          <a>删除</a>
+        </Space>
+      ),
+    },
+  ];
+  const data = [
+    {
+      key: '1',
+      name: 'John Brown',
+      age: 32,
+      address: 'New York No. 1 Lake Park',
+      tags: ['nice', 'developer'],
+    },
+    {
+      key: '2',
+      name: 'Jim Green',
+      age: 42,
+      address: 'London No. 1 Lake Park',
+      tags: ['loser'],
+    },
+    {
+      key: '3',
+      name: 'Joe Black',
+      age: 32,
+      address: 'Sydney No. 1 Lake Park',
+      tags: ['cool', 'teacher'],
+    },
+  ];
+  const handleModalVisibility = isVisible => {
+    setIsModalVisible(isVisible);
+  };
+
+  const handleContentClick = async (id, showActions) => {
+    console.log(showActions, 'showActions');
+
+    try {
+      const response = await getInfo({ newsId: id });
+
+      if (response.code === 200 && response.data) {
+        setModalData(modalData => ({
+          ...modalData,
+          ...response.data,
+          showActions: showActions,
+        }));
+      } else {
+        message.error('获取失败');
+      }
+    } catch (error) {
+      console.error('获取失败:', error);
+      message.error('获取时发生错误');
+    }
+    handleModalVisibility(true);
+  };
+
+  const handleExport = id => {
+    const newsId = id;
+    debugger;
+    // 创建一个新的 XMLHttpRequest 对象
+    var xhr = new XMLHttpRequest();
+    // 配置请求
+    xhr.open('GET', `/intelligence/api/news/exportNewsToWord?newsId=${newsId}`, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.responseType = 'blob'; // 设置响应类型为 blob
+
+    // 处理响应
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        var blob = xhr.response; // 获取响应数据的 Blob 对象
+        const url = window.URL.createObjectURL(
+          new Blob([blob], { type: 'application/vnd.ms-excel;charset=utf-8' })
+        );
+        // 创建一个链接并点击下载
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', '新闻.doc');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+        message.success('导出成功!');
+      } else {
+        message.error('导出失败');
+      }
+    };
+    // 发送请求
+    xhr.send();
+  };
+
+  const handleExportClick = exportType => {
+    console.log('导出类型:', exportType);
+
+    if (isExportMode) {
+      console.log('执行导出操作');
+
+      setIsExportMode(false);
+    } else {
+      setIsExportMode(true);
+    }
+  };
+  const menu = (
+    <Menu>
+      <Menu.Item key="word" onClick={() => handleExportClick('word')}>
+        导出为Word
+      </Menu.Item>
+      <Menu.Item key="excel" onClick={() => handleExportClick('excel')}>
+        导出为Excel
+      </Menu.Item>
+    </Menu>
+  );
+
+  return (
+    <>
+      <div className={styles.container}>
+        <div className={styles.left}>
+          <Button onClick={handleAddMonitor} icon={<PlusOutlined />} className={styles.btn}>
+            新增文件夹
+          </Button>
+          <div>
+            {firstLevelArchives.map(item => {
+              return (
+                <div key={item.id}>
+                  <div
+                    className={styles.listItem}
+                    style={{ background: expandedId === item.id ? '#118D86' : '' }}
+                  >
+                    <AimOutlined />
+                    <span className={styles.title} onClick={() => handleMonitorItemClick(item.id)}>
+                      {item.name}
+                    </span>
+                    <React.Fragment>
+                      <EditOutlined
+                        className={styles.editIcon}
+                        name="EditOutlined"
+                        onClick={event => handleEditClick(item.id, event)}
+                      />
+                      <Popconfirm
+                        title="您确定要删除吗？"
+                        onConfirm={confirm}
+                        onCancel={cancel}
+                        okText="是"
+                        cancelText="否"
+                      >
+                        <DeleteOutlined
+                          className={styles.deleteIcon}
+                          name="DeleteOutlined"
+                          onClick={event => handleDeleteClick(item.id, event)}
+                        />
+                      </Popconfirm>
+                    </React.Fragment>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className={styles.container1}>
+          {/* <div > */}
+          <Tabs defaultActiveKey="1" className={styles.tabBox}>
+            <Tabs.TabPane tab="信息列表" key="1">
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: '0 20px ',
+                }}
+              >
+                <span>
+                  共<span style={{ color: '#FF8000', margin: '0 10px' }}>{totalCount}</span>
+                  条记录
+                </span>
+
+                <Dropdown overlay={menu} placement="bottomCenter">
+                  <Button style={{ backgroundColor: 'rgba(255, 128, 0, 0.5)', color: 'white' }}>
+                    批量导出
+                  </Button>
+                </Dropdown>
+              </div>
+              {mockCardsData.map((card, index) => {
+                const processedCard = {
+                  ...card,
+                  titleZh: highLight(card.titleZh, searchQuery),
+                  contentZh: highLight(card.contentZh, searchQuery),
+                };
+
+                return (
+                  <div key={card.id} style={{ display: 'flex', paddingLeft: '10px' }}>
+                    <DashboardCard
+                      className={styles.dashboardCardStyle}
+                      key={card.id}
+                      img={dynamicImg(card.sourceType)}
+                      sourceName={card.sourceName}
+                      publishTime={card.publishTime}
+                      title={processedCard.titleZh}
+                      content={processedCard.contentZh}
+                      link={card.url}
+                      images={card.pics}
+                      likeNum={card.likeNum}
+                      commentNum={card.commentNum}
+                      shareNum={card.shareNum}
+                      readNum={card.readNum}
+                      showActions={card.showActions}
+                      onClickContent={() => handleContentClick(card.id, card.showActions)}
+                      onCollect={isCollected => handleCollect(card.id, isCollected)}
+                      onExport={() => handleExport(card.id)}
+                    />
+                  </div>
+                );
+              })}
+              <Pagination
+                current={currentPage}
+                total={totalCount}
+                pageSize={pageSize}
+                onChange={(page, pageSize) => {
+                  setCurrentPage(page);
+                  setPageSize(pageSize);
+                }}
+                onShowSizeChange={(current, size) => {
+                  setCurrentPage(1);
+                  setPageSize(size);
+                }}
+                style={{ margin: '10px auto', display: 'flex', justifyContent: 'center' }}
+                showSizeChanger={false}
+              />
+            </Tabs.TabPane>
+            <Tabs.TabPane tab="报告制作" key="2">
+              <div className={styles.centerStyle}>
+                <div className={styles.centerLeft}>
+                  {' '}
+                  <Input className={styles.titleInput} width={500} value={titleValue}></Input>
+                  <p className={styles.textStyle}>正文</p>
+                  <TextArea
+                    className={styles.textArea}
+                    autoSize={{
+                      minRows: 20,
+                      maxRows: 20,
+                    }}
+                    value={textAreaValue}
+                    onChange={handleTextAreaChange}
+                  />
+                  <p className={styles.textStyle}>图片</p>
+                  <div className={styles.imgBox}>
+                    <Image.PreviewGroup
+                      preview={{
+                        toolbarRender: (
+                          _,
+                          {
+                            transform: { scale },
+                            actions: {
+                              onActive,
+                              onFlipY,
+                              onFlipX,
+                              onRotateLeft,
+                              onRotateRight,
+                              onZoomOut,
+                              onZoomIn,
+                              onReset,
+                            },
+                          }
+                        ) => (
+                          <Space size={12} className={styles.toolbarWrapper}>
+                            <LeftOutlined onClick={() => onActive?.(-1)} />
+                            <RightOutlined onClick={() => onActive?.(1)} />
+                            <DownloadOutlined onClick={onDownload} />
+                            <SwapOutlined rotate={90} onClick={onFlipY} />
+                            <SwapOutlined onClick={onFlipX} />
+                            <RotateLeftOutlined onClick={onRotateLeft} />
+                            <RotateRightOutlined onClick={onRotateRight} />
+                            <ZoomOutOutlined disabled={scale === 1} onClick={onZoomOut} />
+                            <ZoomInOutlined disabled={scale === 50} onClick={onZoomIn} />
+                            <UndoOutlined onClick={onReset} />
+                          </Space>
+                        ),
+                        onChange: index => {
+                          setCurrent(index);
+                        },
+                      }}
+                    >
+                      {imageList.map(item => (
+                        <Image key={item} src={item} width={200} />
+                      ))}
+                    </Image.PreviewGroup>
+                  </div>
+                  <p className={styles.textStyle}>分析</p>
+                  <div className={styles.fenxiBox}>
+                    <span>分析认为：</span>
+                    <TextArea
+                      value={textAreaValue1}
+                      onChange={e => setTextAreaValue1(e.target.value)}
+                      autoSize={{
+                        minRows: 3,
+                        maxRows: 5,
+                      }}
+                    />
+                  </div>
+                  <div className={styles.huoQingBox}>
+                    <Input
+                      addonBefore="获情单位"
+                      placeholder="*************科室"
+                      value={danweiValue}
+                      className={styles.huoQing}
+                      onChange={e => setDanweiValue(e.target.value)}
+                    />
+                  </div>
+                  <div className={styles.bottomBox}>
+                    <Button className={styles.btn} onClick={reset}>
+                      重置
+                    </Button>
+                    <Button> 生成报告</Button>
+                  </div>
+                </div>
+                <div className={styles.centerRight1}></div>
+                <div className={styles.centerRight}>
+                  <Search
+                    placeholder="请输入关键字"
+                    allowClear
+                    // onSearch={onSearch}
+                    style={{
+                      width: 200,
+                    }}
+                    className={styles.searchStyle}
+                  />
+                  <div className={styles.cardBox}>
+                    {cardDemoData.map(card => (
+                      <div className={styles.cardStyle} key={card.id}>
+                        <Radio
+                          onChange={() => handleSelectCard(card)}
+                          value={card.id}
+                          checked={selectedCard && selectedCard.id === card.id}
+                        />
+                        <Card key={card.id} style={{ width: 370 }}>
+                          <Card.Meta
+                            title={
+                              <Tooltip title={card.title}>
+                                <div
+                                  style={{
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis',
+                                    whiteSpace: 'nowrap',
+                                  }}
+                                >
+                                  {card.title}
+                                </div>
+                              </Tooltip>
+                            }
+                            description={
+                              <Tooltip title={card.content}>
+                                <div className={styles.contentStyle}>{card.content}</div>
+                              </Tooltip>
+                            }
+                          />
+                        </Card>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </Tabs.TabPane>
+            <Tabs.TabPane tab="报告列表" key="3">
+              <Table
+                columns={columns}
+                dataSource={data}
+                pagination={{ position: ['bottomCenter'] }}
+              />
+            </Tabs.TabPane>
+          </Tabs>
+        </div>
+
+        <Modal
+          visible={isSocialEditorVisible}
+          onOk={handleSaveMonitor}
+          onCancel={handleCancel}
+          data={currentCardData}
+          isEditing={isEditing}
+          handleSearchZhang={handleSearchZhang}
+          className={styles.modalSty}
+        >
+          <Form labelWidth={120} labelPosition="left">
+            <Form.Item label={isEditing ? '编辑文件夹名称：' : '文件夹名称'}>
+              <Input
+                placeholder="请输入文件夹名称"
+                value={isEditing ? currentMonitor.name : newMonitor.targetName}
+                onChange={handleMonitorChange}
+              />
+            </Form.Item>
+          </Form>
+        </Modal>
+      </div>
+    </>
+  );
+}

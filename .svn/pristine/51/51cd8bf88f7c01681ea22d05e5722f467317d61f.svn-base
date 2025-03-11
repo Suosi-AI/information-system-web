@@ -1,0 +1,109 @@
+import React, { useState, useEffect } from 'react';
+import { Menu } from 'antd';
+import { useSelector } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
+import { insideRoutes } from '@/router';
+import { useMenu } from '@/hooks';
+import styles from './index.less'; // 确保路径正确
+const { SubMenu } = Menu;
+
+const MenuList = () => {
+  const { theme } = useSelector(state => state.SettingReducer);
+  const location = useLocation(); // 获取当前路由位置
+  const selectedKeys = useMenu();
+  const [openKeys, setOpenKeys] = useState(useMenu());
+  const [currentSelectedKey, setCurrentSelectedKey] = useState(selectedKeys[0] || '/');
+  const rank = JSON.parse(localStorage.getItem('rank')); // 从本地存储中获取用户的权限等级
+
+  useEffect(() => {
+    // 当路由变化时，更新 currentSelectedKey
+    const currentPath = location.pathname;
+    setCurrentSelectedKey(currentPath);
+  }, [location]); // 依赖于 location 对象
+
+  const onMenuSelect = e => {
+    setCurrentSelectedKey(e.key);
+  };
+
+  const filterRoutes = routes => {
+    return routes.filter(route => {
+      // 如果路由有permission属性，并且用户不是管理员，则不显示该路由
+      if (route.permission && route.permission === 'admin' && rank !== '1') {
+        return false;
+      }
+      // 如果路由hidden为true，并且用户不是管理员，则不显示该路由
+      if (route.hidden && rank !== '1') {
+        return false;
+      }
+      return true;
+    });
+  };
+
+  const getMenu = (routes, parentPath) => {
+    const filteredRoutes = filterRoutes(routes);
+    return filteredRoutes.map(route => {
+      const fullPath = `${parentPath}${route.path}`;
+      const isSelected = currentSelectedKey === fullPath;
+      const iconElement = route.icon
+        ? React.cloneElement(route.icon, {
+            style: isSelected ? { color: '#02f3dd', fontSize: '18px' } : {},
+          })
+        : null;
+
+      if (route.children?.length) {
+        return (
+          <SubMenu
+            key={fullPath}
+            title={<div style={{ color: isSelected ? '#02f3dd' : 'white' }}>{route.title}</div>}
+            icon={iconElement}
+            className={isSelected ? styles.selectedMenuItem : ''}
+            style={isSelected ? { backgroundColor: '#001529' } : {}}
+          >
+            {getMenu(route.children, fullPath + '/')}
+          </SubMenu>
+        );
+      } else {
+        const handleClick = e => {
+          if (route.disabled) {
+            e.preventDefault();
+          } else {
+            setCurrentSelectedKey(fullPath);
+          }
+        };
+
+        return (
+          <Menu.Item
+            key={fullPath}
+            icon={iconElement}
+            className={isSelected ? styles.selectedMenuItem : ''}
+            style={isSelected ? { backgroundColor: '#001529' } : {}}
+            disabled={route.disabled}
+          >
+            <Link
+              to={fullPath}
+              onClick={handleClick}
+              style={{ color: isSelected ? '#02f3dd' : '', fontSize: isSelected ? '17px' : '16px' }}
+            >
+              {route.title}
+            </Link>
+          </Menu.Item>
+        );
+      }
+    });
+  };
+  return (
+    <Menu
+      className={styles.menuStyle}
+      theme={theme}
+      mode="horizontal"
+      selectedKeys={[currentSelectedKey]}
+      openKeys={openKeys}
+      onOpenChange={setOpenKeys}
+      onSelect={onMenuSelect}
+    >
+      {getMenu(insideRoutes, '/')}
+    </Menu>
+  );
+};
+
+export default MenuList;

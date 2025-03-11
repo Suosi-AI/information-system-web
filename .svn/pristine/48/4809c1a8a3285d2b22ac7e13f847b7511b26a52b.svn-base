@@ -1,0 +1,130 @@
+// CardModal.js
+import React, { useState } from 'react';
+import { Modal } from 'antd';
+import {
+  LikeOutlined,
+  MessageOutlined,
+  ShareAltOutlined,
+  EyeOutlined,
+  TranslationOutlined,
+  FileWordTwoTone,
+  StarOutlined,
+} from '@ant-design/icons';
+import styles from './index.less';
+import weibo from './../../../assets/images/icon/weibo.png';
+import weixin from './../../../assets/images/icon/weixin.png';
+import google from './../../../assets/images/icon/google.png';
+import blog from './../../../assets/images/icon/blog.png';
+import wangzhan from './../../../assets/images/icon/new.png';
+import baidu from './../../../assets/images/icon/baidu.png';
+import twitter from './../../../assets/images/icon/twitter.png';
+const CardModal = ({ visible, onCancel, currentCardData, setIsModalVisible }) => {
+  const dynamicImg = sourceType => {
+    switch (sourceType) {
+      case '微博':
+        return weibo;
+      case '公众号':
+        return weixin;
+      case '谷歌':
+        return google;
+      case '博客':
+        return blog;
+      case '网站':
+        return wangzhan;
+      case '百度':
+        return baidu;
+      case '推特':
+        return twitter;
+      default:
+        return '';
+    }
+  };
+
+  return (
+    <Modal
+      title="卡片信息"
+      visible={visible}
+      onCancel={() => setIsModalVisible(false)}
+      footer={null}
+      className={styles.cardModal}
+      width={1000}
+    >
+      <div className={styles.modalContent}>
+        <div className={styles.modalHeader}>
+          <div className={styles.medalHeader1}>
+            <img
+              src={dynamicImg(currentCardData?.sourceType)}
+              alt="source-icon"
+              className={styles.sourceIcon}
+            />
+            <div className={styles.info}>
+              <span className={styles.label}>来源：</span>
+              {currentCardData?.sourceName}
+            </div>
+          </div>
+          <div className={styles.info}>
+            <span className={styles.label}>发布时间：</span>
+            {currentCardData?.publishTime}
+          </div>
+          {currentCardData?.showActions && (
+            <div className={styles.actions}>
+              <span className={styles.actionItem}>
+                <LikeOutlined /> {currentCardData.likeNum}
+              </span>
+              <span className={styles.actionItem}>
+                <MessageOutlined /> {currentCardData.commentNum}
+              </span>
+              <span className={styles.actionItem}>
+                <ShareAltOutlined /> {currentCardData.shareNum}
+              </span>
+              <span className={styles.actionItem}>
+                <EyeOutlined /> {currentCardData.readNum}
+              </span>
+            </div>
+          )}
+        </div>
+        <div className={styles.modalBody}>
+          <div className={styles.modalBodyTop}>
+            <div className={styles.metadata}>
+              <span className={styles.label}>作者：</span>
+              {currentCardData?.auth}
+            </div>
+            <div className={styles.metadata}>
+              <span className={styles.label}>语种：</span>
+              {currentCardData?.lang}
+            </div>
+            <div className={styles.metadata}>
+              <span className={styles.label}>原文地址：</span>
+              <a href={currentCardData?.link} target="_blank" rel="noopener noreferrer">
+                {currentCardData?.link}
+              </a>
+            </div>
+          </div>
+          <div className={styles.controls}>
+            <span className={styles.controlsSpan}>
+              <TranslationOutlined style={{ color: '#EAB308', marginRight: '8px' }} />
+              <span style={{ textDecoration: 'underline' }}>原文</span>
+            </span>
+            <span className={styles.controlsSpan}>
+              <FileWordTwoTone style={{ marginRight: '8px' }} />
+              <span style={{ textDecoration: 'underline' }}>导出</span>
+            </span>
+            <span className={styles.controlsSpan}>
+              <StarOutlined style={{ color: 'orange', marginRight: '8px' }} />
+              <span style={{ textDecoration: 'underline' }}>收藏</span>
+            </span>
+          </div>
+          <div className={styles.content}>{currentCardData?.content}</div>
+          <div className={styles.images}>
+            {currentCardData?.images &&
+              currentCardData.images.map((image, index) => (
+                <img key={index} src={image} alt={`image-${index}`} className={styles.image} />
+              ))}
+          </div>
+        </div>
+      </div>
+    </Modal>
+  );
+};
+
+export default CardModal;

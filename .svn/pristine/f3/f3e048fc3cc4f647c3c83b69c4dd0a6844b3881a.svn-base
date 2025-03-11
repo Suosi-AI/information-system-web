@@ -1,0 +1,36 @@
+///  全局滚动条样式
+.container ::-webkit-scrollbar {
+  width: 0px !important;
+  max-height: 12px;
+}
+.cardBox ::-webkit-scrollbar {
+  width: 0px !important;
+  max-height: 12px;
+}
+
+/* 滚动条的滑块 */
+.container ::-webkit-scrollbar-thumb {
+  // background-color: rgba(251, 251, 251, 0.7);
+  // background-color: #6f7179;
+  color: #6f7179;
+  border-radius: 6px;
+}
+
+/* 滚动条的轨道 */
+.container ::-webkit-scrollbar-track {
+  background-color: none !important;
+  // background-color: none;
+  border-radius: 6px;
+}
+
+/* 滚动条的轨道的两端按钮 */
+.container ::-webkit-scrollbar-button {
+  display: none;
+  height: 10px;
+  background-color: none;
+}
+
+/* 当滚动条处于 hover 状态时 */
+.container ::-webkit-scrollbar-thumb:hover {
+  background-color: #6f7179;
+}

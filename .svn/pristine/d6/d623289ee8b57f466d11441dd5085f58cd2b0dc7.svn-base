@@ -1,0 +1,40 @@
+import React from 'react';
+import { Tabs } from 'antd';
+import ReactMarkdown from 'react-markdown';
+import styles from './index.less';
+// import { foreignPolicyData } from './path-to-your-data'; // 确保正确导入数据
+
+const ForeignPolicy = foreignPolicyData => {
+  const tabsKeys = Object.keys(foreignPolicyData);
+
+  return (
+    <div className={styles.container}>
+      <Tabs
+        defaultActiveKey={tabsKeys[0]}
+        style={{
+          color: 'white',
+          width: '100%',
+          marginTop: '-30px',
+          height: '86vh',
+          overflow: 'hidden',
+        }}
+      >
+        {tabsKeys.map(key => {
+          const tabs = foreignPolicyData[key];
+          return Object.keys(tabs).map(tabKey => {
+            const tabData = tabs[tabKey];
+            return (
+              <Tabs.TabPane tab={tabData.title} key={tabKey}>
+                <div style={{ width: '100%', color: 'white' }}>
+                  <ReactMarkdown>{tabData.content}</ReactMarkdown>
+                </div>
+              </Tabs.TabPane>
+            );
+          });
+        })}
+      </Tabs>
+    </div>
+  );
+};
+
+export default ForeignPolicy;
