@@ -52,7 +52,11 @@ import youtube from './../../assets/images/icon/youtube.png';
 import telegram from './../../assets/images/icon/telegram.png';
 const { RangePicker } = DatePicker;
 const { Search, TextArea } = Input;
-const plainOptions = ['微博', '公众号', '谷歌', '博客', '网站', '推特', '百度', '油管', '脸书', '电报'];
+const plainOptions = ['微博', '公众号', '谷歌', '博客', '网站', '推特', '百度', '油管', '脸书', '电报', '智库'];
+/**
+ * 内容类型
+ */
+const contentTypes = ['目标动向', '人员更替', '政策发布', '官方发布']
 const defaultCheckedList = [''];
 
 const CheckboxGroup = Checkbox.Group;
@@ -137,6 +141,10 @@ export default function Social() {
   const [checkedList, setCheckedList] = useState(defaultCheckedList);
   const [indeterminate, setIndeterminate] = useState(true);
   const [checkAll, setCheckAll] = useState(false);
+
+  // 内容类型
+  const [contentType, setContentType] = useState('')
+  const [isAllContentType, setIsAllContentType] = useState(true);
 
   const [targetMatchedCondition, setTargetMatchedCondition] = useState('');
   const [monitorName, setMonitorName] = useState('');
@@ -336,6 +344,10 @@ export default function Social() {
     setIndeterminate(false);
     setCheckAll(e.target.checked);
   };
+
+  const onContentTypeChange = (type) => {
+    setContentType(type)
+  }
 
   useEffect(() => {
     fetchFirstLevelArchives();
@@ -1015,7 +1027,7 @@ export default function Social() {
               )}
             </div>
             <div className={styles.mediaSelect}>
-              <span>媒体范围：</span>
+              <span>网站类型：</span>
               <Checkbox
                 indeterminate={indeterminate}
                 onChange={onCheckAllChange}
@@ -1027,7 +1039,7 @@ export default function Social() {
               <CheckboxGroup options={plainOptions} value={checkedList} onChange={onChange} />
             </div>
             <div className={styles.languageSelect}>
-              <span className={styles.curP}>语种筛选：</span>
+              <span className={styles.curP}>地区：</span>
               <span
                 className={`${styles.curP1} ${selectedLanguage === '' ? styles.selected : ''}`}
                 onClick={() => handleLanguageChange('')}
@@ -1038,19 +1050,19 @@ export default function Social() {
                 className={`${styles.curP1} ${selectedLanguage === '中文' ? styles.selected : ''}`}
                 onClick={() => handleLanguageChange('中文')}
               >
-                中文
+                中国
               </span>
-              <span
+              {/* <span
                 className={`${styles.curP1} ${selectedLanguage === '繁体' ? styles.selected : ''}`}
                 onClick={() => handleLanguageChange('繁体')}
               >
                 繁体
-              </span>
+              </span> */}
               <span
                 className={`${styles.curP1} ${selectedLanguage === '日语' ? styles.selected : ''}`}
                 onClick={() => handleLanguageChange('日语')}
               >
-                日语
+                日本
               </span>
               <span
                 className = {
@@ -1058,14 +1070,14 @@ export default function Social() {
  '英语' ? styles.selected : ''}`}
                 onClick={() => handleLanguageChange('英语')}
               >
-                英语
+                美国
               </span>
-              <span
+              {/* <span
                 className={`${styles.curP1} ${selectedLanguage === '韩语' ? styles.selected : ''}`}
                 onClick={() => handleLanguageChange('韩语')}
               >
                 韩语
-              </span>
+              </span> */}
               <span
                 className={`${styles.curP1} ${selectedLanguage === '其他' ? styles.selected : ''}`}
                 onClick={() => handleLanguageChange('其他')}
@@ -1073,6 +1085,28 @@ export default function Social() {
                 其他
               </span>
             </div>
+
+            <div className={styles.contentTypeSelect}>
+            <span className={styles.curP}>内容类型：</span>
+              <span
+                className={`${styles.curP1} ${contentType === '' ? styles.selected : ''}`}
+                onClick={() => onContentTypeChange('')}
+              >
+                全部
+              </span>
+              { contentTypes.map(type => {
+                return (
+                  <span
+                    key={type}
+                    className={`${styles.curP1} ${contentType === type ? styles.selected : ''}`}
+                    onClick={() => onContentTypeChange(type)}
+                  >
+                    {type}
+                  </span>
+                )
+              }) }
+            </div>
+
             <div
               style={{
                 display: 'flex',
