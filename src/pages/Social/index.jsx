@@ -13,6 +13,8 @@ import {
   EditOutlined,
   SettingOutlined,
 } from '@ant-design/icons';
+import { useLocalStorageState } from 'ahooks';
+import dayjs from 'dayjs';
 
 import styles from './index.less';
 import {
@@ -39,6 +41,7 @@ import DashboardCard from './../../components/common/DashboardCard';
 import ActionStats from '@/components/common/ActionStats';
 import CardModal from './../../components/common/CardModal';
 import SocialEditor from '@/components/common/SocialEditor';
+import DataSmartSearchForm, { formatForm } from './DataSmartSearchForm';
 
 import weibo from './../../assets/images/icon/weibo.png';
 import weixin from './../../assets/images/icon/weixin.png';
@@ -52,11 +55,23 @@ import youtube from './../../assets/images/icon/youtube.png';
 import telegram from './../../assets/images/icon/telegram.png';
 const { RangePicker } = DatePicker;
 const { Search, TextArea } = Input;
-const plainOptions = ['微博', '公众号', '谷歌', '博客', '网站', '推特', '百度', '油管', '脸书', '电报', '智库'];
+const plainOptions = [
+  '微博',
+  '公众号',
+  '谷歌',
+  '博客',
+  '网站',
+  '推特',
+  '百度',
+  '油管',
+  '脸书',
+  '电报',
+  '智库',
+];
 /**
  * 内容类型
  */
-const contentTypes = ['目标动向', '人员更替', '政策发布', '官方发布']
+const contentTypes = ['目标动向', '人员更替', '政策发布', '官方发布'];
 const defaultCheckedList = [''];
 
 const CheckboxGroup = Checkbox.Group;
@@ -121,7 +136,10 @@ export default function Social() {
   const [isAlertModalVisible, setIsAlertModalVisible] = useState(false);
   const [currentCardData, setCurrentCardData] = useState(null);
 
-  const [firstLevelArchives, setFirstLevelArchives] = useState([]);
+  const [firstLevelArchives, setFirstLevelArchives] = useLocalStorageState('firstLevelArchives', {
+    defaultValue: [],
+    listenStorageChange: true,
+  });
   const [secondLevelArchives, setSecondLevelArchives] = useState({});
   const [selectedFirstLevelArchiveId, setSelectedFirstLevelArchiveId] = useState(null);
   const [selectedSecondLevelArchiveId, setSelectedSecondLevelArchiveId] = useState(null);
@@ -142,8 +160,6 @@ export default function Social() {
   const [indeterminate, setIndeterminate] = useState(true);
   const [checkAll, setCheckAll] = useState(false);
 
-  // 内容类型
-  const [contentType, setContentType] = useState('')
   const [isAllContentType, setIsAllContentType] = useState(true);
 
   const [targetMatchedCondition, setTargetMatchedCondition] = useState('');
@@ -160,6 +176,13 @@ export default function Social() {
   const [permissionType, setPermissionType] = useState(1); // 1: 仅自己可见, 2: 指定用户可见
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [userList, setUserList] = useState([]);
+
+  // 内容类型
+  const [contentType, setContentType] = useState('');
+  // 搜索模式
+  const [searchMode, setSearchMode] = useState('precise');
+  const [filterRule, setFilterRule] = useState('');
+  const [queryListObj, setQueryListObj] = useState();
 
   const calculateTimeRange = range => {
     const endDate = new Date(); // 结束时间为当前时间
@@ -214,7 +237,12 @@ export default function Social() {
     setSelectedLanguage(language);
   };
 
-  const handleSearch = searchQuery => {
+  const handleSearch = (input = '') => {
+    let searchQuery = input;
+    if (typeof input === 'string' && 'target' in input) {
+      const { target } = searchQuery;
+      searchQuery = target.value;
+    }
     setCurrentPage(1);
     setSearchQuery(searchQuery);
     setSearchKeywords(searchQuery);
@@ -225,8 +253,8 @@ export default function Social() {
   //   }
   //   const regexKeyword = new RegExp(`(${keyword})`, 'gi');
   //   const regexCondition = new RegExp(`(${targetMatchedCondition})`, 'gi');
-    
-  //   const parts = text.split(regexKeyword).flatMap(part => 
+
+  //   const parts = text.split(regexKeyword).flatMap(part =>
   //     part.split(regexCondition).map((subPart, index) => {
   //       if (regexCondition.test(subPart)) {
   //         return (
@@ -250,80 +278,79 @@ export default function Social() {
   // };
 
   const highLight = (text, keyword, targetMatchedCondition) => {
-  if (!text || !isAlert) return text;
-  
-  // 解析匹配条件
-  const parseMatchCondition = (condition) => {
-    if (!condition) return [];
-    
-    // 分解AND条件
-    return condition.split('+').flatMap(andPart => {
-      const parts = andPart.trim().split('-');
-      const matches = [];
-      
-      // 处理第一部分（可能包含OR条件）
-      if (parts[0]) {
-        const orPart = parts[0].trim();
-        if (orPart.startsWith('(') && orPart.endsWith(')')) {
-          // 处理括号内的OR条件
-          const orTerms = orPart.substring(1, orPart.length - 1).split('|');
-          matches.push(...orTerms.map(term => term.trim()));
-        } else {
-          matches.push(orPart);
+    if (!text || !isAlert) return text;
+
+    // 解析匹配条件
+    const parseMatchCondition = condition => {
+      if (!condition) return [];
+
+      // 分解AND条件
+      return condition.split('+').flatMap(andPart => {
+        const parts = andPart.trim().split('-');
+        const matches = [];
+
+        // 处理第一部分（可能包含OR条件）
+        if (parts[0]) {
+          const orPart = parts[0].trim();
+          if (orPart.startsWith('(') && orPart.endsWith(')')) {
+            // 处理括号内的OR条件
+            const orTerms = orPart.substring(1, orPart.length - 1).split('|');
+            matches.push(...orTerms.map(term => term.trim()));
+          } else {
+            matches.push(orPart);
+          }
         }
+
+        return matches;
+      });
+    };
+
+    // 获取所有需要高亮的词组
+    const highlightTerms = parseMatchCondition(targetMatchedCondition);
+
+    // 创建正则表达式模式
+    const keywordPattern = keyword ? `(${keyword})` : '';
+    const termsPattern =
+      highlightTerms.length > 0
+        ? `(${highlightTerms.map(term => term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`
+        : '';
+
+    // 构建组合的正则表达式
+    const patterns = [keywordPattern, termsPattern].filter(Boolean).join('|');
+
+    if (!patterns) return text;
+
+    const regex = new RegExp(patterns, 'gi');
+
+    // 分割文本并添加高亮
+    const parts = text.split(regex);
+
+    return parts.map((part, index) => {
+      // 检查是否匹配关键词
+      if (keyword && new RegExp(keywordPattern, 'gi').test(part)) {
+        return (
+          // <span key={`keyword-${index}`} className="highlight-keyword">
+          // eslint-disable-next-line react/no-array-index-key
+          <span key={`keyword-${index}`} style={{ color: 'red' }}>
+            {part}
+          </span>
+        );
       }
-      
-      return matches;
+
+      // 检查是否匹配条件词
+      if (highlightTerms.some(term => new RegExp(`^${term}$`, 'i').test(part))) {
+        return (
+          // <span key={`condition-${index}`} className="highlight-condition">
+          // eslint-disable-next-line react/no-array-index-key
+          <span key={`condition-${index}`} style={{ color: 'red' }}>
+            {part}
+          </span>
+        );
+      }
+
+      return part;
     });
   };
-
-  // 获取所有需要高亮的词组
-  const highlightTerms = parseMatchCondition(targetMatchedCondition);
-  
-  // 创建正则表达式模式
-  const keywordPattern = keyword ? `(${keyword})` : '';
-  const termsPattern = highlightTerms.length > 0 ? 
-    `(${highlightTerms.map(term => term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})` : '';
-  
-  // 构建组合的正则表达式
-  const patterns = [keywordPattern, termsPattern]
-    .filter(Boolean)
-    .join('|');
-    
-  if (!patterns) return text;
-  
-  const regex = new RegExp(patterns, 'gi');
-  
-  // 分割文本并添加高亮
-  const parts = text.split(regex);
-  
-  return parts.map((part, index) => {
-    // 检查是否匹配关键词
-    if (keyword && new RegExp(keywordPattern, 'gi').test(part)) {
-      return (
-        // <span key={`keyword-${index}`} className="highlight-keyword">
-        // eslint-disable-next-line react/no-array-index-key
-        <span key={`keyword-${index}`} style={ {color: 'red'}}>
-          {part}
-        </span>
-      );
-    }
-    
-    // 检查是否匹配条件词
-    if (highlightTerms.some(term => new RegExp(`^${term}$`, 'i').test(part))) {
-      return (
-        // <span key={`condition-${index}`} className="highlight-condition">
-        // eslint-disable-next-line react/no-array-index-key
-        <span key={`condition-${index}`} style={ {color: 'red'}}>
-          {part}
-        </span>
-      );
-    }
-    
-    return part;
-  });
-};
-
 
   const onChange = list => {
     // 如果列表长度等于选项总数，则全选，设置为空数组
@@ -345,9 +372,9 @@ export default function Social() {
     setCheckAll(e.target.checked);
   };
 
-  const onContentTypeChange = (type) => {
-    setContentType(type)
-  }
+  const onContentTypeChange = type => {
+    setContentType(type);
+  };
 
   useEffect(() => {
     fetchFirstLevelArchives();
@@ -364,6 +391,7 @@ export default function Social() {
     selectedFirstLevelArchiveId,
     selectedRange,
     selectedLanguage,
+    contentType,
     dateRange,
     searchQuery,
     checkedList,
@@ -400,7 +428,10 @@ export default function Social() {
           name: item.target_name,
           targetMatchedCondition: item.target_matched_condition,
         }));
-        setFirstLevelArchives(firstLevelData);
+
+        if (!firstLevelArchives || firstLevelArchives.length === 0) {
+          setFirstLevelArchives((firstLevelData ?? []).map(formatForm));
+        }
         setShouldFetchData(true);
         if (firstLevelData.length > 0) {
           setMonitorName(firstLevelData[0].name);
@@ -414,6 +445,24 @@ export default function Social() {
   };
 
   const handleMonitorItemClick = async id => {
+    function setQueryParams(query) {
+      if (!query) {
+        return;
+      }
+
+      const ifPresent = (value, action) => action?.(value);
+
+      const { timeRange, dateRange, sourceType, lang, targetMatchedCondition, contentType } = query;
+      setShouldFetchData(false);
+      ifPresent(targetMatchedCondition, handleSearch);
+      ifPresent(sourceType, arr => onChange(arr?.length === 0 ? [...plainOptions] : arr));
+      ifPresent(lang, handleLanguageChange);
+      ifPresent(timeRange, handleRangeChange);
+
+      if (timeRange === 'custom') {
+        ifPresent(dateRange, handleDateChange);
+      }
+    }
     setSelectedIds([]); // 清空选中的ID
     setIsExportMode(false); // 关闭复选框显示
     const selectedArchive = firstLevelArchives.find(item => item.id === id);
@@ -428,6 +477,9 @@ export default function Social() {
       setTargetMatchedCondition(selectedArchive.targetMatchedCondition); // 设置匹配条件
       setMonitorName(selectedArchive.name);
       setShouldFetchData(true);
+      setQueryListObj(selectedArchive);
+      setQueryParams(selectedArchive);
+      setTimeout(() => setShouldFetchData(true));
     }
   };
 
@@ -456,6 +508,7 @@ export default function Social() {
       }
 
       const response = await getMonitorTargetNewsPage({
+        ...(queryListObj ?? {}),
         page: currentPage.toString(),
         limit: pageSize.toString(),
         startTime,
@@ -464,6 +517,7 @@ export default function Social() {
         searchContent: searchQuery || '',
         targetMatchedCondition: targetMatchedCondition,
         sourceType: checkedList.length === plainOptions.length ? '' : checkedList.join(','),
+        contentType: contentType || '',
       });
       setMockData(response.page.list);
       setTotalCount(response.page.totalCount);
@@ -491,6 +545,34 @@ export default function Social() {
       setTargetMatchedCondition(selectedArchive.targetMatchedCondition); // 设置编辑器中的匹配条件为选中的监测目标匹配条件
     }
   };
+
+  function smartSearchFormCloseCallback() {
+    setIsSocialEditorVisible(false);
+    setCurrentMonitor(null);
+  }
+
+  function onSaveSmartSearchForm(item) {
+    const list = [...firstLevelArchives];
+
+    const same = list.find(archive => archive.id === item.id);
+
+    if (!same) {
+      setFirstLevelArchives([...list, item]);
+      message.success('添加成功');
+    } else {
+      setFirstLevelArchives(list.map(i => (i.id === item.id ? item : i)));
+      message.success('编辑成功');
+    }
+
+    smartSearchFormCloseCallback();
+  }
+
+  function removeSmartSearchForm(id) {
+    const list = [...firstLevelArchives];
+    setFirstLevelArchives(list.filter(item => item.id !== id));
+    message.success('删除成功');
+  }
+
   const handleSaveMonitor = async () => {
     try {
       let response;
@@ -559,7 +641,7 @@ export default function Social() {
 
   const handleCancel = () => {
     console.log('取消操作');
-    setIsSocialEditorVisible(false);
+    smartSearchFormCloseCallback();
   };
 
   const handleContentClick = async (id, showActions) => {
@@ -780,15 +862,15 @@ export default function Social() {
 
   const handlePermissionSave = async () => {
     // 前端假配置，不走后端
-      message.success('权限配置保存成功');
-      setIsPermissionModalVisible(false);
+    message.success('权限配置保存成功');
+    setIsPermissionModalVisible(false);
     // try {
     //   const params = {
     //     targetType: permissionType,
     //     targetUserIds: selectedUsers,
     //     monitorId: currentPermissionItem.id, // 监测目标ID
     //   };
-      
+
     //   const response = await saveViewPermission(params);
     //   if (response.code === 200) {
     //     message.success('权限配置保存成功');
@@ -813,47 +895,47 @@ export default function Social() {
   const dataSource = [
     {
       key: 1,
-      time: "2025-01-01 10:00:00",
-      content: "阿布扎比在 MIPCOM 2024 上推出新现金返还，最低 35%++",
-      source: "台湾英文新闻",
+      time: '2025-01-01 10:00:00',
+      content: '阿布扎比在 MIPCOM 2024 上推出新现金返还，最低 35%++',
+      source: '台湾英文新闻',
     },
     {
       key: 2,
-      time: "2024-12-31 10:00:00",
-      content: "成龙房祖名一家三代亮相JCE群星宴(6)",
-      source: "台湾英文新闻",
+      time: '2024-12-31 10:00:00',
+      content: '成龙房祖名一家三代亮相JCE群星宴(6)',
+      source: '台湾英文新闻',
     },
     {
       key: 3,
-      time: "2024-12-30 20:10:00",
-      content: "《沉睡在大海的钻石》是一部历史杰作，华丽的演员阵容向国村淳表示感谢“在日剧中……”",
-      source: "谷歌",
+      time: '2024-12-30 20:10:00',
+      content: '《沉睡在大海的钻石》是一部历史杰作，华丽的演员阵容向国村淳表示感谢“在日剧中……”',
+      source: '谷歌',
     },
     {
       key: 4,
-      time: "2024-12-29 10:00:60",
-      content: "消息：美拟把向华为供管制晶片的中国公司列黑名单",
-      source: "联合早报",
+      time: '2024-12-29 10:00:60',
+      content: '消息：美拟把向华为供管制晶片的中国公司列黑名单',
+      source: '联合早报',
     },
     {
       key: 5,
-      time: "2024-12-29 02:00:00",
-      content: "据报助华为获台积电晶片 算能科技被美列入黑名单",
-      source: "日本每日新闻",
+      time: '2024-12-29 02:00:00',
+      content: '据报助华为获台积电晶片 算能科技被美列入黑名单',
+      source: '日本每日新闻',
     },
     {
       key: 6,
-      time: "2024-12-28 10:00:60",
-      content: "日经亚洲编辑的来信：日产本田合并谈判和一个时代的结束",
-      source: "日经亚洲",
+      time: '2024-12-28 10:00:60',
+      content: '日经亚洲编辑的来信：日产本田合并谈判和一个时代的结束',
+      source: '日经亚洲',
     },
     {
       key: 7,
-      time: "2024-12-26 12:20:00",
-      content: "联华电子表示没有在美国建厂的计划",
-      source: "台北时报",
-    }
-  ]
+      time: '2024-12-26 12:20:00',
+      content: '联华电子表示没有在美国建厂的计划',
+      source: '台北时报',
+    },
+  ];
 
   const columns = [
     {
@@ -894,7 +976,7 @@ export default function Social() {
       <div className={styles.container}>
         <div className={styles.left}>
           <Button onClick={handleAddMonitor} icon={<PlusOutlined />} className={styles.btn}>
-            添加监测目标
+            数据智能搜索
           </Button>
           <div>
             {firstLevelArchives.map(item => (
@@ -910,13 +992,13 @@ export default function Social() {
                       name="EditOutlined"
                       onClick={event => handleEditClick(item.id, event)}
                     />
-                    <SettingOutlined 
+                    <SettingOutlined
                       className={styles.settingIcon}
                       onClick={event => handlePermissionClick(item, event)}
                     />
                     <Popconfirm
                       title="您确定要删除吗？"
-                      onConfirm={event => confirmDelete(item.id, event)}
+                      onConfirm={event => removeSmartSearchForm(item.id, event)}
                       onCancel={() => console.log('Cancel clicked')}
                       okText="是"
                       cancelText="否"
@@ -930,12 +1012,18 @@ export default function Social() {
           </div>
         </div>
 
+        <DataSmartSearchForm
+          data={currentMonitor}
+          visible={isSocialEditorVisible}
+          onOk={onSaveSmartSearchForm}
+          onCancel={handleCancel}
+        />
         <Modal
           title={isEditing ? '编辑监测目标' : '添加监测目标'}
-          visible={isSocialEditorVisible}
-          onOk={handleSaveMonitor}
-          onCancel={handleCancel}
-          className={styles.modalSty}
+          // visible={isSocialEditorVisible}
+          // onOk={handleSaveMonitor}
+          // onCancel={handleCancel}
+          // className={styles.modalSty}
         >
           <Form>
             <Form.Item label="监测目标名称">
@@ -959,7 +1047,7 @@ export default function Social() {
                 onChange={value => {
                   if (value === '打开') {
                     // 触发高亮显示的逻辑
-                    setIsAlert(true)
+                    setIsAlert(true);
                   }
                 }}
               >
@@ -971,15 +1059,52 @@ export default function Social() {
         </Modal>
         <div className={styles.container1}>
           <div className={styles.countTop}>
-            <div className={styles.searchTop}>
+            <div
+              className={styles.searchTop}
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'min-content 600px 100px',
+                gap: '10px',
+              }}
+            >
+              <Select
+                value={
+                  ['日本+海上保安厅', '美国+海岸警卫队', '台湾+海巡署'].includes(searchQuery)
+                    ? searchQuery
+                    : null
+                }
+                onChange={value => handleSearch(value)}
+                placeholder="请选择过滤规则"
+              >
+                {['日本+海上保安厅', '美国+海岸警卫队', '台湾+海巡署'].map(rule => {
+                  return (
+                    <Select.Option key={rule} value={rule}>
+                      {rule || '数据筛选规则'}
+                    </Select.Option>
+                  );
+                })}
+              </Select>
               <Search
                 placeholder="请输入您要搜索的内容"
                 allowClear
+                value={searchQuery}
+                onChange={e => handleSearch(e)}
                 onSearch={e => handleSearch(e)}
-                style={{
-                  width: 200,
-                }}
+                disabled={false}
               />
+              <Select
+                value={searchMode}
+                onChange={value => setSearchMode(value)}
+                style={
+                  {
+                    // width: 100,
+                    // marginLeft: 240,
+                  }
+                }
+              >
+                <Select.Option value="precise">精准搜索</Select.Option>
+                <Select.Option value="fuzzy">模糊搜索</Select.Option>
+              </Select>
             </div>
             <div className={styles.timeSelect}>
               <span className={styles.curP}>时间范围：</span>
@@ -1020,7 +1145,7 @@ export default function Social() {
                   start-placeholder="开始日期"
                   end-placeholder="结束日期"
                   value-format="yyyy-MM-dd HH:mm:ss"
-                  default-time={['00:00:00', '23:59:59']}
+                  defaultValue={(dateRange || ['00:00:00', '23:59:59']).map(v => dayjs(v))}
                   className="mar-l-10"
                   onChange={handleDateChange}
                 />
@@ -1065,9 +1190,7 @@ export default function Social() {
                 日本
               </span>
               <span
-                className = {
-                    `${styles.curP1} ${selectedLanguage ===
- '英语' ? styles.selected : ''}`}
+                className={`${styles.curP1} ${selectedLanguage === '英语' ? styles.selected : ''}`}
                 onClick={() => handleLanguageChange('英语')}
               >
                 美国
@@ -1087,14 +1210,14 @@ export default function Social() {
             </div>
 
             <div className={styles.contentTypeSelect}>
-            <span className={styles.curP}>内容类型：</span>
+              <span className={styles.curP}>内容类型：</span>
               <span
                 className={`${styles.curP1} ${contentType === '' ? styles.selected : ''}`}
                 onClick={() => onContentTypeChange('')}
               >
                 全部
               </span>
-              { contentTypes.map(type => {
+              {contentTypes.map(type => {
                 return (
                   <span
                     key={type}
@@ -1103,8 +1226,8 @@ export default function Social() {
                   >
                     {type}
                   </span>
-                )
-              }) }
+                );
+              })}
             </div>
 
             <div
@@ -1155,10 +1278,7 @@ export default function Social() {
                       批量导出
                     </Button>
                   </Dropdown>
-                  <Button
-                    style={{ marginLeft: 16 }}
-                    onClick={showAlertModal}
-                  >
+                  <Button style={{ marginLeft: 16 }} onClick={showAlertModal}>
                     告警日志
                   </Button>
                 </div>
@@ -1181,8 +1301,12 @@ export default function Social() {
               {mockData.map((card, index) => {
                 const processedCard = {
                   ...card,
-                  titleZh: isAlert ? highLight(card.titleZh, searchQuery, targetMatchedCondition) : card.titleZh,
-                  contentZh: isAlert ? highLight(card.contentZh, searchQuery, targetMatchedCondition) : card.contentZh,
+                  titleZh: isAlert
+                    ? highLight(card.titleZh, searchQuery, targetMatchedCondition)
+                    : card.titleZh,
+                  contentZh: isAlert
+                    ? highLight(card.contentZh, searchQuery, targetMatchedCondition)
+                    : card.contentZh,
                 };
 
                 return (
@@ -1253,7 +1377,6 @@ export default function Social() {
       </div>
 
       <CardModal
-        visible={isModalVisible}
         onCancel={() => handleModalVisibility(false)}
         modalData={modalData}
         setIsModalVisible={handleModalVisibility}
@@ -1271,15 +1394,12 @@ export default function Social() {
       >
         <Form layout="vertical">
           <Form.Item label="可见范围">
-            <Radio.Group 
-              value={permissionType}
-              onChange={e => setPermissionType(e.target.value)}
-            >
+            <Radio.Group value={permissionType} onChange={e => setPermissionType(e.target.value)}>
               <Radio value={1}>仅自己可见</Radio>
               <Radio value={2}>指定用户可见</Radio>
             </Radio.Group>
           </Form.Item>
-          
+
           {permissionType === 2 && (
             <Form.Item label="选择可见用户">
               <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
@@ -1288,8 +1408,8 @@ export default function Social() {
                     <Checkbox
                       checked={selectedUsers.includes(user.userId)}
                       onChange={e => {
-                        const newSelectedUsers = e.target.checked 
-                          ? [...selectedUsers, user.userId] 
+                        const newSelectedUsers = e.target.checked
+                          ? [...selectedUsers, user.userId]
                           : selectedUsers.filter(id => id !== user.userId);
                         setSelectedUsers(newSelectedUsers);
                       }}

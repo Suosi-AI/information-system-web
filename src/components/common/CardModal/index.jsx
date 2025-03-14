@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Image, Menu, Dropdown } from 'antd';
+import { Modal, Image, Menu, Dropdown, Tag } from 'antd';
 import {
   LikeOutlined,
   MessageOutlined,
@@ -68,9 +68,6 @@ const CardModal = ({
         return youtube;
       case '电报':
         return telegram;
-
-
-
 
       default:
         return '';
@@ -348,22 +345,25 @@ const CardModal = ({
             </span>
           </div>
           <div className={styles.content}>
-            摘要：<pre
-                style={{
-                  maxWidth: '100%',
-                  whiteSpace: 'pre-wrap',
-                  // background: 'rgba(79, 75, 74, 0.17)',
-                  background: '#696969',
-                  padding: '15px 0',
-                }}
-              >
-                {processedModalData.summary || "\n"}
-              </pre>
-            译文：<pre style={{ maxWidth: '100%', whiteSpace: 'pre-wrap' }}>
-              {/* {displayRawContent ? processedModalData.contentraw : processedModalData.contentzh} */}
-              {processedModalData.contentzh || "\n"}
+            摘要：
+            <pre
+              style={{
+                maxWidth: '100%',
+                whiteSpace: 'pre-wrap',
+                // background: 'rgba(79, 75, 74, 0.17)',
+                background: '#696969',
+                padding: '15px 0',
+              }}
+            >
+              {processedModalData.summary || '\n'}
             </pre>
-            原文：<pre style={{ maxWidth: '100%', whiteSpace: 'pre-wrap', background: '#696969'}}>
+            译文：
+            <pre style={{ maxWidth: '100%', whiteSpace: 'pre-wrap' }}>
+              {/* {displayRawContent ? processedModalData.contentraw : processedModalData.contentzh} */}
+              {processedModalData.contentzh || '\n'}
+            </pre>
+            原文：
+            <pre style={{ maxWidth: '100%', whiteSpace: 'pre-wrap', background: '#696969' }}>
               {processedModalData.contentraw}
             </pre>
           </div>

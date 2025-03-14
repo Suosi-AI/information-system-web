@@ -14,7 +14,7 @@
     height: 90vh;
     margin-right: 10px;
     padding-top: 20px !important;
-    background-color: #171b28 !important;   
+    background-color: #171b28 !important;
      overflow: auto;
     .btn {
       width: 90%;
@@ -210,7 +210,7 @@
   height: 35px !important;
 }
 .searchTop :global(.ant-input-affix-wrapper) {
-  width: 600px;
+  /* width: 600px; */
   height: 40px !important;
   color: #02f3dd !important;
   background-color: #171b28 !important;
@@ -293,8 +293,34 @@
   margin-right: 20px;
   // color: #02f3dd;
   cursor: pointer;
-  
+
   &:hover {
     color: #02f3dd;
   }
+}
+[data-smart-search-form] {
+    --primary-color: #02f3dd;
+}
+[data-smart-search-form] :global([data-like-button]) {
+    color: white;
+    cursor: pointer;
+}
+
+[data-smart-search-form] :global([data-like-button]:hover), :global([data-like-button="true"][data-like-button="true"]) {
+    color: var(--primary-color)
+}
+
+[data-smart-search-form] :global(.ant-form-item) {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    justify-items: start;
+    column-gap: 1.5rem;
+}
+
+[data-smart-search-form] :global(.ant-form-item-control) {
+    width: 100%;
+}
+
+[data-smart-search-form] :global(.ant-form-item-label) {
+    font-weight: bolder;
 }

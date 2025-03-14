@@ -3,6 +3,7 @@ import 'moment/locale/zh-cn';
 import locale from 'antd/es/date-picker/locale/zh_CN';
 import Icon from '@/components/Icon';
 import moment from 'moment';
+import * as ReadReportPlatform from './readReportPlatform';
 import {
   PlusOutlined,
   DownloadOutlined,
@@ -44,6 +45,7 @@ import {
   Dropdown,
   Empty,
   Upload,
+  Typography,
 } from 'antd';
 const { RangePicker } = DatePicker;
 const { Search, TextArea } = Input;
@@ -71,6 +73,7 @@ import {
 
 import CardModal from './../../components/common/CardModal';
 
+import SearchReportPlatform from './SearchReportPlatform';
 import DashboardCard from './../../components/common/DashboardCard';
 import weibo from './../../assets/images/icon/weibo.png';
 import weixin from './../../assets/images/icon/weixin.png';
@@ -239,7 +242,7 @@ export default function Favorites() {
   // 定义选择框的配置
   const rowSelection = {
     selectedRowKeys,
-    onChange: (newSelectedRowKeys) => {
+    onChange: newSelectedRowKeys => {
       setSelectedRowKeys(newSelectedRowKeys);
     },
   };
@@ -518,8 +521,8 @@ export default function Favorites() {
   useEffect(() => {
     if (!selectedFirstLevel) {
       // 智能搜索时floderId为空
-      fetchListData(null)
-      return
+      fetchListData(null);
+      return;
     }
     // 初始化时，如果firstLevelArchives有数据，设置第一个文件夹为选中状态，并获取数据
     if (firstLevelArchives.length > 0 && !selectedFirstLevelArchiveId) {
@@ -533,7 +536,18 @@ export default function Favorites() {
     if (selectedFirstLevelArchiveId) {
       fetchListData(selectedFirstLevelArchiveId, searchQuery, currentPage, pageSize);
     }
-  }, [firstLevelArchives, selectedFirstLevelArchiveId, selectedRange, selectedLanguage, selectedArea, selectedContentType, searchQuery, currentPage, pageSize, targetMatchedCondition]);
+  }, [
+    firstLevelArchives,
+    selectedFirstLevelArchiveId,
+    selectedRange,
+    selectedLanguage,
+    selectedArea,
+    selectedContentType,
+    searchQuery,
+    currentPage,
+    pageSize,
+    targetMatchedCondition,
+  ]);
 
   // 监听isActive的变化，以决定是否调用handleTableReport
   useEffect(() => {
@@ -568,7 +582,7 @@ export default function Favorites() {
         ...(selectedRange !== 'all' && { startTime, endTime }),
         lang: selectedLanguage || '',
         ...(searchQuery && {
-          [searchMode === 'precise' ? 'searchContent' : 'targetMatchedCondition']: searchQuery
+          [searchMode === 'precise' ? 'searchContent' : 'targetMatchedCondition']: searchQuery,
         }),
         targetMatchedCondition: targetMatchedCondition,
         area: selectedArea || '',
@@ -895,7 +909,9 @@ export default function Favorites() {
     </Menu>
   );
 
+  const [tabName, setTabName] = useState('');
   const handleTabClick = (event, tab) => {
+    setTabName('');
     if (event === '1') {
       setIsActive(false);
       setCurrentPage(1);
@@ -909,8 +925,9 @@ export default function Favorites() {
       }
     } else if (event === '2') {
       setIsActive(false);
+      setTabName('readReportPlatform');
       setCurrentPage(1);
-      setIsLeftPanelVisible(true);
+      setIsLeftPanelVisible(false);
       if (selectedFirstLevelArchiveId) {
         fetchListData(selectedFirstLevelArchiveId, searchQuery);
       }
@@ -974,13 +991,13 @@ export default function Favorites() {
                   background: 'rgba(255, 128, 0, 0.5)',
                 }}
                 onClick={() => {
-                  setSelectedFirstLevel(false)
-                  fetchListData(null, searchQuery)
+                  setSelectedFirstLevel(false);
+                  fetchListData(null, searchQuery);
                 }}
               >
                 数据智能搜索
               </div>
-                
+
               {firstLevelArchives.map(item => {
                 return (
                   <div key={item.id}>
@@ -1018,7 +1035,31 @@ export default function Favorites() {
             </div>
           </div>
         )}
-        {!isLeftPanelVisible && <div className={styles.left}></div>}
+        {!isLeftPanelVisible && (
+          <div className={styles.left}>
+            {tabName === 'readReportPlatform' && (
+              <ReadReportPlatform.Aside
+                data={mockCardsData}
+                searchQuery={searchQuery}
+                selectedCard={selectedCard}
+                handleSelectCard={handleSelectCard}
+                handleContentClick={handleContentClick}
+                handleSearch={handleSearch}
+                pagination={
+                  <Pagination
+                    current={currentPage}
+                    total={totalCount}
+                    pageSize={pageSize}
+                    onChange={handlePageChange}
+                    onShowSizeChange={handlePageChange}
+                    style={{ margin: '10px auto', display: 'flex', justifyContent: 'center' }}
+                    showSizeChanger={false}
+                  />
+                }
+              />
+            )}
+          </div>
+        )}
 
         <div className={styles.container1}>
           <Tabs defaultActiveKey="1" className={styles.tabBox} onTabClick={handleTabClick}>
@@ -1059,7 +1100,7 @@ export default function Favorites() {
                         {isAllSelected ? '全不选' : '当页全选'}
                       </Button>
                     )} */}
-                    {/* <Dropdown overlay={menu} placement="bottom" onClick={handleExportModeToggle}>
+            {/* <Dropdown overlay={menu} placement="bottom" onClick={handleExportModeToggle}>
                       <Button
                         style={{
                           backgroundColor: 'rgba(255, 128, 0, 0.5)',
@@ -1154,216 +1195,237 @@ export default function Favorites() {
               )} */}
             {/* </Tabs.TabPane> */}
             <Tabs.TabPane tab="报文素材" key="1" className={styles.tabFirst}>
-            <div className={styles.searchTop}>
-              <Search
-                placeholder="请输入您要搜索的内容"
-                allowClear
-                onSearch={e => handleSearch(e)}
-                style={{
-                  width: 200,
-                }}
-              />
-              <Select
-                value={searchMode}
-                onChange={value => setSearchMode(value)}
-                style={{ 
-                  width: 100,
-                  marginLeft: 240
-                }}
-              >
-                <Select.Option value="precise">精准搜索</Select.Option>
-                <Select.Option value="fuzzy">模糊搜索</Select.Option>
-              </Select>
-            </div>
-
-            <div className={styles.timeSelect}>
-              <span className={styles.curP}>时间范围：</span>
-              <span
-                className={`${styles.curP} ${selectedRange === 'all' ? styles.selected : ''}`}
-                onClick={() => handleRangeChange('all')}
-              >
-                全部
-              </span>
-              <span
-                className={`${styles.curP} ${selectedRange === '24h' ? styles.selected : ''}`}
-                onClick={() => handleRangeChange('24h')}
-              >
-                近一天
-              </span>
-              <span
-                className={`${styles.curP} ${selectedRange === '1w' ? styles.selected : ''}`}
-                onClick={() => handleRangeChange('1w')}
-              >
-                近一周
-              </span>
-              <span
-                className={`${styles.curP} ${selectedRange === '1m' ? styles.selected : ''}`}
-                onClick={() => handleRangeChange('1m')}
-              >
-                近一月
-              </span>
-              <span
-                className={`${styles.curP} ${selectedRange === '1y' ? styles.selected : ''}`}
-                onClick={() => handleRangeChange('1y')}
-              >
-                近一年
-              </span>
-              <span
-                className={`${styles.curP} ${selectedRange === 'custom' ? styles.selected : ''}`}
-                onClick={() => handleRangeChange('custom')}
-              >
-                自定义
-              </span>
-              {selectedRange === 'custom' && (
-                <RangePicker
-                  locale={locale}
-                  range-separator="至"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
-                  value-format="yyyy-MM-dd HH:mm:ss"
-                  default-time={['00:00:00', '23:59:59']}
-                  className="mar-l-10"
-                  onChange={handleDateChange}
+              <div className={styles.searchTop}>
+                <Search
+                  placeholder="请输入您要搜索的内容"
+                  allowClear
+                  onSearch={e => handleSearch(e)}
+                  style={{
+                    width: 200,
+                  }}
                 />
-              )}
-            </div>
-            <div className={styles.languageSelect}>
-              <span className={styles.curP}>语种筛选：</span>
-              <span
-                className={`${styles.curP1} ${selectedLanguage === '' ? styles.selected : ''}`}
-                onClick={() => handleLanguageChange('')}
-              >
-                全部
-              </span>
-              <span
-                className={`${styles.curP1} ${selectedLanguage === '中文' ? styles.selected : ''}`}
-                onClick={() => handleLanguageChange('中文')}
-              >
-                中文
-              </span>
-              <span
-                className={`${styles.curP1} ${selectedLanguage === '繁体' ? styles.selected : ''}`}
-                onClick={() => handleLanguageChange('繁体')}
-              >
-                繁体
-              </span>
-              <span
-                className={`${styles.curP1} ${selectedLanguage === '日语' ? styles.selected : ''}`}
-                onClick={() => handleLanguageChange('日语')}
-              >
-                日语
-              </span>
-              <span
-                className={`${styles.curP1} ${selectedLanguage === '英语' ? styles.selected : ''}`}
-                onClick={() => handleLanguageChange('英语')}
-              >
-                英语
-              </span>
-              <span
-                className={`${styles.curP1} ${selectedLanguage === '韩语' ? styles.selected : ''}`}
-                onClick={() => handleLanguageChange('韩语')}
-              >
-                韩语
-              </span>
-              <span
-                className={`${styles.curP1} ${selectedLanguage === '其他' ? styles.selected : ''}`}
-                onClick={() => handleLanguageChange('其他')}
-              >
-                其他
-              </span>
-            </div>
-            <div className={styles.areaSelect}>
-              <span className={styles.curP}>信源地区：</span>
-              <span
-                className={`${styles.curP1} ${selectedArea === '' ? styles.selected : ''}`}
-                onClick={() => handleAreaChange('')}
-              >
-                全部
-              </span>
-              <span
-                className={`${styles.curP1} ${selectedArea === '中国' ? styles.selected : ''}`}
-                onClick={() => handleAreaChange('中国')}
-              >
-                中国
-              </span>
-              <span
-                className={`${styles.curP1} ${selectedArea === '美国' ? styles.selected : ''}`}
-                onClick={() => handleAreaChange('美国')}
-              >
-                美国
-              </span>
-              <span
-                className={`${styles.curP1} ${selectedArea === '日本' ? styles.selected : ''}`}
-                onClick={() => handleAreaChange('日本')}
-              >
-                日本
-              </span>
-              <span
-                className={`${styles.curP1} ${selectedArea === '韩国' ? styles.selected : ''}`}
-                onClick={() => handleAreaChange('韩国')}
-              >
-                韩国
-              </span>
-              <span
-                className={`${styles.curP1} ${selectedArea === '台湾' ? styles.selected : ''}`}
-                onClick={() => handleAreaChange('台湾')}
-              >
-                台湾
-              </span>
-              <span
-                className={`${styles.curP1} ${selectedArea === '越南' ? styles.selected : ''}`}
-                onClick={() => handleAreaChange('越南')}
-              >
-                越南
-              </span>
-              <span
-                className={`${styles.curP1} ${selectedArea === '菲律宾' ? styles.selected : ''}`}
-                onClick={() => handleAreaChange('菲律宾')}
-              >
-                菲律宾
-              </span>
-              <span
-                className={`${styles.curP1} ${selectedArea === '马来西亚' ? styles.selected : ''}`}
-                onClick={() => handleAreaChange('马来西亚')}
-              >
-                马来西亚
-              </span>
-              
-            </div>
+                <Select
+                  value={searchMode}
+                  onChange={value => setSearchMode(value)}
+                  style={{
+                    width: 100,
+                    marginLeft: 240,
+                  }}
+                >
+                  <Select.Option value="precise">精准搜索</Select.Option>
+                  <Select.Option value="fuzzy">模糊搜索</Select.Option>
+                </Select>
+              </div>
 
-            <div className={styles.areaSelect}>
-              <span className={styles.curP}>内容类型：</span>
-              <span
-                className={`${styles.curP1} ${selectedContentType === '' ? styles.selected : ''}`}
-                onClick={() => handleContentTypeChange('')}
-              >
-                全部
-              </span>
-              <span
-                className={`${styles.curP1} ${selectedContentType === '目标动向' ? styles.selected : ''}`}
-                onClick={() => handleContentTypeChange('目标动向')}
-              >
-                目标动向
-              </span>
-              <span
-                className={`${styles.curP1} ${selectedContentType === '人员更替' ? styles.selected : ''}`}
-                onClick={() => handleContentTypeChange('人员更替')}
-              >
-                人员更替
-              </span>
-              <span
-                className={`${styles.curP1} ${selectedContentType === '政策发布' ? styles.selected : ''}`}
-                onClick={() => handleContentTypeChange('政策发布')}
-              >
-                政策发布
-              </span>
-              <span
-                className={`${styles.curP1} ${selectedArea === '官方发布' ? styles.selected : ''}`}
-                onClick={() => handleContentTypeChange('官方发布')}
-              >
-                官方发布
-              </span>
-            </div>
+              <div className={styles.timeSelect}>
+                <span className={styles.curP}>时间范围：</span>
+                <span
+                  className={`${styles.curP} ${selectedRange === 'all' ? styles.selected : ''}`}
+                  onClick={() => handleRangeChange('all')}
+                >
+                  全部
+                </span>
+                <span
+                  className={`${styles.curP} ${selectedRange === '24h' ? styles.selected : ''}`}
+                  onClick={() => handleRangeChange('24h')}
+                >
+                  近一天
+                </span>
+                <span
+                  className={`${styles.curP} ${selectedRange === '1w' ? styles.selected : ''}`}
+                  onClick={() => handleRangeChange('1w')}
+                >
+                  近一周
+                </span>
+                <span
+                  className={`${styles.curP} ${selectedRange === '1m' ? styles.selected : ''}`}
+                  onClick={() => handleRangeChange('1m')}
+                >
+                  近一月
+                </span>
+                <span
+                  className={`${styles.curP} ${selectedRange === '1y' ? styles.selected : ''}`}
+                  onClick={() => handleRangeChange('1y')}
+                >
+                  近一年
+                </span>
+                <span
+                  className={`${styles.curP} ${selectedRange === 'custom' ? styles.selected : ''}`}
+                  onClick={() => handleRangeChange('custom')}
+                >
+                  自定义
+                </span>
+                {selectedRange === 'custom' && (
+                  <RangePicker
+                    locale={locale}
+                    range-separator="至"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期"
+                    value-format="yyyy-MM-dd HH:mm:ss"
+                    default-time={['00:00:00', '23:59:59']}
+                    className="mar-l-10"
+                    onChange={handleDateChange}
+                  />
+                )}
+              </div>
+              <div className={styles.languageSelect}>
+                <span className={styles.curP}>语种筛选：</span>
+                <span
+                  className={`${styles.curP1} ${selectedLanguage === '' ? styles.selected : ''}`}
+                  onClick={() => handleLanguageChange('')}
+                >
+                  全部
+                </span>
+                <span
+                  className={`${styles.curP1} ${
+                    selectedLanguage === '中文' ? styles.selected : ''
+                  }`}
+                  onClick={() => handleLanguageChange('中文')}
+                >
+                  中文
+                </span>
+                <span
+                  className={`${styles.curP1} ${
+                    selectedLanguage === '繁体' ? styles.selected : ''
+                  }`}
+                  onClick={() => handleLanguageChange('繁体')}
+                >
+                  繁体
+                </span>
+                <span
+                  className={`${styles.curP1} ${
+                    selectedLanguage === '日语' ? styles.selected : ''
+                  }`}
+                  onClick={() => handleLanguageChange('日语')}
+                >
+                  日语
+                </span>
+                <span
+                  className={`${styles.curP1} ${
+                    selectedLanguage === '英语' ? styles.selected : ''
+                  }`}
+                  onClick={() => handleLanguageChange('英语')}
+                >
+                  英语
+                </span>
+                <span
+                  className={`${styles.curP1} ${
+                    selectedLanguage === '韩语' ? styles.selected : ''
+                  }`}
+                  onClick={() => handleLanguageChange('韩语')}
+                >
+                  韩语
+                </span>
+                <span
+                  className={`${styles.curP1} ${
+                    selectedLanguage === '其他' ? styles.selected : ''
+                  }`}
+                  onClick={() => handleLanguageChange('其他')}
+                >
+                  其他
+                </span>
+              </div>
+              <div className={styles.areaSelect}>
+                <span className={styles.curP}>信源地区：</span>
+                <span
+                  className={`${styles.curP1} ${selectedArea === '' ? styles.selected : ''}`}
+                  onClick={() => handleAreaChange('')}
+                >
+                  全部
+                </span>
+                <span
+                  className={`${styles.curP1} ${selectedArea === '中国' ? styles.selected : ''}`}
+                  onClick={() => handleAreaChange('中国')}
+                >
+                  中国
+                </span>
+                <span
+                  className={`${styles.curP1} ${selectedArea === '美国' ? styles.selected : ''}`}
+                  onClick={() => handleAreaChange('美国')}
+                >
+                  美国
+                </span>
+                <span
+                  className={`${styles.curP1} ${selectedArea === '日本' ? styles.selected : ''}`}
+                  onClick={() => handleAreaChange('日本')}
+                >
+                  日本
+                </span>
+                <span
+                  className={`${styles.curP1} ${selectedArea === '韩国' ? styles.selected : ''}`}
+                  onClick={() => handleAreaChange('韩国')}
+                >
+                  韩国
+                </span>
+                <span
+                  className={`${styles.curP1} ${selectedArea === '台湾' ? styles.selected : ''}`}
+                  onClick={() => handleAreaChange('台湾')}
+                >
+                  台湾
+                </span>
+                <span
+                  className={`${styles.curP1} ${selectedArea === '越南' ? styles.selected : ''}`}
+                  onClick={() => handleAreaChange('越南')}
+                >
+                  越南
+                </span>
+                <span
+                  className={`${styles.curP1} ${selectedArea === '菲律宾' ? styles.selected : ''}`}
+                  onClick={() => handleAreaChange('菲律宾')}
+                >
+                  菲律宾
+                </span>
+                <span
+                  className={`${styles.curP1} ${
+                    selectedArea === '马来西亚' ? styles.selected : ''
+                  }`}
+                  onClick={() => handleAreaChange('马来西亚')}
+                >
+                  马来西亚
+                </span>
+              </div>
+
+              <div className={styles.areaSelect}>
+                <span className={styles.curP}>内容类型：</span>
+                <span
+                  className={`${styles.curP1} ${selectedContentType === '' ? styles.selected : ''}`}
+                  onClick={() => handleContentTypeChange('')}
+                >
+                  全部
+                </span>
+                <span
+                  className={`${styles.curP1} ${
+                    selectedContentType === '目标动向' ? styles.selected : ''
+                  }`}
+                  onClick={() => handleContentTypeChange('目标动向')}
+                >
+                  目标动向
+                </span>
+                <span
+                  className={`${styles.curP1} ${
+                    selectedContentType === '人员更替' ? styles.selected : ''
+                  }`}
+                  onClick={() => handleContentTypeChange('人员更替')}
+                >
+                  人员更替
+                </span>
+                <span
+                  className={`${styles.curP1} ${
+                    selectedContentType === '政策发布' ? styles.selected : ''
+                  }`}
+                  onClick={() => handleContentTypeChange('政策发布')}
+                >
+                  政策发布
+                </span>
+                <span
+                  className={`${styles.curP1} ${
+                    selectedArea === '官方发布' ? styles.selected : ''
+                  }`}
+                  onClick={() => handleContentTypeChange('官方发布')}
+                >
+                  官方发布
+                </span>
+              </div>
 
               <div
                 style={{
@@ -1439,7 +1501,7 @@ export default function Favorites() {
               </div>
 
               {mockCardsData.length === 0 ? (
-                <Empty style={{ margin: 'auto 8px', fontSize: '18px' }}></Empty>
+                <Empty style={{ margin: 'auto 8px', fontSize: '18px' }} />
               ) : (
                 mockCardsData.map((card, index) => {
                   const processedCard = {
@@ -1508,40 +1570,117 @@ export default function Favorites() {
               )}
             </Tabs.TabPane>
             <Tabs.TabPane tab="阅报平台" key="2">
-              <div className={styles.centerStyle}>
-                <div className={styles.centerLeft}>
-                  {' '}
+              <ReadReportPlatform.Body
+                aside={
                   <div
                     style={{
-                      height: '50px',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      width: '97%',
+                      display: 'grid',
+                      gridTemplateColumns: '1fr',
+                      gridAutoRows: 'min-content',
+                      rowGap: '16px',
                     }}
                   >
-                  <p className={styles.textStyle}>标题：</p>
-                    <Input
-                      className={styles.titleInput}
-                      width={500}
-                      value={titleRawValue}
-                      onChange={handleTitleRawValueChange}
-                    ></Input>
-                    <Input
-                      className={styles.titleInput}
-                      width={500}
-                      value={titleValue}
-                      onChange={handleTitleValueChange}
-                    ></Input>
+                    <div>
+                      <Typography.Title level={5}>时间</Typography.Title>
+                      <Input
+                        placeholder=""
+                        value={
+                          subjectValue && subjectValue.length > 0 ? JSON.parse(subjectValue)[0] : ''
+                        }
+                        // className={styles.huoQing}
+                        onChange={e => setDanweiValue(e.target.value)}
+                        style={{ fontSize: '16px' }}
+                      />
+                    </div>
+
+                    <div>
+                      <Typography.Title level={5}>地点</Typography.Title>
+                      <Input
+                        placeholder=""
+                        value={
+                          subjectValue && subjectValue.length > 0 ? JSON.parse(subjectValue)[1] : ''
+                        }
+                        // className={styles.huoQing}
+                        onChange={e => setDanweiValue(e.target.value)}
+                        style={{ fontSize: '16px' }}
+                      />
+                    </div>
+
+                    <div>
+                      <Typography.Title level={5}>实体（人物）</Typography.Title>
+                      <Input
+                        placeholder=""
+                        value={
+                          subjectValue && subjectValue.length > 0 ? JSON.parse(subjectValue)[2] : ''
+                        }
+                        // className={styles.huoQing}
+                        onChange={e => setDanweiValue(e.target.value)}
+                        style={{ fontSize: '16px' }}
+                      />
+                    </div>
+
+                    <div>
+                      <Typography.Title level={5}>实体（机构）</Typography.Title>
+                      <Input
+                        placeholder=""
+                        value={
+                          subjectValue && subjectValue.length > 0 ? JSON.parse(subjectValue)[3] : ''
+                        }
+                        // className={styles.huoQing}
+                        onChange={e => setDanweiValue(e.target.value)}
+                        style={{ fontSize: '16px' }}
+                      />
+                    </div>
+
+                    <div>
+                      <Typography.Title level={5}>实体（装备）</Typography.Title>
+                      <Input
+                        placeholder=""
+                        value={
+                          subjectValue && subjectValue.length > 0 ? JSON.parse(subjectValue)[4] : ''
+                        }
+                        // className={styles.huoQing}
+                        onChange={e => setDanweiValue(e.target.value)}
+                        style={{ fontSize: '16px' }}
+                      />
+                    </div>
+
+                    <div>
+                      <Typography.Title level={5}>行动</Typography.Title>
+                      <Input
+                        placeholder=""
+                        value={
+                          subjectValue && subjectValue.length > 0 ? JSON.parse(subjectValue)[5] : ''
+                        }
+                        // className={styles.huoQing}
+                        onChange={e => setDanweiValue(e.target.value)}
+                        style={{ fontSize: '16px' }}
+                      />
+                    </div>
+
+                    <div>
+                      <Typography.Title level={5}>事件</Typography.Title>
+                      <Input
+                        placeholder=""
+                        value={
+                          subjectValue && subjectValue.length > 0 ? JSON.parse(subjectValue)[6] : ''
+                        }
+                        // className={styles.huoQing}
+                        onChange={e => setDanweiValue(e.target.value)}
+                        style={{ fontSize: '16px' }}
+                      />
+                    </div>
                   </div>
-                  <p className={styles.textStyle}>正文：</p>
-                  <div
-                    style={{
-                      // height: '50px',
-                      display: 'flex',
-                      // justifyContent: 'center',
-                      width: '97%',
-                    }}
-                  >
+                }
+                rawReportTitle={
+                  <Input
+                    className={styles.titleInput}
+                    width={500}
+                    value={titleRawValue}
+                    onChange={handleTitleRawValueChange}
+                  />
+                }
+                rawReportBody={
                   <TextArea
                     className={styles.textArea}
                     autoSize={{
@@ -1549,8 +1688,18 @@ export default function Favorites() {
                     }}
                     value={textRawAreaValue}
                     onChange={handleTextRawAreaChange}
-                    style={{ marginRight: '10px' , fontSize: '16px'}}
+                    style={{ marginRight: '10px', fontSize: '16px' }}
                   />
+                }
+                transformReportTitle={
+                  <Input
+                    className={styles.titleInput}
+                    width={500}
+                    value={titleValue}
+                    onChange={handleTitleValueChange}
+                  />
+                }
+                transformReportBody={
                   <TextArea
                     className={styles.textArea}
                     autoSize={{
@@ -1558,10 +1707,10 @@ export default function Favorites() {
                     }}
                     value={textAreaValue}
                     onChange={handleTextAreaChange}
-                    style={{ marginLeft: '10px' , fontSize: '16px'}}
+                    style={{ marginLeft: '10px', fontSize: '16px' }}
                   />
-                  </div>
-                  <p className={styles.textStyle}>摘要：</p>
+                }
+                summary={
                   <TextArea
                     className={styles.textArea}
                     autoSize={{
@@ -1571,154 +1720,8 @@ export default function Favorites() {
                     onChange={handleSummaryAreaChange}
                     style={{ marginLeft: '10px', fontSize: '16px' }}
                   />
-                  <p className={styles.textStyle}>实体抽取：</p>
-                  {/* <div className={styles.fenxiBox}> */}
-                    {/* <span style={{ width: '100px', fontSize: '16px' }}>分析认为：</span> */}
-                    {/* <TextArea
-                      value={textAreaValue1}
-                      onChange={e => setTextAreaValue1(e.target.value)}
-                      autoSize={{
-                        minRows: 5,
-                      }}
-                      className={styles.textAreaFenxi}
-                    /> */}
-                    
-                  {/* </div> */}
-                  <div className={styles.huoQingBox}>
-                    <Input
-                      addonBefore="时间"
-                      placeholder=""
-                      value={subjectValue && subjectValue.length > 0 ? JSON.parse(subjectValue)[0] : ''}
-                      // className={styles.huoQing}
-                      onChange={e => setDanweiValue(e.target.value)}
-                      style={{ fontSize: '16px' }}
-                    />
-                    <Input
-                      addonBefore="地点"
-                      placeholder=""
-                      value={subjectValue && subjectValue.length > 0 ? JSON.parse(subjectValue)[1] : ''}
-                      // className={styles.huoQing}
-                      onChange={e => setDanweiValue(e.target.value)}
-                      style={{ fontSize: '16px' }}
-                    />
-                    <Input
-                      addonBefore="实体（人物）"
-                      placeholder=""
-                      value={subjectValue && subjectValue.length > 0 ? JSON.parse(subjectValue)[2] : ''}
-                      // className={styles.huoQing}
-                      onChange={e => setDanweiValue(e.target.value)}
-                      style={{ fontSize: '16px' }}
-                    />
-                    <Input
-                      addonBefore="实体（机构）"
-                      placeholder=""
-                      value={subjectValue && subjectValue.length > 0 ? JSON.parse(subjectValue)[3] : ''}
-                      // className={styles.huoQing}
-                      onChange={e => setDanweiValue(e.target.value)}
-                      style={{ fontSize: '16px' }}
-                    />
-                    <Input
-                      addonBefore="实体（装备）"
-                      placeholder=""
-                      value={subjectValue && subjectValue.length > 0 ? JSON.parse(subjectValue)[4] : ''}
-                      // className={styles.huoQing}
-                      onChange={e => setDanweiValue(e.target.value)}
-                      style={{ fontSize: '16px' }}
-                    />
-                    <Input
-                      addonBefore="行动"
-                      placeholder=""
-                      value={subjectValue && subjectValue.length > 0 ? JSON.parse(subjectValue)[5] : ''}
-                      // className={styles.huoQing}
-                      onChange={e => setDanweiValue(e.target.value)}
-                      style={{ fontSize: '16px' }}
-                    />
-                    <Input
-                      addonBefore="事件"
-                      placeholder=""
-                      value={subjectValue && subjectValue.length > 0 ? JSON.parse(subjectValue)[6] : ''}
-                      // className={styles.huoQing}
-                      onChange={e => setDanweiValue(e.target.value)}
-                      style={{ fontSize: '16px' }}
-                    />
-                  </div>
-                </div>
-                <div className={styles.centerRight1}></div>
-                <div className={styles.centerRight}>
-                  <Search
-                    placeholder="请输入关键字"
-                    allowClear
-                    onSearch={e => handleSearch(e)}
-                    style={{
-                      width: 200,
-                    }}
-                    className={styles.searchStyle}
-                  />
-                  <div style={{ display: 'flex', justifyContent: 'right', marginRight: '-60%' }}>
-                    共<span style={{ color: 'red', margin: '0 8px' }}>{totalCount}</span>结果
-                  </div>
-                  <div className={styles.cardBox}>
-                    {mockCardsData.length === 0 ? (
-                      <Empty style={{ margin: '200px 8px', fontSize: '16px' }}></Empty>
-                    ) : (
-                      mockCardsData.map(card => {
-                        const processedCard = {
-                          ...card,
-                          titleZh: highLight(card.titleZh, searchQuery),
-                          contentZh: highLight(card.contentZh, searchQuery),
-                        };
-
-                        return (
-                          <div className={styles.cardStyle} key={card.id}>
-                            <Radio
-                              onChange={() => handleSelectCard(card)}
-                              value={card.id}
-                              checked={selectedCard && selectedCard.id === card.id}
-                            />
-                            <Card key={card.id} className={styles.card}>
-                              <Card.Meta
-                                className={styles.cardMeta}
-                                title={
-                                  <div
-                                    onClick={() => handleContentClick(card.id, card.showActions)}
-                                    style={{
-                                      overflow: 'hidden',
-                                      textOverflow: 'ellipsis',
-                                      whiteSpace: 'nowrap',
-                                      maxWidth: '250px',
-                                    }}
-                                  >
-                                    {processedCard.titleZh}
-                                  </div>
-                                }
-                                description={
-                                  <div
-                                    className={styles.contentStyle}
-                                    onClick={() => handleContentClick(card.id, card.showActions)}
-                                  >
-                                    {processedCard.contentZh}
-                                  </div>
-                                }
-                              />
-                            </Card>
-                          </div>
-                        );
-                      })
-                    )}
-                    {mockCardsData.length > 0 && (
-                      <Pagination
-                        current={currentPage}
-                        total={totalCount}
-                        pageSize={pageSize}
-                        onChange={handlePageChange}
-                        onShowSizeChange={handlePageChange}
-                        style={{ margin: '10px auto', display: 'flex', justifyContent: 'center' }}
-                        showSizeChanger={false}
-                      />
-                    )}
-                  </div>
-                </div>
-              </div>
+                }
+              />
             </Tabs.TabPane>
             <Tabs.TabPane tab="素材通报" key="3">
               <div className={styles.centerStyle}>
@@ -1727,25 +1730,33 @@ export default function Favorites() {
                   <div
                     style={{
                       height: '50px',
-                      display: 'grid',
+                      display: 'flex',
                       justifyContent: 'center',
                       width: '97%',
                     }}
                   >
-                    <Input
-                      className={styles.titleInput}
-                      width={500}
-                      value={titleValue}
-                      onChange={handleTitleValueChange}
-                    ></Input>
+                    <div>
+                      <Input
+                        className={styles.titleInput}
+                        width={500}
+                        value={titleValue}
+                        onChange={handleTitleValueChange}
+                      />
+
+                      <Select defaultValue="option1" style={{ marginLeft: '16px' }}>
+                        <Select.Option value="option1">模板1</Select.Option>
+                        <Select.Option value="option2">模板2</Select.Option>
+                        <Select.Option value="option3">模板3</Select.Option>
+                      </Select>
+                    </div>
                   </div>
-                  <p className={styles.textStyle}>正文</p>
+                  <p className={styles.textStyle}>摘要</p>
                   <TextArea
                     className={styles.textArea}
                     autoSize={{
                       minRows: 20,
                     }}
-                    value={textAreaValue}
+                    value={summaryAreaValue}
                     onChange={handleTextAreaChange}
                   />
                   <p className={styles.textStyle}>图片</p>
@@ -1797,7 +1808,7 @@ export default function Favorites() {
                     <Button onClick={handleSave}> 生成报告</Button>
                   </div>
                 </div>
-                <div className={styles.centerRight1}></div>
+                <div className={styles.centerRight1} />
                 <div className={styles.centerRight}>
                   <Search
                     placeholder="请输入关键字"
@@ -1813,7 +1824,7 @@ export default function Favorites() {
                   </div>
                   <div className={styles.cardBox}>
                     {mockCardsData.length === 0 ? (
-                      <Empty style={{ margin: '200px 8px', fontSize: '16px' }}></Empty>
+                      <Empty style={{ margin: '200px 8px', fontSize: '16px' }} />
                     ) : (
                       mockCardsData.map(card => {
                         const processedCard = {
@@ -1875,28 +1886,19 @@ export default function Favorites() {
               </div>
             </Tabs.TabPane>
             <Tabs.TabPane tab="报告管理" key="4">
-            <Button 
-              onClick={() => message.success("批量通报成功！")} 
-              style={{ marginBottom: 16, backgroundColor: 'rgba(255, 128, 0, 0.5)', color: 'white'}} // 添加一些底部间距
-            >
-              批量通报
-            </Button>
-            <Table
-              rowSelection={rowSelection}  // 注入勾选框配置
-              rowKey="reportId"           // 为每行设置唯一的key
-              columns={columns}
-              dataSource={dataSource}
-              pagination={{
-                position: ['bottomCenter'],
-                current: currentPage,
-                pageSize: pageSize,
-                total: totalCount,
-                onChange: handlePageChange,
-              }}
-              />
-
-              {/* <Table
-                // key={`${index}+1`}
+              <Button
+                onClick={() => message.success('批量通报成功！')}
+                style={{
+                  marginBottom: 16,
+                  backgroundColor: 'rgba(255, 128, 0, 0.5)',
+                  color: 'white',
+                }} // 添加一些底部间距
+              >
+                批量通报
+              </Button>
+              <Table
+                rowSelection={rowSelection} // 注入勾选框配置
+                rowKey="reportId" // 为每行设置唯一的key
                 columns={columns}
                 dataSource={dataSource}
                 pagination={{
@@ -1906,7 +1908,24 @@ export default function Favorites() {
                   total: totalCount,
                   onChange: handlePageChange,
                 }}
-              /> */}
+              />
+
+              {/* <Table
+                  // key={`${index}+1`}
+                  columns={columns}
+                  dataSource={dataSource}
+                  pagination={{
+                    position: ['bottomCenter'],
+                    current: currentPage,
+                    pageSize: pageSize,
+                    total: totalCount,
+                    onChange: handlePageChange,
+                  }}
+                /> */}
+            </Tabs.TabPane>
+
+            <Tabs.TabPane tab="搜报平台" key="5">
+              <SearchReportPlatform />
             </Tabs.TabPane>
           </Tabs>
         </div>

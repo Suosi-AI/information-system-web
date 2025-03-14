@@ -78,7 +78,8 @@ const similarArticles = [
     sourceType: '百度',
     publishTime: '2024-12-31 12:26:00',
     titleZh: '2024 年阿布扎比在 MIPCOM 上推出新现金返还',
-    contentZh: '阿布扎比电影委员会 (ADFC) 旗下的阿布扎比​​创意媒体管理局 (CMA) 今天宣布了一项重大发展，将继续发展、加强和吸引电影和电视制作行业的战略投资。ADFC 将从 2025 年 1 月 1 日起申请的合格制作的当前折扣从 30% 提高到 35%++。此更新将确保好莱坞、宝莱坞和阿拉伯世界的进一步制作。',
+    contentZh:
+      '阿布扎比电影委员会 (ADFC) 旗下的阿布扎比​​创意媒体管理局 (CMA) 今天宣布了一项重大发展，将继续发展、加强和吸引电影和电视制作行业的战略投资。ADFC 将从 2025 年 1 月 1 日起申请的合格制作的当前折扣从 30% 提高到 35%++。此更新将确保好莱坞、宝莱坞和阿拉伯世界的进一步制作。',
     url: 'https://www.taiwannews.com.tw/en/news/5956348',
     // pics: ['/images/sample2.jpg'],
     likeNum: 20,
@@ -93,14 +94,15 @@ const similarArticles = [
     img: dynamicImg('网站'),
     publishTime: '2024-12-31 12:37:00',
     titleZh: '阿布扎比在 MIPCOM 上推出新现金返还',
-    contentZh: '阿布扎比电影委员会主席 Sameer Al Jaberi 补充道：“自 2013 年启动我们的回扣计划以来，已有 150 多部主要作品通过该计划受益。独立验证的研究表明，回扣对我们的经济产生了巨大影响。”通过该计划，通过在酋长国举办大型制作，超过三迪拉姆的资金回流到经济中，除了对经济的财政刺激之外，参观制作还为作为国家未来故事讲述者的年轻创意人员提供了巨大的培训机会，这一重点确保了强有力的发展。当我们临近 2025 年 1 月 1 日发放回扣时，我们将与我们现有的生产社区分享更多信息。”',
+    contentZh:
+      '阿布扎比电影委员会主席 Sameer Al Jaberi 补充道：“自 2013 年启动我们的回扣计划以来，已有 150 多部主要作品通过该计划受益。独立验证的研究表明，回扣对我们的经济产生了巨大影响。”通过该计划，通过在酋长国举办大型制作，超过三迪拉姆的资金回流到经济中，除了对经济的财政刺激之外，参观制作还为作为国家未来故事讲述者的年轻创意人员提供了巨大的培训机会，这一重点确保了强有力的发展。当我们临近 2025 年 1 月 1 日发放回扣时，我们将与我们现有的生产社区分享更多信息。”',
     url: 'https://www.taiwannews.com.tw/en/news/1286295',
     // pics: ['/images/sample3.jpg'],
     likeNum: 15,
     commentNum: 8,
     shareNum: 3,
     readNum: 150,
-  }
+  },
 ];
 
 import { collectNew, getFavoritesList, cancelCollectNew } from './../../../services/store';
@@ -277,19 +279,23 @@ const DashboardCard = ({
           {contentType && (
             <>
               内容类型：
-              {/* <Button
-                type='primary'
+              <Button
+                type="primary"
                 style={{
                   color: 'white',
-                  backgroundColor: 'rgba(0, 0, 0, 0.2)'
+                  backgroundColor: 'rgba(0, 0, 0, 0.2)',
                 }}
               >
                 {contentType}
-              </Button> */}
-              <Tag style={{ 
-                fontSize: '14px',
-                padding: '4px 8px'
-              }}>{contentType}</Tag>
+              </Button>
+              <Tag
+                style={{
+                  fontSize: '14px',
+                  padding: '4px 8px',
+                }}
+              >
+                {contentType}
+              </Tag>
             </>
           )}
           <div onClick={showModal} style={{ cursor: 'pointer' }}>
@@ -430,31 +436,31 @@ const DashboardCard = ({
         {/* 在 Modal 中嵌套 DashboardCard 组件 */}
         {/* <DashboardCard /> */}
         {/* 如果需要多个 DashboardCard，可以使用 map 函数渲染多个 */}
-        {similarArticles.map(card =>
+        {similarArticles.map(card => (
           <DashboardCard
-                      className={styles.dashboardCardStyle}
-                      key={card.id}
-                      img={dynamicImg(card.sourceType)}
-                      sourceName={card.sourceName}
-                      sourceType={card.sourceType}
-                      publishTime={card.publishTime}
-                      title={card.titleZh}
-                      content={card.contentZh}
-                      link={card.url}
-                      images={card.pics}
-                      likeNum={card.likeNum}
-                      commentNum={card.commentNum}
-                      shareNum={card.shareNum}
-                      readNum={card.readNum}
-                      showActions={card.showActions}
-                      onClickContent={() => handleContentClick(card.id, card.showActions)}
-                      onCollect={isCollected => handleCollect(card.id, isCollected)}
-                      onExport={() => handleExport(card.id)}
-                      whetherCollect={card.whetherCollect}
-                      // newsId={card.id}
-                      // folderId={card.folderId}
-                    />
-        )}
+            className={styles.dashboardCardStyle}
+            key={card.id}
+            img={dynamicImg(card.sourceType)}
+            sourceName={card.sourceName}
+            sourceType={card.sourceType}
+            publishTime={card.publishTime}
+            title={card.titleZh}
+            content={card.contentZh}
+            link={card.url}
+            images={card.pics}
+            likeNum={card.likeNum}
+            commentNum={card.commentNum}
+            shareNum={card.shareNum}
+            readNum={card.readNum}
+            showActions={card.showActions}
+            onClickContent={() => handleContentClick(card.id, card.showActions)}
+            onCollect={isCollected => handleCollect(card.id, isCollected)}
+            onExport={() => handleExport(card.id)}
+            whetherCollect={card.whetherCollect}
+            // newsId={card.id}
+            // folderId={card.folderId}
+          />
+        ))}
       </Modal>
     </Card>
   );
