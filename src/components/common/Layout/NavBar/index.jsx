@@ -54,7 +54,7 @@ const NavBar = () => {
             <img className={styles.navLogo} src={img} alt="logo" />
           </div>
           {/* </Link> */}
-          <TopMenu></TopMenu>
+          <TopMenu />
         </div>
         <div>
           <div>

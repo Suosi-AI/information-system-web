@@ -33,7 +33,7 @@ const TreeGraph = ({ data }) => {
     }
   }, [data]);
 
-  return <div ref={graphRef}></div>;
+  return <div ref={graphRef} />;
 };
 
 export default TreeGraph;
