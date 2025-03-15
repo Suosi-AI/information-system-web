@@ -21,6 +21,7 @@ import twitter from '../../../assets/images/icon/twitter.png';
 import facebook from '../../../assets/images/icon/facebook.png';
 import youtube from '../../../assets/images/icon/youtube.png';
 import telegram from '../../../assets/images/icon/telegram.png';
+import zhiku from '../../../assets/images/icon/zhiku.svg';
 
 const BASE_IP = '/images';
 
@@ -51,6 +52,8 @@ const dynamicImg = sourceType => {
       return youtube;
     case '电报':
       return telegram;
+    case '智库':
+      return zhiku;
 
     default:
       return '';
@@ -141,6 +144,8 @@ const DashboardCard = ({
   const [currentFavorite, setCurrentFavorite] = useState(null);
   const [showMenu, setShowMenu] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const hasSamePost = title?.includes('阿布扎比') || content?.includes('阿布扎比');
 
   const handleCollect = () => {
     setIsCollected(!isCollected);
@@ -288,18 +293,10 @@ const DashboardCard = ({
               >
                 {contentType}
               </Button>
-              <Tag
-                style={{
-                  fontSize: '14px',
-                  padding: '4px 8px',
-                }}
-              >
-                {contentType}
-              </Tag>
             </>
           )}
-          <div onClick={showModal} style={{ cursor: 'pointer' }}>
-            相似文章：3
+          <div onClick={hasSamePost && showModal} style={{ cursor: 'pointer' }}>
+            相似文章：{hasSamePost ? 3 : 0}
           </div>
           <span style={{ display: 'flex', lineHeight: '20px' }}>
             <FileWordTwoTone onClick={onExport} style={{ fontSize: '22px', marginRight: '2px' }} />

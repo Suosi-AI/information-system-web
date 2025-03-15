@@ -121,8 +121,8 @@ export default function DataSmartSearchForm(props) {
 
   function close(action, isSave) {
     if (isSave && !form.targetMatchedCondition) {
-      message.error('关键词组不能为空');
-      return;
+      // message.error('关键词组不能为空');
+      // return;
     } else if (isSave && !form.name) {
       message.error('搜索主题不能为空');
       return;

@@ -53,6 +53,7 @@ import twitter from './../../assets/images/icon/twitter.png';
 import facebook from './../../assets/images/icon/facebook.png';
 import youtube from './../../assets/images/icon/youtube.png';
 import telegram from './../../assets/images/icon/telegram.png';
+import zhiku from './../../assets/images/icon/zhiku.svg';
 const { RangePicker } = DatePicker;
 const { Search, TextArea } = Input;
 const plainOptions = [
@@ -113,6 +114,8 @@ const dynamicImg = sourceType => {
       return youtube;
     case '电报':
       return telegram;
+    case '智库':
+      return zhiku;
 
     default:
       return '';
@@ -151,6 +154,13 @@ export default function Social() {
 
   const [isSocialEditorVisible, setIsSocialEditorVisible] = React.useState(false);
   const [mockData, setMockData] = useState([]);
+
+  import('./mock-data.js').then(({ data }) => {
+    if (!mockData || mockData.length === 0) {
+      setMockData(data);
+    }
+  });
+
   const [totalCount, setTotalCount] = useState(0);
   const [searchKeywords, setSearchKeywords] = useState('');
   const [modalData, setModalData] = useState({});
@@ -165,7 +175,7 @@ export default function Social() {
   const [targetMatchedCondition, setTargetMatchedCondition] = useState('');
   const [monitorName, setMonitorName] = useState('');
   const [isInitialFetch, setIsInitialFetch] = useState(true);
-  const [shouldFetchData, setShouldFetchData] = useState(false);
+  const [shouldFetchData, setShouldFetchData] = useState(true);
 
   const [selectedIds, setSelectedIds] = useState([]);
   const [isAllSelected, setIsAllSelected] = useState(false);
@@ -237,15 +247,21 @@ export default function Social() {
     setSelectedLanguage(language);
   };
 
-  const handleSearch = (input = '') => {
+  const handleSearch = (input = '', manualFetch) => {
     let searchQuery = input;
-    if (typeof input === 'string' && 'target' in input) {
+    if (typeof input === 'object' && 'target' in input) {
       const { target } = searchQuery;
       searchQuery = target.value;
     }
     setCurrentPage(1);
     setSearchQuery(searchQuery);
     setSearchKeywords(searchQuery);
+    if (manualFetch) {
+      fetchListData({ manualSearchContent: searchQuery });
+      // setTimeout(() => fetchListData());
+    } else {
+      setShouldFetchData(true);
+    }
   };
   // const highLight = (text, keyword, targetMatchedCondition) => {
   //   if (!keyword || keyword.trim() === '') {
@@ -384,7 +400,7 @@ export default function Social() {
   useEffect(() => {
     if (shouldFetchData) {
       fetchListData();
-      setShouldFetchData(true);
+      // setShouldFetchData(true);
     }
   }, [
     currentPage,
@@ -393,7 +409,7 @@ export default function Social() {
     selectedLanguage,
     contentType,
     dateRange,
-    searchQuery,
+    // searchQuery,
     checkedList,
     // targetMatchedCondition, // 添加依赖项。不应该是弹窗关闭的时候主动调接口吗，关闭？
     shouldFetchData, // 添加依赖项
@@ -476,10 +492,8 @@ export default function Social() {
       setCurrentPage(1);
       setTargetMatchedCondition(selectedArchive.targetMatchedCondition); // 设置匹配条件
       setMonitorName(selectedArchive.name);
-      setShouldFetchData(true);
-      setQueryListObj(selectedArchive);
       setQueryParams(selectedArchive);
-      setTimeout(() => setShouldFetchData(true));
+      // setTimeout(() => setShouldFetchData(true));
     }
   };
 
@@ -492,7 +506,8 @@ export default function Social() {
   };
 
   // 新闻列表
-  const fetchListData = async () => {
+  const fetchListData = async (query = {}) => {
+    const { manualSearchContent } = query;
     setIsLoading(true);
     try {
       let startTime, endTime;
@@ -508,14 +523,15 @@ export default function Social() {
       }
 
       const response = await getMonitorTargetNewsPage({
-        ...(queryListObj ?? {}),
+        // ...(queryListObj ?? {}),
         page: currentPage.toString(),
         limit: pageSize.toString(),
         startTime,
         endTime,
         lang: selectedLanguage || '',
-        searchContent: searchQuery || '',
-        targetMatchedCondition: targetMatchedCondition,
+        searchContent: manualSearchContent ?? (searchQuery || ''),
+        // targetMatchedCondition: targetMatchedCondition,
+        // targetMatchedCondition: searchQuery,
         sourceType: checkedList.length === plainOptions.length ? '' : checkedList.join(','),
         contentType: contentType || '',
       });
@@ -1018,45 +1034,6 @@ export default function Social() {
           onOk={onSaveSmartSearchForm}
           onCancel={handleCancel}
         />
-        <Modal
-          title={isEditing ? '编辑监测目标' : '添加监测目标'}
-          // visible={isSocialEditorVisible}
-          // onOk={handleSaveMonitor}
-          // onCancel={handleCancel}
-          // className={styles.modalSty}
-        >
-          <Form>
-            <Form.Item label="监测目标名称">
-              <Input
-                value={monitorName}
-                onChange={e => setMonitorName(e.target.value)}
-                placeholder="监测目标名称"
-              />
-            </Form.Item>
-            <Form.Item label="匹配条件">
-              <TextArea
-                rows={4}
-                value={targetMatchedCondition}
-                onChange={e => setTargetMatchedCondition(e.target.value)}
-                placeholder="输入匹配条件，使用+-|组合对应逻辑表达式，例：(日本|海上保安厅)+军舰 进行筛选"
-              />
-            </Form.Item>
-            <Form.Item label="告警功能">
-              <Select
-                defaultValue="关闭"
-                onChange={value => {
-                  if (value === '打开') {
-                    // 触发高亮显示的逻辑
-                    setIsAlert(true);
-                  }
-                }}
-              >
-                <Select.Option value="关闭">关闭</Select.Option>
-                <Select.Option value="打开">打开</Select.Option>
-              </Select>
-            </Form.Item>
-          </Form>
-        </Modal>
         <div className={styles.container1}>
           <div className={styles.countTop}>
             <div
@@ -1073,7 +1050,7 @@ export default function Social() {
                     ? searchQuery
                     : null
                 }
-                onChange={value => handleSearch(value)}
+                onChange={value => handleSearch(value, true)}
                 placeholder="请选择过滤规则"
               >
                 {['日本+海上保安厅', '美国+海岸警卫队', '台湾+海巡署'].map(rule => {
@@ -1088,20 +1065,10 @@ export default function Social() {
                 placeholder="请输入您要搜索的内容"
                 allowClear
                 value={searchQuery}
-                onChange={e => handleSearch(e)}
-                onSearch={e => handleSearch(e)}
-                disabled={false}
+                onChange={e => setSearchQuery(e.target.value)}
+                onSearch={e => handleSearch(e, true)}
               />
-              <Select
-                value={searchMode}
-                onChange={value => setSearchMode(value)}
-                style={
-                  {
-                    // width: 100,
-                    // marginLeft: 240,
-                  }
-                }
-              >
+              <Select value={searchMode} onChange={value => setSearchMode(value)}>
                 <Select.Option value="precise">精准搜索</Select.Option>
                 <Select.Option value="fuzzy">模糊搜索</Select.Option>
               </Select>
@@ -1335,6 +1302,7 @@ export default function Social() {
                       publishTime={card.publishTime}
                       title={processedCard.titleZh}
                       content={processedCard.contentZh}
+                      contentType={processedCard.contentType}
                       link={card.url}
                       images={card.pics}
                       likeNum={card.likeNum}
