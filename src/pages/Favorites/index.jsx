@@ -139,6 +139,7 @@ export default function Favorites() {
   const [editingId, setEditingId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [firstLevelArchives, setFirstLevelArchives] = useState([]);
+  const [materialTemplate, setMaterialTemplate] = useState([]);
   const [selectedFirstLevelArchiveId, setSelectedFirstLevelArchiveId] = useState(null);
   const [selectedFirstLevel, setSelectedFirstLevel] = useState(true);
   const [newMonitor, setNewMonitor] = useState({ name: '', matchConditions: '' });
@@ -1743,10 +1744,15 @@ export default function Favorites() {
                         onChange={handleTitleValueChange}
                       />
 
-                      <Select defaultValue="option1" style={{ marginLeft: '16px' }}>
-                        <Select.Option value="option1">模板1</Select.Option>
-                        <Select.Option value="option2">模板2</Select.Option>
-                        <Select.Option value="option3">模板3</Select.Option>
+                      <Select
+                        value={materialTemplate}
+                        style={{ marginLeft: '16px' }}
+                        onSelect={setMaterialTemplate}
+                        placeholder="请选择模板"
+                      >
+                        <Select.Option value="template1">模板1</Select.Option>
+                        <Select.Option value="template2">模板2</Select.Option>
+                        <Select.Option value="template3">模板3</Select.Option>
                       </Select>
                     </div>
                   </div>
@@ -1759,27 +1765,31 @@ export default function Favorites() {
                     value={summaryAreaValue}
                     onChange={handleTextAreaChange}
                   />
-                  <p className={styles.textStyle}>图片</p>
-                  <div className={styles.imgBox}>
-                    {imagesWithNewIP.length > 0 &&
-                      imagesWithNewIP.map((src, index) => (
-                        <div
-                          key={index}
-                          style={{ display: 'flex', marginRight: '10px', height: '100px' }}
-                        >
-                          <Image
-                            src={src}
-                            alt={`Image ${index}`}
-                            style={{ width: '100px', height: '100px', margin: '0 10px' }}
-                            onClick={() => handlePreviewImg(src)}
-                          />
-                          <CloseCircleOutlined
-                            onClick={() => handleDeleteImg(src)}
-                            style={{ color: 'black' }}
-                          />
-                        </div>
-                      ))}
-                  </div>
+                  {materialTemplate !== 'template1' && (
+                    <React.Fragment>
+                      <p className={styles.textStyle}>图片</p>
+                      <div className={styles.imgBox}>
+                        {imagesWithNewIP.length > 0 &&
+                          imagesWithNewIP.map((src, index) => (
+                            <div
+                              key={index}
+                              style={{ display: 'flex', marginRight: '10px', height: '100px' }}
+                            >
+                              <Image
+                                src={src}
+                                alt={`Image ${index}`}
+                                style={{ width: '100px', height: '100px', margin: '0 10px' }}
+                                onClick={() => handlePreviewImg(src)}
+                              />
+                              <CloseCircleOutlined
+                                onClick={() => handleDeleteImg(src)}
+                                style={{ color: 'black' }}
+                              />
+                            </div>
+                          ))}
+                      </div>
+                    </React.Fragment>
+                  )}
                   <p className={styles.textStyle}>分析</p>
                   <div className={styles.fenxiBox}>
                     <span style={{ width: '100px', fontSize: '16px' }}>分析认为：</span>
