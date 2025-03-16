@@ -1,7 +1,8 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { Button, Table, Tooltip, Space, message } from 'antd';
+import { Button, Table, Tooltip, Space, message, Modal } from 'antd';
 import { queryPageTable, deleteReport, exportReportToWord } from './../../services/store';
+import DashboardCard, { dynamicImg } from 'src/components/common/DashboardCard/index.jsx';
 
 function downloadFile(resp) {
   // 创建 Blob 对象
@@ -33,6 +34,8 @@ export default function SearchReportPlatform() {
   const [pageSize, setPageSize] = useState(10);
   const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [sameReports, setSameReports] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   // 定义选择框的配置
   const rowSelection = {
     selectedRowKeys,
@@ -64,14 +67,14 @@ export default function SearchReportPlatform() {
     },
     {
       title: '日期',
-      dataIndex: 'createTime',
-      key: 'createTime',
+      dataIndex: 'publishTime',
+      key: 'publishTime',
       // width: 200,
     },
     {
       title: '创建者',
-      dataIndex: 'username',
-      key: 'username',
+      dataIndex: 'sourceName',
+      key: 'sourceName',
       // width: 200,
       ellipsis: {
         showTitle: false,
@@ -88,7 +91,11 @@ export default function SearchReportPlatform() {
     title: '相似合并数量',
     dataIndex: 'mergeNum',
     key: 'mergeNum',
-    render: value => <Button type="text">{value}</Button>,
+    render: (value, record) => (
+      <Button type="text" onClick={() => showSameReports(record?.sameReportIds)}>
+        {record?.sameReportIds?.length ?? 0}
+      </Button>
+    ),
   };
 
   const operationColumn = {
@@ -109,6 +116,15 @@ export default function SearchReportPlatform() {
     setColumns([...baseColumns, mergeColumn, operationColumn]);
   }
 
+  function showSameReports(sameReportIds) {
+    if (!sameReportIds || sameReportIds?.length === 0) {
+      return;
+    }
+    const sameReports = dataSource.filter(report => sameReportIds.includes(report.id));
+    setSameReports(sameReports);
+    setIsModalVisible(true);
+  }
+
   const handlePageChange = (page, pageSize) => {
     setCurrentPage(page);
     setPageSize(pageSize);
@@ -116,6 +132,12 @@ export default function SearchReportPlatform() {
   };
 
   const handleTableReport = async () => {
+    if (true) {
+      const { reports } = await import('../Social/mock-data');
+      setDataSource(reports);
+      setTotalCount(reports.length);
+      return;
+    }
     setIsLoading(true);
     try {
       const response = await queryPageTable({
@@ -174,7 +196,7 @@ export default function SearchReportPlatform() {
       <Table
         style={{ maxWidth: '100%' }}
         rowSelection={rowSelection} // 注入勾选框配置
-        rowKey="reportId" // 为每行设置唯一的key
+        rowKey="id" // 为每行设置唯一的key
         columns={columns}
         dataSource={dataSource}
         pagination={{
@@ -185,6 +207,34 @@ export default function SearchReportPlatform() {
           onChange: handlePageChange,
         }}
       />
+
+      <Modal
+        title="相似文章"
+        visible={isModalVisible}
+        footer={null} // 不显示默认的底部按钮
+        width={800} // 设置 Modal 宽度
+        onCancel={() => setIsModalVisible(false)}
+      >
+        {sameReports.map(card => (
+          <DashboardCard
+            key={card.id}
+            img={dynamicImg(card.sourceType)}
+            sourceName={card.sourceName}
+            sourceType={card.sourceType}
+            publishTime={card.publishTime}
+            title={card.titleZh}
+            content={card.contentZh}
+            link={card.url}
+            images={card.pics}
+            likeNum={card.likeNum}
+            commentNum={card.commentNum}
+            shareNum={card.shareNum}
+            readNum={card.readNum}
+            showActions={card.showActions}
+            whetherCollect={card.whetherCollect}
+          />
+        ))}
+      </Modal>
     </div>
   );
 }

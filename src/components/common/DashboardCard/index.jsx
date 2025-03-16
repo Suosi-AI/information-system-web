@@ -30,7 +30,7 @@ const replaceIP = url => {
   return `${BASE_IP}${urlObj.pathname}`;
 };
 
-const dynamicImg = sourceType => {
+export const dynamicImg = sourceType => {
   switch (sourceType) {
     case '微博':
       return weibo;
