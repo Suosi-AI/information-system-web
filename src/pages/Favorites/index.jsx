@@ -150,9 +150,7 @@ export default function Favorites() {
   const [isLeftPanelVisible, setIsLeftPanelVisible] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [mockCardsData, setMockCardsData] = useState([]);
-  import('../Social/mock-data').then(({ data }) => {
-    setMockCardsData(data);
-  });
+
   const [selectedCard, setSelectedCard] = useState(null);
   const [textAreaValue, setTextAreaValue] = useState('');
   const [textRawAreaValue, setTextRawAreaValue] = useState('');
@@ -915,6 +913,28 @@ export default function Favorites() {
   );
 
   const [tabName, setTabName] = useState('');
+  useEffect(() => {
+    if (tabName === 'readReportPlatform') {
+      import('./readReportPlatform/mock-data').then(({ data }) => {
+        setMockCardsData(data);
+      });
+    } else {
+      import('../Social/mock-data').then(({ reports }) => {
+        setMockCardsData(reports);
+      });
+    }
+  }, [tabName]);
+
+  function handleTypeChange(value) {
+    if (!value) {
+      return;
+    }
+    import('./readReportPlatform/mock-data').then(({ data }) => {
+      const filterData = data.filter(item => item.type === value);
+      setMockCardsData(filterData);
+    });
+  }
+
   const handleTabClick = (event, tab) => {
     setTabName('');
     if (event === '1') {
@@ -1052,7 +1072,7 @@ export default function Favorites() {
           </div>
         )}
         {!isLeftPanelVisible && (
-          <div className={styles.left}>
+          <div className={styles.left} style={{ width: 'min-content' }}>
             {tabName === 'readReportPlatform' && (
               <ReadReportPlatform.Aside
                 data={mockCardsData}
@@ -1061,6 +1081,7 @@ export default function Favorites() {
                 handleSelectCard={handleSelectCard}
                 handleContentClick={handleContentClick}
                 handleSearch={handleSearch}
+                onTypeChange={handleTypeChange}
                 pagination={
                   <Pagination
                     current={currentPage}
@@ -1694,6 +1715,7 @@ export default function Favorites() {
                     width={500}
                     value={titleRawValue}
                     onChange={handleTitleRawValueChange}
+                    style={{ textAlign: 'center' }}
                   />
                 }
                 rawReportBody={
@@ -1713,6 +1735,7 @@ export default function Favorites() {
                     width={500}
                     value={titleValue}
                     onChange={handleTitleValueChange}
+                    style={{ textAlign: 'center' }}
                   />
                 }
                 transformReportBody={
@@ -1874,7 +1897,7 @@ export default function Favorites() {
                                 value={card.id}
                                 checked={selectedCard && selectedCard.id === card.id}
                               />
-                              <Card key={card.id} className={styles.card}>
+                              <Card key={card.id} className={styles.card} style={{ margin: '0' }}>
                                 <Card.Meta
                                   className={styles.cardMeta}
                                   title={
@@ -1892,6 +1915,13 @@ export default function Favorites() {
                                   }
                                   description={
                                     <div
+                                      style={{
+                                        display: '-webkit-box',
+                                        overflow: 'hidden',
+                                        WebkitBoxOrient: 'vertical',
+                                        WebkitLineClamp: '2',
+                                        color: 'rgb(222, 218, 218)',
+                                      }}
                                       className={styles.contentStyle}
                                       onClick={() => handleContentClick(card.id, card.showActions)}
                                     >

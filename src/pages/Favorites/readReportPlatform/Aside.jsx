@@ -36,16 +36,21 @@ export default function ReadReportPlatform(props) {
     handleContentClick,
     handleSearch,
     pagination,
+    onTypeChange,
   } = props;
 
   const [keyword, setKeyword] = useState('');
-  const [reportType, setReportType] = useState('公开数据');
+  const [reportType, setReportType] = useState();
+
+  useEffect(() => {
+    onTypeChange?.(reportType);
+  }, [reportType]);
 
   return (
     <div style={{ padding: '0 16px', display: 'grid', gridTemplateColumns: '1fr', rowGap: '18px' }}>
       <header style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', columnGap: '16px' }}>
         <Search placeholder="请输入关键字" allowClear onSearch={e => handleSearch(e)} />
-        <Select defaultValue={reportType} onChange={setReportType}>
+        <Select value={reportType} onChange={setReportType} placeholder="数据筛选规则">
           {['公开数据', '通报报文', '内部素材'].map(type => {
             return (
               <Select.Option key={type} value={type}>
