@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { Button, Input, Select, Radio, Empty } from 'antd';
+import { Button, Input, Select, Radio, Empty, Modal } from 'antd';
+import DashboardCard, { dynamicImg } from 'src/components/common/DashboardCard';
 import styles from '../index.less';
 
 const { Search, TextArea } = Input;
@@ -29,7 +30,7 @@ const highLight = (text, keyword) => {
 
 export default function ReadReportPlatform(props) {
   const {
-    data = [],
+    data: mockData = [],
     searchQuery = {},
     selectedCard,
     handleSelectCard,
@@ -41,6 +42,15 @@ export default function ReadReportPlatform(props) {
 
   const [keyword, setKeyword] = useState('');
   const [reportType, setReportType] = useState();
+  const [isModalVisible, setIsModalVisible] = useState();
+  const [sameReports, setSameReports] = useState([]);
+  const [duplicationFlag, setDuplicationFlag] = useState(false);
+
+  function showDuplication(item) {
+    setIsModalVisible(true);
+    const data = mockData.filter(d => item?.sameReportIds.includes(d.id));
+    setSameReports(data);
+  }
 
   useEffect(() => {
     onTypeChange?.(reportType);
@@ -62,9 +72,9 @@ export default function ReadReportPlatform(props) {
       </header>
 
       <section style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Button>相似文章去重</Button>
+        <Button onClick={() => setDuplicationFlag(!duplicationFlag)}>相似文章去重</Button>
         <span>
-          共 <span style={{ color: 'red' }}>{data.length}</span> 结果
+          共 <span style={{ color: 'red' }}>{mockData.length}</span> 结果
         </span>
       </section>
 
@@ -72,10 +82,10 @@ export default function ReadReportPlatform(props) {
         <div
           style={{ display: 'grid', gridTemplateColumns: '1fr', rowGap: '16px', padding: '20px 0' }}
         >
-          {data.length === 0 ? (
+          {mockData.length === 0 ? (
             <Empty style={{ margin: '200px 8px', fontSize: '16px' }} />
           ) : (
-            data.map(card => {
+            mockData.map(card => {
               const processedCard = {
                 ...card,
                 titleZh: highLight(card.titleZh, searchQuery),
@@ -86,7 +96,7 @@ export default function ReadReportPlatform(props) {
                 <div
                   style={{
                     display: 'grid',
-                    gridTemplateColumns: 'min-content 1fr',
+                    gridTemplateColumns: 'min-content 1fr min-content',
                     alignItems: 'center',
                     columnGap: '16px',
                   }}
@@ -125,13 +135,50 @@ export default function ReadReportPlatform(props) {
                       {processedCard.contentZh}
                     </p>
                   </article>
+                  {duplicationFlag && (
+                    <Button
+                      type="text"
+                      onClick={() => showDuplication(card)}
+                      style={{ color: 'white' }}
+                    >
+                      {card?.sameReportIds?.length ?? 0}
+                    </Button>
+                  )}
                 </div>
               );
             })
           )}
-          {data.length > 0 && pagination}
+          {mockData.length > 0 && pagination}
         </div>
       </main>
+
+      <Modal
+        title="相似文章"
+        visible={isModalVisible}
+        footer={null} // 不显示默认的底部按钮
+        width={800} // 设置 Modal 宽度
+        onCancel={() => setIsModalVisible(false)}
+      >
+        {sameReports.map(card => (
+          <DashboardCard
+            key={card.id}
+            img={dynamicImg(card.sourceType)}
+            sourceName={card.sourceName}
+            sourceType={card.sourceType}
+            publishTime={card.publishTime}
+            title={card.titleZh}
+            content={card.contentZh}
+            link={card.url}
+            images={card.pics}
+            likeNum={card.likeNum}
+            commentNum={card.commentNum}
+            shareNum={card.shareNum}
+            readNum={card.readNum}
+            showActions={card.showActions}
+            whetherCollect={card.whetherCollect}
+          />
+        ))}
+      </Modal>
     </div>
   );
 }

@@ -175,6 +175,8 @@ export default function Favorites() {
   const [isAllSelected, setIsAllSelected] = useState(false);
 
   const [searchMode, setSearchMode] = useState('precise'); // 'precise' 或 'fuzzy'
+  const [duplicationVisible, setDuplicationVisible] = useState(false);
+  const [duplicationData, setDuplicationData] = useState([]);
 
   const calculateTimeRange = range => {
     const endDate = new Date(); // 结束时间为当前时间
@@ -961,18 +963,17 @@ export default function Favorites() {
       setCurrentPage(1);
       setIsLeftPanelVisible(true);
       handleTableReport();
+    } else if (event === '4') {
+      setIsActive(false);
+      setCurrentPage(1);
+      setIsLeftPanelVisible(true);
+      handleTableReport();
+    } else if (event === '4') {
+      setIsActive(false);
+      setCurrentPage(1);
+      setIsLeftPanelVisible(true);
+      handleTableReport();
     }
-    // else if (event === '4') {
-    //   setIsActive(false);
-    //   setCurrentPage(1);
-    //   setIsLeftPanelVisible(false);
-    //   handleTableReport();
-    // } else if (event === '4') {
-    //   setIsActive(false);
-    //   setCurrentPage(1);
-    //   setIsLeftPanelVisible(false);
-    //   handleTableReport();
-    // }
   };
   const handleTableReport = async () => {
     setIsLoading(true);
@@ -1072,7 +1073,7 @@ export default function Favorites() {
           </div>
         )}
         {!isLeftPanelVisible && (
-          <div className={styles.left} style={{ width: 'min-content' }}>
+          <div className={styles.left} style={{ width: 'min-content', minWidth: '14%' }}>
             {tabName === 'readReportPlatform' && (
               <ReadReportPlatform.Aside
                 data={mockCardsData}
