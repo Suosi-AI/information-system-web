@@ -70,6 +70,7 @@ import {
   deleteReport,
   exportReportToWord,
 } from './../../services/store';
+import MaterialReport from './MaterialReport';
 
 import CardModal from './../../components/common/CardModal';
 
@@ -149,6 +150,9 @@ export default function Favorites() {
   const [isLeftPanelVisible, setIsLeftPanelVisible] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [mockCardsData, setMockCardsData] = useState([]);
+  import('../Social/mock-data').then(({ data }) => {
+    setMockCardsData(data);
+  });
   const [selectedCard, setSelectedCard] = useState(null);
   const [textAreaValue, setTextAreaValue] = useState('');
   const [textRawAreaValue, setTextRawAreaValue] = useState('');
@@ -933,11 +937,22 @@ export default function Favorites() {
         fetchListData(selectedFirstLevelArchiveId, searchQuery);
       }
     } else if (event === '3') {
-      setIsActive(true);
+      setIsActive(false);
       setCurrentPage(1);
-      setIsLeftPanelVisible(false);
+      setIsLeftPanelVisible(true);
       handleTableReport();
     }
+    // else if (event === '4') {
+    //   setIsActive(false);
+    //   setCurrentPage(1);
+    //   setIsLeftPanelVisible(false);
+    //   handleTableReport();
+    // } else if (event === '4') {
+    //   setIsActive(false);
+    //   setCurrentPage(1);
+    //   setIsLeftPanelVisible(false);
+    //   handleTableReport();
+    // }
   };
   const handleTableReport = async () => {
     setIsLoading(true);
@@ -1725,7 +1740,186 @@ export default function Favorites() {
               />
             </Tabs.TabPane>
             <Tabs.TabPane tab="素材通报" key="3">
-              <div className={styles.centerStyle}>
+              <MaterialReport
+                left={{
+                  header: (
+                    <React.Fragment>
+                      <Input
+                        style={{ width: '200px' }}
+                        width={500}
+                        value={titleValue}
+                        onChange={handleTitleValueChange}
+                      />
+
+                      <Select
+                        value={materialTemplate}
+                        style={{ marginLeft: '16px' }}
+                        onSelect={setMaterialTemplate}
+                        placeholder="请选择模板"
+                      >
+                        <Select.Option value="template1">模板1</Select.Option>
+                        <Select.Option value="template2">模板2</Select.Option>
+                        <Select.Option value="template3">模板3</Select.Option>
+                      </Select>
+                    </React.Fragment>
+                  ),
+                  main: (
+                    <React.Fragment>
+                      <div>
+                        <p style={{ fontSize: '18px' }}>摘要</p>
+                        <TextArea
+                          className={styles.textArea}
+                          autoSize={{
+                            minRows: 20,
+                          }}
+                          value={summaryAreaValue}
+                          onChange={handleTextAreaChange}
+                        />
+                      </div>
+                      {!['template1', 'template3'].includes(materialTemplate) && (
+                        <div>
+                          <p style={{ fontSize: '18px' }}>图片</p>
+                          <div
+                            style={{
+                              display: 'flex',
+                              flexWrap: 'wrap',
+                              width: '100%',
+                              minHeight: '400px',
+                              maxHeight: '400px',
+                              padding: '10px',
+                              overflow: 'auto',
+                              backgroundColor: '#fff',
+                              borderRadius: '8px',
+                            }}
+                          >
+                            {imagesWithNewIP.length > 0 &&
+                              imagesWithNewIP.map((src, index) => (
+                                <div
+                                  key={index}
+                                  style={{ display: 'flex', marginRight: '10px', height: '100px' }}
+                                >
+                                  <Image
+                                    src={src}
+                                    alt={`Image ${index}`}
+                                    style={{ width: '100px', height: '100px', margin: '0 10px' }}
+                                    onClick={() => handlePreviewImg(src)}
+                                  />
+                                  <CloseCircleOutlined
+                                    onClick={() => handleDeleteImg(src)}
+                                    style={{ color: 'black' }}
+                                  />
+                                </div>
+                              ))}
+                          </div>
+                        </div>
+                      )}
+                      {!['template2', 'template3'].includes(materialTemplate) && (
+                        <div>
+                          <p style={{ fontSize: '18px' }}>分析</p>
+                          <div>
+                            <span style={{ width: '100px', fontSize: '16px' }}>分析认为：</span>
+                            <TextArea
+                              value={textAreaValue1}
+                              onChange={e => setTextAreaValue1(e.target.value)}
+                              autoSize={{
+                                minRows: 5,
+                              }}
+                            />
+                          </div>
+                        </div>
+                      )}
+                      <div className={styles.huoQingBox}>
+                        <Input
+                          addonBefore="获情单位"
+                          placeholder="*************科室"
+                          value={danweiValue}
+                          className={styles.huoQing}
+                          onChange={e => setDanweiValue(e.target.value)}
+                        />
+                      </div>
+                      <div style={{ justifySelf: 'center', display: 'flex', columnGap: '16px' }}>
+                        <Button onClick={reset}>重置</Button>
+                        <Button onClick={handleSave}> 生成报告</Button>
+                      </div>
+                    </React.Fragment>
+                  ),
+                }}
+                right={
+                  <div>
+                    <Search placeholder="请输入关键字" allowClear onSearch={e => handleSearch(e)} />
+                    <div style={{ display: 'flex', justifyContent: 'right', marginRight: '-60%' }}>
+                      共<span style={{ color: 'red', margin: '0 8px' }}>{totalCount}</span>结果
+                    </div>
+                    <div className={styles.cardBox}>
+                      {mockCardsData.length === 0 ? (
+                        <Empty style={{ margin: '200px 8px', fontSize: '16px' }} />
+                      ) : (
+                        mockCardsData.map(card => {
+                          const processedCard = {
+                            ...card,
+                            titleZh: highLight(card.titleZh, searchQuery),
+                            contentZh: highLight(card.contentZh, searchQuery),
+                          };
+
+                          return (
+                            <div
+                              style={{
+                                display: 'grid',
+                                gridTemplateColumns: 'min-content 1fr',
+                                alignItems: 'center',
+                              }}
+                            >
+                              <Radio
+                                onChange={() => handleSelectCard(card)}
+                                value={card.id}
+                                checked={selectedCard && selectedCard.id === card.id}
+                              />
+                              <Card key={card.id} className={styles.card}>
+                                <Card.Meta
+                                  className={styles.cardMeta}
+                                  title={
+                                    <div
+                                      onClick={() => handleContentClick(card.id, card.showActions)}
+                                      style={{
+                                        overflow: 'hidden',
+                                        textOverflow: 'ellipsis',
+                                        whiteSpace: 'nowrap',
+                                        maxWidth: '250px',
+                                      }}
+                                    >
+                                      {processedCard.titleZh}
+                                    </div>
+                                  }
+                                  description={
+                                    <div
+                                      className={styles.contentStyle}
+                                      onClick={() => handleContentClick(card.id, card.showActions)}
+                                    >
+                                      {processedCard.contentZh}
+                                    </div>
+                                  }
+                                />
+                              </Card>
+                            </div>
+                          );
+                        })
+                      )}
+                      {mockCardsData.length > 0 && (
+                        <Pagination
+                          current={currentPage}
+                          total={totalCount}
+                          pageSize={pageSize}
+                          onChange={handlePageChange}
+                          onShowSizeChange={handlePageChange}
+                          style={{ margin: '10px auto', display: 'flex', justifyContent: 'center' }}
+                          showSizeChanger={false}
+                        />
+                      )}
+                    </div>
+                  </div>
+                }
+              />
+              {/* <div className={styles.centerStyle}>
                 <div className={styles.centerLeft}>
                   {' '}
                   <div
@@ -1765,7 +1959,7 @@ export default function Favorites() {
                     value={summaryAreaValue}
                     onChange={handleTextAreaChange}
                   />
-                  {materialTemplate !== 'template1' && (
+                  {!['template1', 'template3'].includes(materialTemplate) && (
                     <React.Fragment>
                       <p className={styles.textStyle}>图片</p>
                       <div className={styles.imgBox}>
@@ -1790,18 +1984,22 @@ export default function Favorites() {
                       </div>
                     </React.Fragment>
                   )}
-                  <p className={styles.textStyle}>分析</p>
-                  <div className={styles.fenxiBox}>
-                    <span style={{ width: '100px', fontSize: '16px' }}>分析认为：</span>
-                    <TextArea
-                      value={textAreaValue1}
-                      onChange={e => setTextAreaValue1(e.target.value)}
-                      autoSize={{
-                        minRows: 5,
-                      }}
-                      className={styles.textAreaFenxi}
-                    />
-                  </div>
+                  {!['template2', 'template3'].includes(materialTemplate) && (
+                    <React.Fragment>
+                      <p className={styles.textStyle}>分析</p>
+                      <div className={styles.fenxiBox}>
+                        <span style={{ width: '100px', fontSize: '16px' }}>分析认为：</span>
+                        <TextArea
+                          value={textAreaValue1}
+                          onChange={e => setTextAreaValue1(e.target.value)}
+                          autoSize={{
+                            minRows: 5,
+                          }}
+                          className={styles.textAreaFenxi}
+                        />
+                      </div>
+                    </React.Fragment>
+                  )}
                   <div className={styles.huoQingBox}>
                     <Input
                       addonBefore="获情单位"
@@ -1893,7 +2091,7 @@ export default function Favorites() {
                     )}
                   </div>
                 </div>
-              </div>
+              </div> */}
             </Tabs.TabPane>
             <Tabs.TabPane tab="报告管理" key="4">
               <Button
