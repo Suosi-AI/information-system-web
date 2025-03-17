@@ -5,7 +5,7 @@ import { createBrowserHistory } from 'history';
 
 const defaultConfig = {
   // baseURL: '/dev-api',
-  baseURL: 'http://192.168.102.23:8899',
+  baseURL: 'http://192.168.100.200:8899',
   // timeout: 120 * 1000,
   withCredentials: true,
   headers: {

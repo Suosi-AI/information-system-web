@@ -927,6 +927,9 @@ export default function Favorites() {
         setMockCardsData(data);
       });
     } else {
+      if (tabName === 'report' || tabName === '') {
+        return;
+      }
       import('../Social/mock-data').then(({ reports }) => {
         setMockCardsData(reports);
       });

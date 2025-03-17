@@ -61,6 +61,29 @@ export const dynamicImg = sourceType => {
   }
 };
 
+async function downloadPdf(urlPath) {
+  const response = await fetch(urlPath);
+  // 创建 Blob 对象
+  const blob = new Blob([await response.blob()], { type: 'application/vnd.ms-word;charset=utf-8' });
+
+  // 生成 URL
+  const url = window.URL.createObjectURL(blob);
+
+  // 创建一个 <a> 元素并设置相关属性
+  const link = document.createElement('a');
+  link.style.display = 'none';
+  link.href = url;
+  link.download = '报告.pdf'; // 设置下载文件的名称
+
+  // 将 <a> 元素添加到页面中并触发点击
+  document.body.appendChild(link);
+  link.click();
+
+  // 清理操作
+  document.body.removeChild(link);
+  window.URL.revokeObjectURL(url);
+}
+
 const similarArticles = [
   {
     id: 1,
@@ -429,7 +452,7 @@ const DashboardCard = ({
           return (
             <span style={{ display: 'flex', lineHeight: '20px' }}>
               <FilePdfTwoTone style={{ fontSize: '22px', marginRight: '2px' }} />
-              <a style={{ color: 'white' }} href={file} download target={'_blank'}>
+              <a style={{ color: 'white' }} onClick={() => downloadPdf(file)}>
                 导出
               </a>
             </span>
