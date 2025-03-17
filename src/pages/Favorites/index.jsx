@@ -593,8 +593,10 @@ export default function Favorites() {
         area: selectedArea || '',
         contentType: selectedContentType || '',
       });
-      setMockCardsData(response.page.list);
-      setTotalCount(response.page.totalCount);
+      if (tabName === 'report') {
+        setMockCardsData(response.page.list);
+        setTotalCount(response.page.totalCount);
+      }
     } catch (error) {
       console.error('获取数据失败:', error);
       message.error(`获取数据失败${response.msg}`);
@@ -914,6 +916,10 @@ export default function Favorites() {
     </Menu>
   );
 
+  import('./readReportPlatform/mock-data').then(({ data }) => {
+    console.log('fkk');
+  });
+
   const [tabName, setTabName] = useState('');
   useEffect(() => {
     if (tabName === 'readReportPlatform') {
@@ -940,6 +946,7 @@ export default function Favorites() {
   const handleTabClick = (event, tab) => {
     setTabName('');
     if (event === '1') {
+      setTabName('report');
       setIsActive(false);
       setCurrentPage(1);
       setIsLeftPanelVisible(true);

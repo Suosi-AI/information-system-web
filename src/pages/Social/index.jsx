@@ -155,11 +155,11 @@ export default function Social() {
   const [isSocialEditorVisible, setIsSocialEditorVisible] = React.useState(false);
   const [mockData, setMockData] = useState([]);
 
-  import('./mock-data.js').then(({ data }) => {
-    if (!mockData || mockData.length === 0) {
-      setMockData(data);
-    }
-  });
+  // import('./mock-data.js').then(({ data }) => {
+  //   if (!mockData || mockData?.length === 0) {
+  //     setMockData(data);
+  //   }
+  // });
 
   const [totalCount, setTotalCount] = useState(0);
   const [searchKeywords, setSearchKeywords] = useState('');
@@ -1310,6 +1310,7 @@ export default function Social() {
                       shareNum={card.shareNum}
                       readNum={card.readNum}
                       showActions={card.showActions}
+                      files={card.files ? JSON.parse(card.files) : []}
                       onClickContent={() => handleContentClick(card.id, card.showActions)}
                       onCollect={isCollected => handleCollect(card.id, isCollected)}
                       onExport={() => handleExport(card.id)}

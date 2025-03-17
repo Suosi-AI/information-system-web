@@ -9,6 +9,7 @@ import {
   ShareAltOutlined,
   EyeOutlined,
   StarFilled,
+  FilePdfTwoTone,
 } from '@ant-design/icons';
 import styles from './index.less';
 import weibo from '../../../assets/images/icon/weibo.png';
@@ -137,6 +138,7 @@ const DashboardCard = ({
   isCollected,
   setIsCollected,
   summary,
+  files,
   ...props
 }) => {
   // const [isCollected, setIsCollected] = useState(false);
@@ -269,7 +271,7 @@ const DashboardCard = ({
   return (
     <Card className={styles.cardStyle}>
       <p className={styles.topCard}>
-        <span className={styles.topLeft} onClick={onClickContent}>
+        <span className={styles.topLeft} onClick={() => onClickContent?.()}>
           <span className={styles.topImg}>
             <img
               style={{ width: '20px', height: '20px', marginRight: '12px' }}
@@ -422,6 +424,17 @@ const DashboardCard = ({
           ))}
         </div>
       )}
+      {files?.length > 0 &&
+        files.map(file => {
+          return (
+            <span style={{ display: 'flex', lineHeight: '20px' }}>
+              <FilePdfTwoTone style={{ fontSize: '22px', marginRight: '2px' }} />
+              <a style={{ color: 'white' }} href={file} download target={'_blank'}>
+                导出
+              </a>
+            </span>
+          );
+        })}
 
       <Modal
         title="相似文章"
