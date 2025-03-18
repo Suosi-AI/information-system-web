@@ -1,4 +1,5 @@
 import React from 'react';
+import ReportList from 'src/components/common/ReportList';
 
 export default function MaterialReport(props) {
   const { left, right } = props || {};

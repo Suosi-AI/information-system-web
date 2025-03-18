@@ -53,7 +53,7 @@ const calculateTimeRange = range => {
   return [moment(startTime, 'YYYY-MM-DD HH:mm:ss'), moment(endDate, 'YYYY-MM-DD HH:mm:ss')];
 };
 
-const defaultTimeRange = '24h';
+const defaultTimeRange = '1y';
 
 const emptyForm = () => ({
   id: new Date().getTime().toString(),

@@ -255,7 +255,7 @@ export function ReportMedia({ data, type = 'img' }) {
 }
 
 export default function Report(props) {
-  const { data, keyword, onFlush } = props;
+  const { data, keyword, theme, onFlush } = props;
 
   const pdfFiles = data.files ? JSON.parse(data.files) : [];
 
@@ -291,7 +291,9 @@ export default function Report(props) {
           }}
         >
           <div style={{ display: 'flex', columnGap: '16px', alignItems: 'center' }}>
-            <img width="25" height="25" src={sourceTypeImg(data.sourceType)} />
+            {theme != 'simple' && (
+              <img width="25" height="25" src={sourceTypeImg(data.sourceType)} />
+            )}
             <span style={{ color: primaryColor }}>{data.sourceName}</span>
             <span>{data.publishTime}</span>
 
@@ -318,7 +320,7 @@ export default function Report(props) {
           {keywordHightlight(data.content ?? data.contentZh, keyword)}
         </main>
 
-        <ReportDataIcons data={data} />
+        {theme != 'simple' && <ReportDataIcons data={data} />}
 
         {data.url && (
           <ReportDataIcon
@@ -356,6 +358,7 @@ export default function Report(props) {
         <ReportDetail
           data={reportDetail}
           keyword={keyword}
+          theme={theme}
           onFlush={() => showReportDetail(onFlush)}
         />
       </Modal>

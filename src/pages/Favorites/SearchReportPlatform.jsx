@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Button, Table, Tooltip, Space, message, Modal } from 'antd';
 import { queryPageTable, deleteReport, exportReportToWord } from './../../services/store';
 import DashboardCard, { dynamicImg } from 'src/components/common/DashboardCard/index.jsx';
+import { useLocalStorageState } from 'ahooks';
 
 function downloadFile(resp) {
   // 创建 Blob 对象
@@ -29,13 +30,14 @@ function downloadFile(resp) {
 export default function SearchReportPlatform() {
   const [isAllSelected, setIsAllSelected] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]); // 用于存储被选中的行的key值
-  const [dataSource, setDataSource] = useState([]);
+  const [dataSource, setDataSource] = useLocalStorageState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [sameReports, setSameReports] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isDuplication, setIsDuplication] = useState(false);
   // 定义选择框的配置
   const rowSelection = {
     selectedRowKeys,
@@ -79,11 +81,13 @@ export default function SearchReportPlatform() {
       ellipsis: {
         showTitle: false,
       },
-      render: username => (
-        <Tooltip placement="topLeft" title={username}>
-          {username}
-        </Tooltip>
-      ),
+      render: () => {
+        return (
+          <Tooltip placement="topLeft" title={'admin'}>
+            admin
+          </Tooltip>
+        );
+      },
     },
   ];
 
@@ -112,9 +116,7 @@ export default function SearchReportPlatform() {
 
   const [columns, setColumns] = useState([...baseColumns, operationColumn]);
 
-  function handleDeduplicate() {
-    setColumns([...baseColumns, mergeColumn, operationColumn]);
-  }
+  useEffect(() => {});
 
   function showSameReports(sameReportIds) {
     if (!sameReportIds || sameReportIds?.length === 0) {
@@ -156,20 +158,25 @@ export default function SearchReportPlatform() {
     }
   };
 
-  const onDel = async reportId => {
-    try {
-      const response = await deleteReport({ reportId: reportId });
-
-      if (response.code === 200) {
-        message.success('删除成功');
-        handleTableReport();
-      } else {
-        message.error('删除失败');
-      }
-    } catch (error) {
-      console.error('删除失败:', error);
-      message.error('删除时发生错误');
+  async function handleDeduplicate() {
+    if (!isDuplication) {
+      const filterData = dataSource.filter(
+        item => !!item.sameReportIds && item.sameReportIds?.length !== 0
+      );
+      setDataSource(filterData);
+      setColumns([...baseColumns, mergeColumn, operationColumn]);
+    } else {
+      await handleTableReport();
+      setColumns([...baseColumns, operationColumn]);
     }
+    setIsDuplication(!isDuplication);
+  }
+
+  const onDel = async reportId => {
+    const filterData = dataSource.filter(item => item.id !== reportId);
+    setDataSource(filterData);
+    await handleDeduplicate();
+    message.success('删除成功');
   };
 
   const onExportFire = async reportId => {

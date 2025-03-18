@@ -20,6 +20,7 @@ import {
   AimOutlined,
   CloseCircleOutlined,
 } from '@ant-design/icons';
+import ReportList from 'src/components/common/ReportList';
 
 import styles from './index.less';
 import {
@@ -502,27 +503,6 @@ export default function Favorites() {
     setImageList([]);
   };
 
-  // useEffect(() => {
-  //   if (selectedFirstLevelArchiveId) {
-  //     fetchListData(selectedFirstLevelArchiveId, searchQuery, currentPage, pageSize);
-  //   }
-  // }, [selectedFirstLevelArchiveId, searchQuery, currentPage, pageSize]);
-
-  // useEffect(() => {
-  //   if (firstLevelArchives.length > 0 && searchQuery) {
-  //     const firstFolderId = firstLevelArchives[0].id;
-  //     setSelectedFirstLevelArchiveId(firstFolderId);
-  //     fetchListData(firstFolderId, searchQuery);
-  //     setExpandedId(firstFolderId);
-  //   }
-  // }, [firstLevelArchives, searchQuery]);
-
-  // useEffect(() => {
-  //   if (isActive) {
-  //     handleTableReport();
-  //   }
-  // }, [currentPage, pageSize]);
-
   useEffect(() => {
     if (!selectedFirstLevel) {
       // 智能搜索时floderId为空
@@ -593,7 +573,7 @@ export default function Favorites() {
         area: selectedArea || '',
         contentType: selectedContentType || '',
       });
-      if (tabName === 'report') {
+      if (tabName === 'report' || tabName === '') {
         setMockCardsData(response.page.list);
         setTotalCount(response.page.totalCount);
       }
@@ -609,23 +589,6 @@ export default function Favorites() {
     setCurrentPage(page);
     setPageSize(pageSize);
     setIsAllSelected(false);
-  };
-  const handleSelectAll = () => {
-    const currentIds = mockCardsData.map(item => item.id);
-    if (isAllSelected) {
-      setSelectedIds(selectedIds.filter(id => !currentIds.includes(id)));
-    } else {
-      setSelectedIds([...selectedIds, ...currentIds]);
-    }
-    setIsAllSelected(!isAllSelected);
-  };
-
-  const handleExportModeToggle = () => {
-    setIsExportMode(!isExportMode); // 切换 isExportMode 的值
-
-    if (isExportMode) {
-      setSelectedIds([]); // 清空选中的ID
-    }
   };
 
   const handleTextAreaChange = event => {
@@ -804,122 +767,6 @@ export default function Favorites() {
       });
   };
 
-  // 收集当前页新闻ID的方法
-  const collectCurrentPageNewsIds = () => {
-    const currentIds = mockCardsData.map(item => item.id);
-    return currentIds;
-  };
-
-  // 手动选中新闻id
-  const handleSelectChange = (id, checked) => {
-    if (checked) {
-      setSelectedIds([...selectedIds, id]);
-    } else {
-      setSelectedIds(selectedIds.filter(selectedId => selectedId !== id));
-    }
-  };
-
-  // 导出为Excel的方法
-  const handleExportToExcel = () => {
-    if (selectedIds.length === 0) {
-      message.error('请选择要导出的新闻');
-      return;
-    }
-
-    let newsIdL = {
-      newsIdList: selectedIds,
-    };
-
-    exportNewsToExcel(newsIdL)
-      .then(resp => {
-        // 创建 Blob 对象
-        const blob = new Blob([resp], { type: 'application/vnd.ms-xls;charset=utf-8' });
-
-        // 生成 URL
-        const url = window.URL.createObjectURL(blob);
-
-        // 创建一个 <a> 元素并设置相关属性
-        const link = document.createElement('a');
-        link.style.display = 'none';
-        link.href = url;
-        link.download = '新闻列表.xls'; // 设置下载文件的名称
-
-        // 将 <a> 元素添加到页面中并触发点击
-        document.body.appendChild(link);
-        link.click();
-
-        // 清理操作
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(url);
-
-        message.success('导出成功!');
-        setSelectedIds([]); // 清空选中的ID
-        setIsExportMode(false); // 关闭复选框显示
-      })
-      .catch(error => {
-        console.error('导出为Excel失败:', error);
-        message.error('导出为Excel失败');
-      });
-  };
-
-  // 导出多个Word压缩成Zip的方法
-  const handleExportToWordZip = () => {
-    if (selectedIds.length === 0) {
-      message.error('请选择要导出的新闻');
-      return;
-    }
-
-    let newsIdL = {
-      newsIdList: selectedIds,
-    };
-
-    exportNewsToWordZip(newsIdL)
-      .then(resp => {
-        // 创建 Blob 对象
-        const blob = new Blob([resp], { type: 'application/vnd.ms-zip;charset=utf-8' });
-
-        // 生成 URL
-        const url = window.URL.createObjectURL(blob);
-
-        // 创建一个 <a> 元素并设置相关属性
-        const link = document.createElement('a');
-        link.style.display = 'none';
-        link.href = url;
-        link.download = '新闻列表.zip'; // 设置下载文件的名称
-
-        // 将 <a> 元素添加到页面中并触发点击
-        document.body.appendChild(link);
-        link.click();
-
-        // 清理操作
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(url);
-
-        message.success('导出成功!');
-        setSelectedIds([]); // 清空选中的ID
-        setIsExportMode(false); // 关闭复选框显示
-      })
-      .catch(error => {
-        console.error('导出为Excel失败:', error);
-        message.error('导出为Excel失败');
-      });
-  };
-
-  const menu = (
-    <Menu>
-      <Menu.Item key="excel" onClick={handleExportToExcel}>
-        导出为Excel
-      </Menu.Item>
-      <Menu.Item key="wordZip" style={{ width: '150px' }} onClick={handleExportToWordZip}>
-        导出为WordZip
-      </Menu.Item>
-    </Menu>
-  );
-
-  import('./readReportPlatform/mock-data').then(({ data }) => {
-    console.log('fkk');
-  });
-
   const [tabName, setTabName] = useState('');
   useEffect(() => {
     if (tabName === 'readReportPlatform') {
@@ -935,16 +782,6 @@ export default function Favorites() {
       });
     }
   }, [tabName]);
-
-  function handleTypeChange(value) {
-    if (!value) {
-      return;
-    }
-    import('./readReportPlatform/mock-data').then(({ data }) => {
-      const filterData = data.filter(item => item.type === value);
-      setMockCardsData(filterData);
-    });
-  }
 
   const handleTabClick = (event, tab) => {
     setTabName('');
@@ -1025,210 +862,71 @@ export default function Favorites() {
 
   return (
     <>
-      <div className={styles.container}>
-        {isLeftPanelVisible && (
-          <div className={styles.left}>
-            <Button onClick={handleAddMonitor} icon={<PlusOutlined />} className={styles.btn}>
-              新增文件夹
-            </Button>
-            <div>
-              {firstLevelArchives.map(item => {
-                return (
-                  <div key={item.id}>
-                    <div
-                      className={styles.listItem}
-                      style={{ background: expandedId === item.id ? '#118D86' : '' }}
-                    >
-                      <AimOutlined />
-                      <span
-                        className={styles.title}
-                        onClick={() => handleMonitorItemClick(item.id)}
-                      >
-                        {item.name}
-                      </span>
-                      <React.Fragment>
-                        <EditOutlined
-                          className={styles.editIcon}
-                          name="EditOutlined"
-                          onClick={event => handleEditClick(item.id, event)}
-                        />
-                        <Popconfirm
-                          title="您确定要删除吗？"
-                          onConfirm={event => confirmDelete(item.id, event)}
-                          onCancel={() => console.log('Cancel clicked')}
-                          okText="是"
-                          cancelText="否"
-                        >
-                          <DeleteOutlined className={styles.deleteIcon} name="DeleteOutlined" />
-                        </Popconfirm>
-                      </React.Fragment>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
-        {!isLeftPanelVisible && (
-          <div className={styles.left} style={{ width: 'min-content', minWidth: '14%' }}>
-            {tabName === 'readReportPlatform' && (
-              <ReadReportPlatform.Aside
-                data={mockCardsData}
-                searchQuery={searchQuery}
-                selectedCard={selectedCard}
-                handleSelectCard={handleSelectCard}
-                handleContentClick={handleContentClick}
-                handleSearch={handleSearch}
-                onTypeChange={handleTypeChange}
-                pagination={
-                  <Pagination
-                    current={currentPage}
-                    total={totalCount}
-                    pageSize={pageSize}
-                    onChange={handlePageChange}
-                    onShowSizeChange={handlePageChange}
-                    style={{ margin: '10px auto', display: 'flex', justifyContent: 'center' }}
-                    showSizeChanger={false}
-                  />
-                }
-              />
-            )}
-          </div>
-        )}
-
-        <div className={styles.container1}>
-          <Tabs defaultActiveKey="1" className={styles.tabBox} onTabClick={handleTabClick}>
-            {/* <Tabs.TabPane tab="信息列表" key="1" className={styles.tabFirst}>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  padding: '0 20px',
-                }}
-              >
-                <div>
-                  <span>
-                    共<span style={{ color: '#FF8000', margin: '0 10px' }}>{totalCount}</span>
-                    条记录
-                  </span>
-                </div>
-
-                {totalCount > 0 ? (
-                  <div>
-                    {selectedIds.length > 0 && (
-                      <span style={{ marginRight: 8 }}>
-                        已选择
-                        <span style={{ color: 'red', margin: '0 5px' }}>{selectedIds.length}</span>
-                        条新闻
-                      </span>
-                    )}
-                    {/* {isExportMode && (
-                      <Button
-                        style={{
-                          marginLeft: 8,
-                          background: 'rgb(103 101 101 / 70%)',
-                          color: 'white',
-                        }}
-                        onClick={handleSelectAll}
-                      >
-                        {isAllSelected ? '全不选' : '当页全选'}
-                      </Button>
-                    )} */}
-            {/* <Dropdown overlay={menu} placement="bottom" onClick={handleExportModeToggle}>
-                      <Button
-                        style={{
-                          backgroundColor: 'rgba(255, 128, 0, 0.5)',
-                          color: 'white',
-                          marginLeft: 8,
-                        }}
-                        disabled={selectedIds.length === 0}
-                      >
-                        批量导出
-                      </Button>
-                    </Dropdown>
-                  </div>
-                ) : (
-                  <div>
-                    <Button
-                      style={{ backgroundColor: 'rgba(255, 128, 0, 0.5)', color: 'white' }}
-                      disabled
-                    >
-                      批量导出
-                    </Button>
-                  </div>
-                )}
-              </div>
-
-              {mockCardsData.length === 0 ? (
-                <Empty style={{ margin: 'auto 8px', fontSize: '18px' }}></Empty>
-              ) : (
-                mockCardsData.map((card, index) => {
-                  const processedCard = {
-                    ...card,
-                    titleZh: highLight(card.titleZh, searchQuery),
-                    contentZh: highLight(card.contentZh, searchQuery),
-                  };
-
+      <div
+        className={styles.container}
+        style={{ display: 'grid', gridTemplateColumns: '370px 1fr' }}
+      >
+        <div className={styles.left} style={{ width: '100%' }}>
+          {isLeftPanelVisible && (
+            <React.Fragment>
+              <Button onClick={handleAddMonitor} icon={<PlusOutlined />} className={styles.btn}>
+                新增文件夹
+              </Button>
+              <div>
+                {firstLevelArchives.map(item => {
                   return (
-                    <div
-                      key={card.id}
-                      style={{
-                        display: 'flex',
-                        paddingLeft: '10px',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                      }}
-                    >
-                      {isExportMode && (
-                        <Checkbox
-                          value={card.id}
-                          checked={selectedIds.includes(card.id)}
-                          onChange={e => handleSelectChange(card.id, e.target.checked)}
-                          style={{ marginRight: '10px' }}
-                        />
-                      )}
-                      <DashboardCard
-                        className={styles.dashboardCardStyle}
-                        key={card.id}
-                        img={dynamicImg(card.sourceType)}
-                        sourceName={card.sourceName}
-                        publishTime={card.publishTime}
-                        title={processedCard.titleZh}
-                        content={processedCard.contentZh}
-                        link={card.url}
-                        images={card.pics}
-                        likeNum={card.likeNum}
-                        commentNum={card.commentNum}
-                        shareNum={card.shareNum}
-                        readNum={card.readNum}
-                        showActions={card.showActions}
-                        onClickContent={() => handleContentClick(card.id, card.showActions)}
-                        onCollect={isCollected => handleCollect(card.id, isCollected)}
-                        onExport={() => handleExport(card.id)}
-                        newsId={card.id}
-                        folderId={card.folderId}
-                        whetherCollect={card.whetherCollect}
-                        isCollected={isCollected}
-                        setIsCollected={setIsCollected}
-                        onHandle={fetchListData}
-                      />
+                    <div key={item.id}>
+                      <div
+                        className={styles.listItem}
+                        style={{ background: expandedId === item.id ? '#118D86' : '' }}
+                      >
+                        <AimOutlined />
+                        <span
+                          className={styles.title}
+                          onClick={() => handleMonitorItemClick(item.id)}
+                        >
+                          {item.name}
+                        </span>
+                        <React.Fragment>
+                          <EditOutlined
+                            className={styles.editIcon}
+                            name="EditOutlined"
+                            onClick={event => handleEditClick(item.id, event)}
+                          />
+                          <Popconfirm
+                            title="您确定要删除吗？"
+                            onConfirm={event => confirmDelete(item.id, event)}
+                            onCancel={() => console.log('Cancel clicked')}
+                            okText="是"
+                            cancelText="否"
+                          >
+                            <DeleteOutlined className={styles.deleteIcon} name="DeleteOutlined" />
+                          </Popconfirm>
+                        </React.Fragment>
+                      </div>
                     </div>
                   );
-                })
-              )}
-              {mockCardsData.length > 0 && (
-                <Pagination
-                  current={currentPage}
-                  total={totalCount}
-                  pageSize={pageSize}
-                  onChange={handlePageChange}
-                  onShowSizeChange={handlePageChange}
-                  style={{ margin: '10px auto', display: 'flex', justifyContent: 'center' }}
-                  showSizeChanger={false}
-                />
-              )} */}
-            {/* </Tabs.TabPane> */}
+                })}
+              </div>
+            </React.Fragment>
+          )}
+
+          {!isLeftPanelVisible && tabName === 'readReportPlatform' && (
+            <ReadReportPlatform.Aside
+              data={mockCardsData}
+              selectedCard={selectedCard}
+              handleSelectCard={handleSelectCard}
+            />
+          )}
+        </div>
+
+        <div className={styles.container1} style={{ width: '100%' }}>
+          <Tabs
+            defaultActiveKey="1"
+            className={styles.tabBox}
+            style={{ width: '100%', padding: '0 16px' }}
+            onTabClick={handleTabClick}
+          >
             <Tabs.TabPane tab="报文素材" key="1" className={styles.tabFirst}>
               <div className={styles.searchTop}>
                 <Search
@@ -1467,7 +1165,6 @@ export default function Favorites() {
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  padding: '0 20px',
                 }}
               >
                 <div>
@@ -1478,7 +1175,7 @@ export default function Favorites() {
                 </div>
 
                 {/* 二次检索 */}
-                <div className={styles.searchTop1}>
+                <div className={styles.searchTop1} style={{ marginBottom: '16px' }}>
                   <Search
                     placeholder="请输入您要搜索的内容"
                     allowClear
@@ -1488,121 +1185,25 @@ export default function Favorites() {
                     }}
                   />
                 </div>
-
-                {totalCount > 0 ? (
-                  <div>
-                    {selectedIds.length > 0 && (
-                      <span style={{ marginRight: 8 }}>
-                        已选择
-                        <span style={{ color: 'red', margin: '0 5px' }}>{selectedIds.length}</span>
-                        条新闻
-                      </span>
-                    )}
-                    {/* {isExportMode && (
-                      <Button
-                        style={{
-                          marginLeft: 8,
-                          background: 'rgb(103 101 101 / 70%)',
-                          color: 'white',
-                        }}
-                        onClick={handleSelectAll}
-                      >
-                        {isAllSelected ? '全不选' : '当页全选'}
-                      </Button>
-                    )} */}
-                    <Dropdown overlay={menu} placement="bottom" onClick={handleExportModeToggle}>
-                      <Button
-                        style={{
-                          backgroundColor: 'rgba(255, 128, 0, 0.5)',
-                          color: 'white',
-                          marginLeft: 8,
-                        }}
-                        disabled={selectedIds.length === 0}
-                      >
-                        批量导出
-                      </Button>
-                    </Dropdown>
-                  </div>
-                ) : (
-                  <div>
-                    <Button
-                      style={{ backgroundColor: 'rgba(255, 128, 0, 0.5)', color: 'white' }}
-                      disabled
-                    >
-                      批量导出
-                    </Button>
-                  </div>
-                )}
               </div>
-
-              {mockCardsData.length === 0 ? (
-                <Empty style={{ margin: 'auto 8px', fontSize: '18px' }} />
-              ) : (
-                mockCardsData.map((card, index) => {
-                  const processedCard = {
-                    ...card,
-                    titleZh: highLight(card.titleZh, searchQuery),
-                    contentZh: highLight(card.contentZh, searchQuery),
-                  };
-
-                  return (
-                    <div
-                      key={card.id}
-                      style={{
-                        display: 'flex',
-                        paddingLeft: '10px',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                      }}
-                    >
-                      {isExportMode && (
-                        <Checkbox
-                          value={card.id}
-                          checked={selectedIds.includes(card.id)}
-                          onChange={e => handleSelectChange(card.id, e.target.checked)}
-                          style={{ marginRight: '10px' }}
-                        />
-                      )}
-                      <DashboardCard
-                        className={styles.dashboardCardStyle}
-                        key={card.id}
-                        img={dynamicImg(card.sourceType)}
-                        sourceName={card.sourceName}
-                        publishTime={card.publishTime}
-                        title={processedCard.titleZh}
-                        content={processedCard.contentZh}
-                        link={card.url}
-                        images={card.pics}
-                        likeNum={card.likeNum}
-                        commentNum={card.commentNum}
-                        shareNum={card.shareNum}
-                        readNum={card.readNum}
-                        showActions={card.showActions}
-                        onClickContent={() => handleContentClick(card.id, card.showActions)}
-                        onCollect={isCollected => handleCollect(card.id, isCollected)}
-                        onExport={() => handleExport(card.id)}
-                        newsId={card.id}
-                        folderId={card.folderId}
-                        whetherCollect={card.whetherCollect}
-                        isCollected={isCollected}
-                        setIsCollected={setIsCollected}
-                        onHandle={fetchListData}
-                      />
-                    </div>
-                  );
-                })
-              )}
-              {mockCardsData.length > 0 && (
-                <Pagination
-                  current={currentPage}
-                  total={totalCount}
-                  pageSize={pageSize}
-                  onChange={handlePageChange}
-                  onShowSizeChange={handlePageChange}
-                  style={{ margin: '10px auto', display: 'flex', justifyContent: 'center' }}
-                  showSizeChanger={false}
-                />
-              )}
+              <ReportList
+                list={mockCardsData}
+                queryOption={{ keyword: searchQuery }}
+                loading={isLoading}
+                style={{ padding: '0' }}
+                pagination={
+                  <Pagination
+                    current={currentPage}
+                    total={totalCount}
+                    pageSize={pageSize}
+                    onChange={handlePageChange}
+                    onShowSizeChange={handlePageChange}
+                    style={{ margin: '10px auto', display: 'flex', justifyContent: 'center' }}
+                    showSizeChanger={false}
+                  />
+                }
+                onFlush={fetchListData}
+              />
             </Tabs.TabPane>
             <Tabs.TabPane tab="阅报平台" key="2">
               <ReadReportPlatform.Body
@@ -1947,179 +1548,6 @@ export default function Favorites() {
                   </div>
                 }
               />
-              {/* <div className={styles.centerStyle}>
-                <div className={styles.centerLeft}>
-                  {' '}
-                  <div
-                    style={{
-                      height: '50px',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      width: '97%',
-                    }}
-                  >
-                    <div>
-                      <Input
-                        className={styles.titleInput}
-                        width={500}
-                        value={titleValue}
-                        onChange={handleTitleValueChange}
-                      />
-
-                      <Select
-                        value={materialTemplate}
-                        style={{ marginLeft: '16px' }}
-                        onSelect={setMaterialTemplate}
-                        placeholder="请选择模板"
-                      >
-                        <Select.Option value="template1">模板1</Select.Option>
-                        <Select.Option value="template2">模板2</Select.Option>
-                        <Select.Option value="template3">模板3</Select.Option>
-                      </Select>
-                    </div>
-                  </div>
-                  <p className={styles.textStyle}>摘要</p>
-                  <TextArea
-                    className={styles.textArea}
-                    autoSize={{
-                      minRows: 20,
-                    }}
-                    value={summaryAreaValue}
-                    onChange={handleTextAreaChange}
-                  />
-                  {!['template1', 'template3'].includes(materialTemplate) && (
-                    <React.Fragment>
-                      <p className={styles.textStyle}>图片</p>
-                      <div className={styles.imgBox}>
-                        {imagesWithNewIP.length > 0 &&
-                          imagesWithNewIP.map((src, index) => (
-                            <div
-                              key={index}
-                              style={{ display: 'flex', marginRight: '10px', height: '100px' }}
-                            >
-                              <Image
-                                src={src}
-                                alt={`Image ${index}`}
-                                style={{ width: '100px', height: '100px', margin: '0 10px' }}
-                                onClick={() => handlePreviewImg(src)}
-                              />
-                              <CloseCircleOutlined
-                                onClick={() => handleDeleteImg(src)}
-                                style={{ color: 'black' }}
-                              />
-                            </div>
-                          ))}
-                      </div>
-                    </React.Fragment>
-                  )}
-                  {!['template2', 'template3'].includes(materialTemplate) && (
-                    <React.Fragment>
-                      <p className={styles.textStyle}>分析</p>
-                      <div className={styles.fenxiBox}>
-                        <span style={{ width: '100px', fontSize: '16px' }}>分析认为：</span>
-                        <TextArea
-                          value={textAreaValue1}
-                          onChange={e => setTextAreaValue1(e.target.value)}
-                          autoSize={{
-                            minRows: 5,
-                          }}
-                          className={styles.textAreaFenxi}
-                        />
-                      </div>
-                    </React.Fragment>
-                  )}
-                  <div className={styles.huoQingBox}>
-                    <Input
-                      addonBefore="获情单位"
-                      placeholder="*************科室"
-                      value={danweiValue}
-                      className={styles.huoQing}
-                      onChange={e => setDanweiValue(e.target.value)}
-                    />
-                  </div>
-                  <div className={styles.bottomBox}>
-                    <Button className={styles.btn} onClick={reset}>
-                      重置
-                    </Button>
-                    <Button onClick={handleSave}> 生成报告</Button>
-                  </div>
-                </div>
-                <div className={styles.centerRight1} />
-                <div className={styles.centerRight}>
-                  <Search
-                    placeholder="请输入关键字"
-                    allowClear
-                    onSearch={e => handleSearch(e)}
-                    style={{
-                      width: 200,
-                    }}
-                    className={styles.searchStyle}
-                  />
-                  <div style={{ display: 'flex', justifyContent: 'right', marginRight: '-60%' }}>
-                    共<span style={{ color: 'red', margin: '0 8px' }}>{totalCount}</span>结果
-                  </div>
-                  <div className={styles.cardBox}>
-                    {mockCardsData.length === 0 ? (
-                      <Empty style={{ margin: '200px 8px', fontSize: '16px' }} />
-                    ) : (
-                      mockCardsData.map(card => {
-                        const processedCard = {
-                          ...card,
-                          titleZh: highLight(card.titleZh, searchQuery),
-                          contentZh: highLight(card.contentZh, searchQuery),
-                        };
-
-                        return (
-                          <div className={styles.cardStyle} key={card.id}>
-                            <Radio
-                              onChange={() => handleSelectCard(card)}
-                              value={card.id}
-                              checked={selectedCard && selectedCard.id === card.id}
-                            />
-                            <Card key={card.id} className={styles.card}>
-                              <Card.Meta
-                                className={styles.cardMeta}
-                                title={
-                                  <div
-                                    onClick={() => handleContentClick(card.id, card.showActions)}
-                                    style={{
-                                      overflow: 'hidden',
-                                      textOverflow: 'ellipsis',
-                                      whiteSpace: 'nowrap',
-                                      maxWidth: '250px',
-                                    }}
-                                  >
-                                    {processedCard.titleZh}
-                                  </div>
-                                }
-                                description={
-                                  <div
-                                    className={styles.contentStyle}
-                                    onClick={() => handleContentClick(card.id, card.showActions)}
-                                  >
-                                    {processedCard.contentZh}
-                                  </div>
-                                }
-                              />
-                            </Card>
-                          </div>
-                        );
-                      })
-                    )}
-                    {mockCardsData.length > 0 && (
-                      <Pagination
-                        current={currentPage}
-                        total={totalCount}
-                        pageSize={pageSize}
-                        onChange={handlePageChange}
-                        onShowSizeChange={handlePageChange}
-                        style={{ margin: '10px auto', display: 'flex', justifyContent: 'center' }}
-                        showSizeChanger={false}
-                      />
-                    )}
-                  </div>
-                </div>
-              </div> */}
             </Tabs.TabPane>
             <Tabs.TabPane tab="报告管理" key="4">
               <Button

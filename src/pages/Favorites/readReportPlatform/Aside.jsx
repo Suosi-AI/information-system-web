@@ -1,79 +1,87 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { Button, Input, Select, Radio, Empty, Modal } from 'antd';
-import ReportDetail from 'src/components/common/ReportDetail';
-import DashboardCard, { dynamicImg } from 'src/components/common/DashboardCard';
 
-const { Search, TextArea } = Input;
+import ReportList from 'src/components/common/ReportList';
+import { highLight as keywordHightlight } from 'src/utils/common';
+
+const { Search } = Input;
 
 const emptyQueryOption = {
+  ids: null,
   keyword: '',
-  reportType: '',
+  type: null,
   filterSame: false,
 };
 
-const highLight = (text, keyword) => {
-  // 增加空值检查
-  if (!text) return '';
-
-  if (!keyword || keyword.trim() === '') {
-    return text;
-  }
-  const regex = new RegExp(`(${keyword})`, 'gi');
-  const parts = text.split(regex);
-  return parts.map((part, index) => {
-    if (regex.test(part)) {
-      return (
-        <span key={index} style={{ color: 'yellow' }}>
-          {part}
-        </span>
-      );
-    } else {
-      return part;
-    }
-  });
-};
-
 async function getList(queryOption) {
-  // import('./readReportPlatform/mock-data').then(({ data }) => {
-  //   setMockCardsData(data);
-  // });
+  const { data } = await import('./mock-data');
+
+  return data
+    .filter(
+      item =>
+        !queryOption.ids || queryOption.ids?.length === 0 || queryOption?.ids?.includes(item.id)
+    )
+    .filter(
+      item => !queryOption.filterSame || (item.sameReportIds && item.sameReportIds?.length !== 0)
+    )
+    .filter(item => !queryOption.type || queryOption.type === item.type)
+    .filter(
+      item =>
+        !queryOption.keyword ||
+        item.titleZh.includes(queryOption.keyword) ||
+        item.contentZh.includes(queryOption.keyword)
+    );
 }
 
 export default function ReadReportPlatform(props) {
-  const {
-    data: mockData = [],
-    searchQuery = {},
-    selectedCard,
-    handleSelectCard,
-    handleContentClick,
-    handleSearch,
-    pagination,
-    onTypeChange,
-  } = props;
+  const { selectedCard, handleSelectCard, pagination } = props;
 
-  const [keyword, setKeyword] = useState('');
-  const [reportType, setReportType] = useState();
-  const [isModalVisible, setIsModalVisible] = useState();
+  const [data, setData] = useState([]);
   const [sameReports, setSameReports] = useState([]);
-  const [duplicationFlag, setDuplicationFlag] = useState(false);
   const [queryOption, setQueryOption] = useState({ ...emptyQueryOption });
+  const [isModalVisible, setIsModalVisible] = useState();
 
-  function showDuplication(item) {
+  const dataLength = data.length;
+
+  async function showDuplication(ids) {
+    if (!ids || ids.length === 0) {
+      return;
+    }
     setIsModalVisible(true);
-    const data = mockData.filter(d => item?.sameReportIds.includes(d.id));
+    const data = await getList({ ids });
     setSameReports(data);
   }
 
-  useEffect(() => {
-    onTypeChange?.(reportType);
-  }, [reportType]);
+  /**
+   *
+   * @param {keyof typeof emptyQueryOption} key
+   * @param {any} value
+   */
+  function handleQueryChange(key, value) {
+    setQueryOption({ ...queryOption, [key]: value });
+  }
+
+  useEffect(async () => {
+    const data = await getList(queryOption);
+    console.log(queryOption);
+    setData(data);
+  }, [queryOption]);
 
   return (
     <div style={{ padding: '0 16px', display: 'grid', gridTemplateColumns: '1fr', rowGap: '18px' }}>
       <header style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', columnGap: '16px' }}>
-        <Search placeholder="请输入关键字" allowClear onSearch={e => handleSearch(e)} />
-        <Select value={reportType} onChange={setReportType} placeholder="数据筛选规则">
+        <Search
+          placeholder="请输入关键字"
+          allowClear
+          onSearch={value => handleQueryChange('keyword', value)}
+        />
+        <Select
+          allowClear
+          value={queryOption.type}
+          onChange={value => handleQueryChange('type', value)}
+          placeholder="数据筛选规则"
+        >
           {['公开数据', '通报报文', '内部素材'].map(type => {
             return (
               <Select.Option key={type} value={type}>
@@ -85,9 +93,12 @@ export default function ReadReportPlatform(props) {
       </header>
 
       <section style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Button onClick={() => setDuplicationFlag(!duplicationFlag)}>相似文章去重</Button>
+        <Button onClick={() => handleQueryChange('filterSame', !queryOption.filterSame)}>
+          相似文章去重
+        </Button>
+
         <span>
-          共 <span style={{ color: 'red' }}>{mockData.length}</span> 结果
+          共 <span style={{ color: 'red' }}>{dataLength}</span> 结果
         </span>
       </section>
 
@@ -95,16 +106,10 @@ export default function ReadReportPlatform(props) {
         <div
           style={{ display: 'grid', gridTemplateColumns: '1fr', rowGap: '16px', padding: '20px 0' }}
         >
-          {mockData.length === 0 ? (
+          {dataLength === 0 ? (
             <Empty style={{ margin: '200px 8px', fontSize: '16px' }} />
           ) : (
-            mockData.map(card => {
-              const processedCard = {
-                ...card,
-                titleZh: highLight(card.titleZh, searchQuery),
-                contentZh: highLight(card.contentZh, searchQuery),
-              };
-
+            data.map(card => {
               return (
                 <div
                   style={{
@@ -122,7 +127,6 @@ export default function ReadReportPlatform(props) {
                   />
                   <article>
                     <header
-                      onClick={() => handleContentClick(card.id, card.showActions)}
                       style={{
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
@@ -133,7 +137,7 @@ export default function ReadReportPlatform(props) {
                         marginBottom: '8px',
                       }}
                     >
-                      {processedCard.titleZh}
+                      {keywordHightlight(card.titleZh, queryOption.keyword)}
                     </header>
                     <p
                       style={{
@@ -143,38 +147,44 @@ export default function ReadReportPlatform(props) {
                         WebkitLineClamp: '2',
                         color: '#dedada',
                       }}
-                      onClick={() => handleContentClick(card.id, card.showActions)}
                     >
-                      {processedCard.contentZh}
+                      {keywordHightlight(card.contentZh, queryOption.keyword)}
                     </p>
                   </article>
-                  {duplicationFlag && (
-                    <Button
+                  {queryOption.filterSame && (
+                    <span
                       type="text"
-                      onClick={() => showDuplication(card)}
-                      style={{ color: 'white' }}
+                      onClick={() => showDuplication(card.sameReportIds)}
+                      style={{
+                        color: 'white',
+                        fontSize: '20px',
+                        textDecoration: 'underline',
+                        cursor: 'pointer',
+                      }}
                     >
                       {card?.sameReportIds?.length ?? 0}
-                    </Button>
+                    </span>
                   )}
                 </div>
               );
             })
           )}
-          {mockData.length > 0 && pagination}
+          {dataLength > 0 && pagination}
         </div>
       </main>
 
       <Modal
         title="相似文章"
         visible={isModalVisible}
-        footer={null} // 不显示默认的底部按钮
-        width={800} // 设置 Modal 宽度
+        footer={null}
+        width="min-content"
         onCancel={() => setIsModalVisible(false)}
       >
-        {sameReports.map(card => (
-          <ReportDetail data={card} />
-        ))}
+        <ReportList
+          list={sameReports}
+          style={{ minWidth: '800px', color: 'whitesmoke' }}
+          theme="simple"
+        />
       </Modal>
     </div>
   );

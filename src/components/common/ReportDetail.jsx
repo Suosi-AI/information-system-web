@@ -30,7 +30,7 @@ export function Article({ label, value, keyword, hightlight }) {
   );
 }
 
-export default function ReportDetail({ data = {}, keyword, onFlush }) {
+export default function ReportDetail({ data = {}, keyword, theme = 'full', onFlush }) {
   return (
     <div
       style={{
@@ -54,29 +54,37 @@ export default function ReportDetail({ data = {}, keyword, onFlush }) {
       </header>
 
       <section style={{ width: '100%', display: 'flex', columnGap: '16px' }}>
-        <Info label="来源" value={data.sourceType} logo={sourceTypeImg(data.sourceType)} />
-        <Info label="作者" value={data.sourceName} />
-        <Info label="语种" value={data.lang} />
+        {theme !== 'simple' && (
+          <Info label="来源" value={data.sourceType} logo={sourceTypeImg(data.sourceType)} />
+        )}
+        {theme !== 'simple' && <Info label="作者" value={data.sourceName} />}
+        {theme !== 'simple' && <Info label="语种" value={data.lang} />}
         <Info label="发布时间" value={data.publishTime} />
       </section>
 
-      <section
-        style={{
-          fontSize: '16px',
-          color: 'whitesmoke',
-          whiteSpace: 'nowrap',
-          textOverflow: 'ellipsis',
-          overflow: 'hidden',
-        }}
-      >
-        <span>原文地址：</span>
-        <a href={data.url} target="_blank">
-          {data.url}
-        </a>
-      </section>
+      {theme !== 'simple' && (
+        <section
+          style={{
+            fontSize: '16px',
+            color: 'whitesmoke',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+            overflow: 'hidden',
+          }}
+        >
+          <span>原文地址：</span>
+          <a href={data.url} target="_blank">
+            {data.url}
+          </a>
+        </section>
+      )}
 
       <section style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <ReportDataIcons data={data} style={{ color: 'whitesmoke' }} />
+        {theme !== 'simple' ? (
+          <ReportDataIcons data={data} style={{ color: 'whitesmoke' }} />
+        ) : (
+          <div />
+        )}
 
         <div>
           <ReportExport data={data} />
@@ -86,11 +94,15 @@ export default function ReportDetail({ data = {}, keyword, onFlush }) {
 
       <hr style={{ color: 'whitesmoke', opacity: '0.2' }} />
 
-      <Article label="摘要" value={data.summary} keyword={keyword} hightlight />
+      {theme !== 'simple' && (
+        <Article label="摘要" value={data.summary} keyword={keyword} hightlight />
+      )}
 
-      <Article label="译文" value={data.contentzh} keyword={keyword} />
+      <Article label="译文" value={data.contentzh ?? data.contentZh} keyword={keyword} />
 
-      <Article label="原文" value={data.contentraw} keyword={keyword} hightlight />
+      {theme !== 'simple' && (
+        <Article label="原文" value={data.contentraw} keyword={keyword} hightlight />
+      )}
     </div>
   );
 }

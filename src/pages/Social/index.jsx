@@ -191,7 +191,7 @@ export default function Social() {
   // 内容类型
   const [contentType, setContentType] = useState('');
   // 搜索模式
-  const [searchMode, setSearchMode] = useState('precise');
+  const [searchMode, setSearchMode] = useState('fuzzy');
   const [filterRule, setFilterRule] = useState('');
   const [queryListObj, setQueryListObj] = useState();
 

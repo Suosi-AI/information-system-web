@@ -27,7 +27,7 @@ export default function ReadReportPlatform(props) {
     <div
       style={{
         display: 'grid',
-        gridTemplateColumns: '1fr 600px',
+        gridTemplateColumns: '1fr 350px',
         gap: '2rem',
         background: 'white',
         padding: '2rem',

@@ -12,21 +12,21 @@ import { Navigate } from 'react-router-dom';
 export const insideRoutes = [
   {
     path: 'home',
-    title: '海情速查',
+    title: '数据采集',
     id: '1',
     icon: <MonitorOutlined />,
     element: lazy(() => import('@/pages/Dashboard')),
   },
   {
     path: 'social',
-    title: '专题监测',
+    title: '分类导航',
     id: '2',
     icon: <LineChartOutlined style={{ fontSize: '16px' }} />,
     element: lazy(() => import('@/pages/Social')),
   },
   {
     path: 'archives',
-    title: '海警情报',
+    title: '百科数据',
     id: '3',
     icon: <ReconciliationOutlined style={{ fontSize: '16px' }} />,
     element: lazy(() => import('@/pages/Archives')),

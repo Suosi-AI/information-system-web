@@ -56,7 +56,15 @@ export function ReportListExport({ onTrigger, ids = [], style = {} }) {
   );
 }
 
-export default function ReportList({ list = [], queryOption = {}, loading, pagination, onFlush }) {
+export default function ReportList({
+  list = [],
+  queryOption = {},
+  loading = false,
+  style = {},
+  pagination,
+  theme,
+  onFlush,
+}) {
   const length = list.length;
   const showEmpty = length === 0 && !loading;
 
@@ -82,7 +90,7 @@ export default function ReportList({ list = [], queryOption = {}, loading, pagin
   }
 
   return (
-    <div style={{ padding: '0 20px' }}>
+    <div style={{ padding: '0 20px', ...style }}>
       <header style={{ textAlign: 'end', paddingBottom: '20px' }}>
         <ReportListExport
           onTrigger={() => setShowSelect(!showSelect)}
@@ -117,7 +125,7 @@ export default function ReportList({ list = [], queryOption = {}, loading, pagin
                     style={{ padding: '0 16px' }}
                   />
                 )}
-                <Report data={card} keyword={queryOption.keyword} onFlush={onFlush} />
+                <Report data={card} keyword={queryOption.keyword} onFlush={onFlush} theme={theme} />
               </div>
             );
           })}
