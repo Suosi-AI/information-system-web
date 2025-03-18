@@ -64,6 +64,10 @@ const selectOptions = [
     value: '电报',
     label: '电报',
   },
+  {
+    value: '智库',
+    label: '智库',
+  },
 ];
 const SocialEditor = ({ visible, onSave, isEditing, data, onCancel, editingId }) => {
   const [valueName, setValueName] = useState('');

@@ -1,8 +1,15 @@
-import React, { lazy } from 'react'
-import { DashboardOutlined, StarOutlined, AimOutlined, FormOutlined, MonitorOutlined, LineChartOutlined, ReconciliationOutlined } from '@ant-design/icons'
-import { Navigate } from 'react-router-dom'
+import React, { lazy } from 'react';
+import {
+  DashboardOutlined,
+  StarOutlined,
+  AimOutlined,
+  FormOutlined,
+  MonitorOutlined,
+  LineChartOutlined,
+  ReconciliationOutlined,
+} from '@ant-design/icons';
+import { Navigate } from 'react-router-dom';
 export const insideRoutes = [
-
   {
     path: 'home',
     title: '海情速查',
@@ -28,7 +35,7 @@ export const insideRoutes = [
 
   {
     path: 'favorites',
-    title: '收藏管理',
+    title: '报告平台',
     id: '4',
     icon: <StarOutlined style={{ fontSize: '16px' }} />,
 
@@ -115,4 +122,4 @@ export const insideRoutes = [
   //   hidden: true,
   //   disabled: true,
   // },
-]
+];

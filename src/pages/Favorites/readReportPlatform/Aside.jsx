@@ -1,10 +1,16 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { Button, Input, Select, Radio, Empty, Modal } from 'antd';
+import ReportDetail from 'src/components/common/ReportDetail';
 import DashboardCard, { dynamicImg } from 'src/components/common/DashboardCard';
-import styles from '../index.less';
 
 const { Search, TextArea } = Input;
+
+const emptyQueryOption = {
+  keyword: '',
+  reportType: '',
+  filterSame: false,
+};
 
 const highLight = (text, keyword) => {
   // 增加空值检查
@@ -28,6 +34,12 @@ const highLight = (text, keyword) => {
   });
 };
 
+async function getList(queryOption) {
+  // import('./readReportPlatform/mock-data').then(({ data }) => {
+  //   setMockCardsData(data);
+  // });
+}
+
 export default function ReadReportPlatform(props) {
   const {
     data: mockData = [],
@@ -45,6 +57,7 @@ export default function ReadReportPlatform(props) {
   const [isModalVisible, setIsModalVisible] = useState();
   const [sameReports, setSameReports] = useState([]);
   const [duplicationFlag, setDuplicationFlag] = useState(false);
+  const [queryOption, setQueryOption] = useState({ ...emptyQueryOption });
 
   function showDuplication(item) {
     setIsModalVisible(true);
@@ -160,23 +173,7 @@ export default function ReadReportPlatform(props) {
         onCancel={() => setIsModalVisible(false)}
       >
         {sameReports.map(card => (
-          <DashboardCard
-            key={card.id}
-            img={dynamicImg(card.sourceType)}
-            sourceName={card.sourceName}
-            sourceType={card.sourceType}
-            publishTime={card.publishTime}
-            title={card.titleZh}
-            content={card.contentZh}
-            link={card.url}
-            images={card.pics}
-            likeNum={card.likeNum}
-            commentNum={card.commentNum}
-            shareNum={card.shareNum}
-            readNum={card.readNum}
-            showActions={card.showActions}
-            whetherCollect={card.whetherCollect}
-          />
+          <ReportDetail data={card} />
         ))}
       </Modal>
     </div>

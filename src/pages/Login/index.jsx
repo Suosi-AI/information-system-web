@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { getLogin } from './../../services/store';
 import img from '@/assets/images/login_logo.png';
 import './index.css';
+import Logo from 'src/components/common/Logo';
 
 const Login = () => {
   const [form] = Form.useForm();
@@ -54,7 +55,8 @@ const Login = () => {
   return (
     <div className="appHeader">
       <div className="loginContent">
-        <img className="login-img" src={img} />
+        {/* <img className="login-img" src={img} /> */}
+        <Logo title="信息自动化采集系统" style={{ paddingTop: '16px' }} />
         <Form
           form={form}
           name="normal_login"

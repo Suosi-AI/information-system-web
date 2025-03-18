@@ -15,6 +15,7 @@ import cls from 'classnames';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { Link } from 'react-router-dom';
 import navLogo from '@/assets/images/login_logo.png';
+import Logo from '../Logo';
 
 const { Content } = Container;
 const Layout = () => {
@@ -25,7 +26,8 @@ const Layout = () => {
     <div className={styles.container}>
       <div className={styles.header}>
         {/* <Link to="/"> */}
-        <img className={styles.navLogo} src={navLogo} alt="logo" />
+        {/* <img className={styles.navLogo} src={navLogo} alt="logo" /> */}
+        <Logo title="信息自动化采集系统" />
         {/* </Link> */}
         <TopBar />
       </div>

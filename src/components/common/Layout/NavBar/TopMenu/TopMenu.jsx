@@ -28,7 +28,7 @@ const TopMenu = () => {
       url: '/intelligence',
     },
     {
-      name: '收藏管理',
+      name: '报告平台',
       id: '4',
       icon: 'StarOutlined',
       url: '/favorites',
@@ -60,8 +60,8 @@ const TopMenu = () => {
 
   const navigateTo = url => {
     // window.location.href = url + '/';
-    console.log('url==',url);
-    navigate(url)
+    console.log('url==', url);
+    navigate(url);
   };
 
   const getTopMenuList = () => {

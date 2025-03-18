@@ -15,6 +15,7 @@ import {
 } from '@ant-design/icons';
 import { useLocalStorageState } from 'ahooks';
 import dayjs from 'dayjs';
+import ReportList from 'src/components/common/ReportList';
 
 import styles from './index.less';
 import {
@@ -263,110 +264,6 @@ export default function Social() {
       setShouldFetchData(true);
     }
   };
-  // const highLight = (text, keyword, targetMatchedCondition) => {
-  //   if (!keyword || keyword.trim() === '') {
-  //     return text;
-  //   }
-  //   const regexKeyword = new RegExp(`(${keyword})`, 'gi');
-  //   const regexCondition = new RegExp(`(${targetMatchedCondition})`, 'gi');
-
-  //   const parts = text.split(regexKeyword).flatMap(part =>
-  //     part.split(regexCondition).map((subPart, index) => {
-  //       if (regexCondition.test(subPart)) {
-  //         return (
-  //           <span key={`condition-${index}`} style={{ color: 'blue' }}>
-  //             {subPart}
-  //           </span>
-  //         );
-  //       } else if (regexKeyword.test(subPart)) {
-  //         return (
-  //           <span key={`keyword-${index}`} style={{ color: 'red' }}>
-  //             {subPart}
-  //           </span>
-  //         );
-  //       } else {
-  //         return subPart;
-  //       }
-  //     })
-  //   );
-
-  //   return parts;
-  // };
-
-  const highLight = (text, keyword, targetMatchedCondition) => {
-    if (!text || !isAlert) return text;
-
-    // 解析匹配条件
-    const parseMatchCondition = condition => {
-      if (!condition) return [];
-
-      // 分解AND条件
-      return condition.split('+').flatMap(andPart => {
-        const parts = andPart.trim().split('-');
-        const matches = [];
-
-        // 处理第一部分（可能包含OR条件）
-        if (parts[0]) {
-          const orPart = parts[0].trim();
-          if (orPart.startsWith('(') && orPart.endsWith(')')) {
-            // 处理括号内的OR条件
-            const orTerms = orPart.substring(1, orPart.length - 1).split('|');
-            matches.push(...orTerms.map(term => term.trim()));
-          } else {
-            matches.push(orPart);
-          }
-        }
-
-        return matches;
-      });
-    };
-
-    // 获取所有需要高亮的词组
-    const highlightTerms = parseMatchCondition(targetMatchedCondition);
-
-    // 创建正则表达式模式
-    const keywordPattern = keyword ? `(${keyword})` : '';
-    const termsPattern =
-      highlightTerms.length > 0
-        ? `(${highlightTerms.map(term => term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`
-        : '';
-
-    // 构建组合的正则表达式
-    const patterns = [keywordPattern, termsPattern].filter(Boolean).join('|');
-
-    if (!patterns) return text;
-
-    const regex = new RegExp(patterns, 'gi');
-
-    // 分割文本并添加高亮
-    const parts = text.split(regex);
-
-    return parts.map((part, index) => {
-      // 检查是否匹配关键词
-      if (keyword && new RegExp(keywordPattern, 'gi').test(part)) {
-        return (
-          // <span key={`keyword-${index}`} className="highlight-keyword">
-          // eslint-disable-next-line react/no-array-index-key
-          <span key={`keyword-${index}`} style={{ color: 'red' }}>
-            {part}
-          </span>
-        );
-      }
-
-      // 检查是否匹配条件词
-      if (highlightTerms.some(term => new RegExp(`^${term}$`, 'i').test(part))) {
-        return (
-          // <span key={`condition-${index}`} className="highlight-condition">
-          // eslint-disable-next-line react/no-array-index-key
-          <span key={`condition-${index}`} style={{ color: 'red' }}>
-            {part}
-          </span>
-        );
-      }
-
-      return part;
-    });
-  };
 
   const onChange = list => {
     // 如果列表长度等于选项总数，则全选，设置为空数组
@@ -522,6 +419,8 @@ export default function Social() {
         endTime = calculatedEndTime;
       }
 
+      const searchInput = manualSearchContent ?? (searchQuery || '');
+
       const response = await getMonitorTargetNewsPage({
         // ...(queryListObj ?? {}),
         page: currentPage.toString(),
@@ -529,11 +428,13 @@ export default function Social() {
         startTime,
         endTime,
         lang: selectedLanguage || '',
-        searchContent: manualSearchContent ?? (searchQuery || ''),
         // targetMatchedCondition: targetMatchedCondition,
         // targetMatchedCondition: searchQuery,
         sourceType: checkedList.length === plainOptions.length ? '' : checkedList.join(','),
         contentType: contentType || '',
+        ...{
+          [searchMode === 'precise' ? 'searchContent' : 'targetMatchedCondition']: searchInput,
+        },
       });
       setMockData(response.page.list);
       setTotalCount(response.page.totalCount);
@@ -542,9 +443,6 @@ export default function Social() {
     } finally {
       setIsLoading(false);
     }
-  };
-  const handleModalVisibility = isVisible => {
-    setIsModalVisible(isVisible);
   };
 
   const handleAlertModalVisibility = isVisible => {
@@ -589,273 +487,9 @@ export default function Social() {
     message.success('删除成功');
   }
 
-  const handleSaveMonitor = async () => {
-    try {
-      let response;
-      const saveData = {
-        targetName: monitorName,
-        targetMatchedCondition: targetMatchedCondition,
-      };
-
-      if (isEditing) {
-        // 在编辑状态下，确保更新currentMonitor对象的name和targetMatchedCondition
-        const updatedMonitor = {
-          // ...currentMonitor,
-          targetName: monitorName, // 使用最新的monitorName
-          targetMatchedCondition: targetMatchedCondition, // 使用最新的targetMatchedCondition
-        };
-        updatedMonitor.targetId = editingId;
-
-        if (!monitorName) {
-          alert('请输入监测目标名称');
-          return;
-        } else if (!targetMatchedCondition) {
-          alert('请输入匹配条件');
-          return;
-        }
-        response = await getUpdate(updatedMonitor);
-      } else {
-        if (!monitorName) {
-          alert('请输入监测目标名称');
-          return;
-        } else if (!targetMatchedCondition) {
-          alert('请输入匹配条件');
-          return;
-        }
-        // 新增监测目标
-        response = await getSave(saveData);
-      }
-
-      if (response.code === 200) {
-        message.success(isEditing ? '编辑监测目标成功' : '添加监测目标成功');
-        setIsSocialEditorVisible(false);
-        setShouldFetchData(true); // 设置标志，表示需要重新获取数据
-        await fetchFirstLevelArchives(); // 重新获取监测目标列表
-      } else {
-        message.error(`操作失败：${response.msg}`);
-      }
-    } catch (error) {
-      console.error('操作失败:', error);
-    }
-  };
-
-  const confirmDelete = async (id, event) => {
-    event.stopPropagation(); // 阻止事件冒泡
-    try {
-      const response = await getDelete({ targetId: id });
-
-      if (response.code === 200) {
-        await fetchFirstLevelArchives();
-        message.success('删除成功');
-      } else {
-        message.error(`操作失败：${response.msg}`);
-      }
-    } catch (error) {
-      console.error('删除失败:', error);
-    }
-  };
-
   const handleCancel = () => {
     console.log('取消操作');
     smartSearchFormCloseCallback();
-  };
-
-  const handleContentClick = async (id, showActions) => {
-    console.log(showActions, 'showActions');
-
-    try {
-      const response = await getInfo({ newsId: id });
-
-      if (response.code === 200 && response.data) {
-        setModalData(modalData => ({
-          ...modalData,
-          ...response.data,
-          showActions: showActions,
-          searchQuery: searchQuery,
-        }));
-      } else {
-        message.error(`操作失败：${response.msg}`);
-      }
-    } catch (error) {
-      console.error('获取失败:', error);
-      message.error('获取时发生错误');
-    }
-    handleModalVisibility(true);
-  };
-
-  const handleExport = id => {
-    const newsId = id;
-
-    downNewsWord({ newsId })
-      .then(resp => {
-        // 创建 Blob 对象
-        const blob = new Blob([resp], { type: 'application/vnd.ms-word;charset=utf-8' });
-
-        // 生成 URL
-        const url = window.URL.createObjectURL(blob);
-
-        // 创建一个 <a> 元素并设置相关属性
-        const link = document.createElement('a');
-        link.style.display = 'none';
-        link.href = url;
-        link.download = '新闻.doc'; // 设置下载文件的名称
-
-        // 将 <a> 元素添加到页面中并触发点击
-        document.body.appendChild(link);
-        link.click();
-
-        // 清理操作
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(url);
-
-        message.success('导出成功!');
-      })
-      .catch(error => {
-        console.error('导出失败:', error);
-        message.error('导出失败: ' + error.message);
-      });
-  };
-
-  // 收集当前页新闻ID的方法
-  const collectCurrentPageNewsIds = () => {
-    const currentIds = mockData.map(item => item.id); // 假设mockData是当前页新闻数据的数组
-    return currentIds;
-  };
-
-  // 手动选中新闻id
-  const handleSelectChange = (id, checked) => {
-    if (checked) {
-      setSelectedIds([...selectedIds, id]);
-    } else {
-      setSelectedIds(selectedIds.filter(selectedId => selectedId !== id));
-    }
-
-    // 更新全选状态
-    // const allSelected = mockData.every(item => selectedIds.includes(item.id));
-    // setIsAllSelected(allSelected);
-  };
-
-  const handleSelectAll = () => {
-    const currentIds = mockData.map(item => item.id);
-    if (isAllSelected) {
-      setSelectedIds(selectedIds.filter(id => !currentIds.includes(id)));
-    } else {
-      setSelectedIds([...selectedIds, ...currentIds]);
-    }
-    setIsAllSelected(!isAllSelected);
-  };
-  const handleExportModeToggle = () => {
-    setIsExportMode(!isExportMode); // 切换 isExportMode 的值
-
-    if (isExportMode) {
-      setSelectedIds([]); // 清空选中的ID
-    }
-  };
-
-  // 导出为Excel的方法
-  const handleExportToExcel = () => {
-    // const newsId = collectCurrentPageNewsIds();
-    // let newsIdL = {
-    //   newsIdList: newsId,
-    // };
-    if (selectedIds.length === 0) {
-      message.error('请选择要导出的新闻');
-      return;
-    }
-
-    let newsIdL = {
-      newsIdList: selectedIds,
-    };
-
-    exportNewsToExcel(newsIdL)
-      .then(resp => {
-        // 创建 Blob 对象
-        const blob = new Blob([resp], { type: 'application/vnd.ms-xls;charset=utf-8' });
-
-        // 生成 URL
-        const url = window.URL.createObjectURL(blob);
-
-        // 创建一个 <a> 元素并设置相关属性
-        const link = document.createElement('a');
-        link.style.display = 'none';
-        link.href = url;
-        link.download = '新闻列表.xls'; // 设置下载文件的名称
-
-        // 将 <a> 元素添加到页面中并触发点击
-        document.body.appendChild(link);
-        link.click();
-
-        // 清理操作
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(url);
-
-        message.success('导出成功!');
-        setSelectedIds([]); // 清空选中的ID
-        setIsExportMode(false); // 关闭复选框显示
-      })
-      .catch(error => {
-        console.error('导出为Excel失败:', error);
-        message.error('导出为Excel失败');
-      });
-  };
-
-  // 导出多个Word压缩成Zip的方法
-  const handleExportToWordZip = () => {
-    if (selectedIds.length === 0) {
-      message.error('请选择要导出的新闻');
-      return;
-    }
-
-    let newsIdL = {
-      newsIdList: selectedIds,
-    };
-
-    exportNewsToWordZip(newsIdL)
-      .then(resp => {
-        // 创建 Blob 对象
-        const blob = new Blob([resp], { type: 'application/vnd.ms-zip;charset=utf-8' });
-
-        // 生成 URL
-        const url = window.URL.createObjectURL(blob);
-
-        // 创建一个 <a> 元素并设置相关属性
-        const link = document.createElement('a');
-        link.style.display = 'none';
-        link.href = url;
-        link.download = '新闻列表.zip'; // 设置下载文件的名称
-
-        // 将 <a> 元素添加到页面中并触发点击
-        document.body.appendChild(link);
-        link.click();
-
-        // 清理操作
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(url);
-
-        message.success('导出成功!');
-        setSelectedIds([]); // 清空选中的ID
-        setIsExportMode(false); // 关闭复选框显示
-      })
-      .catch(error => {
-        console.error('导出为Excel失败:', error);
-        message.error('导出为Excel失败');
-      });
-  };
-
-  const menu = (
-    <Menu>
-      <Menu.Item key="excel" onClick={handleExportToExcel}>
-        导出为Excel
-      </Menu.Item>
-      <Menu.Item key="wordZip" onClick={handleExportToWordZip}>
-        导出为WordZip
-      </Menu.Item>
-    </Menu>
-  );
-
-  const handleCollect = (cardId, isCollected) => {
-    console.log('Card ID:', cardId, 'is now', isCollected ? 'collected' : 'not collected');
-    // 实现收藏逻辑
   };
 
   const fetchUserList = async () => {
@@ -880,34 +514,7 @@ export default function Social() {
     // 前端假配置，不走后端
     message.success('权限配置保存成功');
     setIsPermissionModalVisible(false);
-    // try {
-    //   const params = {
-    //     targetType: permissionType,
-    //     targetUserIds: selectedUsers,
-    //     monitorId: currentPermissionItem.id, // 监测目标ID
-    //   };
-
-    //   const response = await saveViewPermission(params);
-    //   if (response.code === 200) {
-    //     message.success('权限配置保存成功');
-    //     setIsPermissionModalVisible(false);
-    //   } else {
-    //     message.error(response.msg || '保存失败');
-    //   }
-    // } catch (error) {
-    //   console.error('保存权限配置失败:', error);
-    //   message.error('保存失败');
-    // }
   };
-
-  // 样例数据
-  // const dataSource = Array.from({ length: 10 }, (v, i) => ({
-  //   key: i + 1,
-  //   time: `2023-10-0${i + 1} 12:00:00`,
-  //   content: `告警内容 ${i + 1}`,
-  //   source: `来源 ${i + 1}`,
-  // }));
-
   const dataSource = [
     {
       key: 1,
@@ -975,18 +582,6 @@ export default function Social() {
       key: 'source',
     },
   ];
-
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const showAlertModal = () => {
-    setIsAlertModalVisible(true);
-  };
-  const handleAlertCancel = () => {
-    setIsModalVisible(false);
-  };
-
   return (
     <>
       <div className={styles.container}>
@@ -1145,11 +740,11 @@ export default function Social() {
                 中国
               </span>
               {/* <span
-                className={`${styles.curP1} ${selectedLanguage === '繁体' ? styles.selected : ''}`}
-                onClick={() => handleLanguageChange('繁体')}
-              >
-                繁体
-              </span> */}
+              className={`${styles.curP1} ${selectedLanguage === '繁体' ? styles.selected : ''}`}
+              onClick={() => handleLanguageChange('繁体')}
+            >
+              繁体
+            </span> */}
               <span
                 className={`${styles.curP1} ${selectedLanguage === '日语' ? styles.selected : ''}`}
                 onClick={() => handleLanguageChange('日语')}
@@ -1163,11 +758,11 @@ export default function Social() {
                 美国
               </span>
               {/* <span
-                className={`${styles.curP1} ${selectedLanguage === '韩语' ? styles.selected : ''}`}
-                onClick={() => handleLanguageChange('韩语')}
-              >
-                韩语
-              </span> */}
+              className={`${styles.curP1} ${selectedLanguage === '韩语' ? styles.selected : ''}`}
+              onClick={() => handleLanguageChange('韩语')}
+            >
+              韩语
+            </span> */}
               <span
                 className={`${styles.curP1} ${selectedLanguage === '其他' ? styles.selected : ''}`}
                 onClick={() => handleLanguageChange('其他')}
@@ -1211,148 +806,34 @@ export default function Social() {
                   条记录
                 </span>
               </div>
-
-              {totalCount > 0 ? (
-                <div>
-                  {selectedIds.length > 0 && (
-                    <span style={{ marginRight: 8 }}>
-                      已选择
-                      <span style={{ color: 'red', margin: '0 5px' }}>{selectedIds?.length}</span>
-                      条新闻
-                    </span>
-                  )}
-                  {/* {isExportMode && (
-                    <Button
-                      style={{
-                        marginLeft: 8,
-                        background: 'rgb(103 101 101 / 70%)',
-                        color: 'white',
-                      }}
-                      onClick={handleSelectAll}
-                    >
-                      {isAllSelected ? '全不选' : '当页全选'}
-                    </Button>
-                  )} */}
-                  <Dropdown overlay={menu} placement="bottom" onClick={handleExportModeToggle}>
-                    <Button
-                      style={{
-                        backgroundColor: 'rgba(255, 128, 0, 0.5)',
-                        color: 'white',
-                        marginLeft: 8,
-                      }}
-                      disabled={selectedIds.length === 0}
-                    >
-                      批量导出
-                    </Button>
-                  </Dropdown>
-                  <Button style={{ marginLeft: 16 }} onClick={showAlertModal}>
-                    告警日志
-                  </Button>
-                </div>
-              ) : (
-                <div>
-                  <Button
-                    style={{ backgroundColor: 'rgba(255, 128, 0, 0.5)', color: 'white' }}
-                    disabled
-                  >
-                    批量导出
-                  </Button>
-                </div>
-              )}
             </div>
           </div>
-          {mockData.length === 0 && !isLoading ? (
-            <Empty className={styles.empty} description={<div>暂无数据</div>} />
-          ) : (
-            <Spin style={{ marginTop: '30vh' }} tip="加载数据中..." spinning={isLoading}>
-              {mockData.map((card, index) => {
-                const processedCard = {
-                  ...card,
-                  titleZh: isAlert
-                    ? highLight(card.titleZh, searchQuery, targetMatchedCondition)
-                    : card.titleZh,
-                  contentZh: isAlert
-                    ? highLight(card.contentZh, searchQuery, targetMatchedCondition)
-                    : card.contentZh,
-                };
-
-                return (
-                  <div
-                    key={card.id}
-                    style={{
-                      display: 'flex',
-                      paddingLeft: '10px',
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                    }}
-                  >
-                    {isExportMode && (
-                      <Checkbox
-                        value={card.id}
-                        checked={selectedIds.includes(card.id)}
-                        onChange={e => handleSelectChange(card.id, e.target.checked)}
-                        style={{ marginRight: '10px' }}
-                      />
-                    )}
-                    <DashboardCard
-                      className={styles.dashboardCardStyle}
-                      key={card.id}
-                      img={dynamicImg(card.sourceType)}
-                      sourceName={card.sourceName}
-                      publishTime={card.publishTime}
-                      title={processedCard.titleZh}
-                      content={processedCard.contentZh}
-                      contentType={processedCard.contentType}
-                      link={card.url}
-                      images={card.pics}
-                      likeNum={card.likeNum}
-                      commentNum={card.commentNum}
-                      shareNum={card.shareNum}
-                      readNum={card.readNum}
-                      showActions={card.showActions}
-                      files={card.files ? JSON.parse(card.files) : []}
-                      onClickContent={() => handleContentClick(card.id, card.showActions)}
-                      onCollect={isCollected => handleCollect(card.id, isCollected)}
-                      onExport={() => handleExport(card.id)}
-                      whetherCollect={card.whetherCollect}
-                      newsId={card.id}
-                      folderId={card.folderId}
-                      onHandleJc={fetchListData}
-                    />
-                  </div>
-                );
-              })}
-            </Spin>
-          )}
-          {mockData.length > 0 && (
-            <Pagination
-              current={currentPage}
-              total={totalCount}
-              pageSize={pageSize}
-              onChange={(page, pageSize) => {
-                setCurrentPage(page);
-                setPageSize(pageSize);
-                setIsAllSelected(false);
-              }}
-              onShowSizeChange={(current, size) => {
-                setCurrentPage(1); // 重置到第一页
-                setPageSize(size);
-              }}
-              style={{ margin: '10px auto', display: 'flex', justifyContent: 'center' }}
-              showSizeChanger={false}
-            />
-          )}
+          <ReportList
+            list={mockData}
+            queryOption={{ keyword: searchKeywords }}
+            loading={isLoading}
+            pagination={
+              <Pagination
+                current={currentPage}
+                total={totalCount}
+                pageSize={pageSize}
+                onChange={(page, pageSize) => {
+                  setCurrentPage(page);
+                  setPageSize(pageSize);
+                  setIsAllSelected(false);
+                }}
+                onShowSizeChange={(current, size) => {
+                  setCurrentPage(1); // 重置到第一页
+                  setPageSize(size);
+                }}
+                style={{ margin: '10px auto', display: 'flex', justifyContent: 'center' }}
+                showSizeChanger={false}
+              />
+            }
+            onFlush={fetchListData}
+          />
         </div>
       </div>
-
-      <CardModal
-        onCancel={() => handleModalVisibility(false)}
-        modalData={modalData}
-        setIsModalVisible={handleModalVisibility}
-        handleExport={() => handleExport(modalData.id)}
-        images={modalData.pics}
-        onHandleJc={fetchListData}
-      />
 
       <Modal
         title="权限配置"

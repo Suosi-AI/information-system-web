@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import 'moment/locale/zh-cn';
 import locale from 'antd/es/date-picker/locale/zh_CN';
-import Icon from '@/components/Icon';
-import axios from 'axios';
 import moment from 'moment';
+import ReportList from 'src/components/common/ReportList';
 
 import {
   PlusOutlined,
@@ -15,37 +14,9 @@ import {
 } from '@ant-design/icons';
 
 import styles from './index.less';
-import {
-  DatePicker,
-  Checkbox,
-  Pagination,
-  Button,
-  Input,
-  Tabs,
-  Menu,
-  Modal,
-  Dropdown,
-  Popconfirm,
-  message,
-  Empty,
-  Spin,
-  Select,
-} from 'antd';
-import DashboardCard from './../../components/common/DashboardCard';
-import ActionStats from '@/components/common/ActionStats';
-import CardModal from './../../components/common/CardModal';
+import { DatePicker, Pagination, Button, Input, Popconfirm, message, Select } from 'antd';
 import SocialEditor from '@/components/common/SocialEditor';
 
-import weibo from './../../assets/images/icon/weibo.png';
-import weixin from './../../assets/images/icon/weixin.png';
-import google from './../../assets/images/icon/google.png';
-import blog from './../../assets/images/icon/blog.png';
-import wangzhan from './../../assets/images/icon/new.png';
-import baidu from './../../assets/images/icon/baidu.png';
-import twitter from './../../assets/images/icon/twitter.png';
-import facebook from './../../assets/images/icon/facebook.png';
-import youtube from './../../assets/images/icon/youtube.png';
-import telegram from './../../assets/images/icon/telegram.png';
 const { RangePicker } = DatePicker;
 const { Search } = Input;
 import {
@@ -55,45 +26,12 @@ import {
   getQcArchivesSave,
   getQcArchivesDelete,
   getQcArchivesUpdate,
-  getInfo,
-  exportNewsToExcel,
-  downNewsWord,
-  exportNewsToWordZip,
   getQcArchivesById,
 } from './../../services/store';
-import img from '@/assets/images/logo.png';
-
-const dynamicImg = sourceType => {
-  switch (sourceType) {
-    case '微博':
-      return weibo;
-    case '公众号':
-      return weixin;
-    case '谷歌':
-      return google;
-    case '博客':
-      return blog;
-    case '网站':
-      return wangzhan;
-    case '百度':
-      return baidu;
-    case '推特':
-      return twitter;
-    case '脸书':
-      return facebook;
-    case '油管':
-      return youtube;
-    case '电报':
-      return telegram;
-
-    default:
-      return '';
-  }
-};
+import { sourceTypeImg, calculateTimeRange } from '../../utils/common';
 
 export default function Dashboard() {
   const isInitialMount = React.useRef(true);
-  const [showDialog, setShowDialog] = useState(false); //在你点击那个的时候。弹出弹框。关闭的时候把这个组件销毁掉类似这个意思，我看你好像有其他状态判断。
   const [selectedRange, setSelectedRange] = useState('1m');
   const [selectedLanguage, setSelectedLanguage] = useState('');
   const [selectedArea, setSelectedArea] = useState('');
@@ -101,11 +39,8 @@ export default function Dashboard() {
   const [dateRange, setDateRange] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const [isExportMode, setIsExportMode] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
   const [currentCardData, setCurrentCardData] = useState(null);
 
   const [firstLevelArchives, setFirstLevelArchives] = useState([]);
@@ -124,54 +59,11 @@ export default function Dashboard() {
   const [mockData, setMockData] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [searchKeywords, setSearchKeywords] = useState('');
-  const [modalData, setModalData] = useState({});
   const [isLoading, setIsLoading] = useState({});
-  const [showActions, setShowActions] = useState(false);
-  const [isCollected, setIsCollected] = useState(false);
-  const [selectedIds, setSelectedIds] = useState([]);
-  const [isAllSelected, setIsAllSelected] = useState(false);
-
-  const [isFuzzySearch, setIsFuzzySearch] = useState(false);
 
   const [searchMode, setSearchMode] = useState('precise'); // 'precise' 或 'fuzzy'
 
-  const calculateTimeRange = range => {
-    const endDate = new Date(); // 结束时间为当前时间
-    let startTime;
-
-    switch (range) {
-      case 'all':
-        startTime = null;
-        break;
-      case '24h':
-        startTime = new Date(endDate.getTime() - 3600 * 1000 * 24 * 1); // 24小时
-        break;
-      case '1w':
-        startTime = new Date(endDate.getTime() - 3600 * 1000 * 24 * 7); // 一周
-        break;
-      case '1m':
-        startTime = new Date(endDate.getTime() - 3600 * 1000 * 24 * 30); // 一月
-        break;
-      case '1y':
-        startTime = new Date(endDate.getTime() - 3600 * 1000 * 24 * 365); // 一年
-        break;
-      default:
-        startTime = null;
-    }
-
-    const formatTime = date => {
-      return date ? moment(date).format('YYYY-MM-DD HH:mm:ss') : '';
-    };
-
-    return {
-      startTime: formatTime(startTime),
-      endTime: formatTime(endDate),
-    };
-  };
-
   const handleRangeChange = range => {
-    console.log(range, totalCount);
-
     setSelectedRange(range);
 
     if (range !== 'custom') {
@@ -199,31 +91,13 @@ export default function Dashboard() {
     setSelectedContentType(area);
   };
 
-  const handleSearch = searchQuery => {
-    setCurrentPage(1);
-    setSearchQuery(searchQuery);
-    setSearchKeywords(searchQuery);
-  };
-  const highLight = (text, keyword) => {
-    // 增加空值检查
-    if (!text) return '';
-
-    if (!keyword || keyword.trim() === '') {
-      return text;
+  const handleSearch = async search => {
+    if (currentPage === 1) {
+      await fetchListData();
+      return;
     }
-    const regex = new RegExp(`(${keyword})`, 'gi');
-    const parts = text.split(regex);
-    return parts.map((part, index) => {
-      if (regex.test(part)) {
-        return (
-          <span key={index} style={{ color: 'red' }}>
-            {part}
-          </span>
-        );
-      } else {
-        return part;
-      }
-    });
+    setCurrentPage(1);
+    setSearchQuery(search);
   };
 
   useEffect(() => {
@@ -267,9 +141,6 @@ export default function Dashboard() {
   }, [firstLevelArchives]);
 
   const handleMonitorItemClick = id => {
-    setSelectedIds([]); // 清空选中的ID
-    setIsExportMode(false); // 关闭复选框显示
-
     const newExpanded = { ...expanded };
 
     // 如果点击的是当前已展开的一级档案，则收起
@@ -329,17 +200,16 @@ export default function Dashboard() {
         limit: pageSize.toString(),
         archivesId: selectedFirstLevelArchiveId,
         sourceId: selectedSecondLevelArchiveId || '',
-        ...(selectedRange !== 'all' && { startTime, endTime }),
+        ...(selectedRange !== 'all' && {}),
         lang: selectedLanguage || '',
         ...(searchQuery && {
-          [searchMode === 'precise' ? 'searchContent' : 'targetMatchedCondition']: searchQuery
+          [searchMode === 'precise' ? 'searchContent' : 'targetMatchedCondition']: searchQuery,
         }),
         area: selectedArea || '',
         contentType: selectedContentType || '',
       });
       setMockData(response.page.list);
-      // console.log(mockData, response.page.list);
-
+      setSearchKeywords(searchQuery);
       setTotalCount(response.page.totalCount);
     } catch (error) {
       console.error('获取数据失败:', error);
@@ -352,6 +222,9 @@ export default function Dashboard() {
     if (isInitialMount.current) {
       isInitialMount.current = false;
     } else {
+      if (selectedRange === 'custom' && dateRange?.length === 0) {
+        return;
+      }
       fetchListData();
     }
     setMockData([]);
@@ -362,14 +235,11 @@ export default function Dashboard() {
     selectedRange,
     selectedLanguage,
     dateRange,
-    searchQuery,
+    searchMode,
+    // searchQuery,
     selectedArea,
-    selectedContentType
+    selectedContentType,
   ]);
-
-  const handleModalVisibility = isVisible => {
-    setIsModalVisible(isVisible);
-  };
 
   const handleSave = async (dataToSave, event) => {
     try {
@@ -496,195 +366,6 @@ export default function Dashboard() {
     setIsSocialEditorVisible(false);
   };
 
-  const handleContentClick = async (id, showActions) => {
-    console.log(showActions, 'showActions');
-
-    try {
-      const response = await getInfo({ newsId: id });
-
-      if (response.code === 200 && response.data) {
-        setModalData(modalData => ({
-          ...modalData,
-          ...response.data,
-          showActions: showActions,
-          searchQuery: searchQuery,
-        }));
-        if (response.data.length < 1) {
-          return <Empty />;
-        }
-      } else {
-        message.error('获取失败');
-      }
-    } catch (error) {
-      console.error('获取失败:', error);
-      message.error('获取时发生错误');
-    }
-    handleModalVisibility(true);
-  };
-
-  const handleExport = id => {
-    const newsId = id;
-
-    downNewsWord({ newsId })
-      .then(resp => {
-        // 创建 Blob 对象
-        const blob = new Blob([resp], { type: 'application/vnd.ms-word;charset=utf-8' });
-
-        // 生成 URL
-        const url = window.URL.createObjectURL(blob);
-
-        // 创建一个 <a> 元素并设置相关属性
-        const link = document.createElement('a');
-        link.style.display = 'none';
-        link.href = url;
-        link.download = '新闻.doc'; // 设置下载文件的名称
-
-        // 将 <a> 元素添加到页面中并触发点击
-        document.body.appendChild(link);
-        link.click();
-
-        // 清理操作
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(url);
-
-        message.success('导出成功!');
-      })
-      .catch(error => {
-        console.error('导出失败:', error);
-        message.error('导出失败: ' + error.message);
-      });
-  };
-  // 收集当前页新闻ID的方法
-  const collectCurrentPageNewsIds = () => {
-    const currentIds = mockData.map(item => item.id);
-    return currentIds;
-  };
-
-  // 手动选中新闻id
-  const handleSelectChange = (id, checked) => {
-    if (checked) {
-      setSelectedIds([...selectedIds, id]);
-    } else {
-      setSelectedIds(selectedIds.filter(selectedId => selectedId !== id));
-    }
-  };
-  const handleSelectAll = () => {
-    const currentIds = mockData.map(item => item.id);
-    if (isAllSelected) {
-      setSelectedIds(selectedIds.filter(id => !currentIds.includes(id)));
-    } else {
-      setSelectedIds([...selectedIds, ...currentIds]);
-    }
-    setIsAllSelected(!isAllSelected);
-  };
-  const handleExportModeToggle = () => {
-    setIsExportMode(!isExportMode); // 切换 isExportMode 的值
-
-    if (isExportMode) {
-      setSelectedIds([]); // 清空选中的ID
-    }
-  };
-
-  // 导出为Excel的方法
-  const handleExportToExcel = () => {
-    if (selectedIds.length === 0) {
-      message.error('请选择要导出的新闻');
-      return;
-    }
-
-    let newsIdL = {
-      newsIdList: selectedIds,
-    };
-
-    exportNewsToExcel(newsIdL)
-      .then(resp => {
-        // 创建 Blob 对象
-        const blob = new Blob([resp], { type: 'application/vnd.ms-xls;charset=utf-8' });
-
-        // 生成 URL
-        const url = window.URL.createObjectURL(blob);
-
-        // 创建一个 <a> 元素并设置相关属性
-        const link = document.createElement('a');
-        link.style.display = 'none';
-        link.href = url;
-        link.download = '新闻列表.xls'; // 设置下载文件的名称
-
-        // 将 <a> 元素添加到页面中并触发点击
-        document.body.appendChild(link);
-        link.click();
-
-        // 清理操作
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(url);
-
-        message.success('导出成功!');
-        setSelectedIds([]); // 清空选中的ID
-        setIsExportMode(false); // 关闭复选框显示
-      })
-      .catch(error => {
-        console.error('导出为Excel失败:', error);
-        message.error('导出为Excel失败');
-      });
-  };
-
-  // 导出多个Word压缩成Zip的方法
-  const handleExportToWordZip = () => {
-    if (selectedIds.length === 0) {
-      message.error('请选择要导出的新闻');
-      return;
-    }
-
-    let newsIdL = {
-      newsIdList: selectedIds,
-    };
-
-    exportNewsToWordZip(newsIdL)
-      .then(resp => {
-        // 创建 Blob 对象
-        const blob = new Blob([resp], { type: 'application/vnd.ms-zip;charset=utf-8' });
-
-        // 生成 URL
-        const url = window.URL.createObjectURL(blob);
-
-        // 创建一个 <a> 元素并设置相关属性
-        const link = document.createElement('a');
-        link.style.display = 'none';
-        link.href = url;
-        link.download = '新闻列表.zip'; // 设置下载文件的名称
-
-        // 将 <a> 元素添加到页面中并触发点击
-        document.body.appendChild(link);
-        link.click();
-
-        // 清理操作
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(url);
-
-        message.success('导出成功!');
-        setSelectedIds([]); // 清空选中的ID
-        setIsExportMode(false); // 关闭复选框显示
-      })
-      .catch(error => {
-        console.error('导出为Excel失败:', error);
-        message.error('导出为Excel失败');
-      });
-  };
-
-  const menu = (
-    <Menu>
-      <Menu.Item key="excel" onClick={handleExportToExcel}>
-        导出为Excel
-      </Menu.Item>
-      <Menu.Item key="wordZip" onClick={handleExportToWordZip}>
-        导出为WordZip
-      </Menu.Item>
-    </Menu>
-  );
-
-  const handleCollect = (cardId, isCollected) => {
-    console.log('Card ID:', cardId, 'is now', isCollected ? 'collected' : 'not collected');
-  };
   return (
     <>
       <div className={styles.container}>
@@ -755,12 +436,14 @@ export default function Dashboard() {
         ) : null}
 
         <div className={styles.container1}>
-          <div className={styles.countTop}>
+          <div className={styles.countTop} style={{ paddingBottom: '0' }}>
             <div className={styles.searchTop}>
               <Search
+                value={searchQuery}
                 placeholder="请输入您要搜索的内容"
                 allowClear
                 onSearch={e => handleSearch(e)}
+                onChange={e => setSearchQuery(e.target.value)}
                 style={{
                   width: 200,
                 }}
@@ -768,10 +451,12 @@ export default function Dashboard() {
               <Select
                 value={searchMode}
                 onChange={value => setSearchMode(value)}
-                style={{ 
+                style={{
                   width: 100,
-                  marginLeft: 240
+                  marginLeft: 240,
+                  // ...selectStyle,
                 }}
+                type="primary"
               >
                 <Select.Option value="precise">精准搜索</Select.Option>
                 <Select.Option value="fuzzy">模糊搜索</Select.Option>
@@ -930,7 +615,6 @@ export default function Dashboard() {
               >
                 马来西亚
               </span>
-              
             </div>
 
             <div className={styles.areaSelect}>
@@ -942,19 +626,25 @@ export default function Dashboard() {
                 全部
               </span>
               <span
-                className={`${styles.curP1} ${selectedContentType === '目标动向' ? styles.selected : ''}`}
+                className={`${styles.curP1} ${
+                  selectedContentType === '目标动向' ? styles.selected : ''
+                }`}
                 onClick={() => handleContentTypeChange('目标动向')}
               >
                 目标动向
               </span>
               <span
-                className={`${styles.curP1} ${selectedContentType === '人员更替' ? styles.selected : ''}`}
+                className={`${styles.curP1} ${
+                  selectedContentType === '人员更替' ? styles.selected : ''
+                }`}
                 onClick={() => handleContentTypeChange('人员更替')}
               >
                 人员更替
               </span>
               <span
-                className={`${styles.curP1} ${selectedContentType === '政策发布' ? styles.selected : ''}`}
+                className={`${styles.curP1} ${
+                  selectedContentType === '政策发布' ? styles.selected : ''
+                }`}
                 onClick={() => handleContentTypeChange('政策发布')}
               >
                 政策发布
@@ -965,7 +655,6 @@ export default function Dashboard() {
               >
                 官方发布
               </span>
-
             </div>
             <div
               style={{
@@ -981,143 +670,33 @@ export default function Dashboard() {
                   条记录
                 </span>
               </div>
-
-              {totalCount > 0 ? (
-                <div>
-                  {selectedIds.length > 0 && (
-                    <span style={{ marginRight: 8 }}>
-                      已选择
-                      <span style={{ color: 'red', margin: '0 5px' }}>{selectedIds.length}</span>
-                      条新闻
-                    </span>
-                  )}
-                  {/* {isExportMode && (
-                  <Button
-                    style={{ marginLeft: 8, background: 'rgb(103 101 101 / 70%)', color: 'white' }}
-                    onClick={handleSelectAll}
-                  >
-                    {isAllSelected ? '全不选' : '当页全选'}
-                  </Button>
-                )} */}
-                  <Dropdown overlay={menu} placement="bottom" onClick={handleExportModeToggle}>
-                    <Button
-                      style={{
-                        backgroundColor: 'rgba(255, 128, 0, 0.5)',
-                        color: 'white',
-                        marginLeft: 8,
-                      }}
-                      disabled={selectedIds.length === 0}
-                    >
-                      批量导出
-                    </Button>
-                  </Dropdown>
-                </div>
-              ) : (
-                <div>
-                  <Button
-                    style={{ backgroundColor: 'rgba(255, 128, 0, 0.5)', color: 'white' }}
-                    disabled
-                  >
-                    批量导出
-                  </Button>
-                </div>
-              )}
             </div>
           </div>
-          {mockData.length === 0 && !isLoading ? (
-            <Empty className={styles.empty} description={<div>暂无数据</div>} />
-          ) : (
-            <Spin style={{ marginTop: '30vh' }} tip="加载数据中..." spinning={isLoading}>
-              {mockData.map((card, index) => {
-                const processedCard = {
-                  ...card,
-                  titleZh: highLight(card.titleZh, searchQuery),
-                  contentZh: highLight(card.contentZh, searchQuery),
-                };
-
-                return (
-                  <div
-                    key={card.id}
-                    style={{
-                      display: 'flex',
-                      paddingLeft: '10px',
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                    }}
-                  >
-                    {isExportMode && (
-                      <Checkbox
-                        value={card.id}
-                        checked={selectedIds.includes(card.id)}
-                        onChange={e => handleSelectChange(card.id, e.target.checked)}
-                        style={{ marginRight: '10px' }}
-                      />
-                    )}
-                    <DashboardCard
-                      className={styles.dashboardCardStyle}
-                      key={card.id}
-                      img={dynamicImg(card.sourceType)}
-                      sourceName={card.sourceName}
-                      publishTime={card.publishTime}
-                      title={processedCard.titleZh}
-                      content={processedCard.contentZh}
-                      contentType={processedCard.contentType}
-                      link={card.url}
-                      images={card.pics}
-                      videos={card.videos}
-                      likeNum={card.likeNum}
-                      commentNum={card.commentNum}
-                      shareNum={card.shareNum}
-                      readNum={card.readNum}
-                      showActions={card.showActions}
-                      onClickContent={() => handleContentClick(card.id, card.showActions)}
-                      onCollect={isCollected => handleCollect(card.id, isCollected)}
-                      onExport={() => handleExport(card.id)}
-                      whetherCollect={card.whetherCollect}
-                      newsId={card.id}
-                      folderId={card.folderId}
-                      onHandleHq={fetchListData}
-                      isCollected={isCollected}
-                      setIsCollected={setIsCollected}
-                    />
-                  </div>
-                );
-              })}
-            </Spin>
-          )}
-          {mockData.length > 0 && (
-            <Pagination
-              current={currentPage}
-              total={totalCount}
-              pageSize={pageSize}
-              onChange={(page, pageSize) => {
-                setCurrentPage(page);
-                setPageSize(pageSize);
-                setIsAllSelected(false);
-              }}
-              onShowSizeChange={(current, size) => {
-                setCurrentPage(1);
-                setPageSize(size);
-              }}
-              style={{ margin: '10px auto', display: 'flex', justifyContent: 'center' }}
-              showSizeChanger={false}
-            />
-          )}
+          <ReportList
+            list={mockData}
+            queryOption={{ keyword: searchKeywords }}
+            loading={isLoading}
+            pagination={
+              <Pagination
+                current={currentPage}
+                total={totalCount}
+                pageSize={pageSize}
+                onChange={(page, pageSize) => {
+                  setCurrentPage(page);
+                  setPageSize(pageSize);
+                }}
+                onShowSizeChange={(current, size) => {
+                  setCurrentPage(1);
+                  setPageSize(size);
+                }}
+                style={{ margin: '10px auto', display: 'flex', justifyContent: 'center' }}
+                showSizeChanger={false}
+              />
+            }
+            onFlush={fetchListData}
+          />
         </div>
       </div>
-
-      <CardModal
-        visible={isModalVisible}
-        onCancel={() => handleModalVisibility(false)}
-        modalData={modalData}
-        setIsModalVisible={handleModalVisibility}
-        handleExport={() => handleExport(modalData.id)}
-        images={modalData.pics}
-        videos={modalData.videos}
-        isCollected={isCollected}
-        setIsCollected={setIsCollected}
-        onHandleHq={fetchListData}
-      />
     </>
   );
 }

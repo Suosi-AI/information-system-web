@@ -1032,19 +1032,6 @@ export default function Favorites() {
               新增文件夹
             </Button>
             <div>
-              <div
-                className={styles.searchItem}
-                style={{
-                  background: 'rgba(255, 128, 0, 0.5)',
-                }}
-                onClick={() => {
-                  setSelectedFirstLevel(false);
-                  fetchListData(null, searchQuery);
-                }}
-              >
-                数据智能搜索
-              </div>
-
               {firstLevelArchives.map(item => {
                 return (
                   <div key={item.id}>
@@ -1773,7 +1760,7 @@ export default function Favorites() {
                 }
               />
             </Tabs.TabPane>
-            <Tabs.TabPane tab="素材通报" key="3">
+            <Tabs.TabPane tab="值班通报" key="3">
               <MaterialReport
                 left={{
                   header: (
