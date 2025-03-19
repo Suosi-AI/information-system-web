@@ -87,33 +87,7 @@ import twitter from './../../assets/images/icon/twitter.png';
 import facebook from './../../assets/images/icon/facebook.png';
 import youtube from './../../assets/images/icon/youtube.png';
 import telegram from './../../assets/images/icon/telegram.png';
-const dynamicImg = sourceType => {
-  switch (sourceType) {
-    case '微博':
-      return weibo;
-    case '公众号':
-      return weixin;
-    case '谷歌':
-      return google;
-    case '博客':
-      return blog;
-    case '网站':
-      return wangzhan;
-    case '百度':
-      return baidu;
-    case '推特':
-      return twitter;
-    case '脸书':
-      return facebook;
-    case '油管':
-      return youtube;
-    case '电报':
-      return telegram;
 
-    default:
-      return '';
-  }
-};
 const BASE_IP = '/images';
 
 const replaceIP = url => {
@@ -165,10 +139,8 @@ export default function Favorites() {
   const [totalCount, setTotalCount] = useState(0);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [shouldFetchData, setShouldFetchData] = useState(false);
-  const [initialFetch, setInitialFetch] = useState(false);
   const [modalData, setModalData] = useState({});
   const [isActive, setIsActive] = useState(false);
-  const [isActive2, setIsActive2] = useState(false);
 
   const [isCollected, setIsCollected] = useState(false);
   const [isExportMode, setIsExportMode] = useState(false);
@@ -176,8 +148,6 @@ export default function Favorites() {
   const [isAllSelected, setIsAllSelected] = useState(false);
 
   const [searchMode, setSearchMode] = useState('precise'); // 'precise' 或 'fuzzy'
-  const [duplicationVisible, setDuplicationVisible] = useState(false);
-  const [duplicationData, setDuplicationData] = useState([]);
 
   const calculateTimeRange = range => {
     const endDate = new Date(); // 结束时间为当前时间
@@ -1385,6 +1355,7 @@ export default function Favorites() {
                       <div>
                         <p style={{ fontSize: '18px' }}>摘要</p>
                         <TextArea
+                          value={textAreaValue}
                           className={styles.textArea}
                           autoSize={{
                             minRows: 20,
@@ -1468,67 +1439,73 @@ export default function Favorites() {
                       共<span style={{ color: 'red', margin: '0 8px' }}>{totalCount}</span>结果
                     </div>
                     <div className={styles.cardBox}>
-                      {mockCardsData.length === 0 ? (
+                      {mockCardsData.filter(item => item.titleZh && item.contentZh).length === 0 ? (
                         <Empty style={{ margin: '200px 8px', fontSize: '16px' }} />
                       ) : (
-                        mockCardsData.map(card => {
-                          const processedCard = {
-                            ...card,
-                            titleZh: highLight(card.titleZh, searchQuery),
-                            contentZh: highLight(card.contentZh, searchQuery),
-                          };
+                        mockCardsData
+                          .filter(item => item.titleZh && item.contentZh)
+                          .map(card => {
+                            const processedCard = {
+                              ...card,
+                              titleZh: highLight(card.titleZh, searchQuery),
+                              contentZh: highLight(card.contentZh, searchQuery),
+                            };
 
-                          return (
-                            <div
-                              style={{
-                                display: 'grid',
-                                gridTemplateColumns: 'min-content 1fr',
-                                alignItems: 'center',
-                              }}
-                            >
-                              <Radio
-                                onChange={() => handleSelectCard(card)}
-                                value={card.id}
-                                checked={selectedCard && selectedCard.id === card.id}
-                              />
-                              <Card key={card.id} className={styles.card} style={{ margin: '0' }}>
-                                <Card.Meta
-                                  className={styles.cardMeta}
-                                  title={
-                                    <div
-                                      onClick={() => handleContentClick(card.id, card.showActions)}
-                                      style={{
-                                        overflow: 'hidden',
-                                        textOverflow: 'ellipsis',
-                                        whiteSpace: 'nowrap',
-                                        maxWidth: '250px',
-                                      }}
-                                    >
-                                      {processedCard.titleZh}
-                                    </div>
-                                  }
-                                  description={
-                                    <div
-                                      style={{
-                                        display: '-webkit-box',
-                                        overflow: 'hidden',
-                                        WebkitBoxOrient: 'vertical',
-                                        WebkitLineClamp: '2',
-                                        color: 'rgb(222, 218, 218)',
-                                      }}
-                                      className={styles.contentStyle}
-                                      onClick={() => handleContentClick(card.id, card.showActions)}
-                                    >
-                                      {processedCard.contentZh}
-                                    </div>
-                                  }
+                            return (
+                              <div
+                                style={{
+                                  display: 'grid',
+                                  gridTemplateColumns: 'min-content 1fr',
+                                  alignItems: 'center',
+                                }}
+                              >
+                                <Radio
+                                  onChange={() => handleSelectCard(card)}
+                                  value={card.id}
+                                  checked={selectedCard && selectedCard.id === card.id}
                                 />
-                              </Card>
-                            </div>
-                          );
-                        })
+                                <Card key={card.id} className={styles.card} style={{ margin: '0' }}>
+                                  <Card.Meta
+                                    className={styles.cardMeta}
+                                    title={
+                                      <div
+                                        onClick={() =>
+                                          handleContentClick(card.id, card.showActions)
+                                        }
+                                        style={{
+                                          overflow: 'hidden',
+                                          textOverflow: 'ellipsis',
+                                          whiteSpace: 'nowrap',
+                                          maxWidth: '250px',
+                                        }}
+                                      >
+                                        {processedCard.titleZh}
+                                      </div>
+                                    }
+                                    description={
+                                      <div
+                                        style={{
+                                          display: '-webkit-box',
+                                          overflow: 'hidden',
+                                          WebkitBoxOrient: 'vertical',
+                                          WebkitLineClamp: '2',
+                                          color: 'rgb(222, 218, 218)',
+                                        }}
+                                        className={styles.contentStyle}
+                                        onClick={() =>
+                                          handleContentClick(card.id, card.showActions)
+                                        }
+                                      >
+                                        {processedCard.contentZh}
+                                      </div>
+                                    }
+                                  />
+                                </Card>
+                              </div>
+                            );
+                          })
                       )}
-                      {mockCardsData.length > 0 && (
+                      {/* {mockCardsData.length > 0 && (
                         <Pagination
                           current={currentPage}
                           total={totalCount}
@@ -1538,7 +1515,7 @@ export default function Favorites() {
                           style={{ margin: '10px auto', display: 'flex', justifyContent: 'center' }}
                           showSizeChanger={false}
                         />
-                      )}
+                      )} */}
                     </div>
                   </div>
                 }
