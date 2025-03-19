@@ -108,9 +108,11 @@ export const highLight = (input, keyword) => {
     return input;
   }
 
-  const pattern = keyword
-    .split(/[\+\|]/gi)
-    .map(part => part.trim())
+  const keywords = keyword.match(
+    /([\u4e00-\u9fa5a-zA-Z0-9\(\)]+)(?=([\+\|]+))|(?<=([\+\|]+))([\u4e00-\u9fa5a-zA-Z0-9\(\)]+)/gi
+  ) ?? [keyword];
+  const pattern = keywords
+    .map(part => part.trim().replace(/[^\u4e00-\u9fa5a-zA-Z0-9]/g, ''))
     .join('|');
   const regexp = new RegExp(pattern, 'gi');
 

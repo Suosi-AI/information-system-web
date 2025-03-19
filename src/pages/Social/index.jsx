@@ -267,16 +267,6 @@ export default function Social() {
     setIsLoading(true);
     try {
       let [startTime, endTime] = dateRange.map(t => moment(t).format('YYYY-MM-DD HH:mm:ss'));
-      console.log(dateRange);
-      // if (selectedRange === 'custom' && dateRange.length) {
-      //   startTime = moment(dateRange[0]).format('YYYY-MM-DD HH:mm:ss');
-      //   endTime = moment(dateRange[1]).format('YYYY-MM-DD HH:mm:ss');
-      // } else {
-      //   const { startTime: calculatedStartTime, endTime: calculatedEndTime } =
-      //     calculateTimeRange(selectedRange);
-      //   startTime = calculatedStartTime;
-      //   endTime = calculatedEndTime;
-      // }
 
       const searchInput = manualSearchContent ?? (searchQuery || '');
 
