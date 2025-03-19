@@ -526,7 +526,6 @@ export default function Social() {
               </span>
               {selectedRange === 'custom' && (
                 <RangePicker
-                  value={dateRange.map(dayjs)}
                   locale={locale}
                   range-separator="至"
                   start-placeholder="开始日期"
