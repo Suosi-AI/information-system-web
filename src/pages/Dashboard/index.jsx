@@ -67,11 +67,7 @@ export default function Dashboard() {
     setSelectedRange(range);
 
     if (range !== 'custom') {
-      const { startTime, endTime } = calculateTimeRange(range);
-      setDateRange([
-        moment(startTime, 'YYYY-MM-DD HH:mm:ss'),
-        moment(endTime, 'YYYY-MM-DD HH:mm:ss'),
-      ]);
+      setDateRange(calculateTimeRange(range));
     }
   };
 
@@ -180,20 +176,22 @@ export default function Dashboard() {
   const fetchListData = async () => {
     setIsLoading(true);
     try {
-      let startTime, endTime;
+      // let startTime, endTime;
 
-      if (selectedRange === 'custom' && dateRange.length) {
-        startTime = dateRange[0].format('YYYY-MM-DD HH:mm:ss');
-        endTime = dateRange[1].format('YYYY-MM-DD HH:mm:ss');
-      } else if (selectedRange === 'all') {
-        startTime = '';
-        endTime = '';
-      } else {
-        const { startTime: calculatedStartTime, endTime: calculatedEndTime } =
-          calculateTimeRange(selectedRange);
-        startTime = calculatedStartTime;
-        endTime = calculatedEndTime;
-      }
+      const [startTime, endTime] = dateRange.map(t => moment(t).format('YYYY-MM-DD HH:mm:ss'));
+
+      // if (selectedRange === 'custom' && dateRange.length) {
+      //   startTime = dateRange[0].format('YYYY-MM-DD HH:mm:ss');
+      //   endTime = dateRange[1].format('YYYY-MM-DD HH:mm:ss');
+      // } else if (selectedRange === 'all') {
+      //   startTime = '';
+      //   endTime = '';
+      // } else {
+      //   const { startTime: calculatedStartTime, endTime: calculatedEndTime } =
+      //     calculateTimeRange(selectedRange);
+      //   startTime = calculatedStartTime;
+      //   endTime = calculatedEndTime;
+      // }
 
       const response = await getNewsPage({
         page: currentPage.toString(),
@@ -207,6 +205,8 @@ export default function Dashboard() {
         }),
         area: selectedArea || '',
         contentType: selectedContentType || '',
+        startTime,
+        endTime,
       });
       setMockData(response.page.list);
       setSearchKeywords(searchQuery);
