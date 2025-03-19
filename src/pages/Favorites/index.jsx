@@ -640,8 +640,10 @@ export default function Favorites() {
     const newsId = selectedCard ? selectedCard.id : null;
     const reportTitle = titleValue; // 标题
     const reportContent = textAreaValue; // 内容
-    const reportImgs = imagesArray; // 图片列表
-    const reportAnalyse = textAreaValue1; // 分析
+    const reportImgs = !['template1', 'template3'].includes(materialTemplate) ? imagesArray : []; // 图片列表
+    const reportAnalyse = !['template2', 'template3'].includes(materialTemplate)
+      ? textAreaValue1
+      : ''; // 分析
     const reportIntelligenceUnit = danweiValue; // 情报单位
 
     const data = {
@@ -1339,9 +1341,11 @@ export default function Favorites() {
                       />
 
                       <Select
+                        allowClear
                         value={materialTemplate}
                         style={{ marginLeft: '16px' }}
                         onSelect={setMaterialTemplate}
+                        onClear={() => setMaterialTemplate(null)}
                         placeholder="请选择模板"
                       >
                         <Select.Option value="template1">模板1</Select.Option>
