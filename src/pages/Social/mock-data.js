@@ -143,7 +143,7 @@ export const reports = [
   {
     id: 'report-7',
     sourceType: '网站',
-    sourceName: '网站',
+    sourceName: 'admin',
     publishTime: '2023-10-12 08:00:00',
     url: 'http://example.com/report-7',
     // pics: ['http://10.10.16.189:10000/hj-news/e5a102eee6b5d3fd72e5b44928a13579'],
@@ -161,13 +161,14 @@ export const reports = [
       '日本海上自卫队扫雷舰“宇岛”号于10日上午在福冈县宗像市海岸附近起火，随后在11日午夜倾覆并于当日8时30分左右沉没。事故导致工程师、三级士官古河龙典（33岁）失踪，海上保安厅已展开搜寻行动。据信火源位于机舱，古河可能被困其中，但潜水员的搜查尚未发现其踪迹。防卫大臣中谷元对此事件发表了看法。',
     contentZh: `\n据网站海上保安庁，日本海上自卫队扫雷舰“宇岛”号10日夜间在福冈县宗像市海岸附近起火（福冈海上保安厅供图）\n\n12日，日本海上保安厅对因海上自卫队扫雷舰“宇岛”号在福冈近海起火沉没而失踪的工程师、三级士官古河龙典（33岁）进行了搜寻。县政府已向该地区部署了一艘巡逻艇。\n古贺三等士很可能在机舱内，据信机舱就是火源，但潜水员 11 日对该船进行的搜查没有发现任何线索。\n\n防卫大臣中谷元在内阁会议后的新闻发布会上表达了对扫雷舰起火事件的看法。\n\n事故发生在10日上午9时40分左右。\n11日午夜刚过，该船倾覆，并于当日8时30分左右沉没。\n`,
     contentType: 'News Report',
+    sameReportIds: [],
   },
 
   // File: 报告 (8).doc
   {
     id: 'report-8',
     sourceType: '网站',
-    sourceName: '网站',
+    sourceName: 'admin',
     publishTime: '2023-11-10 10:00:00',
     url: 'http://example.com/report-8',
     pics: [
@@ -189,13 +190,14 @@ export const reports = [
       '横滨水警署于11月9日和10日在Osanbashi Marche活动中设立了临时派出所，展示了警车和警用摩托车，并举办了互动活动。参与者可以与他们的狗一起拍摄纪念照片，同时海上还有船只进行公关活动，旨在帮助公众更加熟悉警察工作并鼓励了解警察的活动。',
     contentZh: `\n据网站横滨水警署，我在11月9日和10日这两天都参加了Osanbashi Marche。\n开放临时派出所，展示警车、警用摩托车等，并举行互动活动。\n参与者与心爱的狗一起拍摄纪念照片，一艘船在海上进行公关活动，帮助人们更加熟悉警察并鼓励人们了解警察的活动。\n`,
     contentType: 'Event Coverage',
+    sameReportIds: [],
   },
 
   // File: 报告 (3).doc
   {
     id: 'report-3',
     sourceType: '电报',
-    sourceName: '电报',
+    sourceName: 'admin',
     publishTime: '2024-11-22 12:00:00',
     url: 'http://example.com/report-3',
     pics: [
@@ -223,7 +225,7 @@ export const reports = [
   {
     id: 'report-2',
     sourceType: '电报',
-    sourceName: '电报',
+    sourceName: 'admin',
     publishTime: '2024-11-22 12:00:00',
     url: 'http://example.com/report-2',
     pics: [
@@ -249,7 +251,7 @@ export const reports = [
   {
     id: 'report-main',
     sourceType: '电报',
-    sourceName: '电报',
+    sourceName: 'admin',
     publishTime: '2026-03-15 17:00:00',
     url: 'http://example.com/report-main',
     pics: [],
@@ -266,13 +268,14 @@ export const reports = [
     contentType: 'Analysis Report',
     summary:
       '2026年3月15日，美国海军与日本等盟国在冲绳展开联合行动，强调伙伴关系在西太平洋冲突中的关键作用。通过多次演习（如“铁拳”、“锐锋”等），美军与盟友提升了协同作战能力。未来，海军和海军陆战队计划扩大行动范围，结合指挥所演习（CPX）与实战训练（FTX），增强跨军种、跨国协同能力。协调小组将成为冲突初期快速决策和信息共享的核心。指挥官需通过互动建立信任，确保在有限时间内有效应对威胁。海军呼吁优先培养高素质军官，推动协调机制建设，以应对日益复杂的地区安全挑战。',
+    sameReportIds: [],
   },
 
   // File: 报告 (5).doc
   {
     id: 'report-5',
     sourceType: '谷歌',
-    sourceName: '谷歌',
+    sourceName: 'admin',
     publishTime: '2023-11-12 09:00:00',
     url: 'http://example.com/report-5',
     pics: [
@@ -298,7 +301,7 @@ export const reports = [
   {
     id: 'report-4',
     sourceType: '电报',
-    sourceName: '电报',
+    sourceName: 'admin',
     publishTime: '2024-11-22 12:00:00',
     url: 'http://example.com/report-4',
     pics: [
@@ -323,7 +326,7 @@ export const reports = [
   {
     id: 'report-6',
     sourceType: '推特',
-    sourceName: '推特',
+    sourceName: 'admin',
     publishTime: '2023-11-12 09:00:00',
     url: 'http://example.com/report-6',
     pics: [
@@ -348,7 +351,7 @@ export const reports = [
   {
     id: 'report-1',
     sourceType: '推特',
-    sourceName: '推特',
+    sourceName: 'admin',
     publishTime: '2023-11-12 09:00:00',
     url: 'http://example.com/report-1',
     pics: [

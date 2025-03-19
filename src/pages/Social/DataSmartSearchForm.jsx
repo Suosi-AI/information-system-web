@@ -4,10 +4,11 @@ import locale from 'antd/es/date-picker/locale/zh_CN';
 import styles from './index.less';
 import { Input, Modal, Select, Form, DatePicker, message } from 'antd';
 import dayjs from 'dayjs';
+import { primaryColor } from 'src/utils/common';
 
 const { Search, TextArea } = Input;
 const { RangePicker } = DatePicker;
-const plainOptions = [
+export const plainOptions = [
   '微博',
   '公众号',
   '谷歌',
@@ -29,7 +30,7 @@ const timeLabelMappings = {
   'custom': '自定义',
 };
 
-const calculateTimeRange = range => {
+export const calculateTimeRange = range => {
   const endDate = new Date(); // 结束时间为当前时间
   let startTime;
 
@@ -55,7 +56,7 @@ const calculateTimeRange = range => {
 
 const defaultTimeRange = '1y';
 
-const emptyForm = () => ({
+export const emptyForm = () => ({
   id: new Date().getTime().toString(),
   name: '',
   dateRange: calculateTimeRange(defaultTimeRange),
@@ -84,12 +85,79 @@ export function formatForm(form) {
   return { ...emptyForm(), ...(form ?? {}) };
 }
 
+function FormItem({ label, list = [] }) {
+  const [select, setSelect] = useState();
+  return (
+    <div style={{ display: 'flex' }}>
+      <span>{label}</span>
+      {list.map(value => (
+        <span
+          style={{ color: value === select ? primaryColor : 'whitesmoke' }}
+          onClick={() => setSelect(time)}
+          key={value}
+        >
+          {value}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+export function TimeRange({ value, onChange }) {
+  const [timeRange, setTimeRange] = useState('1y');
+  const [dateRange, setDateRange] = useState();
+
+  function handleTimeChange(time) {
+    setTimeRange(time);
+    if (time !== 'custom') {
+      setDateRange(calculateTimeRange(time));
+    }
+  }
+
+  useEffect(() => {
+    onChange?.(dateRange);
+  }, [dateRange]);
+
+  return (
+    <div style={{ display: 'flex', columnGap: '16px' }}>
+      {['24h', '1w', '1m', '1y', 'custom'].map(time => {
+        return (
+          <React.Fragment>
+            <span
+              style={{ color: time === timeRange ? primaryColor : 'whitesmoke' }}
+              onClick={() => handleTimeChange(time)}
+              key={time}
+            >
+              {timeLabelMappings[time]}
+            </span>
+            {timeRange === 'custom' && time === 'custom' && (
+              <RangePicker
+                value={value?.map(v => dayjs(v))}
+                locale={locale}
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                value-format="yyyy-MM-dd HH:mm:ss"
+                onChange={date => setDateRange(date)}
+              />
+            )}
+          </React.Fragment>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function DataSmartSearchForm(props) {
   const { data = {}, visible = false, onOk, onCancel } = props ?? {};
   const isEditing = !!data;
   const [form, setForm] = useState({ ...emptyForm() });
   const [timeRange, setTimeRange] = useState(defaultTimeRange);
   const [disableSourceType, setDisableSourceType] = useState(false);
+
+  console.log(form.dateRange);
+
+  const formatDateRange = form.dateRange.map(t => dayjs(t));
 
   /**
    * @param {keyof form | Record<keyof form, any>} keyOrEntries
@@ -160,6 +228,7 @@ export default function DataSmartSearchForm(props) {
       onOk={() => close(onOk, true)}
       onCancel={() => close(onCancel)}
       className={styles.modalSty}
+      width="fit-content"
     >
       <Form data-smart-search-form>
         <Form.Item label="搜索主题">
@@ -173,13 +242,15 @@ export default function DataSmartSearchForm(props) {
           <div style={{ display: 'flex', columnGap: '16px' }}>
             {['24h', '1w', '1m', '1y', 'custom'].map(time => {
               return (
-                <span
-                  data-like-button={time === timeRange}
-                  onClick={() => setTimeRange(time)}
-                  key={time}
-                >
-                  {timeLabelMappings[time]}
-                </span>
+                <React.Fragment>
+                  <span
+                    data-like-button={time === timeRange}
+                    onClick={() => setTimeRange(time)}
+                    key={time}
+                  >
+                    {timeLabelMappings[time]}
+                  </span>
+                </React.Fragment>
               );
             })}
           </div>
@@ -192,8 +263,6 @@ export default function DataSmartSearchForm(props) {
               start-placeholder="开始日期"
               end-placeholder="结束日期"
               value-format="yyyy-MM-dd HH:mm:ss"
-              className="mar-l-10"
-              defaultValue={form.dateRange.map(v => dayjs(v))}
               onChange={date => handleChange('dateRange', date)}
             />
           </Form.Item>

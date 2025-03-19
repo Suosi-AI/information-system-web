@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { Button, Input, Select, Radio, Empty, Modal } from 'antd';
 
+import ReportDetail from 'src/components/common/ReportDetail';
 import ReportList from 'src/components/common/ReportList';
 import { highLight as keywordHightlight } from 'src/utils/common';
 
@@ -39,8 +40,10 @@ export default function ReadReportPlatform(props) {
 
   const [data, setData] = useState([]);
   const [sameReports, setSameReports] = useState([]);
+  const [viewReport, setViewReport] = useState();
   const [queryOption, setQueryOption] = useState({ ...emptyQueryOption });
   const [isModalVisible, setIsModalVisible] = useState();
+  const [modalType, setModalType] = useState('duplication');
 
   const dataLength = data.length;
 
@@ -48,9 +51,17 @@ export default function ReadReportPlatform(props) {
     if (!ids || ids.length === 0) {
       return;
     }
+    setModalType('duplication');
     setIsModalVisible(true);
     const data = await getList({ ids });
     setSameReports(data);
+    setIsModalVisible(true);
+  }
+
+  function showViewReport(report) {
+    setViewReport(report);
+    setModalType('viewReport');
+    setIsModalVisible(true);
   }
 
   /**
@@ -135,7 +146,9 @@ export default function ReadReportPlatform(props) {
                         fontWeight: 'bold',
                         fontSize: '16px',
                         marginBottom: '8px',
+                        cursor: 'pointer',
                       }}
+                      onClick={() => showViewReport(card)}
                     >
                       {keywordHightlight(card.titleZh, queryOption.keyword)}
                     </header>
@@ -175,13 +188,28 @@ export default function ReadReportPlatform(props) {
 
       <Modal
         title="相似文章"
-        visible={isModalVisible}
+        visible={isModalVisible && modalType === 'duplication'}
         footer={null}
         width="min-content"
         onCancel={() => setIsModalVisible(false)}
       >
         <ReportList
           list={sameReports}
+          style={{ minWidth: '800px', color: 'whitesmoke' }}
+          theme="simple"
+          disableSelect={true}
+        />
+      </Modal>
+
+      <Modal
+        title="文章详情"
+        visible={isModalVisible && modalType === 'viewReport'}
+        footer={null}
+        width="min-content"
+        onCancel={() => setIsModalVisible(false)}
+      >
+        <ReportDetail
+          data={viewReport}
           style={{ minWidth: '800px', color: 'whitesmoke' }}
           theme="simple"
         />

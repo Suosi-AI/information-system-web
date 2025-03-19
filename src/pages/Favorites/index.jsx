@@ -542,6 +542,9 @@ export default function Favorites() {
   }, [isActive, currentPage, pageSize]);
 
   const fetchListData = async (folderId, searchContent) => {
+    if (tabName !== 'report' && tabName !== '' && tabName == 'reportManage') {
+      return;
+    }
     setIsLoading(true);
     try {
       let startTime, endTime;
@@ -573,10 +576,8 @@ export default function Favorites() {
         area: selectedArea || '',
         contentType: selectedContentType || '',
       });
-      if (tabName === 'report' || tabName === '') {
-        setMockCardsData(response.page.list);
-        setTotalCount(response.page.totalCount);
-      }
+      setMockCardsData(response.page.list);
+      setTotalCount(response.page.totalCount);
     } catch (error) {
       console.error('获取数据失败:', error);
       message.error(`获取数据失败${response.msg}`);
@@ -773,13 +774,6 @@ export default function Favorites() {
       import('./readReportPlatform/mock-data').then(({ data }) => {
         setMockCardsData(data);
       });
-    } else {
-      if (tabName === 'report' || tabName === '') {
-        return;
-      }
-      import('../Social/mock-data').then(({ reports }) => {
-        setMockCardsData(reports);
-      });
     }
   }, [tabName]);
 
@@ -802,32 +796,31 @@ export default function Favorites() {
       setTabName('readReportPlatform');
       setCurrentPage(1);
       setIsLeftPanelVisible(false);
-      if (selectedFirstLevelArchiveId) {
-        fetchListData(selectedFirstLevelArchiveId, searchQuery);
-      }
     } else if (event === '3') {
       setIsActive(false);
+      setTabName('zhiban');
       setCurrentPage(1);
       setIsLeftPanelVisible(true);
       handleTableReport();
     } else if (event === '4') {
       setIsActive(false);
+      setTabName('reportManage');
       setCurrentPage(1);
       setIsLeftPanelVisible(true);
       handleTableReport();
-    } else if (event === '4') {
+    } else if (event === '5') {
       setIsActive(false);
+      setTabName('searchReport');
       setCurrentPage(1);
       setIsLeftPanelVisible(true);
-      handleTableReport();
     }
   };
-  const handleTableReport = async () => {
+  const handleTableReport = async (page = 1, size = 10) => {
     setIsLoading(true);
     try {
       const response = await queryPageTable({
-        page: currentPage.toString(),
-        limit: pageSize.toString(),
+        page: page + '',
+        limit: size + '',
         // folderId: selectedFirstLevelArchiveId,
       });
 
@@ -864,7 +857,12 @@ export default function Favorites() {
     <>
       <div
         className={styles.container}
-        style={{ display: 'grid', gridTemplateColumns: '370px 1fr' }}
+        style={{
+          width: '100%',
+          display: 'grid',
+          gridTemplateColumns:
+            tabName !== 'searchReport' && tabName !== 'reportManage' ? '370px 1fr' : '0px 1fr',
+        }}
       >
         <div className={styles.left} style={{ width: '100%' }}>
           {isLeftPanelVisible && (
@@ -1180,9 +1178,6 @@ export default function Favorites() {
                     placeholder="请输入您要搜索的内容"
                     allowClear
                     onSearch={e => handleTargetMatchedCondition(e)}
-                    style={{
-                      width: 200,
-                    }}
                   />
                 </div>
               </div>
@@ -1567,25 +1562,10 @@ export default function Favorites() {
                 dataSource={dataSource}
                 pagination={{
                   position: ['bottomCenter'],
-                  current: currentPage,
-                  pageSize: pageSize,
                   total: totalCount,
-                  onChange: handlePageChange,
+                  onChange: (page, size) => handleTableReport(page, size),
                 }}
               />
-
-              {/* <Table
-                  // key={`${index}+1`}
-                  columns={columns}
-                  dataSource={dataSource}
-                  pagination={{
-                    position: ['bottomCenter'],
-                    current: currentPage,
-                    pageSize: pageSize,
-                    total: totalCount,
-                    onChange: handlePageChange,
-                  }}
-                /> */}
             </Tabs.TabPane>
 
             <Tabs.TabPane tab="搜报平台" key="5">

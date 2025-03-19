@@ -63,6 +63,7 @@ export default function ReportList({
   style = {},
   pagination,
   theme,
+  disableSelect = false,
   onFlush,
 }) {
   const length = list.length;
@@ -91,13 +92,15 @@ export default function ReportList({
 
   return (
     <div style={{ padding: '0 20px', ...style }}>
-      <header style={{ textAlign: 'end', paddingBottom: '20px' }}>
-        <ReportListExport
-          onTrigger={() => setShowSelect(!showSelect)}
-          ids={selectIds}
-          style={{ display: 'inline-block' }}
-        />
-      </header>
+      {!disableSelect && (
+        <header style={{ textAlign: 'end', paddingBottom: '20px' }}>
+          <ReportListExport
+            onTrigger={() => setShowSelect(!showSelect)}
+            ids={selectIds}
+            style={{ display: 'inline-block' }}
+          />
+        </header>
+      )}
 
       <Spin tip="加载数据中..." spinning={loading}>
         <main

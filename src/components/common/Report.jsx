@@ -33,7 +33,7 @@ async function fetchReportDetail(id) {
     if (response.code === 200 && response.data) {
       return response.data;
     } else {
-      message.error(response.message ?? '获取失败');
+      console.error(response.message ?? '获取失败');
     }
   } catch (error) {
     message.error('获取时发生错误');
@@ -297,7 +297,7 @@ export default function Report(props) {
             <span style={{ color: primaryColor }}>{data.sourceName}</span>
             <span>{data.publishTime}</span>
 
-            {data.contentType && (
+            {theme != 'simple' && data.contentType && (
               <div>
                 <span>内容类型：</span>
                 <ReportTag text={data.contentType} />

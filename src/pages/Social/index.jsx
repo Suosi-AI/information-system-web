@@ -19,57 +19,27 @@ import ReportList from 'src/components/common/ReportList';
 
 import styles from './index.less';
 import {
-  Spin,
   DatePicker,
   Checkbox,
   Pagination,
   Button,
   Input,
-  Tabs,
-  Menu,
   Modal,
-  Dropdown,
   Popconfirm,
   message,
-  Form,
   Divider,
-  Empty,
-  Radio,
   Select,
   Table,
 } from 'antd';
-import DashboardCard from './../../components/common/DashboardCard';
-import ActionStats from '@/components/common/ActionStats';
-import CardModal from './../../components/common/CardModal';
-import SocialEditor from '@/components/common/SocialEditor';
-import DataSmartSearchForm, { formatForm } from './DataSmartSearchForm';
+import DataSmartSearchForm, {
+  formatForm,
+  emptyForm,
+  plainOptions,
+  calculateTimeRange,
+} from './DataSmartSearchForm';
 
-import weibo from './../../assets/images/icon/weibo.png';
-import weixin from './../../assets/images/icon/weixin.png';
-import google from './../../assets/images/icon/google.png';
-import blog from './../../assets/images/icon/blog.png';
-import wangzhan from './../../assets/images/icon/new.png';
-import baidu from './../../assets/images/icon/baidu.png';
-import twitter from './../../assets/images/icon/twitter.png';
-import facebook from './../../assets/images/icon/facebook.png';
-import youtube from './../../assets/images/icon/youtube.png';
-import telegram from './../../assets/images/icon/telegram.png';
-import zhiku from './../../assets/images/icon/zhiku.svg';
 const { RangePicker } = DatePicker;
-const { Search, TextArea } = Input;
-const plainOptions = [
-  '微博',
-  '公众号',
-  '谷歌',
-  '博客',
-  '网站',
-  '推特',
-  '百度',
-  '油管',
-  '脸书',
-  '电报',
-  '智库',
-];
+const { Search } = Input;
 /**
  * 内容类型
  */
@@ -77,154 +47,57 @@ const contentTypes = ['目标动向', '人员更替', '政策发布', '官方发
 const defaultCheckedList = [''];
 
 const CheckboxGroup = Checkbox.Group;
-import {
-  getMonitorTargetNewsPage,
-  getInfo,
-  getList,
-  getSave,
-  getUpdate,
-  getDelete,
-  exportNewsToExcel,
-  downNewsWord,
-  exportNewsToWordZip,
-  getUserList,
-  saveViewPermission,
-} from './../../services/store';
-import img from '@/assets/images/logo.png';
-import { error } from 'bfj/src/events';
-
-const dynamicImg = sourceType => {
-  switch (sourceType) {
-    case '微博':
-      return weibo;
-    case '公众号':
-      return weixin;
-    case '谷歌':
-      return google;
-    case '博客':
-      return blog;
-    case '网站':
-      return wangzhan;
-    case '百度':
-      return baidu;
-    case '推特':
-      return twitter;
-    case '脸书':
-      return facebook;
-    case '油管':
-      return youtube;
-    case '电报':
-      return telegram;
-    case '智库':
-      return zhiku;
-
-    default:
-      return '';
-  }
-};
+import { getMonitorTargetNewsPage, getList } from './../../services/store';
 
 export default function Social() {
-  //定义的字段在哪，正在找
-  const [row, setRow] = useState({ name: '' });
   const [currentMonitor, setCurrentMonitor] = useState({});
   const [selectedRange, setSelectedRange] = useState('1m');
   const [selectedLanguage, setSelectedLanguage] = useState('');
   const [dateRange, setDateRange] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [recordsCount, setRecordsCount] = useState(0);
 
-  const [isExportMode, setIsExportMode] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAlertModalVisible, setIsAlertModalVisible] = useState(false);
-  const [currentCardData, setCurrentCardData] = useState(null);
 
   const [firstLevelArchives, setFirstLevelArchives] = useLocalStorageState('firstLevelArchives', {
     defaultValue: [],
     listenStorageChange: true,
   });
-  const [secondLevelArchives, setSecondLevelArchives] = useState({});
   const [selectedFirstLevelArchiveId, setSelectedFirstLevelArchiveId] = useState(null);
-  const [selectedSecondLevelArchiveId, setSelectedSecondLevelArchiveId] = useState(null);
   const [expanded, setExpanded] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
-  const [editingId, setEditingId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
 
   const [isSocialEditorVisible, setIsSocialEditorVisible] = React.useState(false);
   const [mockData, setMockData] = useState([]);
 
-  // import('./mock-data.js').then(({ data }) => {
-  //   if (!mockData || mockData?.length === 0) {
-  //     setMockData(data);
-  //   }
-  // });
-
   const [totalCount, setTotalCount] = useState(0);
   const [searchKeywords, setSearchKeywords] = useState('');
-  const [modalData, setModalData] = useState({});
-  const [newMonitor, setNewMonitor] = useState({ name: '', matchConditions: '' });
   // 媒体范围
   const [checkedList, setCheckedList] = useState(defaultCheckedList);
   const [indeterminate, setIndeterminate] = useState(true);
   const [checkAll, setCheckAll] = useState(false);
 
-  const [isAllContentType, setIsAllContentType] = useState(true);
-
-  const [targetMatchedCondition, setTargetMatchedCondition] = useState('');
-  const [monitorName, setMonitorName] = useState('');
   const [isInitialFetch, setIsInitialFetch] = useState(true);
   const [shouldFetchData, setShouldFetchData] = useState(true);
-
-  const [selectedIds, setSelectedIds] = useState([]);
-  const [isAllSelected, setIsAllSelected] = useState(false);
-  const [isAlert, setIsAlert] = useState(false);
-
-  const [isPermissionModalVisible, setIsPermissionModalVisible] = useState(false);
-  const [currentPermissionItem, setCurrentPermissionItem] = useState(null);
-  const [permissionType, setPermissionType] = useState(1); // 1: 仅自己可见, 2: 指定用户可见
-  const [selectedUsers, setSelectedUsers] = useState([]);
-  const [userList, setUserList] = useState([]);
 
   // 内容类型
   const [contentType, setContentType] = useState('');
   // 搜索模式
   const [searchMode, setSearchMode] = useState('fuzzy');
-  const [filterRule, setFilterRule] = useState('');
-  const [queryListObj, setQueryListObj] = useState();
 
-  const calculateTimeRange = range => {
-    const endDate = new Date(); // 结束时间为当前时间
-    let startTime;
+  // core
+  const [queryOption, setQueryOption] = useState(emptyForm());
 
-    switch (range) {
-      case '24h':
-        startTime = new Date(endDate.getTime() - 3600 * 1000 * 24 * 1); // 24小时
-        break;
-      case '1w':
-        startTime = new Date(endDate.getTime() - 3600 * 1000 * 24 * 7); // 一周
-        break;
-      case '1m':
-        startTime = new Date(endDate.getTime() - 3600 * 1000 * 24 * 30); // 一月
-        break;
-      case '1y':
-        startTime = new Date(endDate.getTime() - 3600 * 1000 * 24 * 365); // 一年
-        break;
-      default:
-        startTime = null;
-    }
+  function handleQueryOptionChange(key, value) {
+    setQueryOption({ ...queryOption, [key]: value });
+  }
 
-    const formatTime = date => {
-      return date ? moment(date).format('YYYY-MM-DD HH:mm:ss') : '';
-    };
-
-    return {
-      startTime: formatTime(startTime),
-      endTime: formatTime(new Date()),
-    };
-  };
+  useEffect(() => {
+    console.log(queryOption);
+  }, [queryOption]);
 
   const handleRangeChange = range => {
     console.log(range, totalCount);
@@ -232,11 +105,7 @@ export default function Social() {
     setSelectedRange(range);
 
     if (range !== 'custom') {
-      const { startTime, endTime } = calculateTimeRange(range);
-      setDateRange([
-        moment(startTime, 'YYYY-MM-DD HH:mm:ss'),
-        moment(endTime, 'YYYY-MM-DD HH:mm:ss'),
-      ]);
+      setDateRange(calculateTimeRange(range));
     }
   };
 
@@ -316,7 +185,6 @@ export default function Social() {
   // 在设置targetMatchedCondition时，更新isInitialFetch状态，看你那个错误。我就已经知道问题在哪了。你想一想为啥会发，哪个问题重复调用吗
   useEffect(() => {
     if (firstLevelArchives.length > 0 && isInitialFetch) {
-      setTargetMatchedCondition(firstLevelArchives[0].targetMatchedCondition);
       setSelectedFirstLevelArchiveId(firstLevelArchives[0].id);
       setIsInitialFetch(false);
     }
@@ -347,8 +215,6 @@ export default function Social() {
         }
         setShouldFetchData(true);
         if (firstLevelData.length > 0) {
-          setMonitorName(firstLevelData[0].name);
-          setTargetMatchedCondition(firstLevelData[0].targetMatchedCondition);
           setSelectedFirstLevelArchiveId(firstLevelData[0].id);
         }
       }
@@ -368,7 +234,7 @@ export default function Social() {
       const { timeRange, dateRange, sourceType, lang, targetMatchedCondition, contentType } = query;
       setShouldFetchData(false);
       ifPresent(targetMatchedCondition, handleSearch);
-      ifPresent(sourceType, arr => onChange(arr?.length === 0 ? [...plainOptions] : arr));
+      ifPresent(sourceType, arr => onChange(!arr || arr?.length === 0 ? [...plainOptions] : arr));
       ifPresent(lang, handleLanguageChange);
       ifPresent(timeRange, handleRangeChange);
 
@@ -376,8 +242,7 @@ export default function Social() {
         ifPresent(dateRange, handleDateChange);
       }
     }
-    setSelectedIds([]); // 清空选中的ID
-    setIsExportMode(false); // 关闭复选框显示
+
     const selectedArchive = firstLevelArchives.find(item => item.id === id);
     if (selectedArchive) {
       const newExpanded = { ...expanded };
@@ -385,10 +250,7 @@ export default function Social() {
       newExpanded[id] = true;
       setExpanded(newExpanded);
       setSelectedFirstLevelArchiveId(id);
-      setSelectedSecondLevelArchiveId(null);
       setCurrentPage(1);
-      setTargetMatchedCondition(selectedArchive.targetMatchedCondition); // 设置匹配条件
-      setMonitorName(selectedArchive.name);
       setQueryParams(selectedArchive);
       // setTimeout(() => setShouldFetchData(true));
     }
@@ -396,9 +258,6 @@ export default function Social() {
 
   const handleAddMonitor = () => {
     setIsEditing(false); // 设置为新增状态
-    setNewMonitor({ name: '', matchConditions: '' }); // 清空输入框状态
-    setMonitorName(''); // 清空监测目标名称
-    setTargetMatchedCondition(''); // 清空匹配条件
     setIsSocialEditorVisible(true); // 显示编辑器
   };
 
@@ -407,17 +266,17 @@ export default function Social() {
     const { manualSearchContent } = query;
     setIsLoading(true);
     try {
-      let startTime, endTime;
-
-      if (selectedRange === 'custom' && dateRange.length) {
-        startTime = dateRange[0].format('YYYY-MM-DD HH:mm:ss');
-        endTime = dateRange[1].format('YYYY-MM-DD HH:mm:ss');
-      } else {
-        const { startTime: calculatedStartTime, endTime: calculatedEndTime } =
-          calculateTimeRange(selectedRange);
-        startTime = calculatedStartTime;
-        endTime = calculatedEndTime;
-      }
+      let [startTime, endTime] = dateRange.map(t => moment(t).format('YYYY-MM-DD HH:mm:ss'));
+      console.log(dateRange);
+      // if (selectedRange === 'custom' && dateRange.length) {
+      //   startTime = moment(dateRange[0]).format('YYYY-MM-DD HH:mm:ss');
+      //   endTime = moment(dateRange[1]).format('YYYY-MM-DD HH:mm:ss');
+      // } else {
+      //   const { startTime: calculatedStartTime, endTime: calculatedEndTime } =
+      //     calculateTimeRange(selectedRange);
+      //   startTime = calculatedStartTime;
+      //   endTime = calculatedEndTime;
+      // }
 
       const searchInput = manualSearchContent ?? (searchQuery || '');
 
@@ -453,10 +312,7 @@ export default function Social() {
     if (selectedArchive) {
       setCurrentMonitor(selectedArchive);
       setIsEditing(true);
-      setEditingId(id);
       setIsSocialEditorVisible(true);
-      setMonitorName(selectedArchive.name); // 设置编辑器中的名称为选中的监测目标名称
-      setTargetMatchedCondition(selectedArchive.targetMatchedCondition); // 设置编辑器中的匹配条件为选中的监测目标匹配条件
     }
   };
 
@@ -492,29 +348,6 @@ export default function Social() {
     smartSearchFormCloseCallback();
   };
 
-  const fetchUserList = async () => {
-    try {
-      const response = await getUserList();
-      if (response.code === 200) {
-        setUserList(response.list || []);
-      }
-    } catch (error) {
-      console.error('获取用户列表失败:', error);
-    }
-  };
-
-  const handlePermissionClick = (item, event) => {
-    event.stopPropagation();
-    setCurrentPermissionItem(item);
-    setIsPermissionModalVisible(true);
-    fetchUserList(); // 获取用户列表
-  };
-
-  const handlePermissionSave = async () => {
-    // 前端假配置，不走后端
-    message.success('权限配置保存成功');
-    setIsPermissionModalVisible(false);
-  };
   const dataSource = [
     {
       key: 1,
@@ -603,10 +436,10 @@ export default function Social() {
                       name="EditOutlined"
                       onClick={event => handleEditClick(item.id, event)}
                     />
-                    <SettingOutlined
+                    {/* <SettingOutlined
                       className={styles.settingIcon}
                       onClick={event => handlePermissionClick(item, event)}
-                    />
+                    /> */}
                     <Popconfirm
                       title="您确定要删除吗？"
                       onConfirm={event => removeSmartSearchForm(item.id, event)}
@@ -629,6 +462,7 @@ export default function Social() {
           onOk={onSaveSmartSearchForm}
           onCancel={handleCancel}
         />
+
         <div className={styles.container1}>
           <div className={styles.countTop}>
             <div
@@ -702,12 +536,12 @@ export default function Social() {
               </span>
               {selectedRange === 'custom' && (
                 <RangePicker
+                  value={dateRange.map(dayjs)}
                   locale={locale}
                   range-separator="至"
                   start-placeholder="开始日期"
                   end-placeholder="结束日期"
                   value-format="yyyy-MM-dd HH:mm:ss"
-                  defaultValue={(dateRange || ['00:00:00', '23:59:59']).map(v => dayjs(v))}
                   className="mar-l-10"
                   onChange={handleDateChange}
                 />
@@ -820,7 +654,6 @@ export default function Social() {
                 onChange={(page, pageSize) => {
                   setCurrentPage(page);
                   setPageSize(pageSize);
-                  setIsAllSelected(false);
                 }}
                 onShowSizeChange={(current, size) => {
                   setCurrentPage(1); // 重置到第一页
@@ -834,45 +667,6 @@ export default function Social() {
           />
         </div>
       </div>
-
-      <Modal
-        title="权限配置"
-        visible={isPermissionModalVisible}
-        onOk={handlePermissionSave}
-        onCancel={() => setIsPermissionModalVisible(false)}
-        destroyOnClose
-      >
-        <Form layout="vertical">
-          <Form.Item label="可见范围">
-            <Radio.Group value={permissionType} onChange={e => setPermissionType(e.target.value)}>
-              <Radio value={1}>仅自己可见</Radio>
-              <Radio value={2}>指定用户可见</Radio>
-            </Radio.Group>
-          </Form.Item>
-
-          {permissionType === 2 && (
-            <Form.Item label="选择可见用户">
-              <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
-                {userList.map(user => (
-                  <div key={user.userId} style={{ marginBottom: 8 }}>
-                    <Checkbox
-                      checked={selectedUsers.includes(user.userId)}
-                      onChange={e => {
-                        const newSelectedUsers = e.target.checked
-                          ? [...selectedUsers, user.userId]
-                          : selectedUsers.filter(id => id !== user.userId);
-                        setSelectedUsers(newSelectedUsers);
-                      }}
-                    >
-                      {user.username}
-                    </Checkbox>
-                  </div>
-                ))}
-              </div>
-            </Form.Item>
-          )}
-        </Form>
-      </Modal>
 
       <Modal
         title="告警推送记录"

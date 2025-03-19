@@ -1,9 +1,8 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { Button, Table, Tooltip, Space, message, Modal } from 'antd';
-import { queryPageTable, deleteReport, exportReportToWord } from './../../services/store';
-import DashboardCard, { dynamicImg } from 'src/components/common/DashboardCard/index.jsx';
 import { useLocalStorageState } from 'ahooks';
+import ReportList from 'src/components/common/ReportList';
 
 function downloadFile(resp) {
   // 创建 Blob 对象
@@ -28,13 +27,16 @@ function downloadFile(resp) {
 }
 
 export default function SearchReportPlatform() {
-  const [isAllSelected, setIsAllSelected] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]); // 用于存储被选中的行的key值
-  const [dataSource, setDataSource] = useLocalStorageState([]);
+  const [dataSource, setDataSource] = useLocalStorageState('searchReport', {
+    defaultValue: [],
+  });
+
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [totalCount, setTotalCount] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
+
+  const [tableData, setTableData] = useState(dataSource ?? []);
   const [sameReports, setSameReports] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isDuplication, setIsDuplication] = useState(false);
@@ -108,15 +110,13 @@ export default function SearchReportPlatform() {
     render: (_, reocrd) => (
       <Space size="middle" style={{ textAlign: 'center' }}>
         <a onClick={() => onExportFire(reocrd.reportId)}>下载</a>
-        <a onClick={() => onDel(reocrd.reportId)}>删除</a>
+        <a onClick={() => onDel(reocrd)}>删除</a>
         <a onClick={() => message.success('通报成功！')}>通报</a>
       </Space>
     ),
   };
 
   const [columns, setColumns] = useState([...baseColumns, operationColumn]);
-
-  useEffect(() => {});
 
   function showSameReports(sameReportIds) {
     if (!sameReportIds || sameReportIds?.length === 0) {
@@ -130,53 +130,64 @@ export default function SearchReportPlatform() {
   const handlePageChange = (page, pageSize) => {
     setCurrentPage(page);
     setPageSize(pageSize);
-    setIsAllSelected(false);
   };
 
-  const handleTableReport = async () => {
-    if (true) {
-      const { reports } = await import('../Social/mock-data');
-      setDataSource(reports);
-      setTotalCount(reports.length);
-      return;
-    }
-    setIsLoading(true);
-    try {
-      const response = await queryPageTable({
-        page: currentPage.toString(),
-        limit: pageSize.toString(),
-        // folderId: selectedFirstLevelArchiveId,
-      });
-
-      setDataSource(response.page.list);
-      setTotalCount(response.page.totalCount);
-    } catch (error) {
-      console.error('获取数据失败:', error);
-      message.error(`获取数据失败${response.msg}`);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  async function handleDeduplicate() {
-    if (!isDuplication) {
+  function handleDeduplicate() {
+    if (isDuplication) {
       const filterData = dataSource.filter(
-        item => !!item.sameReportIds && item.sameReportIds?.length !== 0
+        item => !!item.sameReportIds && Array.isArray(item.sameReportIds)
       );
-      setDataSource(filterData);
+      setTableData(filterData);
       setColumns([...baseColumns, mergeColumn, operationColumn]);
     } else {
-      await handleTableReport();
+      setTableData(dataSource);
       setColumns([...baseColumns, operationColumn]);
     }
-    setIsDuplication(!isDuplication);
   }
 
-  const onDel = async reportId => {
-    const filterData = dataSource.filter(item => item.id !== reportId);
-    setDataSource(filterData);
-    await handleDeduplicate();
-    message.success('删除成功');
+  const onDel = report => {
+    function delSingle() {
+      const hasSameReports = !!(report.sameReportIds && report.sameReportIds.length !== 0);
+      const filterReports = dataSource
+        .filter(item => report.id !== item.id)
+        .map(item => {
+          if (!hasSameReports) {
+            const sameReportIds = item.sameReportIds;
+            if (!sameReportIds) {
+              return item;
+            } else {
+              const filterSameReportIds = sameReportIds.filter(id => id !== report.id);
+              return { ...item, sameReportIds: filterSameReportIds };
+            }
+          } else {
+            const [extendedSameReportId, ...extendedIds] = report.sameReportIds;
+            if (item.id === extendedSameReportId) {
+              return { ...item, sameReportIds: extendedIds };
+            } else {
+              return item;
+            }
+          }
+        });
+      setDataSource(filterReports);
+      message.success('删除成功');
+    }
+
+    function delMulti() {
+      const reportIds = report.sameReportIds ?? [];
+      const filterReports = dataSource
+        .filter(item => !reportIds.includes(item.id))
+        .map(item => {
+          if (item.id === report.id) {
+            return { ...item, sameReportIds: [] };
+          } else {
+            return item;
+          }
+        });
+      setDataSource(filterReports);
+      message.success('重复数据删除成功');
+    }
+
+    isDuplication && report.sameReportIds.length > 0 ? delMulti() : delSingle();
   };
 
   const onExportFire = async reportId => {
@@ -192,20 +203,32 @@ export default function SearchReportPlatform() {
   };
 
   useEffect(() => {
-    handleTableReport();
-  }, [currentPage, pageSize]);
+    handleDeduplicate();
+  }, [isDuplication, dataSource]);
+
+  useEffect(() => {
+    if (dataSource?.length !== 0) {
+      return;
+    } else {
+      import('../Social/mock-data').then(({ reports }) => {
+        setDataSource(reports);
+        setTableData(reports);
+        setTotalCount(reports.length);
+      });
+    }
+  });
 
   return (
     <div style={{ paddingRight: '10px' }}>
       <p style={{ textAlign: 'right' }}>
-        <Button onClick={handleDeduplicate}>相似文章去重</Button>
+        <Button onClick={() => setIsDuplication(!isDuplication)}>相似文章去重</Button>
       </p>
       <Table
         style={{ maxWidth: '100%' }}
         rowSelection={rowSelection} // 注入勾选框配置
         rowKey="id" // 为每行设置唯一的key
         columns={columns}
-        dataSource={dataSource}
+        dataSource={tableData}
         pagination={{
           position: ['bottomCenter'],
           current: currentPage,
@@ -218,29 +241,16 @@ export default function SearchReportPlatform() {
       <Modal
         title="相似文章"
         visible={isModalVisible}
-        footer={null} // 不显示默认的底部按钮
-        width={800} // 设置 Modal 宽度
+        footer={null}
+        width={800}
         onCancel={() => setIsModalVisible(false)}
       >
-        {sameReports.map(card => (
-          <DashboardCard
-            key={card.id}
-            img={dynamicImg(card.sourceType)}
-            sourceName={card.sourceName}
-            sourceType={card.sourceType}
-            publishTime={card.publishTime}
-            title={card.titleZh}
-            content={card.contentZh}
-            link={card.url}
-            images={card.pics}
-            likeNum={card.likeNum}
-            commentNum={card.commentNum}
-            shareNum={card.shareNum}
-            readNum={card.readNum}
-            showActions={card.showActions}
-            whetherCollect={card.whetherCollect}
-          />
-        ))}
+        <ReportList
+          list={sameReports}
+          disableSelect={true}
+          theme="simple"
+          style={{ color: 'whitesmoke' }}
+        />
       </Modal>
     </div>
   );
