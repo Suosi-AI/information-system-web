@@ -3,7 +3,7 @@ module.exports = {
     '/dev-api': {
       // target: 'http://192.168.102.31:8899', // 后端服务地址
       // target: 'http://192.168.101.29:8881', // 后端服务地址
-      target: process.env.SERVER_URL || 'http://localhost:8899', // 后端服务地址
+      target: process.env.SERVER_URL || 'http://hj-server:8899', // access server url through docker container name or docker compose service name
       changeOrigin: true, // 改变请求头中的host信息
       pathRewrite: {
         '^/dev-api': '',
