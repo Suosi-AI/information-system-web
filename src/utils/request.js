@@ -4,8 +4,8 @@ import { Redirect } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
 const defaultConfig = {
-  // baseURL: '/dev-api',
-  baseURL: 'http://localhost:8899',
+  baseURL: '/dev-api',
+  // baseURL: 'http://localhost:8899',
   // timeout: 120 * 1000,
   withCredentials: true,
   headers: {
@@ -14,7 +14,6 @@ const defaultConfig = {
 };
 
 const customHistory = createBrowserHistory();
-
 const request = (method = 'get', url, { params = {}, config } = {}) => {
   const finalConfig = { ...defaultConfig, ...config };
   const instance = axios.create(finalConfig);
